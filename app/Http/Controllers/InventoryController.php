@@ -36,7 +36,21 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate inputs
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required'
+        ]);
+
+        // Create inventory
+        $inventory = new Inventory([
+            'name' => $request->input('name'),
+            'address' => $request->input('address')
+        ]);
+
+        // Save inventory and redirect to index
+        $inventory->save();
+        return redirect('inventories');
     }
 
     /**
