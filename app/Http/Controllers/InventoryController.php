@@ -102,11 +102,13 @@ class InventoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Inventory  $inventory
+     * @param \App\Inventory $inventory
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Inventory $inventory)
     {
-        //
+        // Delete inventory and redirect to index
+        $inventory->delete();
     }
 }
