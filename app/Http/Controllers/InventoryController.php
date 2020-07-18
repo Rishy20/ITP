@@ -84,7 +84,19 @@ class InventoryController extends Controller
      */
     public function update(Request $request, Inventory $inventory)
     {
-        //
+        // Validate inputs
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required'
+        ]);
+
+        // Assign new values to inventory
+        $inventory->name = $request->input('name');
+        $inventory->address = $request->input('address');
+
+        // Save inventory and redirect to index
+        $inventory->save();
+        return redirect('inventories');
     }
 
     /**
