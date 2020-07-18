@@ -110,5 +110,6 @@ class InventoryController extends Controller
     {
         // Delete inventory and redirect to index
         $inventory->delete();
+        return redirect('inventories');
     }
 }
