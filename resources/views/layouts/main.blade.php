@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700,400&display=swap" rel="stylesheet">
 
-    <link href="icons/css/all.css" rel="stylesheet">
-    <link href="css/sample.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="{{ asset('icons/css/all.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/sample.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/styles.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="vendor/DataTables/datatables.min.css"/>
 </head>
 <body>
