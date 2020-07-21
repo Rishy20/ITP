@@ -71,7 +71,7 @@ class InventoryController extends Controller
      */
     public function edit(Inventory $inventory)
     {
-        //
+        return view('inventories.edit')->with('inventory', $inventory);
     }
 
     /**
