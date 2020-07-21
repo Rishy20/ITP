@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,12 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('sample');
 });
-
-
-
+Route::get('/sample', function () {
+    return view('sampleAddForm');
+});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::resource('user', 'UserController');
 
 Route::resource('inventories', 'InventoryController');
