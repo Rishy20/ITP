@@ -38,8 +38,7 @@ class InventoryController extends Controller
     {
         // Validate inputs
         $request->validate([
-            'name' => 'required',
-            'address' => 'required'
+            'name' => 'required'
         ]);
 
         // Create inventory
@@ -86,8 +85,7 @@ class InventoryController extends Controller
     {
         // Validate inputs
         $request->validate([
-            'name' => 'required',
-            'address' => 'required'
+            'name' => 'required'
         ]);
 
         // Assign new values to inventory
