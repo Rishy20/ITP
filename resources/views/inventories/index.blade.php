@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="pg-heading">
-    <a href="#">
+    <a href="{{ route('home') }}">
         <i class="fa fa-arrow-left pg-back"></i>
     </a>
     <div class="pg-title">Inventories</div>
