@@ -2,47 +2,43 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
-    <div class="pg-title">Enter the Page heading here</div>
+    <a href="#">
+        <i class="fa fa-arrow-left pg-back"></i>
+    </a>
+    <div class="pg-title">Inventories</div>
 </div>
 
-<div class="section"> {{-- Start of Section--}}
+<div class="section">
 
-    <div class="section-content"> {{-- Start of sectionContent--}}
+    <div class="section-content">
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <div class="add-btn"> {{-- Add button --}}
-                <a>Add User</a> {{-- Enter the name of the add btn --}}
-            </div>
+            <a href="#">
+                <div class="add-btn">Add Inventory</div>
+            </a>
             <thead class="table-head">
                 <tr>
                     <th>Name</th>
-                    <th>Role</th>
-                    <th>Status</th>
+                    <th>Address</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Row 1 Data 1</td>
-                    <td>Row 1 Data 2</td>
-                    <td>
-                        {{-- Start of toggle switch --}}
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
-                        {{-- End of toggle switch --}}
-                    </td>
-                    <td class="action-icon">
-                        <a href="#"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-                        <a href="#"><i class="fas fa-trash-alt"></i></a>{{-- Delete icon --}}
-                    </td>
-                </tr>
+                @foreach($inventories as $inventory)
+                    <tr>
+                        <td>{{$inventory->name}}</td>
+                        <td>{{$inventory->address}}</td>
+
+                        <td class="action-icon">
+                            <a href="#"><i class="fas fa-pen"></i></a>
+                            <a href=""><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
-    </div> {{-- End  of sectionContent--}}
-</div> {{-- End  of section--}}
+    </div>
+</div>
 
 @endsection
