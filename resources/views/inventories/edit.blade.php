@@ -3,26 +3,28 @@
 
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
-    <div class="pg-title">Enter the page heading</div>
+    <div class="pg-title">Inventories</div>
 </div>
 
-<div class="section"> {{-- Start of Section--}}
+<div class="section">
     <div class="section-title">
-        Enter the name of the Section
+        Edit Inventory
         <hr>
     </div>
-    <div class="section-content"> {{-- Start of sectionContent--}}
-        {{-- Start of Form --}}
-        <form method="post" action="">
+    <div class="section-content">
+        <form method="POST" action="{{ route('inventories.update', $inventory) }}">
+            @method('PUT')  {{-- Spoof form method as 'PUT' to be compatible with the update route --}}
             @csrf
             <div class="row">
                 <div class="col">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
-                    <label for="username" class="float-label">Username</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Inventory name"
+                           value="{{$inventory->name}}">
+                    <label for="name" class="float-label">Name</label>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" name="display_name" placeholder="Display name">
-                    <label class="float-label">Display name</label>
+                    <input type="text" id="address" name="address" class="form-control" placeholder="Inventory address"
+                           value="{{$inventory->address}}">
+                    <label for="address" class="float-label">Address</label>
                 </div>
             </div>
             <div class="row submit-row">
@@ -31,17 +33,7 @@
                 </div>
             </div>
         </form>
-        {{-- End of Form --}}
-    </div> {{-- End  of sectionContent--}}
-</div> {{-- End  of section--}}
+    </div>
+</div>
 
 @endsection
-
-{{--
-    Important points to consider
-    * The labels should be below the input box
-    * All the input boxes should have a placeholder
-    * The class name of the label should be "float-label"
-    * The class name of the submit button should be "btn-submit"
-    * The row containing the submit button should have a class of submit-row
---}}

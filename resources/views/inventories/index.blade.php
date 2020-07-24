@@ -30,7 +30,7 @@
                         <td>{{$inventory->address}}</td>
 
                         <td class="action-icon">
-                            <a href="#"><i class="fas fa-pen"></i></a>
+                            <a href="{{ route('inventories.edit', $inventory) }}"><i class="fas fa-pen"></i></a>
                             <a href=""><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
