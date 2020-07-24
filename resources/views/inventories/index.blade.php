@@ -13,7 +13,7 @@
     <div class="section-content">
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <a href="#">
+            <a href="{{ route('inventories.create') }}">
                 <div class="add-btn">Add Inventory</div>
             </a>
             <thead class="table-head">
