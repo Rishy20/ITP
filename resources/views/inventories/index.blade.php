@@ -2,9 +2,6 @@
 @section('content')
 
 <div class="pg-heading">
-    <a href="{{ route('home') }}">
-        <i class="fa fa-arrow-left pg-back"></i>
-    </a>
     <div class="pg-title">Inventories</div>
 </div>
 
@@ -31,7 +28,11 @@
 
                         <td class="action-icon">
                             <a href="{{ route('inventories.edit', $inventory) }}"><i class="fas fa-pen"></i></a>
-                            <a href=""><i class="fas fa-trash-alt"></i></a>
+                            <form method="POST" class="dlt-form" action="{{ route('inventories.destroy', $inventory) }}">
+                                @method('DELETE')  {{-- Spoof form method as 'DELETE' to comply with destroy route --}}
+                                @csrf
+                                <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
