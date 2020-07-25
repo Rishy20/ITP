@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Enter the Page heading here</div>
 </div>
 
@@ -12,7 +11,7 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn"> {{-- Add button --}}
-                <a>Add User</a> {{-- Enter the name of the add btn --}}
+                <a href="{{ route() }}">Add User</a> {{-- Enter the name of the add btn --}}
             </div>
             <thead class="table-head">
                 <tr>
@@ -35,8 +34,13 @@
                         {{-- End of toggle switch --}}
                     </td>
                     <td class="action-icon">
-                        <a href="#"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-                        <a href="#"><i class="fas fa-trash-alt"></i></a>{{-- Delete icon --}}
+                        <a href="{{ route(user.show,$us->id) }}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
+                        {{-- Delete Icon --}}
+                        <form method="POST" class="dlt-form" action="{{ route('user.destroy',$us->id) }}">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
