@@ -15,7 +15,7 @@
     </div>
     <div class="section-content">
         <form method="POST" action="{{ route('inventories.update', $inventory) }}">
-            @method('PUT')  {{-- Spoof form method as 'PUT' to be compatible with the update route --}}
+            @method('PUT')  {{-- Spoof form method as 'PUT' to comply with update route --}}
             @csrf
             <div class="row">
                 <div class="col">
