@@ -17,7 +17,10 @@ Route::get('/', function () {
     return view('sample');
 });
 
-
+Route::get('/employees', 'EmployeeController@index');
+Route::get('/create', 'EmployeeController@create');
+//Route::get('/create', 'EmployeeController@store');
+//Route::post('/employees/{emp_id}', 'EmployeeController@show');
 
 
 Auth::routes();
