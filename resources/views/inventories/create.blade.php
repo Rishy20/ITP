@@ -19,11 +19,11 @@
             <div class="row">
                 <div class="col">
                     <input type="text" id="name" name="name" class="form-control" placeholder="Inventory name">
-                    <label for="name" class="float-label">Name</label>
+                    <label for="name" class="float-label">Inventory Name</label>
                 </div>
                 <div class="col">
                     <input type="text" id="address" name="address" class="form-control" placeholder="Inventory address">
-                    <label for="address" class="float-label">Address</label>
+                    <label for="address" class="float-label">Inventory Address</label>
                 </div>
             </div>
             <div class="row submit-row">
