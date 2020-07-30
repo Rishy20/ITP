@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('/sample', 'CustomerController');
+
+Route::resource('/cusfolder', 'PromotionController');
+
+Route::resource('/product', 'ProductController');
+
+
 Route::get('/', function () {
     return view('sample');
 });
@@ -20,6 +27,12 @@ Route::get('/', function () {
 
 
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
