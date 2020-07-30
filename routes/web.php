@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::resource('/bankfolder','BankAccountController');
+Route::resource('/exchangefolder','ExchangeController');
+
+
 Route::get('/', function () {
     return view('sample');
 });
