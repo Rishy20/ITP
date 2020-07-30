@@ -1,9 +1,9 @@
-extends('layouts.main')
 @extends('layouts.main')
 @section('content')
 
 <div class="pg-heading">
-    <div class="pg-title">Enter the Page heading here</div>
+    <i class="fa fa-arrow-left pg-back"></i>
+    <div class="pg-title">All Users</div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
@@ -11,8 +11,8 @@ extends('layouts.main')
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route() }}">Add User</a> {{-- Enter the name of the add btn --}}
+            <div class="add-btn">
+                <a>Add User</a>
             </div>
             <thead class="table-head">
                 <tr>
@@ -27,21 +27,28 @@ extends('layouts.main')
                     <td>Row 1 Data 1</td>
                     <td>Row 1 Data 2</td>
                     <td>
-                        {{-- Start of toggle switch --}}
                         <label class="switch">
                             <input type="checkbox" checked>
                             <span class="slider round"></span>
                         </label>
-                        {{-- End of toggle switch --}}
                     </td>
                     <td class="action-icon">
-                        <a href="{{ route(user.show,$us->id) }}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-                        {{-- Delete Icon --}}
-                        <form method="POST" class="dlt-form" action="{{ route('user.destroy',$us->id) }}">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                        </form>
+                        <a href="#"><i class="fas fa-pen"></i></a>
+                        <a href="#"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Row 2 Data 1</td>
+                    <td>Row 2 Data 2</td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                    <td class="action-icon">
+                        <a href="#"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
+                        <a href="#"><i class="fas fa-trash-alt"></i></a> {{-- Delete icon --}}
                     </td>
                 </tr>
             </tbody>

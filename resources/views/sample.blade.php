@@ -6,4 +6,9 @@
         * Just start writing only the body of the code because this section is the body of the code
 
     --}}
+    <div class="user">
+        <div class="pg-title">
+            <h2>Add User</h2>
+        </div>
+    </div>
 @endsection

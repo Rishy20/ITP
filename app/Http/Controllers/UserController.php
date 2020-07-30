@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
+use App\User;
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return Employee::all();
-        //dd($request->all());
-        return view('employees.index');
+        return view ('User.allUsers');
     }
 
     /**
@@ -26,8 +24,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
-
+        return view('User.addUser');
     }
 
     /**
@@ -38,41 +35,29 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new employee;
-        $employee->first_name = request('fname');
-        $employee->last_name = request('lname');
-        $employee->nic = request('nic');
-        $employee->phone = request('phone');
-        $employee->birthday = request('birthday');
-        $employee->address = request('address');
-        $employee->target = request('target');
-        $employee->salary = request('salary');
-        $employee->salary_type = request('salary_type');
-        $employee->commission = request('commission');
-        $employee->joined_date = request('joined_date');
 
-        $employee->save();
+        User::create($request->all());
         return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Employee $employee)
+    public function show($id)
     {
-        return view('employees.show');
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($id)
     {
         //
     }
@@ -81,10 +66,10 @@ class EmployeeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -92,10 +77,10 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Employee  $employee
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
         //
     }
