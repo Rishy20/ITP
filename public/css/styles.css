@@ -122,7 +122,7 @@ header {
     font-family: "Roboto", sans-serif;
 }
 .section .row {
-    padding: 18px;
+    padding: 20px 18px;
 }
 
 .form-control::placeholder {
@@ -132,6 +132,11 @@ header {
 
 .secondary-section{
     margin-top: 20px;
+}
+
+.last-section{
+    margin-bottom: 50px;
+    height: fit-content;
 }
 /******* Start of Floating Label******/
 .float-label {
@@ -147,6 +152,7 @@ header {
 .form-control:focus::placeholder {
     visibility: hidden;
 }
+
 .form-control:not(placeholder-shown) + .float-label,
 .form-control:focus + .float-label {
     visibility: visible;
@@ -224,6 +230,11 @@ input[type="radio"]:checked:after {
 }
 /******End of Radio Button*******/
 
+/******Start of table******/
+.all-table {
+    padding: 20px 10px;
+    text-align: center;
+}
 .table-head th {
     font-weight: 500 !important;
 }
@@ -233,30 +244,29 @@ input[type="radio"]:checked:after {
     background-color: #192b3cf2;
     color: white;
 }
+/******* Search Bar******/
 .dataTables_filter {
     float: left !important;
 }
+.dataTables_filter input[type="search"] {
+    width: 250px !important;
+    padding: 20px 10px;
+}
+/******* Show entries label******/
 .dataTables_length label {
     margin-bottom: 0;
 }
 .dataTables_length {
     padding-top: 8px;
 }
+/****** Table Page number and length in the bottom *******/
 .bottom {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
     padding: 0 10px;
 }
-.all-table {
-    padding: 20px 10px;
-    text-align: center;
-}
 
-.dataTables_filter input[type="search"] {
-    width: 250px !important;
-    padding: 20px 10px;
-}
 .add-btn {
     float: right;
     padding: 10px 20px;
@@ -271,7 +281,8 @@ input[type="radio"]:checked:after {
     border-radius: 3px;
     box-shadow: 6px 5px 8px rgba(43, 189, 185, 0.1);
 }
-
+/******* Start of Action icon ******/
+/* Pencil Edit icon */
 .action-icon a {
     color: #058de9;
     font-size: 18px;
@@ -282,9 +293,33 @@ input[type="radio"]:checked:after {
     background-color: #058de9;
     color: white;
 }
+/*Delete icon */
+.dlt-btn {
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    color: #058de9;
+    font-size: 18px;
+    outline: none;
+    padding: 7.5px 12px;
+    border-radius: 5px;
+}
+.dlt-btn:hover {
+    background-color: #058de9;
+    color: white;
+}
+.dlt-btn:focus{
+    outline: none;
+}
+.dlt-form {
+    display: inline-block;
+}
+/****** End of action icons ******/
+/****** Page number ******/
 .page-item.active .page-link {
     background-color: #5792df;
 }
+/****** Change the table stripe order *******/
 .table-striped > tbody > tr:nth-child(even) > td,
 .table-striped > tbody > tr:nth-child(even) > th {
     background-color: rgba(0, 0, 0, 0.03);
@@ -296,7 +331,7 @@ input[type="radio"]:checked:after {
     color: #212529;
     background-color: rgba(0, 0, 0, 0.075);
 }
-/******Slider******/
+/******Toggle Switch******/
 .switch {
     position: relative;
     display: inline-block;
@@ -308,7 +343,6 @@ input[type="radio"]:checked:after {
     width: 0;
     height: 0;
 }
-
 .slider {
     position: absolute;
     cursor: pointer;
@@ -357,24 +391,142 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+/****** End of Toggle Switch ******/
+/****** End of Table *****/
 
-.dlt-btn {
+/******Start of POS Terminal*****/
+.pos-terminal{
+    background-color: white;
+}
+.pos{
+    margin-left: 10px;
+    margin-top: 80px;
+    margin-right: 10px;
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+
+}
+.pos .row{
+    margin-left: -10px;
+    margin-right: -10px;
+}
+/******Search Bar******/
+.pos .search-icon{
+    color: white;
+    font-size:24px;
+    background-color: #256EA1;
+    padding: 5px 15px;
+    display: inline-block;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+.pos .search-bar{
+    display: inline-block;
+    width: 93%;
+}
+.pos .search-textbox{
+    height: 50px;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+/******* End of Search bar *******/
+
+/****** Item display ******/
+
+.item-display{
+    border: 1px solid #D8CFCF;
+    padding: 20px;
+    margin-top: 20px;
+    height: 90%;
+}
+
+.item-table-head{
+    background-color: #F0F4F4;
+}
+.item-table-row{
+    background-color: rgba(243, 243, 243, 0.28);
+}
+.pos .table{
+    text-align: center;
+}
+
+/****** End of the table ******/
+
+.price-display{
+    border: 1px solid #D8CFCF;
+    padding: 20px;
+    height: 100%;
+}
+.mini-display{
+    border: 1px solid #D8CFCF;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.s-icon{
+    color:#5C8BAB;
+    font-size:30px;
+}
+.s-text{
+    font-size: 20px;
+    padding-left: 10px;
+    vertical-align: 4px;
+}
+
+.display-info{
+    font-size: 20px;
+}
+.display-values{
+    float: right;
+}
+.pay-btn-div{
+
+    padding: 10px;
+    margin-bottom: 15px;
+    color: white;
+    margin-top: 15px;
+    background-color: #2BBDB9;
+}
+.btn{
     background-color: transparent;
     border: none;
-    display: inline-block;
-    color: #058de9;
-    font-size: 18px;
+    width: 100%;
+    text-align: left;
     outline: none;
-    padding: 7.5px 12px;
-    border-radius: 5px;
 }
-.dlt-btn:hover {
-    background-color: #058de9;
+
+.btn:focus{
+    outline: none;
+}
+.pay, .pay-value{
     color: white;
+    font-size: 36px;
+    font-weight: 600;
 }
-.dlt-btn:focus{
-    outline: none;
+.pay-value{
+    float: right;
 }
-.dlt-form {
-    display: inline-block;
+.sub-btn-div{
+    display: flex;
+    justify-content: space-between;
+
+}
+.sub-btn{
+    background-color: #256EA1;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 15px 11px;
+    text-align: center;
+}
+.sub-icon{
+    font-size:16px;
+    float: left;
+}
+.sub-btn-txt{
+    padding-left: 1px;
+}
+
+.pos-header{
+   background-color: #5c8bab;
 }

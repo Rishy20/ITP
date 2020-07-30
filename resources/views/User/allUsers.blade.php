@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
+
     <div class="pg-title">All Users</div>
 </div>
 
@@ -12,20 +12,25 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
-                <a>Add User</a>
+                <a href="{{ route('user.create') }}">Add User</a>
             </div>
             <thead class="table-head">
                 <tr>
-                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Display Name</th>
                     <th>Role</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach($user as $us)
+
+
                 <tr>
-                    <td>Row 1 Data 1</td>
-                    <td>Row 1 Data 2</td>
+                    <td>{{ $us->username }}</td>
+                    <td>{{ $us->display_name }}</td>
+                    <td>Owner</td>
                     <td>
                         <label class="switch">
                             <input type="checkbox" checked>
@@ -33,24 +38,16 @@
                         </label>
                     </td>
                     <td class="action-icon">
-                        <a href="#"><i class="fas fa-pen"></i></a>
-                        <a href="#"><i class="fas fa-trash-alt"></i></a>
+                        <a href="{{ route('user.edit',$us->id) }}"><i class="fas fa-pen"></i></a>
+                        <form method="POST" class="dlt-form" action="{{ route('user.destroy',$us->id) }}">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+                        </form>
                     </td>
                 </tr>
-                <tr>
-                    <td>Row 2 Data 1</td>
-                    <td>Row 2 Data 2</td>
-                    <td>
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
-                    </td>
-                    <td class="action-icon">
-                        <a href="#"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-                        <a href="#"><i class="fas fa-trash-alt"></i></a> {{-- Delete icon --}}
-                    </td>
-                </tr>
+                @endforeach
+
             </tbody>
         </table>
 
