@@ -14,13 +14,11 @@ class CreateInventoryItemsTable extends Migration
     public function up()
     {
         Schema::create('inventory_items', function (Blueprint $table) {
-            $table->bigInteger('inventory_id')->unsigned();
-            $table->bigInteger('product_id')->unsigned();
+            $table->foreignId('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
+            $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('qty')->default(0);
             $table->timestamps();
             $table->primary(['inventory_id', 'product_id']);
-            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
