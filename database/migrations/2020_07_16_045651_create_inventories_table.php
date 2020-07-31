@@ -17,6 +17,7 @@ class CreateInventoriesTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('address')->nullable();
+            $table->integer('qty')->default(0);
             $table->timestamps();
         });
     }

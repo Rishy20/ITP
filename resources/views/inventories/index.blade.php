@@ -17,6 +17,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Address</th>
+                    <th>Quantity</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@
                     <tr>
                         <td>{{$inventory->name}}</td>
                         <td>{{$inventory->address}}</td>
+                        <td>{{$inventory->qty}}</td>
 
                         <td class="action-icon">
                             <a href="{{ route('inventories.edit', $inventory) }}"><i class="fas fa-pen"></i></a>
