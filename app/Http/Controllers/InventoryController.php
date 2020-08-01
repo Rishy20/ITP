@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Inventory;
+use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
 {
@@ -60,7 +62,18 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        //
+        // Get relevant inventory items and products from database
+        $inventory_items = DB::table('inventory_items')->where('inventory_id', $inventory->id)->get();
+        $products = Product::findMany($inventory_items->pluck('product_id'));
+
+        // Assign each product to the inventory item with a matching product id
+        foreach ($inventory_items as $inventory_item)
+            foreach ($products as $product)
+                if ($inventory_item->product_id == $product->id)
+                    $inventory_item->product = $product;
+
+        // Pass the relevant inventory and inventory items to inventory show view
+        return view('inventories.show')->with('inventory_items', $inventory_items)->with('inventory', $inventory);
     }
 
     /**
