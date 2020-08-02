@@ -34,5 +34,7 @@ Route::get('/test', function(){
 
 
 Route::resource('user', 'UserController');
+Route::resource('category', 'CategoryController');
+Route::resource('product', 'productController');
 Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');
 Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
