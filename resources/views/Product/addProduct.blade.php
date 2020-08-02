@@ -45,7 +45,7 @@
 <div class="col-md-4">
 <div class="section"> {{-- Start of Section--}}
     <div class="section-title section-title-sub">
-         Product Information
+         Organization
         <hr>
     </div>
     <div class="section-content">
@@ -54,7 +54,8 @@
             <label class="float-label">Brand</label>
         </div>
         <div class="row">
-            <div class="form-group">
+            <div
+             class="form-group">
             <label>Category</label>
             <select  class="form-control">
              @foreach($cat as $i)
@@ -71,34 +72,104 @@
 </div>
 </div>
 </div>
-<div class="section"> {{-- Start of Section--}}
-    <div class="section-title">
-         Product Pricing
-        <hr>
-    </div>
-    <div class="section-content">
-        <div class="row">
-            <div class="col">
-                <input type="text"  name="costPrice" class="form-control" placeholder="Cost Price" />
-                <label  class="float-label">Cost Price</label>
+<div class="row">
+    <div class="col-md-8">
+        <div class="section"> {{-- Start of Section--}}
+            <div class="section-title">
+                 Product Pricing
+                <hr>
             </div>
-            <div class="col">
-                <input type="text" class="form-control" name="sellingPrice" placeholder="Selling Price">
-                <label class="float-label">Selling Price</label>
+            <div class="section-content">
+                <div class="row">
+                    <div class="col">
+                        <input type="text"  name="costPrice" class="form-control" placeholder="Cost Price" />
+                        <label  class="float-label">Cost Price</label>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="sellingPrice" placeholder="Selling Price">
+                        <label class="float-label">Selling Price</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="text"  name="discount" class="form-control" placeholder="Discount" />
+                        <label  class="float-label">Discount</label>
+                    </div>
+                    <div class="col">
+                        <input type="text"  name="Profit" class="form-control" placeholder="Profit" />
+                        <label  class="float-label">Profit</label>
+                    </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <input type="text"  name="discount" class="form-control" placeholder="Discount" />
-                <label  class="float-label">Discount</label>
-            </div>
-            <div class="col">
-                <input type="text"  name="Profit" class="form-control" placeholder="Profit" />
-                <label  class="float-label">Profit</label>
-            </div>
+        </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="section"> {{-- Start of Section--}}
+            <div class="section-title">
+                 Inventory
+                <hr>
+            </div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="col">
+                        <input type="text"  name="Inventoryname" class="form-control" placeholder="Inventory name" />
+                        <label  class="float-label">Inventory Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" name="Barcode" placeholder="Barcode">
+                        <label class="float-label">Barcode</label>
+                    </div>
+                    <div class="col">
+                        <input type="text"  name="Quantity" class="form-control" placeholder="Quantity" />
+                        <label  class="float-label">Quantity</label>
+                    </div>
+
+            </div>
+        </div>
+        </div>
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="section"> {{-- Start of Section--}}
+            <div class="section-title">
+                 Variants
+                <hr>
+            </div>
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-2">
+                       <h5>
+                           Size
+                       </h5>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text"  name="size" class="form-control" placeholder="Size" />
+                        <label  class="float-label">Size</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <h5>
+                            Color
+                        </h5>
+                     </div>
+                     <div class="col-md-10">
+                         <input type="text"  name="color" class="form-control" placeholder="Color" />
+                         <label  class="float-label">Color</label>
+                     </div>
+
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 {{--
