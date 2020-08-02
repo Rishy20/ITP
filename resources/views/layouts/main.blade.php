@@ -9,6 +9,7 @@
     <link href="{{ asset('css/sample.css')}}" rel="stylesheet">
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="vendor/DataTables/datatables.min.css"/>
+    @livewireStyles
 </head>
 <body>
     @include('assets.header')
@@ -29,5 +30,6 @@
         });
     } );
 </script>
+@livewireScripts
 </body>
 </html>

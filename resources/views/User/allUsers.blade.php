@@ -32,10 +32,8 @@
                     <td>{{ $us->display_name }}</td>
                     <td>Owner</td>
                     <td>
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
+                        @livewire('toggle-switch',['s'=>$us->status,'id'=>$us->id])
+
                     </td>
                     <td class="action-icon">
                         <a href="{{ route('user.edit',$us->id) }}"><i class="fas fa-pen"></i></a>

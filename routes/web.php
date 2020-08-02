@@ -28,6 +28,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pos', function(){
     return view('POS.pos');
 });
+Route::get('/test', function(){
+    return view('test');
+});
+
 
 Route::resource('user', 'UserController');
 Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');

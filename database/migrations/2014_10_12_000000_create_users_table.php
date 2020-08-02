@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('display_name')->nullable($value = false);
             $table->string('password')->nullable($value = false);
             $table->integer('pin')->nullable($value = false);
+            $table->boolean('status')->default(1);
             $table->string('roleId');
             $table->timestamps();
         });
