@@ -38,3 +38,5 @@ Route::resource('category', 'CategoryController');
 Route::resource('product', 'productController');
 Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');
 Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
+
+Route::resource('inventories', 'InventoryController');
