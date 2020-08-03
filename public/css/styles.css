@@ -545,12 +545,23 @@ input:checked + .slider:before {
     height: 60%;
     border: 3px solid;
     border-color: #80bdff;
+    overflow: auto;
+    display: none;
 
 }
+
 
 .pr-code{
     text-align: left;
 }
 .pr-price{
     text-align: right;
+}
+
+.p-link:hover{
+
+}
+.single-product-row tr:hover{
+    background-color:#80bdff21;
+    cursor: pointer;
 }

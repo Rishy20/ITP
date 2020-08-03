@@ -9,11 +9,11 @@
             </form>
             <div class="product-dropdown">
             <div class="single-product-row">
-                <table class="table">
+                <table class="table table-borderless">
 
                 @foreach($products as $pr)
+                   <tr wire:click="show({{$pr->id}})">
 
-                <tr>
                     <td class="pr-code">
                         {{ $pr->id }}
                     </td>
@@ -26,7 +26,9 @@
                     <td class="pr-price">
                         Rs. {{ $pr->sellingPrice }}
                     </td>
+
                 </tr>
+
 
 
             @endforeach

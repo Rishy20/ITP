@@ -18,4 +18,7 @@ class ProductDropdown extends Component
     {
         return view('livewire.product-dropdown');
     }
+    public function show($id){
+        dd($id);
+    }
 }

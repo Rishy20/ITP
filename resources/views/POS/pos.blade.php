@@ -4,11 +4,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700,400&display=swap" rel="stylesheet">
+    <link type="text/css" href="{{ asset('vendor/OverlayScrollbars/css/OverlayScrollbars.css') }}" rel="stylesheet" />
 
     <link href="{{ asset('icons/css/all.css')}}" rel="stylesheet">
     <link href="{{ asset('css/sample.css')}}" rel="stylesheet">
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="vendor/DataTables/datatables.min.css" />
+    <script type="text/javascript" src="{{ asset('vendor/OverlayScrollbars/js/OverlayScrollbars.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="pos-terminal">
     @include('POS.pos-header')
@@ -16,7 +19,7 @@
     <div class="pos">
         <div class="row">
             <div class="col-md-8">
-                <livewire:product-dropdown/>
+                <livewire:product-dropdown />
                 <div class="item-display">
                     <table class="table">
                         <thead class="item-table-head">
@@ -104,16 +107,16 @@
 
                     <div class="sub-btn-div">
 
-                             <button class="sub-btn btn mr-2">
-                                <i class="fas fa-undo sub-icon"></i><span class="sub-btn-txt"> Retrieve Sale</span>
-                            </button>
+                        <button class="sub-btn btn mr-2">
+                            <i class="fas fa-undo sub-icon"></i><span class="sub-btn-txt"> Retrieve Sale</span>
+                        </button>
 
-                            <button class="sub-btn btn mr-2">
-                                <i class="fas fa-parking sub-icon"></i><span class="sub-btn-txt"> Park Sale</span>
-                            </button>
-                            <button class="sub-btn btn">
-                                <i class="fas fa-trash-alt sub-icon"></i><span class="sub-btn-txt"> Discard Sale</span>
-                            </button>
+                        <button class="sub-btn btn mr-2">
+                            <i class="fas fa-parking sub-icon"></i><span class="sub-btn-txt"> Park Sale</span>
+                        </button>
+                        <button class="sub-btn btn">
+                            <i class="fas fa-trash-alt sub-icon"></i><span class="sub-btn-txt"> Discard Sale</span>
+                        </button>
 
 
                     </div>
@@ -122,7 +125,29 @@
         </div>
 
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            OverlayScrollbars(document.querySelectorAll(".product-dropdown"), {});
+        });
+        $(document).ready(function() {
+            $(".search-textbox").focus(function() {
+                $(".product-dropdown").css("display", "block");
+            });
+            $(".search-textbox").focusout(function() {
+                setTimeout(function(){
+                    $(".product-dropdown").css("display", "none");
+                },200);
+
+            });
 
 
+
+
+
+
+        });
+
+    </script>
 </body>
 </html>
