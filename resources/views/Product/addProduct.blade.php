@@ -32,11 +32,7 @@
                     <label  class="float-label">Description</label>
                 </div>
             </div>
-            <div class="row submit-row">
-                <div class="col">
-                    <input class="btn-submit" type="submit" value="Save">
-                </div>
-            </div>
+
 
         {{-- End of Form --}}
     </div> {{-- End  of sectionContent--}}
@@ -119,8 +115,14 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col">
-                        <input type="text"  name="Inventoryname" class="form-control" placeholder="Inventory name" />
-                        <label  class="float-label">Inventory Name</label>
+                        <div class="form-group">
+                            <label>Inventory</label>
+                            <select  class="form-control">
+                             @foreach($inv as $i)
+                                <option value="{{$i->id}}">{{$i->name}} </option>
+                             @endforeach
+                            </select>
+                          </div>
                     </div>
                 </div>
                 <div class="row">
@@ -167,9 +169,41 @@
                          <input type="text"  name="color" class="form-control" placeholder="Color" />
                          <label  class="float-label">Color</label>
                      </div>
+                </div>
+                    <div class="row">
+                        <div class="col">
+                            <table class ="table">
+                                <tr>
+
+                                    <th> Variants </th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                    30
+                                    </td>
+                                    <td>
+                                        <input type="text"  name="price-vant" class="form-control" placeholder="Price" />
+                                        <label  class="float-label">Price</label>
+                                    </td>
+                                   <td>
+                                    <input type="text"  name="qut-vant" class="form-control" placeholder="Quantity" />
+                                    <label  class="float-label">Quantity</label>
+                                   </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row submit-row">
+                        <div class="col">
+                            <input class="btn-submit" type="submit" value="Save">
+                        </div>
+                    </div>
 
 
-            </div>
         </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Inventory;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -26,8 +27,9 @@ class productController extends Controller
     public function create()
     {
         $cat =Category::all();
+        $inv=Inventory::all();
 
-        return view('Product.addProduct',compact('cat'));
+        return view('Product.addProduct',compact('cat','inv'));
 
     }
 
@@ -50,7 +52,7 @@ class productController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
