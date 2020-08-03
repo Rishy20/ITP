@@ -43,19 +43,21 @@
 </div> {{-- End  of section--}}
 </div>
 <div class="col-md-4">
-<div class="section"> {{-- Start of Section--}}
+<div class="section section-sub"> {{-- Start of Section--}}
     <div class="section-title section-title-sub">
          Organization
         <hr>
     </div>
     <div class="section-content">
         <div class="row">
+            <div class="col">
             <input type="text" class="form-control" name="brand" placeholder="Brand">
             <label class="float-label">Brand</label>
         </div>
+    </div>
         <div class="row">
-            <div
-             class="form-group">
+            <div class="col">
+            <div class="form-group">
             <label>Category</label>
             <select  class="form-control">
              @foreach($cat as $i)
@@ -63,16 +65,19 @@
              @endforeach
             </select>
           </div>
+            </div>
         </div>
         <div class="row">
+            <div class="col">
             <input type="text" class="form-control" name="supplier" placeholder="Supplier">
             <label class="float-label">Supplier</label>
+        </div>
         </div>
     </div>
 </div>
 </div>
 </div>
-<div class="row">
+<div class="row mt-4">
     <div class="col-md-8">
         <div class="section"> {{-- Start of Section--}}
             <div class="section-title">
@@ -104,7 +109,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mt-4">
     <div class="col-md-8">
         <div class="section"> {{-- Start of Section--}}
             <div class="section-title">
@@ -133,7 +138,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mt-4">
     <div class="col-md-8">
         <div class="section"> {{-- Start of Section--}}
             <div class="section-title">

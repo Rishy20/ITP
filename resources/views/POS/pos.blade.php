@@ -16,14 +16,7 @@
     <div class="pos">
         <div class="row">
             <div class="col-md-8">
-                <div class="product-search">
-                    <div class="search-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <form class="search-bar">
-                        <input type="text" class="search-textbox form-control" placeholder="Find Products By Name, Number or Barcode">
-                    </form>
-                </div>
+                <livewire:product-dropdown/>
                 <div class="item-display">
                     <table class="table">
                         <thead class="item-table-head">
