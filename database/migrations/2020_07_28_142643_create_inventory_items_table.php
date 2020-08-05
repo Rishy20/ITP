@@ -15,7 +15,7 @@ class CreateInventoryItemsTable extends Migration
     {
         Schema::create('inventory_items', function (Blueprint $table) {
             $table->foreignId('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
-            $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('product_id')->references('pcode')->on('products')->onDelete('cascade');
             $table->integer('qty')->default(0);
             $table->timestamps();
             $table->primary(['inventory_id', 'product_id']);

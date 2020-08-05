@@ -1,0 +1,36 @@
+{
+  "name": "bootstrap-input-spinner",
+  "version": "1.13.19",
+  "description": "A Bootstrap 4 / jQuery plugin to create input spinner elements for number input.",
+  "main": "src/bootstrap-input-spinner.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaack/bootstrap-input-spinner.git"
+  },
+  "keywords": [
+    "Bootstrap 4",
+    "Bootstrap",
+    "jQuery",
+    "Widget",
+    "Html",
+    "Input",
+    "UI"
+  ],
+  "author": "https://shaack.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shaack/bootstrap-input-spinner/issues"
+  },
+  "homepage": "https://github.com/shaack/bootstrap-input-spinner#readme",
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "prismjs": "^1.20.0"
+  }
+}

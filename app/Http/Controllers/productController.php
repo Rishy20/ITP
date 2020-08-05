@@ -27,7 +27,7 @@ class productController extends Controller
     public function create()
     {
         $cat =Category::all();
-        $inv=Inventory::all();
+        $inv =Inventory::all();
 
         return view('Product.addProduct',compact('cat','inv'));
 
@@ -42,6 +42,10 @@ class productController extends Controller
     public function store(Request $request)
     {
         Product::create($request->all());
+
+
+        return redirect()->back();
+
     }
 
     /**

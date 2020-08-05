@@ -11,3 +11,4 @@
     </div>
 </header>
 @livewireScripts
+@stack('scripts')

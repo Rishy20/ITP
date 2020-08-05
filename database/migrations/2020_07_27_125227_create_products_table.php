@@ -14,22 +14,25 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->String('name');
-            $table->String('description');
-            $table->String('brand');
+            $table->String('pcode');
+            $table->String('name')->nullable($value=false);
+            $table->String('description')->nullable();
+            $table->String('brand')->nullable();
             $table->unsignedBigInteger('catID');
             $table->String('barcode');
-            $table->double('sellingPrice');
-            $table->double('costPrice');
-            $table->double('discount');
-            $table->integer('Qty');
-            $table->integer('reorder_level');
+            $table->double('sellingPrice')->nullable($value=false);
+            $table->double('costPrice')->nullable($value=false);
+            $table->double('discount')->default(0);
+            $table->integer('Qty')->default(0);
+            $table->integer('reorder_level')->default(0);
             $table->unsignedBigInteger ('supplierId');
             $table->foreign('catID')->references('id')->on('categories');
 
             $table->timestamps();
+            $table->primary('pcode');
+
         });
+
     }
 
     /**
@@ -41,4 +44,5 @@ class CreateProductsTable extends Migration
     {
         Schema::dropIfExists('products');
     }
+
 }
