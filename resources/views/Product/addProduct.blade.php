@@ -28,7 +28,7 @@
 
             <div class="row">
                 <div class="col">
-                    <textarea   name="description" class="form-control" placeholder="Description"></textarea>
+                    <textarea   name="description" class="form-control" rows="5" placeholder="Description"></textarea>
                     <label  class="float-label">Description</label>
                 </div>
             </div>
@@ -47,15 +47,23 @@
     <div class="section-content">
         <div class="row">
             <div class="col">
-            <input type="text" class="form-control" name="brand" placeholder="Brand">
-            <label class="float-label">Brand</label>
+                <div class="form-group">
+                    <label class="br-label">Brand</label>
+                    <select class="form-control br-select">
+                        <option value="" disabled selected hidden>Select a Brand</option>
+                     @foreach($inv as $i)
+                        <option value="{{$i->id}}">{{$i->name}} </option>
+                     @endforeach
+                    </select>
+                  </div>
         </div>
     </div>
         <div class="row">
             <div class="col">
             <div class="form-group">
-            <label>Category</label>
-            <select  class="form-control">
+            <label class="cat-label">Category</label>
+            <select  class="form-control cat-select">
+              <option value="" disabled selected hidden>Select a Category</option>
              @foreach($cat as $i)
                 <option value="{{$i->id}}">{{$i->name}} </option>
              @endforeach
@@ -65,8 +73,15 @@
         </div>
         <div class="row">
             <div class="col">
-            <input type="text" class="form-control" name="supplier" placeholder="Supplier">
-            <label class="float-label">Supplier</label>
+                <div class="form-group">
+                    <label class="sup-label">Supplier</label>
+                    <select class="form-control sup-select">
+                        <option value="" disabled selected hidden>Select a Supplier</option>
+                     @foreach($inv as $i)
+                        <option value="{{$i->id}}">{{$i->name}} </option>
+                     @endforeach
+                    </select>
+                  </div>
         </div>
         </div>
     </div>
@@ -116,8 +131,9 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label>Inventory</label>
-                            <select  class="form-control">
+                            <label class="inv-label">Inventory</label>
+                            <select class="form-control inv-select">
+                                <option value="" disabled selected hidden>Select an Inventory</option>
                              @foreach($inv as $i)
                                 <option value="{{$i->id}}">{{$i->name}} </option>
                              @endforeach
@@ -140,7 +156,7 @@
         </div>
     </div>
 </div>
-<div class="row mt-4">
+<div class="row mt-4 mb-5">
     <div class="col-md-8">
         <div class="section"> {{-- Start of Section--}}
             <div class="section-title">
@@ -148,55 +164,7 @@
                 <hr>
             </div>
             <div class="section-content">
-                <div class="row">
-                    <div class="col-md-2">
-                       <h5>
-                           Size
-                       </h5>
-                    </div>
-                    <div class="col-md-10">
-                        <input type="text"  name="size" class="form-control" placeholder="Size" />
-                        <label  class="float-label">Size</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <h5>
-                            Color
-                        </h5>
-                     </div>
-                     <div class="col-md-10">
-                         <input type="text"  name="color" class="form-control" placeholder="Color" />
-                         <label  class="float-label">Color</label>
-                     </div>
-                </div>
-                    <div class="row">
-                        <div class="col">
-                            <table class ="table">
-                                <tr>
-
-                                    <th> Variants </th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-
-                                </tr>
-                                <tr>
-                                    <td>
-                                    30
-                                    </td>
-                                    <td>
-                                        <input type="text"  name="price-vant" class="form-control" placeholder="Price" />
-                                        <label  class="float-label">Price</label>
-                                    </td>
-                                   <td>
-                                    <input type="text"  name="qut-vant" class="form-control" placeholder="Quantity" />
-                                    <label  class="float-label">Quantity</label>
-                                   </td>
-
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+                    <livewire:product-variant/>
                     <div class="row submit-row">
                         <div class="col">
                             <input class="btn-submit" type="submit" value="Save">

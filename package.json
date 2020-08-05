@@ -23,6 +23,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "bootstrap-input-spinner": "^1.13.19",
         "overlayscrollbars": "^1.13.0"
     }
 }
