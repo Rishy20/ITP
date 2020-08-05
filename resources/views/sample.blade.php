@@ -9,6 +9,10 @@
     <div class="user">
         <div class="pg-title">
             <h2>Add User</h2>
+
+
+            <?php echo DNS1D::getBarcodeHTML('2000165', 'UPCE',2,40,'black', true); ?>
+
         </div>
     </div>
 @endsection
