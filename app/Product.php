@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $primaryKey = 'pcode';
-    protected $keyType = 'String';
-    public $incrementing = false;
+
+    protected $fillable=['pcode','name','description','brand','catID','sellingPrice','costPrice','discount','Qty','reorder_level','supplierId','barcode'];
 }

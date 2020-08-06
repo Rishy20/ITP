@@ -17,7 +17,7 @@
                 <table class="table table-borderless">
 
                 @foreach($products as $pr)
-                   <tr wire:click="show({{$pr->pcode}})">
+                   <tr wire:click="show({{$pr->id}})">
 
                     <td class="pr-code">
                         {{ $pr->pcode }}

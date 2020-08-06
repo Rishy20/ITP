@@ -42,6 +42,10 @@ class productController extends Controller
     public function store(Request $request)
     {
         Product::create($request->all());
+
+
+        return redirect()->back();
+
     }
 
     /**
@@ -52,7 +56,7 @@ class productController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

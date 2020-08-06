@@ -16,14 +16,17 @@
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
-        <form method="post" action="">
+    <form method="post" action="{{route('product.store')}}">
             @csrf
             <div class="row">
                 <div class="col">
                     <input type="text"  name="name" class="form-control" placeholder="Product Name" />
                     <label  class="float-label">Product Name</label>
                 </div>
-
+                <div class="col">
+                    <input type="text"  name="pcode" class="form-control" placeholder="Product code" />
+                    <label  class="float-label">Product code</label>
+                </div>
             </div>
 
             <div class="row">
@@ -49,7 +52,7 @@
             <div class="col">
                 <div class="form-group">
                     <label class="br-label">Brand</label>
-                    <select class="form-control br-select">
+                    <select class="form-control br-select" name="brand">
                         <option value="" disabled selected hidden>Select a Brand</option>
                      @foreach($inv as $i)
                         <option value="{{$i->id}}">{{$i->name}} </option>
@@ -62,7 +65,7 @@
             <div class="col">
             <div class="form-group">
             <label class="cat-label">Category</label>
-            <select  class="form-control cat-select">
+            <select  class="form-control cat-select" name="catID">
               <option value="" disabled selected hidden>Select a Category</option>
              @foreach($cat as $i)
                 <option value="{{$i->id}}">{{$i->name}} </option>
@@ -75,7 +78,7 @@
             <div class="col">
                 <div class="form-group">
                     <label class="sup-label">Supplier</label>
-                    <select class="form-control sup-select">
+                    <select class="form-control sup-select" name="supplierId">
                         <option value="" disabled selected hidden>Select a Supplier</option>
                      @foreach($inv as $i)
                         <option value="{{$i->id}}">{{$i->name}} </option>
@@ -149,10 +152,13 @@
                         <input type="text"  name="Qty" class="form-control" placeholder="Quantity" />
                         <label  class="float-label">Quantity</label>
                     </div>
+
+
                     <div class="col">
                         <input type="text"  name="reorder_level" class="form-control" placeholder="Reorder Quantity" />
                         <label  class="float-label">Reorder Quantity</label>
                     </div>
+
 
             </div>
         </div>
@@ -173,12 +179,13 @@
                             <input class="btn-submit" type="submit" value="Save">
                         </div>
                     </div>
-
+                </form>
 
         </div>
         </div>
     </div>
 </div>
+
 
 @endsection
 
