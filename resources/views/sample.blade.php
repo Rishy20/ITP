@@ -126,4 +126,10 @@
 
 
    
+    --}}
+    <div class="user">
+        <div class="pg-title">
+            <h2>Add User</h2>
+        </div>
+    </div>
 @endsection

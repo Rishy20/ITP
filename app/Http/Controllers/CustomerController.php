@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function index()
     {
         $cust = Customer::all();
-        return view('sample',compact('cust'));
+        return view('customer',compact('cust'));
 
     }
 
@@ -27,7 +27,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('sample');
+        return view('customer.addCustomer');
     }
 
     /**
@@ -64,7 +64,7 @@ class CustomerController extends Controller
 
         $cust->save();
 
-        return redirect('/sample')->with('success','Data Inserted');
+        return redirect('/customer')->with('success','Data Inserted');
     }
 
     /**
@@ -87,7 +87,7 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $cust = Customer::find($id);
-        return view('cusfolder.custeditpage',compact('cust','id'));
+        return view('customer.customerAllForm',compact('cust','id'));
     }
 
     /**
@@ -125,7 +125,7 @@ class CustomerController extends Controller
 
         $cust->save();
 
-        return redirect('/sample')->with('success','Data updated');
+        return redirect('/customer')->with('success','Data updated');
         
     }
 
@@ -140,6 +140,6 @@ class CustomerController extends Controller
         $cust = Customer::find($id);
         $cust->delete();
 
-        return redirect('/sample')->with('success','Data Deleted');
+        return redirect('/customer')->with('success','Data Deleted');
     }
 }

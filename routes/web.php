@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/sample', 'CustomerController');
+Route::resource('/customer', 'CustomerController');
 
 Route::resource('/cusfolder', 'PromotionController');
 
@@ -23,9 +24,9 @@ Route::resource('/product', 'ProductController');
 Route::get('/', function () {
     return view('sample');
 });
-
-
-
+Route::get('/sample', function () {
+    return view('sampleAddForm');
+});
 
 
 Auth::routes();
@@ -33,6 +34,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-
-
+Route::resource('user', 'UserController');
 
