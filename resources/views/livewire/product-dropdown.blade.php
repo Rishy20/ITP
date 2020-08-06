@@ -5,18 +5,22 @@
             <div class="search-icon">
                 <i class="fas fa-search"></i>
             </div>
-            <form class="search-bar">
-                <input type="text" class="search-textbox form-control" placeholder="Find Products By Name, Number or Barcode">
+            <form class="search-bar" wire:submit.prevent="sub">
+                <input type="text" wire:model="query"  class="search-textbox form-control" placeholder="Find Products By Name, Number or Barcode">
             </form>
-            <div class="product-dropdown">
+
+            @if(!empty($query))
+            <div class="outclick" wire:click="rest"></div>
+            @if(!empty($products))
+            <div class="product-dropdown-1">
             <div class="single-product-row">
                 <table class="table table-borderless">
 
                 @foreach($products as $pr)
-                   <tr wire:click="show({{$pr->id}})">
+                   <tr wire:click="show({{$pr->pcode}})">
 
                     <td class="pr-code">
-                        {{ $pr->id }}
+                        {{ $pr->pcode }}
                     </td>
                     <td class="pr-name">
                         {{ $pr->name }}
@@ -35,10 +39,15 @@
             @endforeach
         </table>
             </div>
-
         </div>
-
-
+        @else
+        <div class="product-dropdown-1">
+            <div class="single-product-row">
+                No results!
+            </div>
+        </div>
+        @endif
+        @endif
     </div>
     <div class="item-display">
         <table class="table">

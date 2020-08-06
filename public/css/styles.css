@@ -547,7 +547,27 @@ input:checked + .slider:before {
     overflow: auto;
     display: none;
 }
+.product-dropdown-1 {
+    background-color: white;
+    width: 90%;
+    margin-left: 59px;
+    margin-top: 5px;
+    position: absolute;
+    height: 60%;
+    border: 3px solid;
+    border-color: #80bdff;
+    overflow: auto;
 
+}
+.outclick{
+    position: fixed;
+    top:0 ;
+    bottom: 0;
+    left:0;
+    right: 0;
+
+
+}
 .pr-code {
     text-align: left;
 }
@@ -563,8 +583,19 @@ input:checked + .slider:before {
 }
 
 /*****Variants*****/
- .inv-label{
+ /* .inv-label{
     display: none;
+} */
+.barcode-col{
+    position: relative;
+    top: 21px;
+}
+.inv-col{
+    position: relative;
+    top: -10px;
+}
+.section .qty-row{
+    padding-top: 0;
 }
 .variant-label{
     font-weight: 400;
@@ -619,4 +650,48 @@ input:checked + .slider:before {
 .qty-spinner {
     width: 25px !important;
     text-align: center;
+}
+/****** Barcode ******/
+.barcode .store-name{
+    font-size: 16px;
+    font-weight: 800;
+    font-family: serif;
+}
+.ll,.kur{
+    font-weight: 800;
+    line-height: 1.2;
+}
+.ll{
+    font-size: 18px;
+}
+.kur{
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.barcode-img{
+    text-align: center;
+}
+.barcode{
+    height: 120px;
+    width: 220px;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+}
+.pr-details{
+    font-size: 10px;
+    margin-top: 5px;
+}
+.barcode-price{
+
+    font-weight: 800;
+    transform: rotate(-90deg);
+    text-align: right;
+    position: relative;
+    bottom: 6px;
+    right: -90px;
+
+}
+.rs{
+    font-size: 14px;
 }

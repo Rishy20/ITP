@@ -130,7 +130,7 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col">
-                        <div class="form-group">
+                        <div class="form-group inv-col">
                             <label class="inv-label">Inventory</label>
                             <select class="form-control inv-select">
                                 <option value="" disabled selected hidden>Select an Inventory</option>
@@ -140,15 +140,18 @@
                             </select>
                           </div>
                     </div>
+                    <div class="col barcode-col">
+                        <livewire:barcode-input/>
+                    </div>
                 </div>
-                <div class="row">
+                <div class="row qty-row">
                     <div class="col">
-                        <input type="text" class="form-control" name="Barcode" placeholder="Barcode">
-                        <label class="float-label">Barcode</label>
+                        <input type="text"  name="Qty" class="form-control" placeholder="Quantity" />
+                        <label  class="float-label">Quantity</label>
                     </div>
                     <div class="col">
-                        <input type="text"  name="Quantity" class="form-control" placeholder="Quantity" />
-                        <label  class="float-label">Quantity</label>
+                        <input type="text"  name="reorder_level" class="form-control" placeholder="Reorder Quantity" />
+                        <label  class="float-label">Reorder Quantity</label>
                     </div>
 
             </div>

@@ -29,9 +29,9 @@
                 }
         });
 
-        $(".inv-select").focus(function() {
-                $(".inv-label").css("display", "block");
-        });
+        // $(".inv-select").focus(function() {
+        //         $(".inv-label").css("display", "block");
+        // });
     } );
 
 </script>

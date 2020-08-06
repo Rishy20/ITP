@@ -29,21 +29,19 @@
             OverlayScrollbars(document.querySelectorAll(".product-dropdown"), {});
         });
         $(document).ready(function() {
-            $(".search-textbox").focus(function() {
-                $(".product-dropdown").css("display", "block");
-            });
-            $(".search-textbox").focusout(function() {
-                setTimeout(function(){
-                    $(".product-dropdown").css("display", "none");
-                },200);
-
-            });
-
-
-
-
-
-
+            // $(".search-textbox").focus(function() {
+            //     $(".product-dropdown").css("display", "block");
+            // });
+            // $(".search-textbox").focusout(function() {
+            //     setTimeout(function(){
+            //         $(".product-dropdown").css("display", "none");
+            //     },200);
+            // });
+            // $(".search-textbox").focusout(function() {
+            //     setTimeout(function(){
+            //         $(".product-dropdown-1").css("display", "none");
+            //     },200);
+            // });
         });
 
     </script>

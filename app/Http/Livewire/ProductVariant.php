@@ -12,6 +12,7 @@ class ProductVariant extends Component
     public $cvalue;
     public $count = 0;
 
+
     public function increment()
     {
         $this->count++;
