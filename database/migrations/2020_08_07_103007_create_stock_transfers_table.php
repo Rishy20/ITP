@@ -15,6 +15,10 @@ class CreateStockTransfersTable extends Migration
     {
         Schema::create('stock_transfers', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
+            $table->string('from');
+            $table->string('to');
+            $table->boolean('completed');
             $table->timestamps();
         });
     }
