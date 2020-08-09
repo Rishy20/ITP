@@ -17,28 +17,28 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
 
-        <form method="post" action="{{action('CustomerController@store')}}">
+        <form method="post" action="{{route('customer.store')}}">
 
             @csrf
 
             <div class="row">
                 <div class="col">
-                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter your first name">
+                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name">
                     <label for="firstname" class="float-label">First Name</label>
                 </div>
                 <div class="col">
-                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter your last name">
+                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last name">
                     <label class="float-label">Last name</label>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
-                <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter your gender">
+                <input type="text" class="form-control" name="gender" id="gender" placeholder="Gender">
                     <label for="gender" class="float-label">Gender</label>
                 </div>
                 <div class="col">
-                <input type="text" class="form-control" name="dob" id="dob" placeholder="Enter your dob">
+                <input type="text" class="form-control" name="dob" id="dob" placeholder="Date Of Birth">
                     <label class="float-label">Date Of Birth</label>
                 </div>
             </div>
@@ -49,14 +49,14 @@
                     <label for="email" class="float-label">Email</label>
                 </div>
                 <div class="col">
-                <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter your phone number">
+                <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone">
                     <label class="float-label">Phone</label>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
-                <input type="text" class="form-control" name="streetaddress" id="streetaddress" placeholder="Enter your street address">
+                <input type="text" class="form-control" name="streetaddress" id="streetaddress" placeholder="Street Address">
                     <label for="streetaddress" class="float-label">Street Address</label>
                 </div>
                 <div class="col">
@@ -67,7 +67,7 @@
 
             <div class="row submit-row">
                 <div class="col">
-                    <input class="btn-submit" type="submit" value="Submit">
+                    <input class="btn-submit" type="submit" value="Save">
                 </div>
             </div>
         </form>

@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function index()
     {
         $cust = Customer::all();
-        return view('customer',compact('cust'));
+        return view('customer.customerAllForm',compact('cust'));
 
     }
 
@@ -64,7 +64,7 @@ class CustomerController extends Controller
 
         $cust->save();
 
-        return redirect('/customer')->with('success','Data Inserted');
+        return redirect('/customer');
     }
 
     /**
@@ -87,7 +87,7 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $cust = Customer::find($id);
-        return view('customer.customerAllForm',compact('cust','id'));
+        return view('customer.editCustomer',compact('cust','id'));
     }
 
     /**
@@ -125,7 +125,7 @@ class CustomerController extends Controller
 
         $cust->save();
 
-        return redirect('/customer')->with('success','Data updated');
+        return redirect('/customer');
         
     }
 
@@ -140,6 +140,6 @@ class CustomerController extends Controller
         $cust = Customer::find($id);
         $cust->delete();
 
-        return redirect('/customer')->with('success','Data Deleted');
+        return redirect('/customer');
     }
 }

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/customer', 'CustomerController');
 
+
 Route::resource('/cusfolder', 'PromotionController');
 
 Route::resource('/product', 'ProductController');
@@ -33,6 +34,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/pos', function(){
+    return view('POS.pos');
+});
 
 Route::resource('user', 'UserController');
+
+Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');
+Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
 

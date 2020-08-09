@@ -34,7 +34,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Email</label>
+                          <input type="text" class="form-control" name="streetaddress" id="streetaddress" value="{{ $cust->streetaddress }}" placeholder="Enter your street address">
+                        </div>
+
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" class="form-control" name="city" id="city" value="{{ $cust->city }}" placeholder="Enter your city">
+                        </div>                  <label>Email</label>
                             <input type="text" class="form-control" name="email" id="email" value="{{ $cust->email }}" placeholder="name@gmail.com">
                         </div>
 
@@ -45,13 +51,7 @@
 
                         <div class="form-group">
                             <label>Street Address</label>
-                            <input type="text" class="form-control" name="streetaddress" id="streetaddress" value="{{ $cust->streetaddress }}" placeholder="Enter your street address">
-                        </div>
-
-                        <div class="form-group">
-                            <label>City</label>
-                            <input type="text" class="form-control" name="city" id="city" value="{{ $cust->city }}" placeholder="Enter your city">
-                        </div>
+            
 
                         {{ method_field('PUT') }}
                       

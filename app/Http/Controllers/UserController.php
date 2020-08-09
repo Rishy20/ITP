@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view ('User.allUsers');
+        $user = User::all();
+        return view ('User.allUsers',compact('user'));
     }
 
     /**
@@ -48,7 +49,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -59,7 +60,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('User.editUser',compact('user'));
     }
 
     /**
@@ -71,9 +73,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->username = $request->input('username');
+        $user->display_name = $request->input('display_name');
+        $user->roleId = $request->input('roleId');
+        $user->save();
+        return redirect('/user');
     }
 
+    public function updatePassword(Request $request, $id){
+        $user = User::findOrFail($id);
+        $user->password = $request->input('newpass');
+        $user->save();
+        return redirect('/user');
+    }
+    public function updatePin(Request $request, $id){
+        $user = User::findOrFail($id);
+        $user->pin = $request->input('newpin');
+        $user->save();
+        return redirect('/user');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -82,6 +101,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back();
     }
 }
