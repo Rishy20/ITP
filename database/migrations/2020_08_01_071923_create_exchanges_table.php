@@ -15,7 +15,6 @@ class CreateExchangesTable extends Migration
     {
         Schema::create('exchanges', function (Blueprint $table) {
             $table->id();
-            $table->string('exchangeID');
             $table->string('productID');
             $table->string('customerID');
             $table->string('salesmanID');

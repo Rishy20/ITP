@@ -1,44 +1,61 @@
 @extends('layouts.main')
 @section('content')
-{
-    <form method ="POST" action="{{action('BankAccountController@store')}}">
+
+ 
+<div class="pg-heading">
+    <i class="fa fa-arrow-left pg-back"></i>
+    <div class="pg-title">Create Return</div>
+</div>
+
+<div class="section"> {{-- Start of Section--}}
+    <div class="section-title">
+        Return Details
+        <hr>
+    </div>
+    <div class="section-content"> {{-- Start of sectionContent--}}
+    <form method ="POST" action="{{action('ExchangeController@store')}}">
 {{csrf_field()}}
 
- <br><br><br>
  
- <div class="form-group">
-    <label>Exchange ID</label>
-    <input type="text" class="form-control" name="exchangeID" id="exchangeID"  placeholder="Enter Exchange ID" required="required">
-  </div>
+<div class="row">
+                <div class="col">
+                    <input type="text" id="productID" name="productID" class="form-control" placeholder="Product ID" />
+                  
+                </div>
 
-  <div class="form-group">
-    <label>Product ID</label>
-    <input type="text" class="form-control" name="productID" id="productID" placeholder="Enter Product ID" required="required">
-  </div>
+                <div class="col">
+                    <input type="text" id="customerID" name="customerID" class="form-control" placeholder="Customer ID" />
+                    
+                </div>
+                </div>
+                <div class="row">
+                <div class="col">
+                    <input type="text" id="salesmanID" name="salesmanID" class="form-control" placeholder="Salesman ID" />
+                  
+                </div>
+                <div class="col">
+                    <input type="text" id="amount" name="amount" class="form-control" placeholder="Amount" />
+                   
+                </div>
+                </div>
 
-  <div class="form-group">
-    <label>Customer ID</label>
-    <input type="text" class="form-control" name="customerID" id="customerID" placeholder="Enter Customer ID" required="required">
-  </div>
+                <div class="row">
 
-  <div class="form-group">
-    <label>Salesman ID</label>
-    <input type="text" class="form-control" id="salesmanID" name="salesmanID" placeholder="Enter Salesman ID" required="required">
-  </div>
-
-  <div class="form-group">
-    <label>Amount</label>
-    <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter Amount" required="required">
-  </div>
-
-  <div class="form-group">
-    <label>Date</label>
-    <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date" required="required">
-  </div>
-
-
-  <button type="submit" name="submit" class="btn btn-primary " style="width:80%">Submit</button>
-
+                <div class="col-md-6">
+                    <input type="date" id="date" name="date" class="form-control" placeholder="Date" />
+                  
+                </div>
+          
+                </div>
+                <div class="row submit-row">
+                <div class="col">
+                    <input class="btn-submit" type="submit" value="Submit">
+                </div>
+                </div>
+                </div>
   </form>
+  </div> {{-- End  of sectionContent--}}
+</div> {{-- End  of section--}}
+
 }
 @endsection

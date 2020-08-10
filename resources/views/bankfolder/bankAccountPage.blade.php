@@ -1,95 +1,61 @@
 @extends('layouts.main')
 @section('content')
-{
 
-    <div class="container">
-       <div class="jumbotron">
+ 
+<div class="pg-heading">
+    <i class="fa fa-arrow-left pg-back"></i>
+    <div class="pg-title">Create Bank Account</div>
+</div>
 
-     @if(\Session::has('success'))
-     <div class="alert alert-danger">
-     <p>{{\Session::get('success')}}</p>
-     </div>
-     @endif
-
+<div class="section"> {{-- Start of Section--}}
+    <div class="section-title">
+        Bank Account Details
+        <hr>
+    </div>
+    <div class="section-content"> {{-- Start of sectionContent--}}
 
     <form method ="POST" action="{{action('BankAccountController@store')}}">
 {{csrf_field()}}
 
-  <div class="form-group">
-    <label>Account Number</label>
-    <input type="text" class="form-control" name="number" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Account Number">
-  </div>
+<div class="row">
+                <div class="col">
+                    <input type="text" id="number" name="number" class="form-control" placeholder="Account Number" />
+                    <label for="number" class="float-label">Account Number</label>
+                </div>
 
-  <div class="form-group">
-    <label>Account Name</label>
-    <input type="text" class="form-control" name="name" id="name" placeholder="Enter Account Name">
-  </div>
+                <div class="col">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" />
+                    <label for="name" class="float-label">User Name</label>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col">
+                    <input type="text" id="type" name="type" class="form-control" placeholder="Account Type" />
+                    <label for="type" class="float-label">Account Type</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="bankname" name="bankname" class="form-control" placeholder="Bank Name" />
+                    <label for="bankname" class="float-label">Bank Name</label>
+                </div>
+                </div>
 
-  <div class="form-group">
-    <label>Account Type</label>
-    <input type="text" class="form-control" name="type" id="type" placeholder="Enter Account Type">
-  </div>
+                <div class="row">
 
-  <div class="form-group">
-    <label>Bank Name</label>
-    <input type="text" class="form-control" id="bankname" name="bankname" placeholder="Enter Bank Name">
-  </div>
-
-  <div class="form-group">
-    <label>Branch Name</label>
-    <input type="text" class="form-control" id="branchname" name="branchname" placeholder="Enter Branch Name">
-  </div>
-
-  <button type="submit" name="submit" class="btn btn-primary " style="width:80%">Submit</button>
-
+                <div class="col-md-6">
+                    <input type="text" id="branchname" name="branchname" class="form-control" placeholder="Branch Name" />
+                    <label for="branchname" class="float-label">Branch Name</label>
+                </div>
+          
+                </div>
+                <div class="row submit-row">
+                <div class="col">
+                    <input class="btn-submit" type="submit" value="Submit">
+                </div>
+                </div>
+                </div>
   </form>
+  </div> {{-- End  of sectionContent--}}
+</div> {{-- End  of section--}}
 
-<br><br><br>
-
-<table class="table table-bordered">
-
-    <thead class="thead-dark">
-       <tr>
-        <th>ID</th>
-        <th>Number</th>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Bank Name</th>
-        <th>Branch Name</th>
-        <th>Edit</th>
-        <th>Delete</th>
-
-        </tr>
-    </thead>
-       <tbody>
-           @foreach($banks as $row)
-           <tr>
-             <td>{{ $row->id }}</td>
-             <td>{{ $row->number }}</td>
-             <td>{{ $row->name }}</td>
-             <td>{{ $row->type }}</td>
-             <td>{{ $row->bankname }}</td>
-             <td>{{ $row->branchname }}</td>
-             <td>
-                 <a href="{{action('BankAccountController@edit',$row['id'])}}" class="btn btn-success">EDIT</a>
-              </td>
-              <td>
-                 <form action="{{action('BankAccountController@destroy', $row['id'])}}" method="POST">
-
-                 {{csrf_field()}}
-
-                 <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-danger">DELETE</button>
-
-              </td>
-           </tr>
-    @endforeach
-    </tbody>
-
-
-</table>
-
-       </div>
-    </div>
 }
 @endsection

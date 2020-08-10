@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::resource('/bankfolder','BankAccountController');
-Route::resource('/exchangefolder','ExchangeController');
+Route::resource('/bank','BankAccountController');
+Route::resource('/exchange','ExchangeController');
 
 
 Route::get('/', function () {

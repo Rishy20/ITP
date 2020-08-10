@@ -14,7 +14,8 @@ class ExchangeController extends Controller
      */
     public function index()
     {
-        return view('exchangefolder.createExchangePage');
+        $exchanges = Exchange::all();
+        return view('exchangefolder.displayExchangeDetails',compact('exchanges'));
     }
 
     /**
@@ -24,7 +25,7 @@ class ExchangeController extends Controller
      */
     public function create()
     {
-        //
+        return view('exchangefolder.createExchangePage');
     }
 
     /**
@@ -37,7 +38,6 @@ class ExchangeController extends Controller
     {
         $this->validate($request,[
            
-            'exchangeID'=>'required',
             'productID'=>'required',
             'customerID'=>'required',
             'salesmanID'=>'required',
@@ -45,17 +45,16 @@ class ExchangeController extends Controller
             'date'=>'required',
 
         ]);
-        $exchange = new Exchange;
-        
-        $exchange->exchangeID=$request->input('exchangeID');
-        $exchange->productID=$request->input('productID');
-        $exchange->customerID=$request->input('customerID');
-        $exchange->salesmanID=$request->input('salesmanID');
-        $exchange->amount=$request->input('amount');
-        $exchange->date=$request->input('date');
+        $exchanges = new Exchange;
+        $exchanges->productID=$request->input('productID');
+        $exchanges->customerID=$request->input('customerID');
+        $exchanges->salesmanID=$request->input('salesmanID');
+        $exchanges->amount=$request->input('amount');
+        $exchanges->date=$request->input('date');
        
 
-        $banks->save();
+        $exchanges->save();
+        return redirect('/exchange');
     }
 
     /**
@@ -64,7 +63,7 @@ class ExchangeController extends Controller
      * @param  \App\Exchange  $exchange
      * @return \Illuminate\Http\Response
      */
-    public function show(Exchange $exchange)
+    public function show(Exchange $exchanges)
     {
         //
     }
@@ -75,9 +74,11 @@ class ExchangeController extends Controller
      * @param  \App\Exchange  $exchange
      * @return \Illuminate\Http\Response
      */
-    public function edit(Exchange $exchange)
+    public function edit($id)
     {
-        //
+        
+        $exchange = Exchange::find($id);
+        return view ('exchangefolder.exchangeEdit',compact('exchange','id'));
     }
 
     /**
@@ -87,9 +88,29 @@ class ExchangeController extends Controller
      * @param  \App\Exchange  $exchange
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Exchange $exchange)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+           
+            'productID'=>'required',
+            'customerID'=>'required',
+            'salesmanID'=>'required',
+            'amount'=>'required',
+            'date'=>'required',
+
+
+        ]);
+        $exchanges = Exchange::find($id);
+
+
+        $exchanges->productID=$request->input('productID');
+        $exchanges->customerID=$request->input('customerID');
+        $exchanges->salesmanID=$request->input('salesmanID');
+        $exchanges->amount=$request->input('amount');
+        $exchanges->date=$request->input('date');
+
+          $exchanges->save();
+          return redirect('/exchange');
     }
 
     /**
@@ -98,8 +119,12 @@ class ExchangeController extends Controller
      * @param  \App\Exchange  $exchange
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Exchange $exchange)
+    public function destroy($id)
     {
-        //
+        
+        $exchanges = Exchange::find($id);
+        $exchanges->delete();
+
+        return redirect('/exchange');
     }
 }

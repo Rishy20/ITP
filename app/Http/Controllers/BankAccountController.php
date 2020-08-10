@@ -14,7 +14,7 @@ class BankAccountController extends Controller
     public function index()
     {
         $banks = BankAccount::all();
-        return view('bankfolder.bankAccountPage',compact('banks'));
+        return view('bankfolder.displayBankDetails',compact('banks'));
 
     }
 
@@ -56,7 +56,7 @@ class BankAccountController extends Controller
 
         $banks->save();
 
-        return redirect('bankfolder')->with('success','Data Inserted');
+        return redirect('/bank');
     }
 
     /**
@@ -111,7 +111,7 @@ class BankAccountController extends Controller
         $banks->branchname=$request->input('branchname');
 
           $banks->save();
-          return redirect('bankfolder')->with('success'.'Data Updated');
+          return redirect('/bank');
 
     }
 
@@ -126,6 +126,6 @@ class BankAccountController extends Controller
         $banks = BankAccount::find($id);
         $banks->delete();
 
-        return redirect('bankfolder')->with('success','Data Deleted');
+        return redirect('/bank');
     }
 }
