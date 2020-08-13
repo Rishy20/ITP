@@ -8,7 +8,7 @@
     <link href="{{ asset('icons/css/all.css')}}" rel="stylesheet">
     <link href="{{ asset('css/sample.css')}}" rel="stylesheet">
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="vendor/DataTables/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/DataTables/datatables.min.css')}}"/>
 </head>
 <body>
     @include('assets.header')
@@ -17,7 +17,7 @@
         @yield('content')
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="vendor/DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="{{ asset('vendor/DataTables/datatables.min.js')}}"></script>
     <script>
     $(document).ready( function () {
         $('#myTable').DataTable({

@@ -3,7 +3,7 @@
 
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
-    <div class="pg-title">ADD Employees</div>
+    <div class="pg-title">Add Employees</div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
@@ -13,9 +13,11 @@
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
-        <form method="post" action=" employees">
+        
+        <form method="post" action=" {{route('employee.store')}}">
             {{-- route('employees.store') --}}
-            @csrf
+            @csrf 
+           {{--  <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
             <div class="row">
                 <div class="col">
                     <input type="text" id="fname" name="fname" class="form-control" placeholder="First Name" />
@@ -51,14 +53,15 @@
                 <div class="row">
                 <div class="col">
                     <input type="date" id="birthday" name="birthday" class="form-control" placeholder="Birthday" />
-                    {{-- <label for="birthday" class="float-label">Birthday</label> --}}
+                    <label for="birthday" class="float-label">Birthday</label> 
                 </div>
                 <div class="col">
                     <input type="date" id="joined_date" name="joined_date" class="form-control" placeholder="Joined Date" />
                     <label for="joined_date" class="float-label">Joined Date</label>
                 </div>
             </div> 
-
+        </div>
+</div>
             <div class="section"> {{-- Start of Section--}}
                 <div class="section-title">
                     Salary Details
@@ -66,8 +69,8 @@
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
                     {{-- Start of Form --}}
-                    <form method="post" action=" employees">
-
+                    <form method="post" action=" {{route('employee.store')}}">
+                        @csrf 
             <div class="row">
                 <div class="col">
                     <input type="text" id="target" name="target" class="form-control" placeholder="Target" />

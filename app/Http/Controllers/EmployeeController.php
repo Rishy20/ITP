@@ -14,9 +14,11 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return Employee::all();
+        $employee = Employee::all();
+        return view ('Employee.show',compact('employee'));
+        //return Employee::all();
         //dd($request->all());
-        return view('employees.index');
+        //return view('employees.index');
     }
 
     /**
@@ -26,7 +28,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('employee.create');
 
     }
 
@@ -38,7 +40,10 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $employee = new employee;
+        Employee::create($request->all());
+        return redirect()->back();
+        
+        /* $employee = new employee;
         $employee->first_name = request('fname');
         $employee->last_name = request('lname');
         $employee->nic = request('nic');
@@ -52,7 +57,7 @@ class EmployeeController extends Controller
         $employee->joined_date = request('joined_date');
 
         $employee->save();
-        return redirect()->back();
+        return redirect()->back(); */
     }
 
     /**
@@ -63,7 +68,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view('employees.show');
+        //
     }
 
     /**
@@ -72,9 +77,10 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit( $emp_id)
     {
-        //
+        $employee = Employee::find($emp_id);
+        return view('Employee.edit',compact('employee'));
     }
 
     /**
@@ -86,7 +92,22 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        //$employee = Employee::findOrFail($emp_id);
+        $employee->fname = $request->input('fname');
+        $employee->lname = $request->input('lname');
+        $employee->nic = $request->input('nic');
+        $employee->address = $request->input('address');
+        $employee->mobile = $request->input('mobile');
+        $employee->home = $request->input('home');
+        $employee->birthday = $request->input('birthday');
+        $employee->joined_date = $request->input('joined_date');
+        $employee->target = $request->input('target');
+        $employee->salary = $request->input('salary');
+        $employee->salary_type = $request->input('salary_type');
+        $employee->commission = $request->input('commission');
+
+        $employee->save();
+        return redirect('/employee');
     }
 
     /**
@@ -95,8 +116,10 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy($emp_id)
     {
-        //
+        $employee = Employee::findOrFail($emp_id);
+        $employee->delete();
+        return redirect()->back();
     }
 }
