@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Inventory;
-use App\Product;
 use App\StockTransfer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class StockTransferController extends Controller
 {
@@ -27,7 +24,7 @@ class StockTransferController extends Controller
      */
     public function create()
     {
-        //
+        return view('inventories.stock-transfers.create');
     }
 
     /**
