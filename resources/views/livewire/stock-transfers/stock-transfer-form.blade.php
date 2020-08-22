@@ -47,17 +47,21 @@
                         </th>
                     </tr>
                 </thead>
+                <tbody>
                 @if(count($inventory_items) > 0)
                     @foreach($inventory_items as $inventory_item)
-                        <tbody>
                             <tr style="cursor: pointer">
                                 <td>{{ $inventory_item->product->name }}</td>
                                 <td class="text-right">{{ $inventory_item->qty }}</td>
                                 <td class="text-right">{{ $inventory_item->destination_qty }}</td>
                             </tr>
-                        </tbody>
                     @endforeach
+                @else
+                    <tr>
+                        <td class="text-center" colspan="3">No items found!</td>
+                    </tr>
                 @endif
+                </tbody>
             </table>
 
             {{ $products->links() }} {{-- Pagination links for search results --}}
