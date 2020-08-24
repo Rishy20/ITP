@@ -2,22 +2,63 @@
     <div class="row">
         <div class="col-md-8">
         <div class="product-search">
+            <div class="search-box">
             <div class="search-icon">
                 <i class="fas fa-search"></i>
             </div>
-            <form class="search-bar" wire:submit.prevent="sub">
-                <input type="text" wire:model="query"  class="search-textbox form-control" placeholder="Find Products By Name, Number or Barcode">
-            </form>
 
+            <form class="search-bar" wire:submit.prevent="sub">
+                <input type="text" wire:model.debounce="query"  class="search-textbox form-control" placeholder="Find Products By Name, Number or Barcode">
+            </form>
+            <div class="load-spinner " wire:loading wire:target="query">
+                <div class="spinner-border text-secondary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+            </div>
+            <button class="v-btn btn ">
+                <i class="fas fa-gift sub-icon"></i><span class="sub-btn-txt"> Voucher</span>
+            </button>
+            <button class="v-btn btn ">
+                <i class="fas fa-exchange-alt sub-icon"></i><span class="sub-btn-txt"> Exchange</span>
+            </button>
+
+
+        </div>
+            <!-- Button trigger modal -->
+ {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button> --}}
+
+  <!-- Modal -->
+  {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> --}}
             @if(!empty($query))
             <div class="outclick" wire:click="rest"></div>
             @if(!empty($products))
             <div class="product-dropdown-1">
             <div class="single-product-row">
+
                 <table class="table table-borderless">
 
                 @foreach($products as $pr)
-                   <tr wire:click="show({{$pr->id}})">
+                   <tr wire:click="show({{$pr->id}})" >
 
                     <td class="pr-code">
                         {{ $pr->pcode }}
@@ -33,9 +74,6 @@
                     </td>
 
                 </tr>
-
-
-
             @endforeach
         </table>
             </div>
@@ -49,6 +87,38 @@
         @endif
         @endif
     </div>
+    @if($size)
+<div class="var-display">
+    <div class="var-display-title">
+        Select a Size
+    </div>
+    <hr>
+    <div class="var-display-content">
+
+        @foreach($size as $key => $s)
+        <button class="var-btn" wire:click="selectSize({{$s}})" >{{ $s }}</button>
+        @endforeach
+
+
+    </div>
+</div>
+@endif
+@if($colorSelect)
+<div class="var-display">
+    <div class="var-display-title">
+        Select a Color
+    </div>
+    <hr>
+    <div class="var-display-content">
+
+        @foreach($color as $key => $c)
+        <button class="var-btn" wire:click='selectColor({{$key}})'>{{ $c }}</button>
+        @endforeach
+
+
+    </div>
+</div>
+@endif
     <div class="item-display">
         <table class="table">
             <thead class="item-table-head">

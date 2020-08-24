@@ -426,13 +426,29 @@ input:checked + .slider:before {
 }
 .pos .search-bar {
     display: inline-block;
-    width: 93%;
+    width: 66%;
 }
 .pos .search-textbox {
     height: 50px;
     font-size: 20px;
     letter-spacing: 0.5px;
     width: 100%;
+}
+.load-spinner{
+    position: absolute;
+    right: 30%;
+    top: 9px;
+    display: inline-block;
+    opacity: 0.2;
+}
+.v-btn{
+    background-color: #5c8bab !important;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 15px 11px;
+    text-align: center !important;
+    width:13% !important;
 }
 /******* End of Search bar *******/
 
@@ -653,6 +669,213 @@ input:checked + .slider:before {
 }
 /****** Barcode ******/
 .barcode .store-name{
+    font-size: 10px;
+    font-weight: 800;
+    font-family: serif;
+}
+.ll,.kur{
+    font-weight: 800;
+    line-height: 1.2;
+}
+.ll{
+    font-size: 14px;
+}
+.kur{
+    font-size: 8px;
+    margin-bottom: 4px;
+}
+.barcode-img{
+    text-align: center;
+}
+.barcode{
+    height: 75px;
+    width: 128px;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #777777;
+
+
+
+}
+.barcode-content{
+    transform: translateX(-5px);
+}
+.pr-details{
+    font-size: 8px;
+
+}
+.barcode-price{
+
+    font-weight: 800;
+    transform: rotate(-90deg);
+    text-align: right;
+    position: relative;
+    bottom: 6px;
+    right: -90px;
+
+}
+
+.barcode-price-print{
+
+    font-weight: bolder;
+    transform: rotate(-90deg);
+    text-align: right;
+    font-size: 16px;
+    position: relative;
+    top:-35px;
+    left:58px;
+
+}
+.rs{
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/******Barcode Print*******/
+.barcode-print{
+    background-color: white;
+    margin: 0 -25px;
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+}
+.barcode-table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+.var-display{
+    height: 300px;
+    width: 600px;
+    background-color: #ffffff;
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-10%, -50%);
+    transform: translate(-10%, -50%);
+    margin: 0;
+    border: 1px solid #777777;
+    padding: 20px;
+}
+.var-display-title{
+    font-size: 25px;
+}
+.var-btn{
+    border: 2px solid #777777;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #fbfbfb;
+    outline: none;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.wrapper {
+
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: calc(100vh - 53px);
+    position: absolute;
+    height: 90vh;
+    z-index: 10;
+    background: #256ea1;
+    color: #fff;
+    transition: all 0.3s;
+    top:53px;
+    display: none;
+}
+#sidebar.active {
+
+    display: block;
+
+}
+
+.btn-nav{
+    background: none;
+    border: none;
+    color: white;
+}
+.pos-header-user{
+    width:22%;
+}
+.pos-nav-li{
+    padding: 10px;
+    border-bottom: 1px solid white;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.pos-sub-display{
+    height: fit-content;
+    width: 600px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: 0;
+    border: 2px solid#256ea145;
+    display: none;
+    border-top: none;
+    box-shadow: 8px 8px 6px rgb(190 190 190 / 20%);
+}
+
+.pos-sub-display-title{
+    font-size: 25px;
+    background-color: #256ea1;
+    color: white;
+    padding: 10px 20px;
+}
+
+.pos-sub-display-content{
+    padding: 12px 20px;
+}
+.pos-sub-txtArea{
+    width: 100%;
+    border: 1px solid #ced4da;
+}
+.pos-sub-display .close-btn{
+    float: right;
+    border: none;
+    background: none;
+    color: white;
+
+}
+
+button:focus{
+    outline:none;
+}
+.full-pg{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(46, 45, 45, 0.1);
+    display: none;
+}
+.block{
+    display: block;
+}
+.pos-sub-display .add-sub-btn{
+    background-color: #256ea1;
+    font-weight: bold;
+    color: white;
+    padding: 10px 40px;
+    float: right;
+    border:none;
+    margin-bottom: 20px;
+
+}
+
+/* .barcode .store-name{
     font-size: 16px;
     font-weight: 800;
     font-family: serif;
@@ -672,11 +895,14 @@ input:checked + .slider:before {
     text-align: center;
 }
 .barcode{
-    height: 120px;
-    width: 220px;
+    height: 75px;
+    width: 128px;
     text-align: center;
+
     background-color: white;
     padding: 10px;
+    border: 1px solid #777777;
+    display: inline-block;
 }
 .pr-details{
     font-size: 10px;
@@ -692,6 +918,18 @@ input:checked + .slider:before {
     right: -90px;
 
 }
+
+.barcode-price-print{
+
+    font-weight: 800;
+    transform: rotate(-90deg);
+    text-align: right;
+    font-size: 20px;
+    position: relative;
+    top:10px;
+    left:90px;
+
+}
 .rs{
     font-size: 14px;
-}
+} */

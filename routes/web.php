@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Milon\Barcode\PDF417;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +30,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pos', function(){
     return view('POS.pos');
 });
-Route::get('/test', function(){
-    return view('test');
-});
+// Route::get('/test', function(){
+//     return view('Barcode.printBarcode');
+// });
+Route::get('/barcode', 'BarcodeController@show');
+Route::get('/test', 'BarcodeController@createPDF');
 
 
 Route::resource('user', 'UserController');

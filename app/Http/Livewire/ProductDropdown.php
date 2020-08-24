@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Product;
+use App\Variant;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -17,6 +18,10 @@ class ProductDropdown extends Component
     public $tax;
     public $total;
     public $query;
+    public $pr;
+    public $size = array();
+    public $color = array();
+    public $colorSelect;
 
     public function mount(){
 
@@ -27,6 +32,7 @@ class ProductDropdown extends Component
         $this->subtotal = 0.00;
         $this->tax = 0.00;
         $this->total = 0.00;
+
     }
     public function updatedQuery(){
         $this->products =  Product::where('pcode','like','%'.$this->query.'%')->get();
@@ -36,7 +42,13 @@ class ProductDropdown extends Component
         $this->products = '';
     }
     public function sub(){
-        dd($this->query);
+        $bcode = str_replace('#','',$this->query);
+        $p =  Product::where('barcode','=',$bcode)->get();
+        $this->query = '';
+        $this->products = '';
+
+        $this->addDropdown($p);
+
     }
     public function render()
     {
@@ -45,23 +57,41 @@ class ProductDropdown extends Component
         return view('livewire.product-dropdown');
     }
     public function show($id){
-        $pr = Product::find($id);
-        dd($pr);
-        $bool = false;
+        $prd =  Product::where('id','=',$id)->get();
+        $var =  Variant::where('product_id','=',$id)->get();
+        $this->query = '';
+        $this->products = '';
 
-        if($this->items){
+        if($var){
+            $this->showSize($var,$prd);
+            $this->pr = $prd;
+        }else{
+            $this->addDropdown($prd);
+        }
+
+
+    }
+    public function addDropdown($prd){
+
+        $bool = false;
+        foreach($prd as $pr){
+
+        if(!empty($this->items)){
             foreach($this->items as $key=>$i){
-                if($i['code'] == $id){
+                if($i['code'] == $pr->pcode){
                     $bool = true;
                     $k = $key;
                     $qty = $this->items[$key]['qty'];
                     $this->items[$key]['qty'] = ++$qty;
-
+                    $this->items[$key]['price'] = $pr->sellingPrice * $this->items[$key]['qty'];
+                    $this->items[$key]['discount'] = $pr->discount* $this->items[$key]['qty'];
+                    $this->items[$key]['total'] = $this->items[$key]['price'] - $this->items[$key]['discount'];
                 }
             }
         }
 
         if($bool != true){
+
         array_push($this->items,[
             'code' => $pr->pcode,
             'name' => $pr->name,
@@ -70,6 +100,7 @@ class ProductDropdown extends Component
             'discount' => $pr->discount,
             'total' => $pr->sellingPrice - $pr->discount
         ]);
+            }
     }
 
 
@@ -85,5 +116,33 @@ class ProductDropdown extends Component
         $this->noOfItems = $tempq;
         $this->subtotal = $tempPrice - $tempd;
         $this->total = $this->subtotal - $this->tax;
+    }
+
+    public function showSize($var,$prd){
+
+        foreach($var as $v){
+            array_push($this->size,$v->size);
+            array_push($this->color,$v->color);
+        }
+       $this->size =  array_unique($this->size);
+       $this->color =  array_unique($this->color);
+
+    }
+    public function selectSize($s){
+        $this->size = '';
+
+        if($this->color){
+            $this->colorSelect = true;
+        }else{
+            $this->addDropdown($this->pr);
+        }
+
+    }
+    public function selectColor($c){
+
+        $selectedColor = $this->color[$c];
+        $this->color = '';
+        $this->colorSelect = '';
+        $this->addDropdown($this->pr);
     }
 }
