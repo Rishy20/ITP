@@ -160,9 +160,22 @@
     <div class="price-display">
 
         <div class="mini-display">
-            <button class="mini-display-btn btn">
-                <i class="fas fa-user-circle s-icon"></i><span class="s-text"> Add a Salesman </span>
+            <button class="mini-display-btn btn"  data-toggle="dropdown">
+                <i class="fas fa-user-circle s-icon"></i>
+                @if (!$sid)
+                    <span class="s-text">Add a Salesman</span>
+                @else
+                     <span class="s-text"><span class="sid">{{ $sid }}</span><span class="sname">{{ $sname}} </span></span>
+                @endif
+
             </button>
+            <ul class="dropdown-menu">
+                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                @foreach($employee as $emp)
+                <li wire:click="updateSalesman({{ $emp->emp_id }})"><span class="sid">{{ $emp->emp_id }}</span><span class="sname">{{ $emp->fname . ' '. $emp->lname }} </span></li>
+                @endforeach
+
+              </ul>
         </div>
 
         <div class="mini-display">

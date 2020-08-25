@@ -874,7 +874,91 @@ button:focus{
     margin-bottom: 20px;
 
 }
+.dropdown-menu{
+    width: 79%;
+    padding:10px;
+}
+.dropdown-menu li {
+    color: black;
+    cursor: pointer;
+}
+.dropdown-menu li{
+    padding: 10px 20px;
+}
+.sid{
+    text-align: left;
+}
+.sname{
+    float: right;
+}
 
+/******Login ******/
+.login{
+    background-image: url("/images/login.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.login-div{
+    margin: 0;
+    position: absolute;
+    top: 55%;
+    right: 75px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.login-container{
+    width: 340px;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 10px 30px;
+}
+.logo-container{
+    width: 340px;
+    -ms-transform: translateY(-100%);
+    position: absolute;
+    transform: translateY(-100%);
+    background-color: rgba(255, 255, 255, 0.6);
+
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.login-container .form-group{
+    margin-bottom: 0;
+}
+.login-container .float-label{
+    top:-45px;
+    position: relative;
+}
+.login-container .form-control{
+    height: 40px;
+}
+.login .logo{
+    width: 200px;
+    display: block;
+    margin: 20px auto;
+}
+.login-title{
+    text-align: center;
+    text-decoration: underline;
+    color: #777777;
+    padding: 30px 0;
+}
+.login-btn{
+    padding: 10px 60px;
+    border-radius: 50px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background-color: #192b3c;
+    margin-bottom: 50px;
+
+}
 /* .barcode .store-name{
     font-size: 16px;
     font-weight: 800;

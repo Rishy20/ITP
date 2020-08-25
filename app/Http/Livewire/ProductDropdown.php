@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Employee;
 use App\Product;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
@@ -22,10 +23,16 @@ class ProductDropdown extends Component
     public $size = array();
     public $color = array();
     public $colorSelect;
+    public $employee;
+    public $sid;
+    public $sname;
+
 
     public function mount(){
 
         $this->products = Product::all();
+        $this->employee = Employee::all();
+
         $this->query = '';
         $this->noOfItems = sizeof($this->items);
         $this->discount = 0.00;
@@ -144,5 +151,15 @@ class ProductDropdown extends Component
         $this->color = '';
         $this->colorSelect = '';
         $this->addDropdown($this->pr);
+    }
+
+    public function updateSalesman($id){
+
+        $sm =  Employee::where('emp_id','=',$id)->get();
+        $this->sid = $id;
+        foreach($sm as $s){
+            $this->sname = $s->fname.' '.$s->lname;
+        }
+
     }
 }

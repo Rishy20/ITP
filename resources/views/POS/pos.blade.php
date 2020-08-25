@@ -4,6 +4,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700,400&display=swap" rel="stylesheet">
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet"> --}}
     <link type="text/css" href="{{ asset('vendor/OverlayScrollbars/css/OverlayScrollbars.css') }}" rel="stylesheet" />
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -84,9 +85,9 @@
                     <div class="header-content">
 
 
-                                <button type="button" id="sidebarCollapse" class="btn-nav">
-                                    <i class="fas fa-align-left"></i>
-                                </button>
+                        <button type="button" id="sidebarCollapse" class="btn-nav">
+                            <i class="fas fa-align-left"></i>
+                        </button>
 
 
                         <div class="header-store">Leatherline</div>
@@ -105,7 +106,7 @@
 
                 <livewire:product-dropdown />
                 <div class="full-pg" id="fadeBg"></div>
-                <div class="pos-sub-display" id="posSubDisplay" >
+                <div class="pos-sub-display" id="posSubDisplay">
 
                     <div class="pos-sub-display-title">
                         <span class="title">Expense</span>
@@ -120,26 +121,26 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Type</label>
                                         <select class="form-control" id="exampleFormControlSelect1">
-                                          <option>1</option>
-                                          <option>2</option>
-                                          <option>3</option>
-                                          <option>4</option>
-                                          <option>5</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
                                         </select>
-                                      </div>
+                                    </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label >Amount</label>
+                                        <label>Amount</label>
                                         <input type="text" class="form-control" />
-                                      </div>
+                                    </div>
                                 </div>
                             </div>
 
 
                             <div class="form-group pl-2 pr-2">
                                 <div class="row">
-                                    <label >Description</label>
+                                    <label>Description</label>
                                 </div>
                                 <div class="row">
                                     <textarea class="pos-sub-txtArea" rows=5></textarea>
@@ -150,7 +151,7 @@
                                 <button class="add-sub-btn">Add</button>
 
                             </div>
-                          </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -168,7 +169,14 @@
             OverlayScrollbars(document.querySelectorAll(".product-dropdown"), {});
         });
 
-
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".dropdown-menu li").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
 
 
 
@@ -196,26 +204,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
     <script>
+        $(document).ready(function() {
 
-$(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').toggleClass('active');
+            });
+            $('#addexpense').on('click', function() {
+                $('#posSubDisplay').toggleClass('block');
+                $('#fadeBg').toggleClass('block');
+                $('#sidebar').removeClass('active');
+            });
+            $('#closeBtn').on('click', function() {
+                $('#posSubDisplay').removeClass('block');
+                $('#fadeBg').removeClass('block');
 
-$('#sidebarCollapse').on('click', function() {
-    $('#sidebar').toggleClass('active');
-});
-$('#addexpense').on('click', function() {
-    $('#posSubDisplay').toggleClass('block');
-    $('#fadeBg').toggleClass('block');
-    $('#sidebar').removeClass('active');
-});
-$('#closeBtn').on('click', function() {
-    $('#posSubDisplay').removeClass('block');
-    $('#fadeBg').removeClass('block');
+            });
+            $(document).ready(function() {
+                $('.mdb-select').materialSelect();
+            });
 
-});
+        });
 
-});
     </script>
 </body>
 </html>

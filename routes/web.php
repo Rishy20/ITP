@@ -19,9 +19,21 @@ use Milon\Barcode\PDF417;
 Route::get('/', function () {
     return view('sample');
 });
+
+Route::resource('employee', 'EmployeeController');
+
+Route::resource('voucher', 'VoucherController');
+
+//Route::get('/employees', 'EmployeeController@index');
+//Route::get('/create', 'EmployeeController@create');
+//Route::post('/store', 'EmployeeController@store')->name('employees.store');
+//Route::post('/employees/{emp_id}', 'EmployeeController@show');
+
+
 Route::get('/sample', function () {
     return view('sampleAddForm');
 });
+
 
 Auth::routes();
 
@@ -29,6 +41,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/pos', function(){
     return view('POS.pos');
+});
+Route::get('/login', function(){
+    return view('login');
 });
 // Route::get('/test', function(){
 //     return view('Barcode.printBarcode');
@@ -40,6 +55,7 @@ Route::get('/test', 'BarcodeController@createPDF');
 Route::resource('user', 'UserController');
 Route::resource('category', 'CategoryController');
 Route::resource('product', 'productController');
+
 Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');
 Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
 
