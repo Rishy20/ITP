@@ -575,6 +575,16 @@ input:checked + .slider:before {
     overflow: auto;
 
 }
+.product-search .dropdown-menu{
+    background-color: white;
+    width: 90%;
+    margin-top: 5px;
+    position: absolute;
+    height: 60%;
+    border: 3px solid;
+    border-color: #80bdff;
+    overflow: auto;
+}
 .outclick{
     position: fixed;
     top:0 ;
@@ -593,7 +603,7 @@ input:checked + .slider:before {
 
 .p-link:hover {
 }
-.single-product-row tr:hover {
+.product-search .dropdown-menu tr:hover {
     background-color: #80bdff21;
     cursor: pointer;
 }
@@ -921,7 +931,6 @@ button:focus{
     position: absolute;
     transform: translateY(-100%);
     background-color: rgba(255, 255, 255, 0.6);
-
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
 }
@@ -958,6 +967,10 @@ button:focus{
     background-color: #192b3c;
     margin-bottom: 50px;
 
+}
+.size{
+    font-size: 14px;
+    opacity: 0.3;
 }
 /* .barcode .store-name{
     font-size: 16px;

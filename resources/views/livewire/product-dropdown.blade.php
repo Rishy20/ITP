@@ -7,14 +7,44 @@
                 <i class="fas fa-search"></i>
             </div>
 
-            <form class="search-bar" wire:submit.prevent="sub">
-                <input type="text" wire:model.debounce="query"  class="search-textbox form-control" placeholder="Find Products By Name, Number or Barcode">
-            </form>
-            <div class="load-spinner " wire:loading wire:target="query">
+                <form class="search-bar" wire:submit.prevent="sub">
+                    <input type="text" wire:model.debounce="query"  id="prdSearch" class="search-textbox form-control"  data-toggle="dropdown"  placeholder="Find Products By Name, Number or Barcode">
+                    <div class="dropdown-menu product-overlay" aria-labelledby="dropdownMenuButton">
+
+
+                                <table class="table table-borderless">
+
+                                @foreach($products as $pr)
+                                   <tr wire:click="show({{$pr->id}})" >
+
+                                    <td class="pr-code">
+                                        {{ $pr->pcode }}
+                                    </td>
+                                    <td class="pr-name">
+                                        {{ $pr->name }}
+                                    </td>
+                                    <td class="pr-qty">
+                                        {{ $pr->Qty }}
+                                    </td>
+                                    <td class="pr-price">
+                                        Rs. {{ $pr->sellingPrice }}
+                                    </td>
+
+                                </tr>
+                            @endforeach
+                        </table>
+
+                      </div>
+                </form>
+
+
+
+
+            {{-- <div class="load-spinner " wire:loading wire:target="query">
                 <div class="spinner-border text-secondary" role="status">
                     <span class="sr-only">Loading...</span>
                   </div>
-            </div>
+            </div> --}}
             <button class="v-btn btn ">
                 <i class="fas fa-gift sub-icon"></i><span class="sub-btn-txt"> Voucher</span>
             </button>
@@ -24,68 +54,7 @@
 
 
         </div>
-            <!-- Button trigger modal -->
- {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-  </button> --}}
 
-  <!-- Modal -->
-  {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div> --}}
-            @if(!empty($query))
-            <div class="outclick" wire:click="rest"></div>
-            @if(!empty($products))
-            <div class="product-dropdown-1">
-            <div class="single-product-row">
-
-                <table class="table table-borderless">
-
-                @foreach($products as $pr)
-                   <tr wire:click="show({{$pr->id}})" >
-
-                    <td class="pr-code">
-                        {{ $pr->pcode }}
-                    </td>
-                    <td class="pr-name">
-                        {{ $pr->name }}
-                    </td>
-                    <td class="pr-qty">
-                        {{ $pr->Qty }}
-                    </td>
-                    <td class="pr-price">
-                        Rs. {{ $pr->sellingPrice }}
-                    </td>
-
-                </tr>
-            @endforeach
-        </table>
-            </div>
-        </div>
-        @else
-        <div class="product-dropdown-1">
-            <div class="single-product-row">
-                No results!
-            </div>
-        </div>
-        @endif
-        @endif
     </div>
     @if($size)
 <div class="var-display">
@@ -138,9 +107,24 @@
                 @foreach($items as $item)
 
                 <tr class="item-table-row">
-                    <th scope="row">1</th>
+                    <th scope="row">{{ $item['num']}}</th>
                     <td>{{ $item['code']}}</td>
-                    <td>{{ $item['name'] }}</td>
+                    <td>{{ $item['name'] }}
+                        @if($item['size'] && $item['color'] )
+                            <div class="size">
+                                {{ $item['size'] }}/{{ $item['color'] }}
+                            </div>
+                        @elseif($item['size'])
+                            <div class="size">
+                                {{ $item['size'] }}
+                            </div>
+                        @elseif( $item['color'] )
+                        <div class="size">
+                            {{ $item['color'] }}
+                        </div>
+                        @endif
+
+                    </td>
                     <td>{{ $item['qty']}}</td>
                     <td>Rs.{{ $item['price'] }}</td>
                     <td>Rs.{{ $item['discount']}}</td>

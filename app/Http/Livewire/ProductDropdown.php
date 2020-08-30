@@ -7,6 +7,7 @@ use App\Product;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 class ProductDropdown extends Component
 {
@@ -26,9 +27,11 @@ class ProductDropdown extends Component
     public $employee;
     public $sid;
     public $sname;
-
-
-    public function mount(){
+    public $selectedSize;
+    public $selectedColor;
+    public $index = 1;
+    public function mount()
+    {
 
         $this->products = Product::all();
         $this->employee = Employee::all();
@@ -39,23 +42,22 @@ class ProductDropdown extends Component
         $this->subtotal = 0.00;
         $this->tax = 0.00;
         $this->total = 0.00;
-
     }
-    public function updatedQuery(){
-        $this->products =  Product::where('pcode','like','%'.$this->query.'%')->get();
-    }
-    public function rest(){
-        $this->query = '';
-        $this->products = '';
-    }
-    public function sub(){
-        $bcode = str_replace('#','',$this->query);
-        $p =  Product::where('barcode','=',$bcode)->get();
+    // public function updatedQuery(){
+    //     $this->products =  Product::where('pcode','like','%'.$this->query.'%')->get();
+    // }
+    // public function rest(){
+    //     $this->query = '';
+    //     $this->products = '';
+    // }
+    public function sub()
+    {
+        $bcode = str_replace('#', '', $this->query);
+        $p =  Product::where('barcode', '=', $bcode)->get();
         $this->query = '';
         $this->products = '';
 
         $this->addDropdown($p);
-
     }
     public function render()
     {
@@ -63,58 +65,138 @@ class ProductDropdown extends Component
 
         return view('livewire.product-dropdown');
     }
-    public function show($id){
-        $prd =  Product::where('id','=',$id)->get();
-        $var =  Variant::where('product_id','=',$id)->get();
-        $this->query = '';
-        $this->products = '';
+    public function show($id)
+    {
+        $prd =  Product::where('id', '=', $id)->get();
+        $var =  Variant::where('product_id', '=', $id)->get();
 
-        if($var){
-            $this->showSize($var,$prd);
-            $this->pr = $prd;
-        }else{
+
+        if ($var->isEmpty()) {
+
             $this->addDropdown($prd);
+        } else {
+            $this->pr = $prd;
+            $this->showSize($var, $prd);
         }
-
-
     }
-    public function addDropdown($prd){
+    public function addDropdown($prd)
+    {
 
         $bool = false;
-        foreach($prd as $pr){
+        foreach ($prd as $pr) {
 
-        if(!empty($this->items)){
-            foreach($this->items as $key=>$i){
-                if($i['code'] == $pr->pcode){
-                    $bool = true;
-                    $k = $key;
-                    $qty = $this->items[$key]['qty'];
-                    $this->items[$key]['qty'] = ++$qty;
-                    $this->items[$key]['price'] = $pr->sellingPrice * $this->items[$key]['qty'];
-                    $this->items[$key]['discount'] = $pr->discount* $this->items[$key]['qty'];
-                    $this->items[$key]['total'] = $this->items[$key]['price'] - $this->items[$key]['discount'];
+            if (!empty($this->items)) {
+                foreach ($this->items as $key => $i) {
+
+                    if ($i['code'] == $pr->pcode) {
+                        if ($this->items[$key]['size'] == $this->selectedSize && $this->items[$key]['color'] == $this->selectedColor) {
+
+                            $bool = true;
+                            $k = $key;
+                            $qty = $this->items[$key]['qty'];
+                            $this->items[$key]['qty'] = ++$qty;
+                            $this->items[$key]['price'] = $pr->sellingPrice * $this->items[$key]['qty'];
+                            $this->items[$key]['discount'] = $pr->discount * $this->items[$key]['qty'];
+                            $this->items[$key]['total'] = $this->items[$key]['price'] - $this->items[$key]['discount'];
+
+                        } else if ($this->items[$key]['size'] == '' && $this->items[$key]['color'] == '') {
+                            $bool = true;
+                            $k = $key;
+                            $qty = $this->items[$key]['qty'];
+                            $this->items[$key]['qty'] = ++$qty;
+                            $this->items[$key]['price'] = $pr->sellingPrice * $this->items[$key]['qty'];
+                            $this->items[$key]['discount'] = $pr->discount * $this->items[$key]['qty'];
+                            $this->items[$key]['total'] = $this->items[$key]['price'] - $this->items[$key]['discount'];
+
+                        }else if ($this->items[$key]['size'] == $this->selectedSize && $this->items[$key]['color'] == '') {
+                            $bool = true;
+                            $k = $key;
+                            $qty = $this->items[$key]['qty'];
+                            $this->items[$key]['qty'] = ++$qty;
+                            $this->items[$key]['price'] = $pr->sellingPrice * $this->items[$key]['qty'];
+                            $this->items[$key]['discount'] = $pr->discount * $this->items[$key]['qty'];
+                            $this->items[$key]['total'] = $this->items[$key]['price'] - $this->items[$key]['discount'];
+
+                        } else if ($this->items[$key]['size'] == '' && $this->items[$key]['color'] == $this->selectedColor) {
+                            $bool = true;
+                            $k = $key;
+                            $qty = $this->items[$key]['qty'];
+                            $this->items[$key]['qty'] = ++$qty;
+                            $this->items[$key]['price'] = $pr->sellingPrice * $this->items[$key]['qty'];
+                            $this->items[$key]['discount'] = $pr->discount * $this->items[$key]['qty'];
+                            $this->items[$key]['total'] = $this->items[$key]['price'] - $this->items[$key]['discount'];
+
+                        }
+                    }
                 }
             }
-        }
 
-        if($bool != true){
+            if ($bool != true && $this->selectedSize && $this->selectedColor) {
 
-        array_push($this->items,[
-            'code' => $pr->pcode,
-            'name' => $pr->name,
-            'qty' => '1',
-            'price' => $pr->sellingPrice,
-            'discount' => $pr->discount,
-            'total' => $pr->sellingPrice - $pr->discount
-        ]);
+                array_push($this->items, [
+                    'num' =>  $this->index++,
+                    'code' => $pr->pcode,
+                    'name' => $pr->name,
+                    'qty' => '1',
+                    'price' => $pr->sellingPrice,
+                    'discount' => $pr->discount,
+                    'total' => $pr->sellingPrice - $pr->discount,
+                    'size' => $this->selectedSize,
+                    'color' => $this->selectedColor
+                ]);
+                $this->selectedSize = '';
+                $this->selectedColor = '';
+            } else if ($bool != true && $this->selectedSize) {
+
+                array_push($this->items, [
+                    'num' =>  $this->index++,
+                    'code' => $pr->pcode,
+                    'name' => $pr->name,
+                    'qty' => '1',
+                    'price' => $pr->sellingPrice,
+                    'discount' => $pr->discount,
+                    'total' => $pr->sellingPrice - $pr->discount,
+                    'size' => $this->selectedSize,
+                    'color' => ''
+
+                ]);
+                $this->selectedSize = '';
+            } else if ($bool != true &&  $this->selectedColor) {
+
+                array_push($this->items, [
+                    'num' =>  $this->index++,
+                    'code' => $pr->pcode,
+                    'name' => $pr->name,
+                    'qty' => '1',
+                    'price' => $pr->sellingPrice,
+                    'discount' => $pr->discount,
+                    'total' => $pr->sellingPrice - $pr->discount,
+                    'size' => '',
+                    'color' => $this->selectedColor
+                ]);
+                $this->selectedSize = '';
+                $this->selectedColor = '';
+            } else if ($bool != true) {
+
+                array_push($this->items, [
+                    'num' =>  $this->index++,
+                    'code' => $pr->pcode,
+                    'name' => $pr->name,
+                    'qty' => '1',
+                    'price' => $pr->sellingPrice,
+                    'discount' => $pr->discount,
+                    'total' => $pr->sellingPrice - $pr->discount,
+                    'size' => '',
+                    'color' => ''
+                ]);
             }
-    }
+        }
 
 
         $tempd = 0;
         $tempPrice = 0;
-        $tempq=0;
-        foreach($this->items as $i){
+        $tempq = 0;
+        foreach ($this->items as $i) {
             $tempd = $tempd + $i['discount'];
             $tempPrice = $tempPrice + $i['price'];
             $tempq = $tempq + $i['qty'];
@@ -125,41 +207,43 @@ class ProductDropdown extends Component
         $this->total = $this->subtotal - $this->tax;
     }
 
-    public function showSize($var,$prd){
+    public function showSize($var, $prd)
+    {
 
-        foreach($var as $v){
-            array_push($this->size,$v->size);
-            array_push($this->color,$v->color);
+        foreach ($var as $v) {
+            array_push($this->size, $v->size);
+            array_push($this->color, $v->color);
         }
-       $this->size =  array_unique($this->size);
-       $this->color =  array_unique($this->color);
-
+        $this->size =  array_unique($this->size);
+        $this->color =  array_unique($this->color);
     }
-    public function selectSize($s){
-        $this->size = '';
-
-        if($this->color){
+    public function selectSize($s)
+    {
+        $this->size = array();
+        $this->selectedSize = $s;
+        if ($this->color) {
             $this->colorSelect = true;
-        }else{
+        } else {
             $this->addDropdown($this->pr);
         }
-
     }
-    public function selectColor($c){
+    public function selectColor($c)
+    {
 
-        $selectedColor = $this->color[$c];
-        $this->color = '';
+        $this->selectedColor = $this->color[$c];
+
+        $this->color = array();
         $this->colorSelect = '';
         $this->addDropdown($this->pr);
     }
 
-    public function updateSalesman($id){
+    public function updateSalesman($id)
+    {
 
-        $sm =  Employee::where('emp_id','=',$id)->get();
+        $sm =  Employee::where('emp_id', '=', $id)->get();
         $this->sid = $id;
-        foreach($sm as $s){
-            $this->sname = $s->fname.' '.$s->lname;
+        foreach ($sm as $s) {
+            $this->sname = $s->fname . ' ' . $s->lname;
         }
-
     }
 }
