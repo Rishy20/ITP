@@ -18,12 +18,14 @@ class StockTransferForm extends Component
     public $search;
     public $transfer_items;
 
+
     public function mount() {
         $this->transfer_items = array();
 
         // Get inventories from database
         $this->inventories = Inventory::all();
     }
+
 
     public function addTransferItem($product_id) {
         // Check if the item is already added
@@ -36,28 +38,14 @@ class StockTransferForm extends Component
         array_push($this->transfer_items, $product_id);
     }
 
-    public function render()
-    {
-        // Check if there are enough inventories for a stock transfer
-        if ($this->inventories->count() >= 2) {
-            // Set the first two inventories as source and destination, if source and destination are null
-            if ($this->source === null && $this->destination === null) {
-                $this->source = $this->inventories[0]->id;
-                $this->destination = $this->inventories[1]->id;
-            }
-        }
-        else
-            return view('livewire.stock-transfers.not-enough-inventories');
 
-
-        /* Inventory Items Search */
-
+    private function getInventoryItems() {
         // Get inventory items and the corresponding product ids from database
         $inventory_items = DB::table('inventory_items')->where('inventory_id', $this->source)->get();
         $product_ids = $inventory_items->pluck('product_id');
 
         // Get products matching the product ids and the search query
-        $products = Product::whereIn('id', $product_ids)->where('name', 'LIKE', '%'.$this->search.'%')->get();
+        $products = Product::whereIn('id', $product_ids)->where('name', 'LIKE', '%'.$this->search.'%')->paginate(10);
 
         // Assign each product to the corresponding inventory item (check for matching product ids)
         foreach ($inventory_items as $inventory_item) {
@@ -82,10 +70,12 @@ class StockTransferForm extends Component
             if (!(isset($inventory_item->product)))
                 $inventory_items->forget($key);
 
+        return ['inventory_items' => $inventory_items, 'products' => $products];
+    }
 
-        /* Transfer Items Table */
 
-        // Create transfer item objects array to use in Transfer Items table
+    private function getTransferItems() {
+        // Create transfer item objects array
         $transfer_item_objects = array();
 
         // Assign to each transfer item, its respective product and destination qty
@@ -105,6 +95,33 @@ class StockTransferForm extends Component
                 array_push($transfer_item_objects, $inventory_item);  // Add the assigned transfer item to array
             }
         }
+
+        return $transfer_item_objects;
+    }
+
+
+    public function render()
+    {
+        // Check if there are enough inventories for a stock transfer
+        if ($this->inventories->count() >= 2) {
+            // Set the first two inventories as source and destination, if source and destination are null
+            if ($this->source === null && $this->destination === null) {
+                $this->source = $this->inventories[0]->id;
+                $this->destination = $this->inventories[1]->id;
+            }
+        }
+        else
+            return view('livewire.stock-transfers.not-enough-inventories');
+
+        // Check and warn if source and destination inventories are the same
+
+
+        // Inventory Items Search
+        $inventory_items = $this->getInventoryItems()['inventory_items'];  // Get inventory items for search
+        $products = $this->getInventoryItems()['products'];  // Get products for pagination
+
+        // Transfer Items Table
+        $transfer_item_objects = $this->getTransferItems();  // Get transfer items to use in Transfer Items table
 
         return view('livewire.stock-transfers.stock-transfer-form')->with('inventory_items', $inventory_items)
             ->with('products', $products)->with('transfer_item_objects', $transfer_item_objects);
