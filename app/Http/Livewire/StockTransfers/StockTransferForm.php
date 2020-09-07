@@ -113,9 +113,6 @@ class StockTransferForm extends Component
         else
             return view('livewire.stock-transfers.not-enough-inventories');
 
-        // Check and warn if source and destination inventories are the same
-
-
         // Inventory Items Search
         $inventory_items = $this->getInventoryItems()['inventory_items'];  // Get inventory items for search
         $products = $this->getInventoryItems()['products'];  // Get products for pagination
