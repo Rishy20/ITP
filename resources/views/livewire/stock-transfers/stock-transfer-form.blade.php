@@ -59,9 +59,8 @@
                             <tbody>
                                 @if(count($inventory_items) > 0)
                                     @foreach($inventory_items as $inventory_item)
-                                            <tr class="result_row" style="cursor: pointer"
-                                                wire:click="addTransferItem({{ $inventory_item->product_id }})">
-                                                <td class="result_data">{{ $inventory_item->product->name }}</td>
+                                            <tr style="cursor: pointer" wire:click="addTransferItem({{ $inventory_item->product_id }})">
+                                                <td>{{ $inventory_item->product->name }}</td>
                                                 <td class="text-right">{{ $inventory_item->qty }}</td>
                                                 <td class="text-right">{{ $inventory_item->destination_qty }}</td>
                                             </tr>
