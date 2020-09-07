@@ -34,5 +34,5 @@ Route::patch('/password/{id}','UserController@updatePassword')->name('user.passw
 Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
 
 Route::resource('inventories', 'InventoryController');
-Route::resource('inventories/stock-transfers', 'StockTransferController');
-Route::resource('inventories/inventory-counts', 'InventoryCountController');
+Route::resource('stock-transfers', 'StockTransferController');
+Route::resource('inventory-counts', 'InventoryCountController');
