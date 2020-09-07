@@ -12,10 +12,10 @@ class StockTransferForm extends Component
 {
     use WithPagination;
 
-    public $search;
     public $source;
     public $destination;
     public $inventories;
+    public $search;
     public $transfer_items;
 
     public function mount() {
@@ -26,8 +26,14 @@ class StockTransferForm extends Component
     }
 
     public function addTransferItem($product_id) {
+        // Check if the item is already added
+        foreach ($this->transfer_items as $transfer_item) {
+            if ($transfer_item == $product_id)
+                return;
+        }
+
         // Add inventory id and product id as an array to the transfer_items 2D array
-        array_push($this->transfer_items, [$this->source, $product_id]);
+        array_push($this->transfer_items, $product_id);
     }
 
     public function render()
@@ -50,8 +56,8 @@ class StockTransferForm extends Component
         $inventory_items = DB::table('inventory_items')->where('inventory_id', $this->source)->get();
         $product_ids = $inventory_items->pluck('product_id');
 
-        // Get products matching the product ids and the search query and paginate them into 5 per page
-        $products = Product::whereIn('id', $product_ids)->where('name', 'LIKE', '%'.$this->search.'%')->paginate(5);
+        // Get products matching the product ids and the search query
+        $products = Product::whereIn('id', $product_ids)->where('name', 'LIKE', '%'.$this->search.'%')->get();
 
         // Assign each product to the corresponding inventory item (check for matching product ids)
         foreach ($inventory_items as $inventory_item) {
@@ -63,6 +69,10 @@ class StockTransferForm extends Component
                     $inventory_item->destination_qty = DB::table('inventory_items')
                         ->where('inventory_id', $this->destination)->where('product_id', $product->id)
                         ->pluck('qty')->first();
+
+                    // If destination qty is null (if product does not exist in destination inventory), assign 0
+                    if (!$inventory_item->destination_qty)
+                        $inventory_item->destination_qty = 0;
                 }
             }
         }
@@ -81,14 +91,16 @@ class StockTransferForm extends Component
         // Assign to each transfer item, its respective product and destination qty
         if ($this->transfer_items > 0) {
             foreach ($this->transfer_items as $transfer_item) {
-                $product_id = $transfer_item[1];
-
                 $inventory_item = DB::table('inventory_items')->where('inventory_id', $this->source)
-                    ->where('product_id', $product_id)->first();  // Get respective inventory item object
-                $inventory_item->product = Product::find($product_id);  // Get respective product
+                    ->where('product_id', $transfer_item)->first();  // Get respective inventory item object
+                $inventory_item->product = Product::find($transfer_item);  // Get respective product
                 $inventory_item->destination_qty = DB::table('inventory_items')
-                    ->where('inventory_id', $this->destination)->where('product_id', $product_id)
+                    ->where('inventory_id', $this->destination)->where('product_id', $transfer_item)
                     ->pluck('qty')->first();  // Get respective destination qty
+
+                // If destination qty is null, assign 0
+                if (!$inventory_item->destination_qty)
+                    $inventory_item->destination_qty = 0;
 
                 array_push($transfer_item_objects, $inventory_item);  // Add the assigned transfer item to array
             }
