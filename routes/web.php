@@ -33,6 +33,5 @@ Route::resource('user', 'UserController');
 Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');
 Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
 
-Route::get('/reports', 'ReportController@index')->name('reports');
-Route::get('/reports/{category}', 'ReportController@category')->name('reports.category');
-Route::get('/reports/{category}/{report}', 'ReportController@generateReport')->name('reports.generate');
+Route::get('/reports', 'ReportController@index')->name('reports.index');
+Route::get('/reports/{report}', 'ReportController@generateReport')->name('reports.generate');
