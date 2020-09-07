@@ -15,6 +15,9 @@ class CreateInventoryCountsTable extends Migration
     {
         Schema::create('inventory_counts', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
+            $table->foreignId('inventory')->references('id')->on('inventories')->onDelete('cascade');
+            $table->boolean('completed')->default(0);
             $table->timestamps();
         });
     }
