@@ -378,3 +378,25 @@ input:checked + .slider:before {
 .dlt-form {
     display: inline-block;
 }
+
+.value-button {
+    display: inline-block;
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 45px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px 0;
+    background: #eee;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .value-button:hover {
+    cursor: pointer;
+  }
