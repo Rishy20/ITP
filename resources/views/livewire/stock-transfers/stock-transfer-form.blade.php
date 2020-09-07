@@ -1,6 +1,10 @@
 <div>
-    <form method="post" action="">
+    <form method="POST" action="{{ route('stock-transfers.store') }}">
         @csrf
+
+        <input type="hidden" name="source" value="{{ $source }}"/>
+        <input type="hidden" name="destination" value="{{ $destination }}"/>
+
         <div class="section">
             <div class="section-title">
                 Transfer Information
@@ -35,7 +39,7 @@
                         <input wire:model="search" type="text" id="search" name="search" class="form-control" placeholder="Search Items">
                         <label for="search" class="float-label">Search Items</label>
 
-                        <table class="table table-hover my-2">
+                        <table class="table table-sm table-hover my-2" id="result_table">
                             <thead>
                                 <tr class="text-center">
                                     <th class="table-head col-6">
@@ -58,8 +62,9 @@
                             <tbody>
                                 @if(count($inventory_items) > 0)
                                     @foreach($inventory_items as $inventory_item)
-                                            <tr style="cursor: pointer" wire:click="addTransferItem({{ $inventory_item->product_id }})">
-                                                <td>{{ $inventory_item->product->name }}</td>
+                                            <tr class="result_row" style="cursor: pointer"
+                                                wire:click="addTransferItem({{ $inventory_item->product_id }})">
+                                                <td class="result_data">{{ $inventory_item->product->name }}</td>
                                                 <td class="text-right">{{ $inventory_item->qty }}</td>
                                                 <td class="text-right">{{ $inventory_item->destination_qty }}</td>
                                             </tr>
@@ -72,7 +77,6 @@
                             </tbody>
                         </table>
 
-                        {{ $products->links() }} {{-- Pagination links for search results --}}
                     </div>
                     <div class="col">
                         <p>Barcode Scan</p>
@@ -89,7 +93,7 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-sm table-bordered table-hover">
                             <thead>
                                 <tr class="text-center">
                                     <th class="table-head col-6">
@@ -117,10 +121,14 @@
                                     @foreach($transfer_item_objects as $transfer_item)
                                         <tr>
                                             <td>{{ $transfer_item->product->name }}</td>
-                                            <td class="text-right">5</td>
+                                            <td class="text-right">
+                                                <input type="number" name="quantities[]" min="1" max="{{ $transfer_item->qty }}" required/>
+                                            </td>
                                             <td class="text-right">{{ $transfer_item->qty }}</td>
                                             <td class="text-right">{{ $transfer_item->destination_qty }}</td>
                                         </tr>
+
+                                        <input type="hidden" name="transfer_items[]" value="{{ $transfer_item->product->id }}"/>
                                     @endforeach
                                 @else
                                     <tr>
