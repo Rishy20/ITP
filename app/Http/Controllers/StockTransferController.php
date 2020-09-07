@@ -149,6 +149,8 @@ class StockTransferController extends Controller
      */
     public function destroy(StockTransfer $stockTransfer)
     {
-        //
+        // Delete stock transfer and redirect to index
+        $stockTransfer->delete();
+        return redirect('stock-transfers');
     }
 }

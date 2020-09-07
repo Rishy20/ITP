@@ -130,6 +130,8 @@ class InventoryCountController extends Controller
      */
     public function destroy(InventoryCount $inventoryCount)
     {
-        //
+        // Delete inventory count and redirect to index
+        $inventoryCount->delete();
+        return redirect('inventory-counts');
     }
 }
