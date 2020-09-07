@@ -3,7 +3,7 @@
 
 <div class="editUser"> {{-- Start of addUser --}}
     <div class="pg-heading">
-        <a href="{{ route('employee.index',$employee->emp_id)}}"><i class="fa fa-arrow-left pg-back"></i></a>
+        <a href="{{ route('employee.index',$employee->id)}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Edit Employee</div>
     </div>
    
@@ -14,7 +14,7 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
-                    <form method="post" action="{{route('employee.update',$employee->emp_id)}}">
+                    <form method="post" action="{{route('employee.update',$employee->id)}}">
                         @csrf
                         @method('PATCH')
                         <div class="row">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="section-content"> {{-- Start of sectionContent--}}
                                 {{-- Start of Form --}}
-                                <form method="post" action="{{route('employee.update',$employee->emp_id)}}">
+                                <form method="post" action="{{route('employee.update',$employee->id)}}">
             
                         <div class="row">
                             <div class="col">

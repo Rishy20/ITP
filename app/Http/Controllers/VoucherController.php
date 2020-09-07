@@ -36,6 +36,11 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'amount'=>'required|max:5',
+            'exp'=>'required',
+            ]);
+
         Voucher::create($request->all());
         return redirect()->back();
     }
