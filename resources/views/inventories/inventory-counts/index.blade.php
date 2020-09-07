@@ -30,7 +30,7 @@
 
                         <td class="action-icon">
                             <a href="{{ route('inventory-counts.edit', $inventory_count) }}"><i class="fas fa-pen"></i></a>
-                            <form method="POST" class="dlt-form" action="{{ route('$inventory_counts.destroy', $inventory_count) }}">
+                            <form method="POST" class="dlt-form" action="{{ route('inventory-counts.destroy', $inventory_count) }}">
                                 @method('DELETE')  {{-- Spoof form method as 'DELETE' to comply with destroy route --}}
                                 @csrf
                                 <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
