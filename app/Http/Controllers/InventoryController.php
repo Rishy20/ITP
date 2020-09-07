@@ -41,7 +41,8 @@ class InventoryController extends Controller
     {
         // Validate inputs
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|max:50',
+            'address' => 'max:200'
         ]);
 
         // Create inventory
