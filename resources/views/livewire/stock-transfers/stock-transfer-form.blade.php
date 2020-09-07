@@ -2,9 +2,6 @@
     <form method="POST" action="{{ route('stock-transfers.store') }}">
         @csrf
 
-        <input type="hidden" name="source" value="{{ $source }}"/>
-        <input type="hidden" name="destination" value="{{ $destination }}"/>
-
         <div class="section">
             <div class="section-title">
                 Transfer Information
@@ -13,7 +10,7 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col">
-                        <select wire:model="source" id="source" name="source" class="form-control custom-select">
+                        <select wire:model="source" id="source" name="source" class="form-control custom-select" required>
                             @foreach($inventories as $inventory)
                                 <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                             @endforeach
@@ -21,7 +18,7 @@
                         <label for="source" class="float-label">Source Outlet</label>
                     </div>
                     <div class="col">
-                        <select wire:model="destination" id="destination" name="destination" class="form-control custom-select">
+                        <select wire:model="destination" id="destination" name="destination" class="form-control custom-select" required>
                             @foreach($inventories as $inventory)
                                 <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                             @endforeach
@@ -29,7 +26,7 @@
                         <label for="destination" class="float-label">Destination Outlet</label>
                     </div>
                     <div class="col">
-                        <input type="text" id="reference" name="reference" class="form-control" placeholder="Reference #">
+                        <input type="text" id="reference" name="reference" class="form-control" placeholder="Reference #" required>
                         <label for="reference" class="float-label">Reference #</label>
                     </div>
                 </div>
@@ -77,6 +74,7 @@
                             </tbody>
                         </table>
 
+                        {{ $products->links() }}
                     </div>
                     <div class="col">
                         <p>Barcode Scan</p>
