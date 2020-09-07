@@ -50,7 +50,7 @@ class InventoryCountController extends Controller
     {
         // Validate inputs
         $request->validate([
-            'reference' => 'required|max:20',
+            'reference' => 'required|unique:inventory_counts|max:20',
             'outlet' => 'required',
             'counted_items' => 'required'
         ]);

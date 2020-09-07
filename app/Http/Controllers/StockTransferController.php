@@ -51,9 +51,9 @@ class StockTransferController extends Controller
     {
         // Validate inputs
         $request->validate([
-            'reference' => 'required|max:20',
+            'reference' => 'required|unique:stock_transfers|max:20',
             'source' => 'required',
-            'destination' => 'required',
+            'destination' => 'required|different:source',
             'transfer_items' => 'required'
         ]);
 
