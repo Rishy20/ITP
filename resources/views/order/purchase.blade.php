@@ -48,7 +48,11 @@
                 <td>{{ $row['expectedDate'] }}</td>
                 <td class="action-icon">
                     <a href="{{ route('purchase.edit',$row['id'])}}"><i class="fas fa-pen"></i></a>
-                    <a href="#"><i class="fas fa-trash-alt"></i></a>
+                    <form method="POST" class="dlt-form" action="{{ route('purchase.destroy',$row['id']) }}">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+                    </form>
                 </td>
             </tr>
         </tbody>
