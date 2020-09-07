@@ -36,26 +36,16 @@ class BankAccountController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $request->validate([
            
-            'number'=>'required',
+            'number'=>'required|max:8',
             'name'=>'required',
             'type'=>'required',
             'bankname'=>'required',
             'branchname'=>'required',
 
         ]);
-        $banks = new BankAccount;
-        $banks->number=$request->input('number');
-        $banks->name=$request->input('name');
-        $banks->type=$request->input('type');
-        $banks->bankname=$request->input('bankname');
-        $banks->branchname=$request->input('branchname');
-
-       
-
-        $banks->save();
-
+        BankAccount::create($request->all());
         return redirect('/bank');
     }
 
@@ -91,9 +81,9 @@ class BankAccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        $request->validate([
            
-            'number'=>'required',
+            'number'=>'required|max:8',
             'name'=>'required',
             'type'=>'required',
             'bankname'=>'required',
@@ -111,6 +101,7 @@ class BankAccountController extends Controller
         $banks->branchname=$request->input('branchname');
 
           $banks->save();
+          BankAccount::create($request->all());
           return redirect('/bank');
 
     }

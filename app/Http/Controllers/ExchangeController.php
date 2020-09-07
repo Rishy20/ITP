@@ -36,24 +36,16 @@ class ExchangeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $request->validate([
            
-            'productID'=>'required',
-            'customerID'=>'required',
-            'salesmanID'=>'required',
+            'productID'=>'required|max:5',
+            'customerID'=>'required|max:3',
+            'salesmanID'=>'required|max:3',
             'amount'=>'required',
             'date'=>'required',
 
         ]);
-        $exchanges = new Exchange;
-        $exchanges->productID=$request->input('productID');
-        $exchanges->customerID=$request->input('customerID');
-        $exchanges->salesmanID=$request->input('salesmanID');
-        $exchanges->amount=$request->input('amount');
-        $exchanges->date=$request->input('date');
-       
-
-        $exchanges->save();
+        Exchange::create($request->all());
         return redirect('/exchange');
     }
 
