@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
             $table->integer('Qty')->default(0);
             $table->integer('reorder_level')->default(0);
             $table->unsignedBigInteger ('supplierId');
-            $table->foreign('catID')->references('id')->on('categories');
+            $table->foreign('catID')->references('id')->on('categories')->cascadeOnDelete();
             $table->timestamps();
         });
 

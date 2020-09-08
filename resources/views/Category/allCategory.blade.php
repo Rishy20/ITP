@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">All Category</div>
 </div>
 @if(session('message'))

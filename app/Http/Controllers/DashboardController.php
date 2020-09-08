@@ -2,17 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Brand;
-use App\Category;
-use App\Inventory;
-use App\Product;
-use App\Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 
-class productController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +13,7 @@ class productController extends Controller
      */
     public function index()
     {
-        $product =DB::select('select p.id,p.pcode,p.name,p.description,p.brand,p.catID,p.sellingPrice,p.costPrice,p.discount,p.Qty,v.first_name,v.last_name from products p, vendors v where p.supplierId = v.id ');
-
-        return view('Product.allProduct',compact('product'));
-
+        return view('dashboard');
     }
 
     /**
@@ -34,15 +23,7 @@ class productController extends Controller
      */
     public function create()
     {
-        $cat =Category::all();
-        $inv =Inventory::all();
-        $brand = Brand::all();
-        $vendor = Vendor::all();
-        $last = DB::table('products')->latest()->first();
-        $barcode = $last->barcode+1;
-
-        return view('Product.addProduct',compact('cat','inv','brand','vendor','barcode'));
-
+        //
     }
 
     /**
@@ -53,10 +34,7 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
-        Session::put('message', 'Success!');
-        return redirect('/product');
-
+        //
     }
 
     /**
@@ -67,7 +45,7 @@ class productController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -78,12 +56,7 @@ class productController extends Controller
      */
     public function edit($id)
     {
-        $p = Product::findOrFail($id);
-        $cat =Category::all();
-        $inv =Inventory::all();
-        $brand = Brand::all();
-        $vendor = Vendor::all();
-        return view('Product.editProduct',compact('p','cat','inv','brand','vendor'));
+        //
     }
 
     /**
@@ -106,10 +79,6 @@ class productController extends Controller
      */
     public function destroy($id)
     {
-        $Product=Product::findOrFail($id);
-        $Product->delete();
-        Session::put('message', 'Success!');
-
-        return redirect()->back();
+        //
     }
 }

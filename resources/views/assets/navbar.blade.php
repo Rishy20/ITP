@@ -16,10 +16,10 @@
         </ul>
     </nav>
 <div class="navigation">
-    <button class="nav-btn" id="sidebarCollapseHome">
+    <a class="nav-btn" href="{{ route('dashboard') }}"  id="sidebarCollapseHome">
         <i class="fas fa-home nav-icon"></i>
         <div class="nav-text">Home</div>
-    </button>
+    </a>
     <button class="nav-btn" id="sidebarCollapseProducts">
         <i class="fas fa-tags nav-icon"></i>
         <div class="nav-text">Products</div>

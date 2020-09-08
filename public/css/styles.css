@@ -84,6 +84,9 @@ header {
     border: none;
     color: white;
 }
+#sidebarCollapseHome{
+padding-left: 8px;
+}
 #navbar {
     min-width: 201px;
     max-width: 200px;
@@ -1169,11 +1172,75 @@ button:focus{
     left: 79px;
     top: -9px;
 }
+.invalid-credentials{
+    color: #e21919;;
+    position: absolute;
+    bottom: 115px;
+    left: 48px;
+}
 .none{
     display: none;
 }
+.ministats .col{
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    height: 100px;
+    border: 1px solid #56565636;
+}
+.stats-amnt{
+    font-size: 26px;
+}
+#stats-amnt-1{
+    color: #21C3BF;
+}
+#stats-amnt-2{
+    color: #836A9D;
+}
+#stats-amnt-3{
+    color: #92C0E2;
+}
+#stats-amnt-4{
+    color: #A6EE8A;
 
+}
+.stats-name{
+    font-size: 14px;
+    font-weight: 600;
+    color: #5656567d;
+}
+.stats-icon{
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.4;
+    right: 25px;
+    top: 35px;
 
+}
+#stats-icon-1{
+    color: #21C3BF;
+    opacity: 0.2;
+}
+#stats-icon-2{
+    color: #836A9D;
+}
+#stats-icon-3{
+    color: #92C0E2;
+}
+#stats-icon-4{
+    color: #A6EE8A;
+
+}
+.section-dashboard{
+    height: 350px;
+    background-color: #fff;
+    border: 1px solid #56565636;
+    padding: 20px;
+}
+
+.login-controller .invalid-feedback{
+    width: 50%;
+}
 
 /* .barcode .store-name{
     font-size: 16px;

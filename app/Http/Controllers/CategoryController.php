@@ -90,9 +90,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($category)
+    public function destroy($cat)
     {
-        $category=Category::findOrFail($category);
+        $category=Category::findOrFail($cat);
         $category->delete();
         Session::put('message', 'Success!');
         return redirect('/category');

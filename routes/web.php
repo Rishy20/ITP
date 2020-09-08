@@ -20,7 +20,9 @@ use Milon\Barcode\PDF417;
 Route::resource('/customer', 'CustomerController');
 
 Route::resource('/promotion', 'PromotionController');
-
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/backlogin','UserController@login');
+Route::post('/validates','UserController@loginValidate')->name('validate');
 
 
 
@@ -29,8 +31,9 @@ Route::resource('/exchange','ExchangeController');
 
 
 Route::get('/', function () {
-    return view('sample');
+    return view('dashboard');
 });
+
 
 Route::resource('employee', 'EmployeeController');
 

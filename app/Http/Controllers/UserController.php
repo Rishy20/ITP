@@ -6,6 +6,7 @@ use App\User;
 use App\userRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -19,7 +20,7 @@ class UserController extends Controller
     {
         // dd(Session::has('status1'));
         $user = DB::select('select u.id, username,display_name,password,pin,status,roleId,Role_name from users u, user_roles ur where u.roleId = ur.id');
-        return view ('User.allUsers',compact('user'));
+        return view('User.allUsers', compact('user'));
     }
 
     /**
@@ -31,7 +32,7 @@ class UserController extends Controller
     {
 
         $role = userRole::all();
-        return view('User.addUser',compact('role'));
+        return view('User.addUser', compact('role'));
     }
 
     /**
@@ -43,15 +44,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username'=>'required|max:50',
-            'password'=>'required|max:20',
-            'display_name'=>'required|max:50'
+            'username' => 'required|max:50',
+            'password' => 'required|max:20',
+            'display_name' => 'required|max:50'
         ]);
         User::create($request->all());
         Session::put('message', 'Success!');
 
         return redirect()->route('user.index');
-
     }
 
     /**
@@ -62,7 +62,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -75,7 +74,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $role = userRole::all();
-        return view('User.editUser',compact('user','role'));
+        return view('User.editUser', compact('user', 'role'));
     }
 
 
@@ -95,17 +94,18 @@ class UserController extends Controller
         $user->save();
         Session::put('message', 'Success!');
         return redirect('/user');
-
     }
 
-    public function updatePassword(Request $request, $id){
+    public function updatePassword(Request $request, $id)
+    {
         $user = User::findOrFail($id);
         $user->password = $request->input('newpass');
         $user->save();
         Session::put('message', 'Success!');
         return redirect('/user');
     }
-    public function updatePin(Request $request, $id){
+    public function updatePin(Request $request, $id)
+    {
         $user = User::findOrFail($id);
         $user->pin = $request->input('newpin');
         $user->save();
@@ -124,5 +124,29 @@ class UserController extends Controller
         $user->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    public function login()
+    {
+        $user = User::all();
+        return view('login', compact('user'));
+    }
+    public function loginValidate(Request $request)
+    {
+
+        $user =  User::where('username', '=', $request->username)->get();
+
+        if (empty($user)) {
+            $request->session()->put('fail', "Login Failed");
+            return view('login');
+        } else {
+
+            if (Hash::check($request->password, $user[0]['password'])) {
+                return view('dashboard');
+            } else {
+                $request->session()->put('fail', "Login Failed");
+                return view('login');
+            }
+        }
     }
 }
