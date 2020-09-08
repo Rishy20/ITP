@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 
-<div class="editVendor"> {{-- Start of addUser --}}
+<div class="editVendor"> {{-- Start of editVendor --}}
     <div class="pg-heading">
         <i class="fa fa-arrow-left pg-back"></i>
         <div class="pg-title">Edit Vendor</div>

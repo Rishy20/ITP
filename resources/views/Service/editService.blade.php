@@ -14,35 +14,36 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
-                    <form method="post" action="{{route('user.store')}}">
+                    <form method="post" action="{{route('service.update',$s->id)}}">
                         @csrf
+                        @method('patch')
                         <div class="row">
                             <div class="col">
-                                <input type="text" id="Customer ID" name="Customer ID" class="form-control" placeholder="Customer ID" />
+                                <input type="text" id="Customer ID" value="{{ $s->customer_id }}" name="customer_id" class="form-control" placeholder="Customer ID" />
                                 <label for="Customer ID" class="float-label">Customer ID</label>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="Service ID" placeholder="Service ID">
+                                <input type="text" class="form-control" value="{{ $s->id }}" name="id" placeholder="Service ID">
                                 <label class="float-label">Service ID</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="Date" placeholder="Date">
+                                <input type="text" class="form-control" value="{{ $s->date }}"  name="date" placeholder="Date">
                                 <label class="float-label">Date</label>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="Service Description" placeholder="Service Description">
+                                <input type="text" class="form-control"  value="{{ $s->service_description}}" name="service_description" placeholder="Service Description">
                                 <label class="float-label">Service Description</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="Return Date" placeholder="Return Date">
+                                <input type="text" class="form-control" value="{{ $s->return_date}}" name="return_date" placeholder="Return Date">
                                 <label class="float-label">Return Date</label>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="cost" placeholder="cost">
+                                <input type="text" class="form-control" value="{{ $s->cost}}" name="cost" placeholder="cost">
                                 <label class="float-label">cost</label>
                             </div>
                         </div>
