@@ -11,7 +11,7 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route() }}">Add User</a> {{-- Enter the name of the add btn --}}
+                <a href="{{ route('') }}">Add User</a> {{-- Enter the name of the add btn --}}
             </div>
             <thead class="table-head">
                 <tr>

@@ -47,6 +47,9 @@ Route::resource('attendance', 'AttendanceController');
 Route::get('/sample', function () {
     return view('sampleAddForm');
 });
+Route::get('/allForm', function () {
+    return view('sampleAllForm');
+});
 
 
 
@@ -55,8 +58,18 @@ Route::resource('vendors','VendorController');
 Route::get('/test', 'VendorController@index');
 Route::post('/store', 'VendorController@store');
 Auth::routes();
+// Route::get('/purchase','PurchaseController@index')->name('order');
+// Route::get('/createOrder','PurchaseController@create')->name('createOrder');
+// Route::get('/addProduct','AddProductController@index')->name('addProduct');
+// Route::get('/editOrder','EditPurchaseOrderController@index')->name('editOrder');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('purchase', 'PurchaseController');
+
+
+// Route::get('/loyalty','AllLoyaltyController@index')->name('allLoyalty');
+// Route::get('/addLoyalty','AddLoyaltyController@index')->name('addLoyalty');
+// Route::post('/addLoyalty','AddLoyaltyController@store');
+// Route::get('/editLoyalty','EditLoyaltyController@index')->name('editLoyalty');
 
 Route::get('/pos', function(){
     return view('POS.pos');
@@ -71,7 +84,17 @@ Route::get('/role', function(){
 Route::get('/barcode', 'BarcodeController@index')->name('barcode');
 Route::get('/barcodeprint', 'BarcodeController@createPDF')->name('printBarcode');
 
+Route::resource('loyalty', 'LoyaltyController');
 
+// Route::get('/vendorPayment','VendorPaymentController@index')->name('vendorPayment');
+// Route::get('/salaryPayment','SalaryPaymentController@index')->name('salaryPayment');
+
+Route::resource('vendorPayment', 'VendorPaymentController');
+Route::resource('salaryPayment', 'SalaryPaymentController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('user', 'UserController');
 Route::resource('role', 'UserRoleController');
 Route::resource('category', 'CategoryController');

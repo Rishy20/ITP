@@ -129,6 +129,7 @@
     --}}
     <div class="user">
         <div class="pg-title">
+<<<<<<< HEAD
             <h2>Add User</h2>
             @for($i = 0; $i < 10; $i++)
             <div class="barcode mr-5 mb-3">
@@ -151,6 +152,10 @@
 
 
 
+=======
+            <h2>Purchase order
+            </h2>
+>>>>>>> ef707a640bcbe4ee5b10d0210ced6ff4c27d27ac
         </div>
     </div>
 @endsection

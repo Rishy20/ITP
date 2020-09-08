@@ -122,7 +122,7 @@
             <a href="{{ route('customer.create') }}">Add Customers</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('role.index') }}">Manage Roles</a>
+            <a href="{{ route('loyalty.index') }}">Manage Loyalty</a>
         </li>
 
     </ul>
