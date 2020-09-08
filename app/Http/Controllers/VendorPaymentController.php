@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\VendorPayment;
 
 class VendorPaymentController extends Controller
 {
@@ -13,7 +14,8 @@ class VendorPaymentController extends Controller
      */
     public function index()
     {
-        return view('VendorPayment.vendorPayment');
+        $vendorPayment = VendorPayment::all()->toArray();
+        return view('VendorPayment.allVendorPayment',compact('vendorPayment'));
     }
 
     /**
@@ -23,7 +25,7 @@ class VendorPaymentController extends Controller
      */
     public function create()
     {
-        //
+        return view('VendorPayment.addVendorPayment');
     }
 
     /**
@@ -34,7 +36,15 @@ class VendorPaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        // $request->validate([
+        //     'paymentType' => 'required|max:20',
+        //     'amount' => 'required|min:100',
+        //     'date' => 'required',
+        // ]);
+
+        VendorPayment::create($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -56,7 +66,8 @@ class VendorPaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vendorPayment = VendorPayment::find($id);
+        return view('vendorPayment.editVendorPayment', compact('vendorPayment', 'id'));
     }
 
     /**
@@ -68,7 +79,11 @@ class VendorPaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vendorPayment = VendorPayment::findOrFail($id);
+
+        $input = $request->all();
+        $vendorPayment->update($input);
+        return redirect('/vendorPayment');
     }
 
     /**
@@ -79,6 +94,8 @@ class VendorPaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vendorPayment = VendorPayment::findOrFail($id);
+        $vendorPayment->delete();
+        return redirect()->back();
     }
 }

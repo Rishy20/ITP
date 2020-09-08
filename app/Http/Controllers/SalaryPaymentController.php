@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\SalaryPayment;
 
 class SalaryPaymentController extends Controller
 {
@@ -13,7 +14,8 @@ class SalaryPaymentController extends Controller
      */
     public function index()
     {
-        return view('StaffPayment.staffPayment');
+        $salaryPayment = SalaryPayment::all()->toArray();
+        return view('StaffPayment.allStaffPayment',compact('salaryPayment'));
     }
 
     /**
@@ -23,7 +25,7 @@ class SalaryPaymentController extends Controller
      */
     public function create()
     {
-        //
+        return view('StaffPayment.addStaffPayment');
     }
 
     /**
@@ -34,7 +36,8 @@ class SalaryPaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SalaryPayment::create($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -56,7 +59,8 @@ class SalaryPaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $salaryPayment = SalaryPayment::find($id);
+        return view('staffPayment.editStaffPayment', compact('salaryPayment', 'id'));
     }
 
     /**
@@ -68,7 +72,11 @@ class SalaryPaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $salaryPayment = SalaryPayment::findOrFail($id);
+
+        $input = $request->all();
+        $salaryPayment->update($input);
+        return redirect('/salaryPayment');
     }
 
     /**
@@ -79,6 +87,8 @@ class SalaryPaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $salaryPayment = SalaryPayment::findOrFail($id);
+        $salaryPayment->delete();
+        return redirect()->back();
     }
 }

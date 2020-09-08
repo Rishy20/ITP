@@ -36,12 +36,12 @@ class LoyaltyController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $request->validate([
-            'loyaltyName' => 'required|max:20',
-            'minimumPointRequired' => 'required|min:100',
-            'tierPoints' => 'required|max:100000',
-            'points' => 'required'
-        ]);
+        // $request->validate([
+        //     'loyaltyName' => 'required|max:20',
+        //     'minimumPointRequired' => 'required|min:100',
+        //     'tierPoints' => 'required|max:100000',
+        //     'points' => 'required'
+        // ]);
 
         Loyalty::create($request->all());
         return redirect()->back();
@@ -79,12 +79,12 @@ class LoyaltyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'loyaltyName' => 'required',
-            'minimumPointRequired' => 'required',
-            'tierPoints' => 'required',
-            'points' => 'required'
-        ]);
+        // $this->validate($request,[
+        //     'loyaltyName' => 'required',
+        //     'minimumPointRequired' => 'required',
+        //     'tierPoints' => 'required',
+        //     'points' => 'required'
+        // ]);
 
         $loyalty = Loyalty::findOrFail($id);
 

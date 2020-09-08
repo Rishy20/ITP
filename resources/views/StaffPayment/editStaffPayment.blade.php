@@ -2,52 +2,53 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
-  <div class="pg-title">Vendor Payment</div>
+  <a href="{{ route('salaryPayment.index') }}"><i class="fa fa-arrow-left pg-back"></i></a>  
+  <div class="pg-title">Edit Salary Payment</div>
 </div>
 
 <div class="section" style="height: 50%;width:50%"> {{-- Start of Section--}}
   <div class="section-title">
-      Payment for Vendor's
+      Edit Payment for Employee's
       <hr>
   </div>
   <div class="section-content" > {{-- Start of sectionContent--}}
       {{-- Start of Form --}}
 
-    <form method="post" action="" >
-              @csrf
+    <form method="post" action="{{route('salaryPayment.update',$salaryPayment->id)}}" >
+        @csrf
+        @method('PATCH')
               <div class="row">
                   <div class="col">
-                      <input type="text" id="paymentId" name="paymentId" class="form-control" placeholder="Payment ID" />
-                      <label for="paymentId" class="float-label">Payment ID</label>
+                      <input type="text" class="form-control" name="staffID" value="{{ $salaryPayment->staffID }}" placeholder="staffID">
+                      <label class="float-label">Satff ID</label>
                   </div>
                   <div class="col">
-                      <input type="text" class="form-control" name="display_name" placeholder="Payment Type">
-                      <label class="float-label">Payment Type</label>
+                    <input type="text" id="vendorId" name="amount" value="{{ $salaryPayment->amount }}" class="form-control" placeholder="Amount" />
+                    <label for="vendorId" class="float-label">Amount</label>
                   </div>
               </div>
               <div class="row">
                 <div class="col">
-                  <input type="text" id="vendorId" name="vendorId" class="form-control" placeholder="Vendor ID" />
-                  <label for="vendorId" class="float-label">Vendor ID</label>
-                </div>
-                <div class="col">
-                    <input type="date" class="form-control" name="display_name" placeholder="Date">
+                    <input type="date" class="form-control" name="date" value="{{ $salaryPayment->date }}" placeholder="Date">
                     <label class="float-label">Date</label>
                 </div>
+                <div class="col"></div>
               </div>
               
 
 
               <hr>
+              <div class="form-group">
+                <input type="search" name="add_products" id="add_products" class="form-control input-lg" placeholder="Enter Staff Member Name.." style="width: 50%" />
+                
+              </div>
+              <br>
 
-              <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-                <div class="add-btn">
-                  <a href="">+ Add Vendors</a>
-                </div>
+              <table class="table hover table-striped table-borderless table-hover all-table">
+              
                 <thead class="table-head">
                     <tr>
-                        <th>Vendor ID</th>
+                        <th>Staff ID</th>
                         <th>Name</th>
                         <th>Actions</th>
                     </tr>
@@ -67,7 +68,7 @@
 
               <div class="row submit-row">
                   <div class="col">
-                      <input class="btn-submit" type="submit" value="Save">
+                      <input class="btn-submit" type="submit" value="Edit">
                   </div>
               </div>
 

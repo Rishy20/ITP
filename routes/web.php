@@ -39,9 +39,11 @@ Route::resource('purchase', 'PurchaseController');
 
 Route::resource('loyalty', 'LoyaltyController');
 
-Route::get('/vendorPayment','VendorPaymentController@index')->name('vendorPayment');
-Route::get('/salaryPayment','SalaryPaymentController@index')->name('salaryPayment');
+// Route::get('/vendorPayment','VendorPaymentController@index')->name('vendorPayment');
+// Route::get('/salaryPayment','SalaryPaymentController@index')->name('salaryPayment');
 
+Route::resource('vendorPayment', 'VendorPaymentController');
+Route::resource('salaryPayment', 'SalaryPaymentController');
 
 Auth::routes();
 

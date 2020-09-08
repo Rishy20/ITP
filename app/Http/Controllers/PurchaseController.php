@@ -34,14 +34,14 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'date' => 'required',
-            'expectedDate' => 'required',
-            'qty' => 'required|min:1',
-            'supplyPrice' => 'required|min:1',
-            'note' => 'required',
-            'vendorID' => 'required'
-        ]);
+        // $request->validate([
+        //     'date' => 'required',
+        //     'expectedDate' => 'required',
+        //     'qty' => 'required|min:1',
+        //     'supplyPrice' => 'required|min:1',
+        //     'note' => 'required',
+        //     'vendorID' => 'required'
+        // ]);
 
         Purchase::create($request->all());
         return redirect()->back();
@@ -79,14 +79,14 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'date' => 'required',
-            'expectedDate' => 'required',
-            'qty' => 'required|min:1',
-            'supplyPrice' => 'required|min:1',
-            'note' => 'required',
-            'vendorID' => 'required'
-        ]);
+        // $this->validate($request,[
+        //     'date' => 'required',
+        //     'expectedDate' => 'required',
+        //     'qty' => 'required|min:1',
+        //     'supplyPrice' => 'required|min:1',
+        //     'note' => 'required',
+        //     'vendorID' => 'required'
+        // ]);
 
         $purchase = Purchase::findOrFail($id);
 
