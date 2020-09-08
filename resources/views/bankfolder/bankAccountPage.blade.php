@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 
- 
+
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Create Bank Account</div>
@@ -14,38 +14,53 @@
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
 
-    <form method ="POST" action="{{action('BankAccountController@store')}}">
+    <form method ="POST" class="needs-validation"  action="{{action('BankAccountController@store')}}" novalidate>
 {{csrf_field()}}
 
 <div class="row">
                 <div class="col">
-                    <input type="text" id="number" name="number" class="form-control" placeholder="Account Number" />
+                    <input type="text" id="number" name="number" class="form-control" placeholder="Account Number"  required/>
                     <label for="number" class="float-label">Account Number</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
 
                 <div class="col">
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" />
-                    <label for="name" class="float-label">User Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required/>
+                    <label for="name" class="float-label">Account Name</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
                 </div>
                 <div class="row">
                 <div class="col">
-                    <input type="text" id="type" name="type" class="form-control" placeholder="Account Type" />
+                    <input type="text" id="type" name="type" class="form-control" placeholder="Account Type" required/>
                     <label for="type" class="float-label">Account Type</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
                 <div class="col">
-                    <input type="text" id="bankname" name="bankname" class="form-control" placeholder="Bank Name" />
+                    <input type="text" id="bankname" name="bankname" class="form-control" placeholder="Bank Name" required/>
                     <label for="bankname" class="float-label">Bank Name</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
                 </div>
 
                 <div class="row">
 
                 <div class="col-md-6">
-                    <input type="text" id="branchname" name="branchname" class="form-control" placeholder="Branch Name" />
+                    <input type="text" id="branchname" name="branchname" class="form-control" placeholder="Branch Name" required/>
                     <label for="branchname" class="float-label">Branch Name</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
-          
+
                 </div>
                 <div class="row submit-row">
                 <div class="col">
