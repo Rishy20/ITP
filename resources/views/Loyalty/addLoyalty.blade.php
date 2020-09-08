@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-9">
             <div class="section"> {{-- Start of Section 1--}}
-                <form method="post" action="{{route('loyalty.store')}}">
+                <form method="post" class="needs-validation" action="{{route('loyalty.store')}}" novalidate>
                 <div class="section-title">
                     Loyalty Information
                     <input class="btn-submit" type="submit" value="Submit">
@@ -23,6 +23,9 @@
                             <div class="col">
                                 <input type="text" id="loyaltyName" name="loyaltyName" class="form-control" placeholder="Loyalty Name" required/>
                                 <label for="loyaltyName" class="float-label">Loyalty Name</label>
+                                <div class="invalid-feedback">
+                                    Please fill out this field
+                                </div>
                             </div>
                         </div>
 
@@ -34,8 +37,10 @@
                         <br>
 
                         <div class="form-group">
-                            <input type="search" name="add_customer" id="add_customer" class="form-control input-lg" placeholder="Enter Customer Name" style="width: 50%" />
-
+                            <input type="search" name="add_customer" id="add_customer" class="form-control input-lg" placeholder="Enter Customer Name" style="width: 50%" required/>
+                            <div class="invalid-feedback">
+                                Please fill out this field
+                            </div>
                         </div>
                         {{ csrf_field() }}
 

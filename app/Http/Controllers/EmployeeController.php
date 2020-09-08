@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class EmployeeController extends Controller
 {
@@ -28,6 +29,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+
         return view('employee.create');
 
     }
@@ -56,8 +58,9 @@ class EmployeeController extends Controller
         ]);
 
         Employee::create($request->all());
+        Session::put('message', 'Success!');
         return redirect()->back();
-        
+
         /* $employee = new employee;
         $employee->first_name = request('fname');
         $employee->last_name = request('lname');
@@ -122,6 +125,8 @@ class EmployeeController extends Controller
         $employee->commission = $request->input('commission');
 
         $employee->save();
+        Session::put('message', 'Success!');
+
         return redirect('/employee');
     }
 
@@ -135,6 +140,7 @@ class EmployeeController extends Controller
     {
         $employee = Employee::findOrFail($id);
         $employee->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

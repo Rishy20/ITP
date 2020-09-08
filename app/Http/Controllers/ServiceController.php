@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ServiceController extends Controller
 {
@@ -24,6 +25,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
+
 
         return view('service.addService');
     }
@@ -46,6 +48,7 @@ class ServiceController extends Controller
 
             ]);
             service::create($request->all());
+            Session::put('message', 'Success!');
             return redirect()->back();
     }
 
@@ -89,6 +92,7 @@ class ServiceController extends Controller
         $vendor->service_description = $request->input('service_description');
         $vendor->cost = $request->input('cost');
         $vendor->save();
+        Session::put('message', 'Success!');
         return redirect('/service');
     }
 
@@ -102,6 +106,7 @@ class ServiceController extends Controller
     {
         $service= Service::findOrFail( $service);
         $service->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

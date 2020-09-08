@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Customer;
-
+use Illuminate\Support\Facades\Session;
 
 class CustomerController extends Controller
 {
@@ -27,6 +27,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
+
         return view('customer.addCustomer');
     }
 
@@ -51,6 +52,7 @@ class CustomerController extends Controller
 
         ]);
         Customer::create($request->all());
+        Session::put('message', 'Success!');
         return redirect('/customer');
 
 
@@ -127,6 +129,7 @@ class CustomerController extends Controller
         $cust->city = $request->input('city');
 
         $cust->save();
+        Session::put('message', 'Success!');
 
         return redirect('/customer');
 
@@ -142,7 +145,7 @@ class CustomerController extends Controller
     {
         $cust = Customer::find($id);
         $cust->delete();
-
+        Session::put('message', 'Success!');
         return redirect('/customer');
     }
 }

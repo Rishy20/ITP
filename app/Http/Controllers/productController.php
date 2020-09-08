@@ -10,6 +10,7 @@ use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class productController extends Controller
 {
@@ -38,6 +39,8 @@ class productController extends Controller
         $brand = Brand::all();
         $vendor = Vendor::all();
 
+
+
         return view('Product.addProduct',compact('cat','inv','brand','vendor'));
 
     }
@@ -52,7 +55,7 @@ class productController extends Controller
     {
         Product::create($request->all());
 
-
+        Session::put('message', 'Success!');
         return redirect()->back();
 
     }
@@ -101,6 +104,7 @@ class productController extends Controller
     {
         $Product=Product::findOrFail($id);
         $Product->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

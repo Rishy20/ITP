@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\VendorPayment;
+use Illuminate\Support\Facades\Session;
 
 class VendorPaymentController extends Controller
 {
@@ -44,6 +45,8 @@ class VendorPaymentController extends Controller
         // ]);
 
         VendorPayment::create($request->all());
+        Session::put('message', 'Success!');
+
         return redirect()->back();
     }
 
@@ -83,6 +86,7 @@ class VendorPaymentController extends Controller
 
         $input = $request->all();
         $vendorPayment->update($input);
+        Session::put('message', 'Success!');
         return redirect('/vendorPayment');
     }
 
@@ -96,6 +100,7 @@ class VendorPaymentController extends Controller
     {
         $vendorPayment = VendorPayment::findOrFail($id);
         $vendorPayment->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

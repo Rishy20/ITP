@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exchange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ExchangeController extends Controller
 {
@@ -28,6 +29,7 @@ class ExchangeController extends Controller
      */
     public function create()
     {
+
         return view('exchangefolder.createExchangePage');
     }
 
@@ -49,6 +51,7 @@ class ExchangeController extends Controller
 
         ]);
         Exchange::create($request->all());
+        Session::put('message', 'Success!');
         return redirect('/exchange');
     }
 
@@ -105,6 +108,7 @@ class ExchangeController extends Controller
         $exchanges->date=$request->input('date');
 
           $exchanges->save();
+          Session::put('message', 'Success!');
           return redirect('/exchange');
     }
 
@@ -119,6 +123,7 @@ class ExchangeController extends Controller
 
         $exchanges = Exchange::find($id);
         $exchanges->delete();
+        Session::put('message', 'Success!');
 
         return redirect('/exchange');
     }

@@ -28,7 +28,8 @@ class brandController extends Controller
     public function create()
     {
         return view('Brand.addBrand');
-        Session::put('message', 'Success!');
+
+
         return redirect('/brand');
 
     }
@@ -42,6 +43,8 @@ class brandController extends Controller
     public function store(Request $request)
     {
         Brand::create($request->all());
+        Session::put('message', 'Success!');
+        return redirect('/brand');
     }
 
     /**
@@ -81,6 +84,7 @@ class brandController extends Controller
         $input=$request->all();
         $brand->update($input);
         Session::put('message', 'Success!');
+
         return redirect('/brand');
     }
 
@@ -95,6 +99,7 @@ class brandController extends Controller
         $brand=Brand::findOrFail($id);
         $brand->delete();
         Session::put('message', 'Success!');
+
         return redirect('/brand');
 
     }

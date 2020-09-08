@@ -27,6 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+
         return view('Category.addCategory');
     }
 
@@ -81,6 +82,7 @@ class CategoryController extends Controller
         $input=$request->all();
         $category->update($input);
         Session::put('message', 'Success!');
+
         return redirect('/category');
     }
 
@@ -95,6 +97,7 @@ class CategoryController extends Controller
         $category=Category::findOrFail($category);
         $category->delete();
         Session::put('message', 'Success!');
+
         return redirect('/category');
 
     }

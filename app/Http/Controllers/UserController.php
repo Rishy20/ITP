@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\userRole;
+use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -31,6 +32,8 @@ class UserController extends Controller
     {
 
         $role = userRole::all();
+
+
         return view('User.addUser',compact('role'));
     }
 
@@ -94,6 +97,7 @@ class UserController extends Controller
         $user->roleId = $request->input('roleId');
         $user->save();
         Session::put('message', 'Success!');
+
         return redirect('/user');
 
     }

@@ -13,7 +13,16 @@
   <i class="fa fa-arrow-left pg-back"></i>
   <div class="pg-title">Purchase Order</div>
 </div>
-
+@if(session('message'))
+<div class="message">
+    <div class="message-success">
+        <i class="far fa-check-circle message-icon"></i>
+        <span class="message-text">Success!</span>
+        <span class="message-text-sub">You're awesome!!!</span>
+    </div>
+</div>
+{{ Session::forget('message') }}
+@endif
 <div class="section" style="height: 100%;width:100%"> {{-- Start of Section--}}
   <div class="section-title">
       Order Details

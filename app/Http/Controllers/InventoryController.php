@@ -6,6 +6,7 @@ use App\Inventory;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class InventoryController extends Controller
 {
@@ -27,6 +28,8 @@ class InventoryController extends Controller
      */
     public function create()
     {
+
+
         return view('inventories.create');
     }
 
@@ -51,6 +54,7 @@ class InventoryController extends Controller
 
         // Save inventory and redirect to index
         $inventory->save();
+        Session::put('message', 'Success!');
         return redirect('inventories');
     }
 
@@ -107,6 +111,7 @@ class InventoryController extends Controller
 
         // Save inventory and redirect to index
         $inventory->save();
+        Session::put('message', 'Success!');
         return redirect('inventories');
     }
 
@@ -121,6 +126,7 @@ class InventoryController extends Controller
     {
         // Delete inventory and redirect to index
         $inventory->delete();
+        Session::put('message', 'Success!');
         return redirect('inventories');
     }
 }

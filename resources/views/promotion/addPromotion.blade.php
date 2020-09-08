@@ -17,37 +17,52 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
 
-        <form method="post" action="{{route('promotion.store')}}">
+        <form method="post" class="needs-validation"  action="{{route('promotion.store')}}" novalidate>
 
             @csrf
 
             <div class="row">
                 <div class="col">
-                <input type="text" class="form-control" name="promotionname" id="promotionname" placeholder="Promotion Name">
+                <input type="text" class="form-control" name="promotionname" id="promotionname" placeholder="Promotion Name" required>
                     <label for="promotionname" class="float-label">Promotion Name</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
                 <div class="col">
-                <input type="text" class="form-control" name="promotiontype" id="promotiontype" placeholder="Promotion Type">
+                <input type="text" class="form-control" name="promotiontype" id="promotiontype" placeholder="Promotion Type" required>
                     <label class="float-label">Promotion Type</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
-                <input type="text" class="form-control" name="discount" id="discount" placeholder="Discount">
+                <input type="text" class="form-control" name="discount" id="discount" placeholder="Discount" required>
                     <label for="discount" class="float-label">Discount</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
 
             </div>
 
             <div class="row">
                 <div class="col">
-                    <input type="date" class="form-control" name="startdate" id="startdate" placeholder="Start Date">
+                    <input type="date" class="form-control" name="startdate" id="startdate" placeholder="Start Date" required>
                         <label class="float-label">Start Date</label>
+                        <div class="invalid-feedback">
+                            Please fill out this field
+                        </div>
                     </div>
                 <div class="col">
-                <input type="date" class="form-control" name="enddate" id="enddate" placeholder="End Date">
+                <input type="date" class="form-control" name="enddate" id="enddate" placeholder="End Date" required>
                     <label for="enddate" class="float-label">End Date</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
 
             </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Purchase;
+use Illuminate\Support\Facades\Session;
+
 class PurchaseController extends Controller
 {
     /**
@@ -23,6 +25,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
+        Session::put('message', 'Success!');
         return view('order.createOrder');
     }
 
@@ -92,6 +95,7 @@ class PurchaseController extends Controller
 
         $input = $request->all();
         $purchase->update($input);
+        Session::put('message', 'Success!');
         return redirect('/purchase');
     }
 
@@ -105,6 +109,8 @@ class PurchaseController extends Controller
     {
         $purchase = Purchase::findOrFail($id);
         $purchase->delete();
+        Session::put('message', 'Success!');
+
         return redirect()->back();
     }
 }

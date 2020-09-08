@@ -13,22 +13,28 @@
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
-        
-        <form method="post" action=" {{route('voucher.store')}}">
-            
-            @csrf 
+
+        <form method="post"  class="needs-validation" action=" {{route('voucher.store')}}" novalidate>
+
+            @csrf
            {{--  <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
             <div class="row">
                 <div class="col">
-                    <input type="text" id="amount" name="amount" class="form-control" placeholder="Amount" />
+                    <input type="text" id="amount" name="amount" class="form-control" placeholder="Amount" required/>
                     <label for="amount" class="float-label">Amount</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
                 <div class="col">
-                    <input type="date" id="exp" name="exp" class="form-control" placeholder="Expiry Date" />
+                    <input type="date" id="exp" name="exp" class="form-control" placeholder="Expiry Date" required />
                     <label for="exp" class="float-label">Expiry Date</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
-           
-            </div> 
+
+            </div>
         </div>
         <div class="row submit-row">
             <div class="col">
