@@ -81,7 +81,7 @@
             <a href="{{ route('expense.index') }}">Expenses</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('role.index') }}">Manage Roles</a>
+            <a href="{{ route('exchange.index') }}">Manage Exchanges</a>
         </li>
         <li class="pos-nav-li">
             <a href="#">About</a>
@@ -119,9 +119,7 @@
         <li class="pos-nav-li">
             <a href="{{ route('role.index') }}">Manage Roles</a>
         </li>
-        <li class="pos-nav-li">
-            <a href="#">About</a>
-        </li>
+
     </ul>
 </nav>
 
@@ -156,7 +154,7 @@
             <a href="{{ route('role.index') }}">Manage Roles</a>
         </li>
         <li class="pos-nav-li">
-            <a href="#">About</a>
+            <a href="{{ route('bank.index') }}">Manage Bank Accounts</a>
         </li>
     </ul>
 </nav>

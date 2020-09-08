@@ -23,6 +23,9 @@ Route::resource('/cusfolder', 'PromotionController');
 
 
 
+Route::resource('/bank','BankAccountController');
+Route::resource('/exchange','ExchangeController');
+
 
 Route::get('/', function () {
     return view('sample');

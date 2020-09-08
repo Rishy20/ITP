@@ -85,7 +85,7 @@ header {
     color: white;
 }
 #navbar {
-    min-width: 200px;
+    min-width: 201px;
     max-width: 200px;
     min-height: calc(100vh - 50px);
     position: fixed;
