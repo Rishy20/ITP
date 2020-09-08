@@ -21,7 +21,7 @@
                     @csrf
                     <div class="row">
                         <div class="col">
-                            <input type="text" name="name" class="form-control" placeholder="Product Name" required/>
+                            <input type="text" name="name" value="{{ $p->name }}" class="form-control" placeholder="Product Name" required/>
                             <label class="float-label">Product Name</label>
                             <div class="invalid-feedback">
                                 Please enter a Product name
@@ -29,7 +29,7 @@
 
                         </div>
                         <div class="col">
-                            <input type="text" name="pcode"  class="form-control" placeholder="Product code" required/>
+                            <input type="text" name="pcode" value="{{ $p->pcode }}"   class="form-control" placeholder="Product code" required/>
                             <label class="float-label">Product code</label>
                             <div class="invalid-feedback">
                                 Please enter a Product code
@@ -40,7 +40,7 @@
 
                     <div class="row">
                         <div class="col">
-                            <textarea name="description" class="form-control"  rows="5" placeholder="Description"></textarea>
+                            <textarea name="description" class="form-control"    rows="5" placeholder="Description">{{ $p->description }}</textarea>
                             <label class="float-label">Description</label>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                             <select class="form-control br-select"  name="brand" required>
                                 <option value="" disabled selected hidden>Select a Brand</option>
                                 @foreach($brand as $b)
-                                <option value="{{$b->id}}">{{$b->name}} </option>
+                                <option @if($b->id == $p->brand) selected @endif   value="{{$b->id}}">{{$b->name}} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">
@@ -84,7 +84,7 @@
                             <select class="form-control cat-select"  name="catID" required>
                                 <option value="" disabled selected hidden>Select a Category</option>
                                 @foreach($cat as $i)
-                                <option value="{{$i->id}}">{{$i->name}} </option>
+                                <option @if($i->id == $p->catID) selected @endif value="{{$i->id}}">{{$i->name}} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">
@@ -100,7 +100,7 @@
                             <select class="form-control sup-select" name="supplierId" required>
                                 <option value="" disabled selected hidden>Select a Supplier</option>
                                 @foreach($vendor as $v)
-                                <option value="{{$v->id}}">{{$v->first_name}}</option>
+                                <option @if($v->id == $p->supplierId) selected @endif  value="{{$v->id}}">{{$v->first_name}}</option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">
@@ -123,7 +123,7 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col">
-                        <input type="text" name="costPrice" id="cprice"  class="form-control" placeholder="Cost Price" required />
+                        <input type="text" name="costPrice" id="cprice" value="{{ $p->costPrice }}"   class="form-control" placeholder="Cost Price" required />
                         <label class="float-label">Cost Price</label>
                         <div class="invalid-feedback">
                             Please enter Cost Price
@@ -132,7 +132,7 @@
 
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="sprice"  name="sellingPrice" placeholder="Selling Price" required>
+                        <input type="text" class="form-control" id="sprice" value="{{ $p->sellingPrice }}"   name="sellingPrice" placeholder="Selling Price" required>
                         <label class="float-label">Selling Price</label>
                         <div class="invalid-feedback">
                             Please enter a Selling Price
@@ -142,7 +142,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <input type="text" name="discount" id="discount"  class="form-control" placeholder="Discount" required />
+                        <input type="text" name="discount" id="discount" value="{{ $p->discount }}"  class="form-control" placeholder="Discount" required />
                         <label class="float-label">Discount</label>
                         <div class="invalid-feedback">
                             Please enter a Discount
@@ -171,10 +171,10 @@
                     <div class="col">
                         <div class="form-group inv-col">
                             <label class="inv-label">Inventory</label>
-                            <select class="form-control inv-select"  required>
+                            <select class="form-control inv-select" name="inv" required>
                                 <option value="" disabled selected hidden>Select an Inventory</option>
                                 @foreach($inv as $i)
-                                <option value="{{$i->id}}">{{$i->name}} </option>
+                                <option  value="{{$i->id}}">{{$i->name}} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                     <div class="col barcode-col">
-                        <input type="text" class="form-control" name="barcode" placeholder="Barcode" value="{{ $barcode }}" >
+                        <input type="text" class="form-control" value="{{ $p->barcode }}"  name="barcode" placeholder="Barcode"  >
                         <label class="float-label">Barcode</label>
 
 
@@ -191,7 +191,7 @@
                 </div>
                 <div class="row qty-row">
                     <div class="col">
-                        <input type="text" name="Qty" class="form-control" placeholder="Quantity" required/>
+                        <input type="text" name="Qty" class="form-control" value="{{ $p->Qty }}"  placeholder="Quantity" required/>
                         <label class="float-label">Quantity</label>
                         <div class="invalid-feedback">
                             Please enter Quantity
@@ -201,7 +201,7 @@
 
 
                     <div class="col">
-                        <input type="text" name="reorder_level"  class="form-control" placeholder="Reorder Quantity" required />
+                        <input type="text" name="reorder_level" value="{{ $p->reorder_level }}"   class="form-control" placeholder="Reorder Quantity" required />
                         <label class="float-label">Reorder Quantity</label>
                         <div class="invalid-feedback">
                             Please enter Reorder Quantity
@@ -219,7 +219,11 @@
 
 <script>
 
-
+var cprice = $('#cprice').val();
+        var sprice = $('#sprice').val();
+        var discount = $('#discount').val();
+        var profit = (sprice-discount)-cprice;
+        $('#profit').val(profit);
 
     $('#sprice').change(function(){
         var cprice = $('#cprice').val();
