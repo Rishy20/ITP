@@ -38,7 +38,7 @@
                     <label for="gender" class="float-label">Gender</label>
                 </div>
                 <div class="col">
-                <input type="text" class="form-control" name="dob" id="dob" placeholder="Date Of Birth">
+                <input type="date" class="form-control" name="dob" id="dob" placeholder="Date Of Birth">
                     <label class="float-label">Date Of Birth</label>
                 </div>
             </div>

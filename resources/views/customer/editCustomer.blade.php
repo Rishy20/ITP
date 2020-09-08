@@ -1,13 +1,13 @@
 @extends('layouts.main')
 @section('content')
 
-<div class="editCustomer"> 
+<div class="editCustomer">
     <div class="pg-heading">
         <a href="{{ route('customer.index',$cust->id)}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Edit Customer</div>
     </div>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="section"> {{-- Start of Section 1--}}
                 <div class="section-title">
                     Customer Details
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </form>
-            
+
 
      </div>
 </div>

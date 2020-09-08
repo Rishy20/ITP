@@ -33,25 +33,26 @@
             </div>
 
             <div class="row">
-                <div class="col">
+                <div class="col-md-6">
                 <input type="text" class="form-control" name="discount" id="discount" placeholder="Discount">
                     <label for="discount" class="float-label">Discount</label>
                 </div>
-                <div class="col">
-                <input type="text" class="form-control" name="startdate" id="startdate" placeholder="Start Date">
-                    <label class="float-label">Start Date</label>
-                </div>
+
             </div>
 
             <div class="row">
                 <div class="col">
-                <input type="text" class="form-control" name="enddate" id="enddate" placeholder="End Date">
+                    <input type="date" class="form-control" name="startdate" id="startdate" placeholder="Start Date">
+                        <label class="float-label">Start Date</label>
+                    </div>
+                <div class="col">
+                <input type="date" class="form-control" name="enddate" id="enddate" placeholder="End Date">
                     <label for="enddate" class="float-label">End Date</label>
                 </div>
-               
+
             </div>
 
-           
+
             <div class="row submit-row">
                 <div class="col">
                     <input class="btn-submit" type="submit" value="Save">

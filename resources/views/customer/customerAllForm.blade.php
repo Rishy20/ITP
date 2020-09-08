@@ -22,7 +22,7 @@
                 <th>DOB</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Street Address</th>
+
                 <th>City</th>
                 <th>Actions</th>
                 </tr>
@@ -37,16 +37,16 @@
                 <td> {{ $row->dob }} </td>
                 <td> {{ $row->email }} </td>
                 <td> {{ $row->phone }} </td>
-                <td> {{ $row->streetaddress }} </td>
+
                 <td> {{ $row->city }} </td>
-                   
+
                     <td class="action-icon">
                     <a href = "{{ route('customer.edit', $row->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         {{-- Delete Icon --}}
+                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
                         <form method="POST" class="dlt-form" action="{{route('customer.destroy',$row->id)}}">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>

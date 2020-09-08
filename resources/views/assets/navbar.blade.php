@@ -63,6 +63,10 @@
         <li class="pos-nav-li">
             <a href="{{ route('brand.index') }}">Manage Brands</a>
         </li>
+
+        <li class="pos-nav-li">
+            <a href="{{ route('promotion.index') }}">Manage Promotions</a>
+        </li>
         <li class="pos-nav-li">
             <a href="{{ route('barcode') }}">Print Labels</a>
         </li>
@@ -84,8 +88,9 @@
             <a href="{{ route('exchange.index') }}">Manage Exchanges</a>
         </li>
         <li class="pos-nav-li">
-            <a href="#">About</a>
+            <a href="{{ route('voucher.index') }}">Manage Vouchers</a>
         </li>
+
     </ul>
 </nav>
 
@@ -111,10 +116,10 @@
 <nav id="navbar" class="navbar-customers">
     <ul class="list-unstyled components">
         <li class="pos-nav-li">
-            <a href="{{ route('user.index') }}" >All Customers</a>
+            <a href="{{ route('customer.index') }}" >All Customers</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('user.create') }}">Add Customers</a>
+            <a href="{{ route('customer.create') }}">Add Customers</a>
         </li>
         <li class="pos-nav-li">
             <a href="{{ route('role.index') }}">Manage Roles</a>
@@ -155,6 +160,9 @@
         </li>
         <li class="pos-nav-li">
             <a href="{{ route('bank.index') }}">Manage Bank Accounts</a>
+        </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('vendors.index') }}">Manage Vendors</a>
         </li>
     </ul>
 </nav>

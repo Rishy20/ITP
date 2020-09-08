@@ -22,7 +22,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Actions</th>
-               
+
                 </tr>
             </thead>
             <tbody>
@@ -34,14 +34,15 @@
                 <td> {{ $row->discount }} </td>
                 <td> {{ $row->startdate }} </td>
                 <td> {{ $row->enddate }} </td>
-                   
+
                     <td class="action-icon">
                     <a href = "{{ route('promotion.edit', $row->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         {{-- Delete Icon --}}
+                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
                         <form method="POST" class="dlt-form" action="{{route('promotion.destroy',$row->id)}}">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+
                         </form>
                     </td>
                 </tr>

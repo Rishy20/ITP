@@ -39,7 +39,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-           
+
             'firstname' => 'required',
             'lastname' => 'required',
             'gender' => 'required',
@@ -48,11 +48,11 @@ class CustomerController extends Controller
             'phone' => 'required',
             'streetaddress' => 'required',
             'city' => 'required',
-            
+
         ]);
         Customer::create($request->all());
-        return redirect()->back();
-        
+        return redirect('/customer');
+
 
         $cust = new Customer;
 
@@ -103,7 +103,7 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-           
+
             'firstname' => 'required',
             'lastname' => 'required',
             'gender' => 'required',
@@ -112,7 +112,7 @@ class CustomerController extends Controller
             'phone' => 'required',
             'streetaddress' => 'required',
             'city' => 'required',
-            
+
         ]);
 
         $cust = Customer::find($id);
@@ -129,7 +129,7 @@ class CustomerController extends Controller
         $cust->save();
 
         return redirect('/customer');
-        
+
     }
 
     /**
