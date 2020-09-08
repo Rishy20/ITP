@@ -112,3 +112,6 @@ Route::resource('inventories', 'InventoryController');
 Route::resource('stock-transfers', 'StockTransferController');
 Route::resource('inventory-counts', 'InventoryCountController');
 Route::get('inventory-counts/{inventory_count}/replace', 'InventoryCountController@replace')->name('inventory-counts.replace');
+
+Route::get('/reports', 'ReportController@index')->name('reports.index');
+Route::get('/reports/{report}', 'ReportController@generateReport')->name('reports.generate');

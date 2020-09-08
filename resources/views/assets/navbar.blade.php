@@ -107,16 +107,19 @@
 <nav id="navbar" class="navbar-reports">
     <ul class="list-unstyled components">
         <li class="pos-nav-li">
-            <a href="{{ route('user.index') }}" >All Reports</a>
+            <a href="{{ route('reports.index') }}" >All Reports</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('user.create') }}">Product Reports</a>
+            <a href="{{ route('reports.index') }}">Sales Report</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('role.index') }}">Manage Roles</a>
+            <a href="{{ route('reports.index') }}">Inventory Report</a>
         </li>
         <li class="pos-nav-li">
-            <a href="#">About</a>
+            <a href="{{ route('reports.index') }}">Product Report</a>
+        </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('reports.index') }}">Customer Report</a>
         </li>
     </ul>
 </nav>
