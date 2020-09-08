@@ -21,7 +21,7 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
-                <a>Add Vendor</a>
+               <a href="{{ route('vendors.create') }}"> Add Vendor </a>
             </div>
             <thead class="table-head">
                 <tr>

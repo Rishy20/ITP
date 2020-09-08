@@ -1,9 +1,9 @@
 @extends('layouts.main')
 @section('content')
 
-<div class="addService"> {{-- Start of addUser --}}
+<div class="addService"> {{-- Start of addService --}}
     <div class="pg-heading">
-        <i class="fa fa-arrow-left pg-back"></i>
+        <a href="{{ route('service.index') }}"<i class="fa fa-arrow-left pg-back"></i> </a>
         <div class="pg-title">Add Service</div>
     </div>
     <div class="row">
@@ -14,31 +14,31 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
-                    <form method="post" action="{{route('user.store')}}">
+                    <form method="post" action="{{route('service.store')}}">
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <input type="text" id="Customer ID" name="Customer ID" class="form-control" placeholder="Customer ID" />
+                                <input type="text" id="Customer ID" name="customer_id" class="form-control" placeholder="Customer ID" />
                                 <label for="Customer ID" class="float-label">Customer ID</label>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="Service ID" placeholder="Service ID">
+                                <input type="text" class="form-control" name="id" placeholder="Service ID">
                                 <label class="float-label">Service ID</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="Date" placeholder="Date">
+                                <input type="text" class="form-control" name="date" placeholder="Date">
                                 <label class="float-label">Date</label>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="Service Description" placeholder="Service Description">
+                                <input type="text" class="form-control" name="service_description" placeholder="Service Description">
                                 <label class="float-label">Service Description</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="Return Date" placeholder="Return Date">
+                                <input type="text" class="form-control" name="return_date" placeholder="Return Date">
                                 <label class="float-label">Return Date</label>
                             </div>
                             <div class="col">

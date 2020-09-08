@@ -57,6 +57,7 @@ Route::get('/allForm', function () {
 
 
 Route::resource('vendors','VendorController');
+Route::resource('service', 'ServiceController');
 
 Route::get('/test', 'VendorController@index');
 Route::post('/store', 'VendorController@store');

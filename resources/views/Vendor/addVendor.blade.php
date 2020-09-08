@@ -1,9 +1,9 @@
 @extends('layouts.main')
 @section('content')
 
-<div class="addVendor"> {{-- Start of addUser --}}
+<div class="addVendor"> {{-- Start of addVendor --}}
     <div class="pg-heading">
-        <i class="fa fa-arrow-left pg-back"></i>
+        <a href="{{ route('vendors.index') }}"<i class="fa fa-arrow-left pg-back"></i> </a>
         <div class="pg-title">Add Vendor</div>
     </div>
     <div class="row">

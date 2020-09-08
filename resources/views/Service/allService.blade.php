@@ -12,7 +12,7 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
-                <a>Add Service</a>
+                <a href="{{ route('service.create') }}">Add Service</a>
             </div>
             <thead class="table-head">
                 <tr>
@@ -26,32 +26,26 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($service as $s)
                 <tr>
-                    <td>SE85</td>
-                    <td>CID581</td>
-                    <td>12/04/2020</td>
-                    <td>06/04/2020</td>
-                    <td>New heel change</td>
-                    <td>Rs.850.00</td>
+                    <td>{{ $s->id  }}</td>
+                    <td>{{ $s->customer_id }}</td>
+                    <td>{{ $s->date }}</td>
+                    <td>{{ $s->return_date }}</td>
+                    <td>{{ $s->service_description }}</td>
+                    <td>{{ $s->cost }}</td>
                     <td class="action-icon">
-                        <a href="#"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-                        <a href="#"><i class="fas fa-trash-alt"></i></a> {{-- Delete icon --}}
+                        <a href="{{ route('service.edit',$s->id) }}"><i class="fas fa-pen"></i></a>
+
+                        <form method="POST" class="dlt-form"  action="{{ route('service.destroy',$s) }}">
+                            @method('DELETE')
+                            @csrf
+                            <button class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+                        </form>
                     </td>
 
                 </tr>
-                <tr>
-                    <td>SE87</td>
-                    <td>CID582</td>
-                    <td>10/05/2020</td>
-                    <td>08/04/2020</td>
-                    <td>Color Damage</td>
-                    <td>Rs.1000.00</td>
-
-                    <td class="action-icon">
-                        <a href="#"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-                        <a href="#"><i class="fas fa-trash-alt"></i></a> {{-- Delete icon --}}
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
 

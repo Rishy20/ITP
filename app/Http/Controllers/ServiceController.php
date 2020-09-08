@@ -14,7 +14,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('Service.allService');
+        $service = Service::all();
+        return view('Service.allService',compact('service'));
+
     }
 
     /**
@@ -37,15 +39,15 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'service_id'=>'required|max:20',
-            'customer_id'=>'required|max:20',
-            'date'=>'required|max:10',
-            'return_date'=>'required|max:10',
-            'service_description'=>'required|max:100',
-            'cost'=>'required|max:10',
+            //'service_id'=>'required|max:20',
+            //'customer_id'=>'required|max:20',
+            //'date'=>'required|max:10',
+            //'return_date'=>'required|max:10',
+            //'service_description'=>'required|max:100',
+            //'cost'=>'required|max:10',
 
             ]);
-            service::create($request->all());
+            Service::create($request->all());
             return redirect()->back();
     }
 
@@ -66,10 +68,10 @@ class ServiceController extends Controller
      * @param  \App\service  $service
      * @return \Illuminate\Http\Response
      */
-    public function edit(service $service)
+    public function edit($id)
     {
-        $service = Service::find($service);
-        return view('service.editService',compact('service'));
+        $s = Service::find($id);
+        return view('service.editService',compact('s','id'));
 
     }
 
@@ -82,13 +84,12 @@ class ServiceController extends Controller
      */
     public function update(Request $request, service $service)
     {
-        $vendor = Service::findOrFail($service);
-        $vendor->service_id = $request->input('service_id');
-        $vendor->customer_id = $request->input('customer_id');
-        $vendor->date = $request->input('return_date');
-        $vendor->service_description = $request->input('service_description');
-        $vendor->cost = $request->input('cost');
-        $vendor->save();
+        $service->id = $request->input('id');
+        $service->customer_id = $request->input('customer_id');
+        $service->date = $request->input('return_date');
+        $service->service_description = $request->input('service_description');
+        $service->cost = $request->input('cost');
+        $service->save();
         return redirect('/service');
     }
 
@@ -98,9 +99,8 @@ class ServiceController extends Controller
      * @param  \App\service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(service $service)
+    public function destroy(Service $service)
     {
-        $service= Service::findOrFail( $service);
         $service->delete();
         return redirect()->back();
     }
