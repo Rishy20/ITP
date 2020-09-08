@@ -14,47 +14,74 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
-                    <form method="post" action="{{route('vendors.update',$v->id)}}">
+                    <form method="post" class="needs-validation"  action="{{route('vendors.update',$v->id)}}" novalidate>
                         @csrf
                         @method('patch')
                         <div class="row">
                             <div class="col">
-                                <input type="text" id="First Name" value="{{ $v->first_name }}" name="first_name" class="form-control" placeholder="First Name" />
+                                <input type="text" id="First Name" value="{{ $v->first_name }}" name="first_name" class="form-control" placeholder="First Name" required/>
                                 <label for="First Name" class="float-label">First Name</label>
+                                <div class="invalid-feedback">
+                                    Please enter First Name
+                                </div>
+
                             </div>
 
                             <div class="col">
-                                <input type="text" class="form-control" value="{{ $v->last_name }}" name="last_name" placeholder="Last Name">
+                                <input type="text" class="form-control" value="{{ $v->last_name }}" name="last_name" placeholder="Last Name" required>
                                 <label class="float-label">Last Name</label>
+                                <div class="invalid-feedback">
+                                    Please enter Last name
+                                </div>
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" value="{{ $v->address }}" name="address" placeholder="Vendor Address">
+                                <input type="text" class="form-control" value="{{ $v->address }}" name="address" placeholder="Vendor Address" required>
                                 <label class="float-label">Vendor Address</label>
+                                <div class="invalid-feedback">
+                                    Please enter Vendor Address
+                                </div>
+
                             </div>
 
                             <div class="col">
-                                <input type="text" class="form-control"  value="{{ $v->city }}" name="email" placeholder="Email">
+                                <input type="text" class="form-control"  value="{{ $v->city }}" name="email" placeholder="Email" required>
                                 <label class="float-label">Email</label>
+                                <div class="invalid-feedback">
+                                    Please enter Email
+                                </div>
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" value="{{ $v->company_name }}" name="company_name" placeholder="Company Name">
+                                <input type="text" class="form-control" value="{{ $v->company_name }}" name="company_name" placeholder="Company Name" required>
                                 <label class="float-label">Company Name</label>
+                                <div class="invalid-feedback">
+                                    Please enter Company name
+                                </div>
+
                             </div>
 
                             <div class="col">
-                                <input type="text" class="form-control" value="{{ $v->phone_no }}" name="phone_no" placeholder="Phone Number">
+                                <input type="text" class="form-control" value="{{ $v->phone_no }}" name="phone_no" placeholder="Phone Number" required>
                                 <label class="float-label">Phone Number</label>
+                                <div class="invalid-feedback">
+                                    Please enter Phone Number
+                                </div>
+
                             </div>
                         </div>
                         <div class="row" style="width: 53%">
 
                             <div class="col">
-                                <input type="text" class="form-control" value="{{ $v->city }}" name="city" placeholder="City">
+                                <input type="text" class="form-control" value="{{ $v->city }}" name="city" placeholder="City" required>
                                 <label class="float-label">City</label>
+                                <div class="invalid-feedback">
+                                    Please enter City
+                                </div>
                             </div>
                         </div>
                         <div class="row submit-row">

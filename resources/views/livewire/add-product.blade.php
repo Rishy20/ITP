@@ -10,16 +10,24 @@
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
                     {{-- Start of Form --}}
-                    <form method="post" action="{{route('product.store')}}" wire:submit.prevent="save">
+                    <form method="post" class="needs-validation" action="{{route('product.store')}}" wire:submit.prevent="save" novalidate>
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <input type="text" name="name" wire:model.lazy="pname" class="form-control" placeholder="Product Name" />
+                                <input type="text" name="name" wire:model.lazy="pname" class="form-control" placeholder="Product Name" required/>
                                 <label class="float-label">Product Name</label>
+                                <div class="invalid-feedback">
+                                    Please enter a Product name
+                                </div>
+
                             </div>
                             <div class="col">
-                                <input type="text" name="pcode" wire:model.lazy="pcode" class="form-control" placeholder="Product code" />
+                                <input type="text" name="pcode" wire:model.lazy="pcode" class="form-control" placeholder="Product code" required/>
                                 <label class="float-label">Product code</label>
+                                <div class="invalid-feedback">
+                                    Please enter a Product code
+                                </div>
+
                             </div>
                         </div>
 
@@ -46,12 +54,17 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="br-label">Brand</label>
-                                <select class="form-control br-select" wire:model.lazy="pbrand" name="brand">
+
+
+                                <select class="form-control br-select" wire:model.lazy="pbrand" name="brand" required>
                                     <option value="" disabled selected hidden>Select a Brand</option>
                                     @foreach($brand as $b)
                                     <option value="{{$b->id}}">{{$b->name}} </option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please Select a Brand
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -59,12 +72,17 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="cat-label">Category</label>
-                                <select class="form-control cat-select" wire:model.lazy="pcat" name="catID">
+
+
+                                <select class="form-control cat-select" wire:model.lazy="pcat" name="catID" required>
                                     <option value="" disabled selected hidden>Select a Category</option>
                                     @foreach($cat as $i)
                                     <option value="{{$i->id}}">{{$i->name}} </option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please Select a Product Category
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -72,12 +90,15 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="sup-label">Supplier</label>
-                                <select class="form-control sup-select" wire:model.lazy="psup" name="supplierId">
+                                <select class="form-control sup-select" wire:model.lazy="psup" name="supplierId" required>
                                     <option value="" disabled selected hidden>Select a Supplier</option>
                                     @foreach($vendor as $v)
                                     <option value="{{$v->id}}">{{$v->first_name}}</option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please Select a Supplier
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -95,22 +116,38 @@
                 <div class="section-content">
                     <div class="row">
                         <div class="col">
-                            <input type="text" name="costPrice" wire:model.lazy="cprice" class="form-control" placeholder="Cost Price" />
+                            <input type="text" name="costPrice" wire:model.lazy="cprice" class="form-control" placeholder="Cost Price" required />
                             <label class="float-label">Cost Price</label>
+                            <div class="invalid-feedback">
+                                Please enter Cost Price
+                            </div>
+
+
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" wire:model.lazy="sprice" name="sellingPrice" placeholder="Selling Price">
+                            <input type="text" class="form-control" wire:model.lazy="sprice" name="sellingPrice" placeholder="Selling Price" required>
                             <label class="float-label">Selling Price</label>
+                            <div class="invalid-feedback">
+                                Please enter Selling Price
+                            </div>
+
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="text" name="discount" wire:model.lazy="pdiscount" class="form-control" placeholder="Discount" />
+                            <input type="text" name="discount" wire:model.lazy="pdiscount" class="form-control" placeholder="Discount" required />
                             <label class="float-label">Discount</label>
+                            <div class="invalid-feedback">
+                                Please enter Discount
+                            </div>
+
+
                         </div>
                         <div class="col">
                             <input type="text" name="Profit" class="form-control" placeholder="Profit" />
                             <label class="float-label">Profit</label>
+
+
                         </div>
                     </div>
                 </div>
@@ -129,29 +166,42 @@
                         <div class="col">
                             <div class="form-group inv-col">
                                 <label class="inv-label">Inventory</label>
-                                <select class="form-control inv-select" wire:model.lazy="pinv">
+                                <select class="form-control inv-select" wire:model.lazy="pinv" required>
                                     <option value="" disabled selected hidden>Select an Inventory</option>
                                     @foreach($inv as $i)
                                     <option value="{{$i->id}}">{{$i->name}} </option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                    Please Select a Inventory
+                                </div>
                             </div>
                         </div>
                         <div class="col barcode-col">
-                            <input type="text" class="form-control" name="barcode" placeholder="Barcode" wire:model="barcode" ">
+                            <input type="text" class="form-control" name="barcode" placeholder="Barcode" wire:model="barcode" >
                             <label class="float-label">Barcode</label>
+
+
                         </div>
                     </div>
                     <div class="row qty-row">
                         <div class="col">
-                            <input type="text" name="Qty" wire:model.lazy="pqty" class="form-control" placeholder="Quantity" />
+                            <input type="text" name="Qty" wire:model.lazy="pqty" class="form-control" placeholder="Quantity" required/>
                             <label class="float-label">Quantity</label>
+                            <div class="invalid-feedback">
+                                Please enter Quantity
+                            </div>
+
                         </div>
 
 
                         <div class="col">
-                            <input type="text" name="reorder_level" wire:model.lazy="prqty" class="form-control" placeholder="Reorder Quantity" />
+                            <input type="text" name="reorder_level" wire:model.lazy="prqty" class="form-control" placeholder="Reorder Quantity" required />
                             <label class="float-label">Reorder Quantity</label>
+                            <div class="invalid-feedback">
+                                Please enter Reorder Quantity
+                            </div>
+
                         </div>
 
 

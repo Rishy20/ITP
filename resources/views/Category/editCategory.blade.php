@@ -13,13 +13,17 @@
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
-        <form method="post" action="{{route('category.update',$cat->id)}}">
+        <form method="post" class="needs-validation"  action="{{route('category.update',$cat->id)}}" novalidate>
             @csrf
             @method('PATCH')
             <div class="row">
                 <div class="col">
-                <input type="text"  name="name"  value="{{$cat->name}}"class="form-control" placeholder="Category Name" />
+                <input type="text"  name="name"  value="{{$cat->name}}"class="form-control" placeholder="Category Name" required />
                     <label  class="float-label">Category Name</label>
+                    <div class="invalid-feedback">
+                        Please enter a name
+                    </div>
+
                 </div>
             </div>
             <div class="row">

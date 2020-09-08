@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-  
+
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Edit Bank Account Details</div>
@@ -14,38 +14,53 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
 
-    <form method ="POST" action="{{action('BankAccountController@update',$banks->id)}}">
+    <form method ="POST" class="needs-validation"  action="{{action('BankAccountController@update',$banks->id)}}">
 {{csrf_field()}}
 
 <div class="row">
                 <div class="col">
-    <input type="text" class="form-control" name="number" id="number" value="{{ $banks->number}}"  placeholder="Account Number"/>
+    <input type="text" class="form-control" name="number" id="number" value="{{ $banks->number}}"  placeholder="Account Number" required/>
     <label for="number" class="float-label">Account Number</label>
+    <div class="invalid-feedback">
+        Please fill out field
+    </div>
   </div>
 
   <div class="col">
-    <input type="text" class="form-control" name="name" id="name" value="{{ $banks->name}}" placeholder="Account Name"/>
+    <input type="text" class="form-control" name="name" id="name" value="{{ $banks->name}}" placeholder="Account Name" required/>
     <label for="name" class="float-label">User Name</label>
+    <div class="invalid-feedback">
+        Please fill out field
+    </div>
   </div>
   </div>
 
   <div class="row">
                 <div class="col">
-    <input type="text" class="form-control" name="type" id="type" value="{{ $banks->type}}" placeholder="Account Type"/>
+    <input type="text" class="form-control" name="type" id="type" value="{{ $banks->type}}" placeholder="Account Type" required/>
     <label for="type" class="float-label">Account Type</label>
+    <div class="invalid-feedback">
+        Please fill out field
+    </div>
   </div>
 
   <div class="col">
-    <input type="text" class="form-control" id="bankname" name="bankname"  value="{{ $banks->bankname}}" placeholder="Bank Name"/>
+    <input type="text" class="form-control" id="bankname" name="bankname"  value="{{ $banks->bankname}}" placeholder="Bank Name" required/>
     <label for="bankname" class="float-label">Bank Name</label>
+    <div class="invalid-feedback">
+        Please fill out field
+    </div>
   </div>
   </div>
 
   <div class="row">
 
                 <div class="col-md-6">
-    <input type="text" class="form-control" id="branchname" name="branchname" value="{{ $banks->branchname}}" placeholder="Branch Name"/>
+    <input type="text" class="form-control" id="branchname" name="branchname" value="{{ $banks->branchname}}" placeholder="Branch Name" required/>
     <label for="branchname" class="float-label">Branch Name</label>
+    <div class="invalid-feedback">
+        Please fill out field
+    </div>
   </div>
   </div>
 
