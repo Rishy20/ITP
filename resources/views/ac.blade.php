@@ -3,34 +3,28 @@
 
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
-    <div class="pg-title">Add Brands</div>
+    <div class="pg-title">Enter the page heading</div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
     <div class="section-title">
-        Brand Information
+        Enter the name of the Section
         <hr>
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
-        <form method="post" class="needs-validation" action="{{route('brand.store')}}" novalidate>
+        <form method="post" action="">
             @csrf
             <div class="row">
                 <div class="col">
-                    <input type="text"  name="name" class="form-control" placeholder="Brand Name" required/>
-                    <label  class="float-label">Brand Name</label>
-                    <div class="invalid-feedback">
-                        Please enter a name
-                    </div>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
+                    <label for="username" class="float-label">Username</label>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col">
-                    <textarea class="form-control" name="description" placeholder="Brand Description"></textarea>
-                    <label class="float-label">Brand Description</label>
+                    <input type="text" class="form-control" name="display_name" placeholder="Display name">
+                    <label class="float-label">Display name</label>
                 </div>
             </div>
-
             <div class="row submit-row">
                 <div class="col">
                     <input class="btn-submit" type="submit" value="Save">

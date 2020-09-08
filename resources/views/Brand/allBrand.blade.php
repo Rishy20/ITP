@@ -6,13 +6,26 @@
     <div class="pg-title">All Brands</div>
 </div>
 
+@if(session('message'))
+<div class="message">
+    <div class="message-success">
+        <i class="far fa-check-circle message-icon"></i>
+        <span class="message-text">Success!</span>
+        <span class="message-text-sub">You're awesome!!!</span>
+    </div>
+</div>
+{{ Session::forget('message') }}
+@endif
 <div class="section"> {{-- Start of Section--}}
 
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn"> {{-- Add button --}}
-                <a>Add Brand</a> {{-- Enter the name of the add btn --}}
+                <a href="{{ route('brand.create') }}">Export Brands</a> {{-- Enter the name of the add btn --}}
+            </div>
+            <div class="add-btn"> {{-- Add button --}}
+                <a href="{{ route('brand.create') }}">Add Brand</a> {{-- Enter the name of the add btn --}}
             </div>
             <thead class="table-head">
 
@@ -31,11 +44,11 @@
 
                     <td class="action-icon">
                         <a href="{{route('brand.edit',$i->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-
+                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
                         <form method="POST" class="dlt-form" action="{{ route('brand.destroy',$i->id)}}">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+
                         </form>
                     </td>
                 </tr>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class brandController extends Controller
 {
@@ -27,6 +28,9 @@ class brandController extends Controller
     public function create()
     {
         return view('Brand.addBrand');
+        Session::put('message', 'Success!');
+        return redirect('/brand');
+
     }
 
     /**
@@ -76,6 +80,7 @@ class brandController extends Controller
         $brand=Brand::findOrFail($id);
         $input=$request->all();
         $brand->update($input);
+        Session::put('message', 'Success!');
         return redirect('/brand');
     }
 
@@ -89,6 +94,7 @@ class brandController extends Controller
     {
         $brand=Brand::findOrFail($id);
         $brand->delete();
+        Session::put('message', 'Success!');
         return redirect('/brand');
 
     }

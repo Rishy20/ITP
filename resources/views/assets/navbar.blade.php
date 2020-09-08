@@ -52,16 +52,16 @@
 <nav id="navbar" class="navbar-products">
     <ul class="list-unstyled components">
         <li class="pos-nav-li">
-            <a href="{{ route('user.index') }}" >All Products</a>
+            <a href="{{ route('product.index') }}" >All Products</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('user.create') }}">Add Products</a>
+            <a href="{{ route('product.create') }}">Add Products</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('role.index') }}">Manage Categories</a>
+            <a href="{{ route('category.index') }}">Manage Categories</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('role.index') }}">Manage Brands</a>
+            <a href="{{ route('brand.index') }}">Manage Brands</a>
         </li>
         <li class="pos-nav-li">
             <a href="{{ route('barcode') }}">Print Labels</a>

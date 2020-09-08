@@ -11,7 +11,10 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route('product.create',) }}">Add Product</a> {{-- Enter the name of the add btn --}}
+                <a href="{{ route('product.create') }}">Export Products</a> {{-- Enter the name of the add btn --}}
+            </div>
+            <div class="add-btn"> {{-- Add button --}}
+                <a href="{{ route('product.create') }}">Add Product</a> {{-- Enter the name of the add btn --}}
             </div>
             <thead class="table-head">
                 <tr>
@@ -34,7 +37,7 @@
                     <td>{{$i->Qty}}</td>
                     <td>{{$i->costPrice}}</td>
                     <td>{{$i->sellingPrice}}</td>
-                    <td>{{$i->supplierId}}</td>
+                    <td>{{$i->first_name." ".$i->last_name}}</td>
 
 
                     {{-- <td> --}}

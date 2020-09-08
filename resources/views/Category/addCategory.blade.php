@@ -13,12 +13,15 @@
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
-        <form method="post" action="{{route('category.store')}}">
+        <form method="post" class="needs-validation" action="{{route('category.store')}}" novalidate>
             @csrf
             <div class="row">
                 <div class="col">
-                    <input type="text"  name="name" class="form-control" placeholder="Category Name" />
+                    <input type="text"  name="name" class="form-control" placeholder="Category Name" required />
                     <label  class="float-label">Category Name</label>
+                    <div class="invalid-feedback">
+                        Please enter a name
+                    </div>
                 </div>
             </div>
             <div class="row">

@@ -6,8 +6,10 @@ use App\Brand;
 use App\Category;
 use App\Inventory;
 use App\Product;
+use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\DB;
 
 class productController extends Controller
 {
@@ -18,7 +20,8 @@ class productController extends Controller
      */
     public function index()
     {
-        $product =Product::all();
+        $product =DB::select('select p.id,p.pcode,p.name,p.description,p.brand,p.catID,p.sellingPrice,p.costPrice,p.discount,p.Qty,v.first_name,v.last_name from products p, vendors v where p.supplierId = v.id ');
+
         return view('Product.allProduct',compact('product'));
 
     }
@@ -33,8 +36,9 @@ class productController extends Controller
         $cat =Category::all();
         $inv =Inventory::all();
         $brand = Brand::all();
+        $vendor = Vendor::all();
 
-        return view('Product.addProduct',compact('cat','inv','brand'));
+        return view('Product.addProduct',compact('cat','inv','brand','vendor'));
 
     }
 

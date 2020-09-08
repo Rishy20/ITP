@@ -48,8 +48,8 @@
                                 <label class="br-label">Brand</label>
                                 <select class="form-control br-select" wire:model.lazy="pbrand" name="brand">
                                     <option value="" disabled selected hidden>Select a Brand</option>
-                                    @foreach($inv as $i)
-                                    <option value="{{$i->id}}">{{$i->name}} </option>
+                                    @foreach($brand as $b)
+                                    <option value="{{$b->id}}">{{$b->name}} </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -74,8 +74,8 @@
                                 <label class="sup-label">Supplier</label>
                                 <select class="form-control sup-select" wire:model.lazy="psup" name="supplierId">
                                     <option value="" disabled selected hidden>Select a Supplier</option>
-                                    @foreach($inv as $i)
-                                    <option value="{{$i->id}}">{{$i->name}} </option>
+                                    @foreach($vendor as $v)
+                                    <option value="{{$v->id}}">{{$v->first_name}}</option>
                                     @endforeach
                                 </select>
                             </div>

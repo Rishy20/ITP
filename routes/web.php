@@ -47,6 +47,11 @@ Route::get('/sample', function () {
 });
 
 
+
+Route::resource('vendors','VendorController');
+
+Route::get('/test', 'VendorController@index');
+Route::post('/store', 'VendorController@store');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

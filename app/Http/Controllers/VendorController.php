@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
-class CategoryController extends Controller
+class VendorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
-        $category= Category::all();
-        return view ('Category.allCategory',compact('category'));
+        $vendor = Vendor::all();
+        return view('Vendor.allVendor',compact('vendor'));
     }
 
     /**
@@ -27,7 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('Category.addCategory');
+
+        return view('Vendor.addVendor');
     }
 
     /**
@@ -38,64 +37,69 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
-        Session::put('message', 'Success!');
-        return redirect('/category');
 
+        // $request->validate([
+        // 'first_name'=>'required|max:50',
+        // 'last_name'=>'required|max:50',
+        // 'company_name'=>'required|max:20',
+        // 'address'=>'required|max:50',
+        // 'city'=>'required|max:10',
+        // 'email'=>'required|max:20',
+        // 'phone_no'=>'required|max:50',
+        // ]);
+        Vendor::create($request->all());
+        return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($category)
+    public function show($id)
     {
-        $cat= Category::find($category);
-
-        return view('Category.editCategory',compact('cat'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit( $category)
+    public function edit($id)
     {
 
+        $v = Vendor::find($id);
+        return view('vendor.editvendor',compact('v'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $category)
+    public function update(Request $request, $id)
     {
-        $category=Category::findOrFail($category);
+        $vendor = Vendor::findOrFail($id);
         $input=$request->all();
-        $category->update($input);
-        Session::put('message', 'Success!');
-        return redirect('/category');
+        $vendor->update($input);
+        return redirect('/vendors');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($category)
+    public function destroy($id)
     {
-        $category=Category::findOrFail($category);
-        $category->delete();
-        Session::put('message', 'Success!');
-        return redirect('/category');
-
+        $vendor = Vendor::findOrFail($id);
+        $vendor->delete();
+        return redirect()->back();
     }
 }

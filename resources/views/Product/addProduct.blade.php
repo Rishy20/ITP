@@ -8,7 +8,7 @@
 
 
 
-        @livewire('add-product', ['inv' => $inv, 'cat' => $cat])
+        @livewire('add-product', ['inv' => $inv, 'cat' => $cat, 'brand' => $brand, 'vendor' => $vendor])
 
 
 @endsection

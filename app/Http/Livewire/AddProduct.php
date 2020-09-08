@@ -17,6 +17,8 @@ class AddProduct extends Component
     public $count = 0;
     public $inv;
     public $cat;
+    public $brand;
+    public $vendor;
     public $pname;
     public $pcode;
     public $pdescription;
@@ -42,9 +44,11 @@ class AddProduct extends Component
     {
         $this->count--;
     }
-    public function mount($inv,$cat){
+    public function mount($inv,$cat,$brand,$vendor){
         $this->inv = $inv;
         $this->cat = $cat;
+        $this->brand = $brand;
+        $this->vendor = $vendor;
         $product = Product::all();
         $key = sizeof($product)-1;
         $this->barcode = $product[$key]['barcode']+1;
@@ -63,7 +67,7 @@ class AddProduct extends Component
     }
     public function render()
     {
-        return view('livewire.product-variant');
+        return view('livewire.add-product');
     }
     public function save(){
 
