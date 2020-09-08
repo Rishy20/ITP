@@ -26,6 +26,7 @@ class VoucherController extends Controller
     public function create()
     {
         return view('voucher.create');
+
     }
 
     /**
@@ -36,8 +37,13 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'amount'=>'required',
+            'exp'=>'required',
+            ]);
+
         Voucher::create($request->all());
-        return redirect()->back();
+        return redirect('/voucher');
     }
 
     /**
@@ -75,7 +81,7 @@ class VoucherController extends Controller
         //$voucher = Voucher::findOrFail($id);
         $voucher->amount = $request->input('amount');
         $voucher->exp = $request->input('exp');
-        
+
         $voucher->save();
         return redirect('/voucher');
     }

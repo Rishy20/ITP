@@ -128,16 +128,16 @@
 <nav id="navbar" class="navbar-staffs">
     <ul class="list-unstyled components">
         <li class="pos-nav-li">
-            <a href="{{ route('user.index') }}" >All Staff</a>
+            <a href="{{ route('employee.index') }}" >All Staff</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('user.create') }}">Staff Attendance</a>
+            <a href="{{ route('employee.create') }}">Add Staff</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('role.index') }}">Manage Roles</a>
+            <a href="{{ route('attendance.index') }}">Staff Attendance</a>
         </li>
         <li class="pos-nav-li">
-            <a href="#">About</a>
+            <a href="{{ route('attendance.create') }}">Mark Attendance</a>
         </li>
     </ul>
 </nav>

@@ -36,6 +36,8 @@ Route::resource('employee', 'EmployeeController');
 
 Route::resource('voucher', 'VoucherController');
 
+Route::resource('attendance', 'AttendanceController');
+
 //Route::get('/employees', 'EmployeeController@index');
 //Route::get('/create', 'EmployeeController@create');
 //Route::post('/store', 'EmployeeController@store')->name('employees.store');

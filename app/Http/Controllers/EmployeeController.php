@@ -40,6 +40,21 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'fname'=>'required|max:20',
+            'lname'=>'required|max:20',
+            'nic'=>'required|max:10',
+            'address'=>'required|max:50',
+            'mobile'=>'required|max:10',
+            'home'=>'required|max:10',
+            'birthday'=>'required',
+            'joined_date'=>'required',
+            'target'=>'required',
+            'salary'=>'required',
+            'salary_type'=>'required',
+            'commission'=>'required'
+        ]);
+
         Employee::create($request->all());
         return redirect()->back();
         
@@ -77,9 +92,9 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit( $emp_id)
+    public function edit( $id)
     {
-        $employee = Employee::find($emp_id);
+        $employee = Employee::find($id);
         return view('Employee.edit',compact('employee'));
     }
 
@@ -116,9 +131,9 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy($emp_id)
+    public function destroy($id)
     {
-        $employee = Employee::findOrFail($emp_id);
+        $employee = Employee::findOrFail($id);
         $employee->delete();
         return redirect()->back();
     }
