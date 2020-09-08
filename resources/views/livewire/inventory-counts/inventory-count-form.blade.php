@@ -105,7 +105,7 @@
                                         <td>{{ $counted_item->product->name }}</td>
                                         <td class="text-right">{{ $counted_item->qty }}</td>
                                         <td class="text-right">
-                                            <input type="number" name="actual_quantities[]" required/>
+                                            <input type="number" name="actual_quantities[]" min="0" required/>
                                         </td>
                                     </tr>
 
