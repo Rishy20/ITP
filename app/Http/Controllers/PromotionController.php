@@ -15,7 +15,7 @@ class PromotionController extends Controller
     public function index()
     {
         $prms = Promotion::all();
-        return view('cusfolder.promotionpage' ,compact('prms'));
+        return view('promotion.promotionAllForm',compact('prms'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
-        return view('cusfolder.promotionpage');
+        return view('promotion.addPromotion');
     }
 
     /**
@@ -45,6 +45,8 @@ class PromotionController extends Controller
             
 
         ]);
+        Promotion::create($request->all());
+        return redirect()->back();
 
         $prms = new Promotion;
 
@@ -56,7 +58,7 @@ class PromotionController extends Controller
 
         $prms->save();
 
-        return redirect('cusfolder')->with('success','Data Inserted');
+        return redirect('/promotion');
 
 
     }
@@ -81,7 +83,7 @@ class PromotionController extends Controller
     public function edit($id)
     {
         $prms = Promotion::find($id);
-        return view('cusfolder.promeditpage',compact('prms','id'));
+        return view('promotion.editPromotion',compact('prms','id'));
     }
 
     /**
@@ -114,7 +116,7 @@ class PromotionController extends Controller
 
         $prms->save();
 
-        return redirect('cusfolder')->with('success','Data updated');
+        return redirect('/promotion');
     }
 
     /**
@@ -128,6 +130,7 @@ class PromotionController extends Controller
         $prms = Promotion::find($id);
         $prms->delete();
 
-        return redirect('cusfolder')->with('success','Data Deleted');
+       
+        return redirect('/promotion');
     }
 }

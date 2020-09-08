@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/customer', 'CustomerController');
 
+Route::resource('/promotion', 'PromotionController');
 
-Route::resource('/cusfolder', 'PromotionController');
 
 Route::resource('/product', 'ProductController');
 
