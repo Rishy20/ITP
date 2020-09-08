@@ -3,29 +3,28 @@
 
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
-    <div class="pg-title">Add Category</div>
+    <div class="pg-title">Add Brands</div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
     <div class="section-title">
-        Category Information
+        Brand Information
         <hr>
     </div>
     <div class="section-content"> {{-- Start of sectionContent--}}
         {{-- Start of Form --}}
-        <form method="post" action="{{route('category.update',$cat->id)}}">
+        <form method="post" action="{{route('brand.store')}}">
             @csrf
-            @method('PATCH')
             <div class="row">
                 <div class="col">
-                <input type="text"  name="name"  value="{{$cat->name}}"class="form-control" placeholder="Category Name" />
-                    <label  class="float-label">Category Name</label>
+                    <input type="text"  name="name" class="form-control" placeholder="Brand Name" />
+                    <label  class="float-label">Brand Name</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <textarea class="form-control" name="description" placeholder="Category Description">{{$cat->description}}</textarea>
-                    <label class="float-label">Category Description</label>
+                    <textarea class="form-control" name="description" placeholder="Brand Description"></textarea>
+                    <label class="float-label">Brand Description</label>
                 </div>
             </div>
 
@@ -35,7 +34,6 @@
                 </div>
             </div>
         </form>
-
         {{-- End of Form --}}
     </div> {{-- End  of sectionContent--}}
 </div> {{-- End  of section--}}

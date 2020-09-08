@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Inventory;
-use App\Product;
+use App\Brand;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 
-class productController extends Controller
+class brandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +14,9 @@ class productController extends Controller
      */
     public function index()
     {
-        $product =Product::all();
-        return view('Product.allProduct',compact('product'));
+        $brand= Brand::all();
 
+        return view ('Brand.allBrand',compact('brand'));
     }
 
     /**
@@ -29,11 +26,7 @@ class productController extends Controller
      */
     public function create()
     {
-        $cat =Category::all();
-        $inv =Inventory::all();
-
-        return view('Product.addProduct',compact('cat','inv'));
-
+        return view('Brand.addBrand');
     }
 
     /**
@@ -44,11 +37,7 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
-
-
-        return redirect()->back();
-
+        Brand::create($request->all());
     }
 
     /**
@@ -59,7 +48,7 @@ class productController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -70,7 +59,9 @@ class productController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand= Brand::find($id);
+
+        return view('Brand.editBrand',compact('brand'));
     }
 
     /**
@@ -82,7 +73,10 @@ class productController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brand=Brand::findOrFail($id);
+        $input=$request->all();
+        $brand->update($input);
+        return redirect('/brand');
     }
 
     /**
@@ -93,8 +87,9 @@ class productController extends Controller
      */
     public function destroy($id)
     {
-        $Product=Product::findOrFail($id);
-        $Product->delete();
-        return redirect()->back();
+        $brand=Brand::findOrFail($id);
+        $brand->delete();
+        return redirect('/brand');
+
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\brandController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,11 +33,11 @@ Route::get('/test', function(){
     return view('test');
 });
 
-
 Route::resource('user', 'UserController');
 Route::resource('category', 'CategoryController');
 Route::resource('product', 'productController');
 Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');
 Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
-
+Route::resource('brand', 'brandController');
 Route::resource('inventories', 'InventoryController');
+;
