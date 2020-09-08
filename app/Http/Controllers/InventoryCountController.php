@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Inventory;
 use App\InventoryCount;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -85,7 +86,16 @@ class InventoryCountController extends Controller
                     'difference' => $actual_qty - $expected_qty, 'created_at' => now(), 'updated_at' => now()]);
         }
 
-        return redirect('inventory-counts');
+        // Get the saved counted items to pass into summary view
+        $counted_items = DB::table('counted_items')->where('count_id', $count_id)->get();
+
+        foreach ($counted_items as $counted_item) {
+            $counted_item->product = Product::find($counted_item->product_id);
+            $counted_item->expected_qty = DB::table('inventory_items')->where('inventory_id', $outlet)
+                ->where('product_id', $counted_item->product_id)->first()->qty;
+        }
+
+        return view('inventories.inventory-counts.summary')->with('inventory_count', $inventory_count)->with('counted_items', $counted_items);
     }
 
     /**
@@ -132,6 +142,25 @@ class InventoryCountController extends Controller
     {
         // Delete inventory count and redirect to index
         $inventoryCount->delete();
+        return redirect('inventory-counts');
+    }
+
+    public function replace(InventoryCount $inventory_count) {
+        $counted_items = DB::table('counted_items')->where('count_id', $inventory_count->id)->get();
+
+        foreach ($counted_items as $counted_item) {
+            if ($counted_item->actual_qty == 0) {
+                // If actual quantity is 0, delete the item from inventory
+                DB::table('inventory_items')->where('inventory_id', $inventory_count->outlet)
+                    ->where('product_id', $counted_item->product_id)->delete();
+            }
+            else {
+                // Else replace the existing quantity with actual quantity
+                DB::table('inventory_items')->where('inventory_id', $inventory_count->outlet)
+                    ->where('product_id', $counted_item->product_id)->update(['qty' => $counted_item->actual_qty]);
+            }
+        }
+
         return redirect('inventory-counts');
     }
 }
