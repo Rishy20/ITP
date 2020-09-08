@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Vendor;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class VendorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view ('User.allUsers');
+        $vendor = Vendor::all();
+        return view('Vendor.allVendor',compact('vendor'));
     }
 
     /**
@@ -25,7 +25,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('User.addUser');
+
+        return view('Vendor.addVendor');
     }
 
     /**
@@ -37,7 +38,16 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        User::create($request->all());
+        // $request->validate([
+        // 'first_name'=>'required|max:50',
+        // 'last_name'=>'required|max:50',
+        // 'company_name'=>'required|max:20',
+        // 'address'=>'required|max:50',
+        // 'city'=>'required|max:10',
+        // 'email'=>'required|max:20',
+        // 'phone_no'=>'required|max:50',
+        // ]);
+        Vendor::create($request->all());
         return redirect()->back();
     }
 
@@ -49,7 +59,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -61,8 +71,9 @@ class UserController extends Controller
     public function edit($id)
     {
 
+        $v = Vendor::find($id);
+        return view('vendor.editvendor',compact('v'));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -73,9 +84,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $vendor = Vendor::findOrFail($id);
+        $input=$request->all();
+        $vendor->update($input);
+        return redirect('/vendors');
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -85,6 +98,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
+        $vendor = Vendor::findOrFail($id);
+        $vendor->delete();
+        return redirect()->back();
     }
 }
