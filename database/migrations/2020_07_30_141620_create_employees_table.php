@@ -14,7 +14,7 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->increments('emp_id')->unique;
+            $table->id();
             $table->string('fname');
             $table->string('lname');
             $table->string('nic')->unique;
@@ -27,7 +27,7 @@ class CreateEmployeesTable extends Migration
             $table->float('salary');
             $table->string('salary_type');
             $table->float('commission');
-           
+
            $table->timestamps();
         });
     }

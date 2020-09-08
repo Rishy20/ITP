@@ -167,6 +167,7 @@ return [
          */
         Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -229,7 +230,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

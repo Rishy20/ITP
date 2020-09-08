@@ -3,7 +3,7 @@
 
 <div class="editUser"> {{-- Start of addUser --}}
     <div class="pg-heading">
-        <a href="{{ route('user.index',$user->id)}}"><i class="fa fa-arrow-left pg-back"></i></a>
+        <a href="{{ route('user.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Edit User</div>
     </div>
     <div class="row">
@@ -14,17 +14,24 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
-                    <form method="post" action="{{route('user.update',$user->id)}}">
+                    <form method="post" class="needs-validation" action="{{route('user.update',$user->id)}}" novalidate>
                         @csrf
                         @method('PATCH')
                         <div class="row">
                             <div class="col">
-                                <input type="text" id="username" name="username" value="{{ $user->username }}" class="form-control" placeholder="Username" />
+                                <input type="text" id="username" name="username" value="{{ $user->username }}" class="form-control" placeholder="Username" required/>
                                 <label for="username" class="float-label">Username</label>
+                                <div class="invalid-feedback">
+                                    Please enter a username
+                                  </div>
+
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="display_name" value="{{ $user->display_name }}" placeholder="Display name">
+                                <input type="text" class="form-control" name="display_name" value="{{ $user->display_name }}" placeholder="Display name" required>
                                 <label class="float-label">Display name</label>
+                                <div class="invalid-feedback">
+                                    Please enter a name
+                                  </div>
                             </div>
                         </div>
 
@@ -43,24 +50,22 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
+                    @php
+                        $i = 1;
+                    @endphp
+                    @if($role)
+                    @foreach($role as $r)
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="roleId" id="radio1" value="option1" checked>
-                        <label class="form-check-label" for="radio1">
-                            Owner
+                        <input class="form-check-input" type="radio" name="roleId" id="radio{{ $i }}" value="{{ $r->id }}" @if($r->id == $user->roleId) checked @endif >
+                        <label class="form-check-label" for="radio{{ $i }}">
+                            {{ $r->Role_name }}
                         </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="roleId" id="radio2" value="option2">
-                        <label class="form-check-label" for="radio2">
-                            Manager
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="roleId" id="radio3" value="option3">
-                        <label class="form-check-label" for="radio3">
-                            Cashier
-                        </label>
-                    </div>
+                    @php
+                        $i++;
+                    @endphp
+                    @endforeach
+                    @endif
                     </form>
                 </div>{{-- End of sectionContent--}}
             </div>{{-- End of section 2--}}

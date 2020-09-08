@@ -69,9 +69,9 @@ header {
 }
 .nav-icon {
     font-size: 20px;
-    padding: 25px;
+    padding: 15px;
     padding-bottom: 6px;
-    padding-top: 36px;
+    padding-top: 33px;
 }
 
 .nav-text {
@@ -79,6 +79,41 @@ header {
     text-align: center;
     font-family: "Roboto", sans-serif;
 }
+.nav-btn{
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+#navbar {
+    min-width: 200px;
+    max-width: 200px;
+    min-height: calc(100vh - 50px);
+    position: fixed;
+    height: 90vh;
+    z-index: 10;
+    background: white;
+    color: black;
+    transition: all 0.3s;
+    top: 50px;
+    display: none;
+    left: 70px;
+}
+#navbar li a{
+    color: black;
+    font-weight: 500;
+}
+#navbar li a:hover{
+    color: #537d99;
+}
+#navbar li a:focus{
+    color: #537d99;
+}
+#navbar.active {
+
+    display: block;
+
+}
+
 /******End of Nav bar******/
 /******Start of main******/
 
@@ -88,6 +123,9 @@ header {
     margin-right: 50px;
     font-family: "Lato", sans-serif;
     font-weight: 700;
+}
+.margin{
+    margin-left: 300px;
 }
 .pg-heading {
     font-size: 26px;
@@ -428,7 +466,7 @@ input:checked + .slider:before {
     display: inline-block;
     width: 66%;
 }
-.pos .search-textbox {
+.search-textbox {
     height: 50px;
     font-size: 20px;
     letter-spacing: 0.5px;
@@ -459,6 +497,7 @@ input:checked + .slider:before {
     padding: 20px;
     margin-top: 20px;
     height: 79vh;
+    width: 100%;
 }
 
 .item-table-head {
@@ -884,6 +923,45 @@ button:focus{
     margin-bottom: 20px;
 
 }
+.payment-btn{
+
+    background-color: #2bbdb9;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+    width: 105px;
+    border:none;
+    margin-bottom: 20px;
+}
+.pos-pay{
+
+    width: 700px;
+
+}
+.amnt-tend{
+    width: 80%;
+
+    border: none;
+}
+.rs-pay{
+    padding-left: 10px;
+    font-size: 30px;
+}
+
+.total-rect{
+    border:1px solid #d8cfcf;
+
+    padding: 6px;
+    font-size: 30px;
+    font-weight: 400;
+}
+.total-rect-value{
+    padding-left: 10px;
+}
+.pos-pay-total{
+    text-align: center;
+    padding-top: 12px;
+}
 .dropdown-menu{
     width: 79%;
     padding:10px;
@@ -972,6 +1050,131 @@ button:focus{
     font-size: 14px;
     opacity: 0.3;
 }
+.permission-check{
+    padding-left: 40px ;
+    padding-top: 20px;
+}
+.permission-check .form-check-label{
+    margin-left: 12px;
+}
+.permission-check input[type=checkbox]{
+    height: 18px;
+    width: 20px;
+}
+.permission-check .form-check-input {
+    margin-top: 0.1rem;
+}
+.access-permission{
+    margin: 0px 20px;
+    border: 2px solid #5c8bab ;
+    height: 100%;
+}
+.access-permission .section{
+
+    margin-top: 0;
+    padding: 0 0px 20px;
+}
+.access-permission .section-title{
+    background-color: #5c8bab;
+    color: white;
+    padding-top: 20px;
+
+}
+
+/*******Select Products for Barcode *******/
+.selectProductsContent .item-display{
+    height: 60vh;
+}
+.selectProductsContent .item-display .table{
+    text-align: center;
+}
+.selectProductsContent{
+    font-weight: 700;
+}
+
+.selectProductsContent .dropdown-menu{
+    height: 50%;
+    width: 94%;
+}
+.selectProductsContent .item-display{
+    margin-top: 0px;
+}
+.barcode-qty{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+.sp-barcode{
+    display: inline-block;
+    padding-top: 10px;
+}
+.cursor{
+    cursor: pointer;
+}
+.allexpense .pos-sub-display-title{
+    background-color: #3e505c;
+}
+.allexpense .add-sub-btn{
+    background-color: #3e505c;
+}
+.selectAll{
+    float: right;
+    width: 45px;
+    height: 25px;
+    margin-top: 5px;
+}
+/*******End of User Permission******/
+
+/******Message Box ********/
+.message{
+    width: 250px;
+    height: 70px;
+    color: #155724;
+    /* color: white; */
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    position: absolute;
+
+
+    top: 55px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.message-success{
+    font-size: 24px;
+    text-align: left;
+
+}
+.message-icon{
+    font-size: 44px;
+    position: relative;
+    top: 14px;
+    left: 25px;
+
+}
+.message-text{
+    padding-left: 5px;
+    position: relative;
+    top: 0px;
+    left: 25px;
+
+}
+.message-text-sub{
+    padding-left: 5px;
+    display: block;
+    font-size: 12px;
+    position: relative;
+    left: 79px;
+    top: -9px;
+}
+.none{
+    display: none;
+}
+
+
+
 /* .barcode .store-name{
     font-size: 16px;
     font-weight: 800;

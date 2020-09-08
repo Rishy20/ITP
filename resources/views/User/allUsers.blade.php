@@ -1,10 +1,23 @@
 @extends('layouts.main')
 @section('content')
 
+
 <div class="pg-heading">
 
     <div class="pg-title">All Users</div>
 </div>
+
+@if(session('message'))
+<div class="message">
+    <div class="message-success">
+        <i class="far fa-check-circle message-icon"></i>
+        <span class="message-text">Success!</span>
+        <span class="message-text-sub">You're awesome!!!</span>
+
+    </div>
+</div>
+{{ Session::forget('message') }}
+@endif
 
 <div class="section"> {{-- Start of Section--}}
 
@@ -12,8 +25,12 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
+                <a href="{{ route('user.create') }}">Export User</a>
+            </div>
+            <div class="add-btn">
                 <a href="{{ route('user.create') }}">Add User</a>
             </div>
+
             <thead class="table-head">
                 <tr>
                     <th>Username</th>
@@ -30,17 +47,17 @@
                 <tr>
                     <td>{{ $us->username }}</td>
                     <td>{{ $us->display_name }}</td>
-                    <td>Owner</td>
+                    <td>{{ $us->Role_name }}</td>
                     <td>
                         @livewire('toggle-switch',['s'=>$us->status,'id'=>$us->id])
 
                     </td>
                     <td class="action-icon">
                         <a href="{{ route('user.edit',$us->id) }}"><i class="fas fa-pen"></i></a>
-                        <form method="POST" class="dlt-form" action="{{ route('user.destroy',$us->id) }}">
+                        <button class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form"  action="{{ route('user.destroy',$us->id) }}">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>

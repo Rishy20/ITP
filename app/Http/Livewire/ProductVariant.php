@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Product;
 use App\Variant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ProductVariant extends Component
@@ -66,8 +67,6 @@ class ProductVariant extends Component
     }
     public function save(){
 
-        // dd($this->vprice[0]);
-
         $pr = new Product();
         $pr->pcode = $this->pcode;
         $pr->name = $this->pname;
@@ -82,23 +81,22 @@ class ProductVariant extends Component
         $pr->reorder_level = $this->prqty;
         $pr->supplierId = $this->psup;
         $pr->save();
+        $last = DB::table('products')->latest()->first();
+        $pId = $last->id;
 
-        $index = Product::where('pcode','=',$this->pcode)->get();
 
 
         if($this->size && $this->color){
             $i = 0;
             foreach($this->size as $skey=>$svalue){
                 foreach($this->color as $ckey=>$cvalue){
+
                         $var = new Variant();
-                        $var->product_id = $index[0]['id'];
+                        $var->product_id = $pId;
                         $var->size = $svalue;
                         $var->color= $cvalue;
-                        // dd( $this->vqty[$i],$this->vprice[$i]);
                         $var->price = $this->vprice[$i];
-
                         $var->quantity = $this->vqty[$i];
-
                         $var->save();
                         $i++;
                 }
@@ -106,7 +104,7 @@ class ProductVariant extends Component
         }else if($this->size){
             foreach($this->size as $key=>$value){
                 $var = new Variant();
-                        $var->product_id = $index[0]['id'];
+                $var->product_id = $pId;
                         $var->size = $value;
                         $var->price = $this->vprice[$key];
                         $var->quantity = $this->vqty[$key];
@@ -116,7 +114,7 @@ class ProductVariant extends Component
         }else if($this->color){
             foreach($this->color as $key=>$value){
                 $var = new Variant();
-                        $var->product_id = $index[0]['id'];
+                $var->product_id = $pId;
                         $var->color= $value;
                         $var->price = $this->vprice[$key];
                         $var->quantity = $this->vqty[$key];
@@ -125,7 +123,7 @@ class ProductVariant extends Component
             }
         }
 
-
+        return redirect('/product');
     }
 
 }

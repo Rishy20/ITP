@@ -41,8 +41,6 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-        $p =  $request->input('pricevariant1');
-        dd($p);
         Product::create($request->all());
 
 
@@ -94,5 +92,4 @@ class productController extends Controller
     {
         //
     }
-
 }

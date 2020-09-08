@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\userRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -14,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
+        // dd(Session::has('status1'));
+        $user = DB::select('select u.id, username,display_name,password,pin,status,roleId,Role_name from users u, user_roles ur where u.roleId = ur.id');
         return view ('User.allUsers',compact('user'));
     }
 
@@ -25,7 +29,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('User.addUser');
+
+        $role = userRole::all();
+        return view('User.addUser',compact('role'));
     }
 
     /**
@@ -36,9 +42,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->validate([
+            'username'=>'required|max:50',
+            'password'=>'required|max:20',
+            'display_name'=>'required|max:50'
+        ]);
         User::create($request->all());
-        return redirect()->back();
+        Session::put('message', 'Success!');
+
+        return redirect()->route('user.index');
+
     }
 
     /**
@@ -61,7 +74,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('User.editUser',compact('user'));
+        $role = userRole::all();
+        return view('User.editUser',compact('user','role'));
     }
 
     /**
@@ -78,19 +92,23 @@ class UserController extends Controller
         $user->display_name = $request->input('display_name');
         $user->roleId = $request->input('roleId');
         $user->save();
+        Session::put('message', 'Success!');
         return redirect('/user');
+
     }
 
     public function updatePassword(Request $request, $id){
         $user = User::findOrFail($id);
         $user->password = $request->input('newpass');
         $user->save();
+        Session::put('message', 'Success!');
         return redirect('/user');
     }
     public function updatePin(Request $request, $id){
         $user = User::findOrFail($id);
         $user->pin = $request->input('newpin');
         $user->save();
+        Session::put('message', 'Success!');
         return redirect('/user');
     }
     /**
@@ -103,6 +121,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

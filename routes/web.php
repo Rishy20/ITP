@@ -16,6 +16,14 @@ use Milon\Barcode\PDF417;
 |
 */
 
+Route::resource('/customer', 'CustomerController');
+
+
+Route::resource('/cusfolder', 'PromotionController');
+
+
+
+
 Route::get('/', function () {
     return view('sample');
 });
@@ -45,17 +53,21 @@ Route::get('/pos', function(){
 Route::get('/login', function(){
     return view('login');
 });
-// Route::get('/test', function(){
-//     return view('Barcode.printBarcode');
-// });
-Route::get('/barcode', 'BarcodeController@show');
-Route::get('/test', 'BarcodeController@createPDF');
+Route::get('/role', function(){
+    return view('User.addUserRole');
+});
+
+Route::get('/barcode', 'BarcodeController@index')->name('barcode');
+Route::get('/barcodeprint', 'BarcodeController@createPDF')->name('printBarcode');
 
 
 Route::resource('user', 'UserController');
+Route::resource('role', 'UserRoleController');
 Route::resource('category', 'CategoryController');
 Route::resource('product', 'productController');
-
+Route::resource('expense', 'ExpenseController');
+Route::resource('sale', 'SalesController');
+Route::patch('/updateExpense', 'ExpenseController@updateExpense')->name('updateExpense');
 Route::patch('/password/{id}','UserController@updatePassword')->name('user.password');
 Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
 

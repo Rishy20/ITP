@@ -12,10 +12,8 @@
 </head>
 <body class="barcode-print">
 
-
-
-
-
 <a class="btn btn-primary" href="/test" target="_blank">Export to PDF</a>
+
+
 </body>
 </html>

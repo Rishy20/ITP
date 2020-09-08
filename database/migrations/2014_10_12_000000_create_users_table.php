@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable($value = false);
             $table->integer('pin')->nullable($value = false);
             $table->boolean('status')->default(1);
-            $table->string('roleId');
+            $table->unsignedBigInteger('roleId');
+            $table->foreign('roleId')->references('id')->on('user_roles')->cascadeOnDelete();
             $table->timestamps();
         });
     }

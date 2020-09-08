@@ -21,26 +21,9 @@
     <div class="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar">
-            {{-- <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
-            </div> --}}
 
             <ul class="list-unstyled components">
-                {{-- <p>Dummy Heading</p> --}}
-                {{-- <li class="active pos-nav-li">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
-                </li> --}}
+
                 <li class="pos-nav-li">
                     <a href="#" id="addexpense">Add Expense</a>
                 </li>
@@ -54,26 +37,7 @@
                     <a href="#">About</a>
                 </li>
 
-                {{-- <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li> --}}
+
             </ul>
 
         </nav>
@@ -105,55 +69,7 @@
             <div class="pos">
 
                 <livewire:product-dropdown />
-                <div class="full-pg" id="fadeBg"></div>
-                <div class="pos-sub-display" id="posSubDisplay">
 
-                    <div class="pos-sub-display-title">
-                        <span class="title">Expense</span>
-                        <button class="close-btn" id="closeBtn"><i class="fas fa-window-close"></i></button>
-                    </div>
-
-                    <div class="pos-sub-display-content">
-
-                        <form>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Type</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label>Amount</label>
-                                        <input type="text" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group pl-2 pr-2">
-                                <div class="row">
-                                    <label>Description</label>
-                                </div>
-                                <div class="row">
-                                    <textarea class="pos-sub-txtArea" rows=5></textarea>
-                                </div>
-                            </div>
-                            <div class="action-btn-row">
-
-                                <button class="add-sub-btn">Add</button>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
 
 
@@ -181,6 +97,13 @@
             $("#prdSearch").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
                 $(".dropdown-menu tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            //Search Customers
+            $("#cusSearch").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".dropdown-menu li").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
@@ -220,14 +143,26 @@
             $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
             });
+            //Expense Model
             $('#addexpense').on('click', function() {
-                $('#posSubDisplay').toggleClass('block');
+                $('#posSubExpense').toggleClass('block');
                 $('#fadeBg').toggleClass('block');
                 $('#sidebar').removeClass('active');
             });
             $('#closeBtn').on('click', function() {
-                $('#posSubDisplay').removeClass('block');
+                $('#posSubExpense').removeClass('block');
                 $('#fadeBg').removeClass('block');
+
+            });
+            //Pay Model
+            $('#payBtn').on('click', function() {
+                $('#posSubPay').toggleClass('block');
+                $('#fadeBgPay').toggleClass('block');
+
+            });
+            $('#closeBtnPay').on('click', function() {
+                $('#posSubPay').removeClass('block');
+                $('#fadeBgPay').removeClass('block');
 
             });
             $(document).ready(function() {

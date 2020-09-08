@@ -21,7 +21,7 @@ class CreateVariantsTable extends Migration
             $table->double('price');
             $table->integer('quantity');
             $table->timestamps();
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

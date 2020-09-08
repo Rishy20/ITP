@@ -14,36 +14,54 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
-                    <form method="post" action="{{route('user.store')}}">
+                    <form method="post" class="needs-validation" action="{{route('user.store')}}" novalidate>
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
+                                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required/>
                                 <label for="username" class="float-label">Username</label>
+                                <div class="invalid-feedback">
+                                    Please enter a username
+                                  </div>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="display_name" placeholder="Display name">
+                                <input type="text" class="form-control" name="display_name" placeholder="Display name" required>
                                 <label class="float-label">Display name</label>
+                                <div class="invalid-feedback">
+                                    Please enter a name
+                                  </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="password" class="form-control" name="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" placeholder="Password" required>
                                 <label class="float-label">Password</label>
+                                <div class="invalid-feedback">
+                                    Please enter a password
+                                  </div>
                             </div>
                             <div class="col">
-                                <input type="password" class="form-control" name="repass" placeholder="Re-enter Password">
+                                <input type="password" class="form-control" name="repass" placeholder="Re-enter Password" required>
                                 <label class="float-label">Re-enter Password</label>
+                                <div class="invalid-feedback">
+                                    Please enter a password
+                                  </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="password" class="form-control" name="pin" placeholder="PIN">
+                                <input type="password" class="form-control" name="pin" placeholder="PIN" required>
                                 <label class="float-label">Pin</label>
+                                <div class="invalid-feedback">
+                                    Please enter a pin
+                                  </div>
                             </div>
                             <div class="col">
-                                <input type="password" class="form-control" name="repin" placeholder="Re-enter PIN">
+                                <input type="password" class="form-control" name="repin" placeholder="Re-enter PIN" required>
                                 <label class="float-label">Re-enter Pin</label>
+                                <div class="invalid-feedback">
+                                    Please enter a pin
+                                  </div>
                             </div>
                         </div>
                         <div class="row submit-row">
@@ -61,24 +79,23 @@
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
+                    @php
+                        $i = 1;
+                    @endphp
+                    @if($role)
+                    @foreach($role as $r)
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="roleId" id="radio1" value="option1" checked>
-                        <label class="form-check-label" for="radio1">
-                            Owner
+                        <input class="form-check-input" type="radio" name="roleId" id="radio{{ $i }}" value="{{ $r->id }}" @if($i == 1) checked @endif >
+                        <label class="form-check-label" for="radio{{ $i }}">
+                            {{ $r->Role_name }}
                         </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="roleId" id="radio2" value="option2">
-                        <label class="form-check-label" for="radio2">
-                            Manager
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="roleId" id="radio3" value="option3">
-                        <label class="form-check-label" for="radio3">
-                            Cashier
-                        </label>
-                    </div>
+                    @php
+                        $i++;
+                    @endphp
+                    @endforeach
+                    @endif
+
                     </form>
                 </div>{{-- End of sectionContent--}}
             </div>{{-- End of section 2--}}

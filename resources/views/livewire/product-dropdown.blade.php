@@ -156,16 +156,26 @@
             <ul class="dropdown-menu">
                 <input class="form-control" id="myInput" type="text" placeholder="Search..">
                 @foreach($employee as $emp)
-                <li wire:click="updateSalesman({{ $emp->emp_id }})"><span class="sid">{{ $emp->emp_id }}</span><span class="sname">{{ $emp->fname . ' '. $emp->lname }} </span></li>
+                <li wire:click="updateSalesman({{ $emp->id }})"><span class="sid">{{ $emp->id }}</span><span class="sname">{{ $emp->fname . ' '. $emp->lname }} </span></li>
                 @endforeach
-
               </ul>
         </div>
 
         <div class="mini-display">
-            <button class="mini-display-btn btn">
-                <i class="fas fa-users s-icon"></i><span class="s-text"> Add a Customer </span>
+            <button class="mini-display-btn btn"  data-toggle="dropdown">
+                <i class="fas fa-users s-icon"></i>
+                @if (!$cusid)
+                <span class="s-text">Add a Customer</span>
+            @else
+                 <span class="s-text"><span class="sid">{{ $cusphone }}</span><span class="sname">{{ $cusname}} </span></span>
+            @endif
             </button>
+            <ul class="dropdown-menu">
+                <input class="form-control" id="cusSearch" type="text" placeholder="Search..">
+                @foreach($customer as $cus)
+                <li wire:click="updateCustomer({{ $cus->id }})"><span class="sid">{{ $cus->phone }}</span><span class="sname">{{ $cus->firstname . ' '. $cus->lastname }} </span></li>
+                @endforeach
+              </ul>
         </div>
 
         <hr class="price-display-rule">
@@ -194,7 +204,7 @@
             <span class="display-values">Rs.{{ $total }}</span>
         </div>
 
-        <div class="pay-btn-div">
+        <div class="pay-btn-div" id="payBtn">
             <button class="pay-btn btn">
                 <span class="pay">PAY</span>
                 <span class="pay-value">Rs.{{ $total }}</span>
@@ -218,5 +228,112 @@
         </div>
     </div>
 </div>
+</div>
+
+{{-- /****** Add Expense Model ******/ --}}
+<div class="full-pg" id="fadeBg"></div>
+<div class="pos-sub-display" id="posSubExpense">
+
+    <div class="pos-sub-display-title">
+        <span class="title">Expense</span>
+        <button class="close-btn" id="closeBtn"><i class="fas fa-window-close"></i></button>
+    </div>
+
+    <div class="pos-sub-display-content">
+
+        <form method="POST" action="{{route('expense.store')}}"  >
+            @csrf
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Type</label>
+                        <select name="type" class="form-control" id="exampleFormControlSelect1">
+                            <option value="Stationary">Stationary</option>
+                            <option value="Food">Food</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Telephone">Telephone</option>
+                            <option value="Petty Cash">Petty Cash</option>
+                            <option value="Water">Water</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group pl-2 pr-2">
+                <div class="row">
+                    <label>Description</label>
+                </div>
+                <div class="row">
+                    <textarea name="description" class="pos-sub-txtArea" rows=5></textarea>
+                </div>
+            </div>
+            <input type="text" value="1" name="userId" hidden>
+            <div class="action-btn-row">
+
+                <input type="submit" class="add-sub-btn" value="Add"/>
+
+            </div>
+        </form>
+    </div>
+</div>
+{{-- End of Add Expense Model --}}
+<div class="full-pg" id="fadeBgPay"></div>
+<div class="pos-sub-display pos-pay" id="posSubPay">
+
+    <div class="pos-sub-display-title">
+        <span class="title">Pay</span>
+        <button class="close-btn" id="closeBtnPay"><i class="fas fa-window-close"></i></button>
+    </div>
+
+    <div class="pos-sub-display-content">
+
+        <form>
+            <div class="row mt-2">
+               <div class="col-md-5">
+                   <h4 class="pos-pay-total pt-3">Amount To Pay</h4>
+               </div>
+               <div class="col-md-7">
+                   <div class="total-rect">
+                    <div class="total-rect-value"> Rs.{{ $total }}</div>
+                   </div>
+               </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-5">
+                    <h4 class="pos-pay-total pt-3">Amount Tendered</h4>
+                </div>
+                <div class="col-md-7">
+                    <div class="total-rect">
+                        <span class="rs-pay">Rs.</span><input type="text" class="amnt-tend" value="{{ $total }}" />
+                    </div>
+                </div>
+             </div>
+             <div class="row mt-5">
+                <div class="col">
+                    <button class="payment-btn" wire:click="makeSale">Cash</button>
+                </div>
+                <div class="col">
+                    <button class="payment-btn">Card</button>
+                </div>
+                <div class="col">
+                    <button class="payment-btn">Loyalty</button>
+                </div>
+                <div class="col">
+                    <button class="payment-btn">Voucher</button>
+                </div>
+                <div class="col">
+                    <button class="payment-btn">Split</button>
+                </div>
+             </div>
+
+    </div>
 </div>
 </div>

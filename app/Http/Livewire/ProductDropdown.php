@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Customer;
 use App\Employee;
 use App\Product;
+use App\Sale;
+use App\SalesProduct;
 use App\Variant;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -30,12 +33,16 @@ class ProductDropdown extends Component
     public $selectedSize;
     public $selectedColor;
     public $index = 1;
+    public $customer;
+    public $cusid;
+    public $cusname;
+    public $cusphone;
     public function mount()
     {
 
         $this->products = Product::all();
         $this->employee = Employee::all();
-
+        $this->customer = Customer::all();
         $this->query = '';
         $this->noOfItems = sizeof($this->items);
         $this->discount = 0.00;
@@ -134,6 +141,7 @@ class ProductDropdown extends Component
             if ($bool != true && $this->selectedSize && $this->selectedColor) {
 
                 array_push($this->items, [
+                    'id' => $pr->id,
                     'num' =>  $this->index++,
                     'code' => $pr->pcode,
                     'name' => $pr->name,
@@ -149,6 +157,7 @@ class ProductDropdown extends Component
             } else if ($bool != true && $this->selectedSize) {
 
                 array_push($this->items, [
+                    'id' => $pr->id,
                     'num' =>  $this->index++,
                     'code' => $pr->pcode,
                     'name' => $pr->name,
@@ -164,6 +173,7 @@ class ProductDropdown extends Component
             } else if ($bool != true &&  $this->selectedColor) {
 
                 array_push($this->items, [
+                    'id' => $pr->id,
                     'num' =>  $this->index++,
                     'code' => $pr->pcode,
                     'name' => $pr->name,
@@ -179,6 +189,7 @@ class ProductDropdown extends Component
             } else if ($bool != true) {
 
                 array_push($this->items, [
+                    'id' => $pr->id,
                     'num' =>  $this->index++,
                     'code' => $pr->pcode,
                     'name' => $pr->name,
@@ -240,10 +251,45 @@ class ProductDropdown extends Component
     public function updateSalesman($id)
     {
 
-        $sm =  Employee::where('emp_id', '=', $id)->get();
+        $sm =  Employee::where('id', '=', $id)->get();
         $this->sid = $id;
         foreach ($sm as $s) {
             $this->sname = $s->fname . ' ' . $s->lname;
         }
+    }
+    public function updateCustomer($id)
+    {
+        $cus =  Customer::where('id', '=', $id)->get();
+        $this->cusid = $id;
+        foreach ($cus as $c) {
+            $this->cusname = $c->firstname . ' ' . $c->lastname;
+            $this->cusphone = $c->phone;
+        }
+    }
+    public function makeSale(){
+
+        $sale = new Sale();
+        $sale->customerId = $this->cusid;
+        $sale->staffId = $this->sid;
+        $sale->amount = $this->total;
+        $sale->discount = $this->discount;
+        $sale->taxes = $this->tax;
+        $sale->save();
+        $last = DB::table('sales')->latest()->first();
+        $saleId = $last->id;
+
+
+        foreach($this->items as $key=>$i){
+
+            $sp = new SalesProduct();
+            $sp->saleId = $saleId;
+            $sp->pid = $this->items[$key]['id'];
+            $sp->qty = $this->items[$key]['qty'];
+            $sp->price = $this->items[$key]['total'];
+            $sp->discount = $this->items[$key]['discount'];
+            $sp->save();
+        }
+
+
     }
 }
