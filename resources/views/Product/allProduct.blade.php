@@ -58,7 +58,7 @@
                         {{-- End of toggle switch --}}
                     {{-- </td> --}}
                     <td class="action-icon">
-                        <a href="{{ route('product.show',$i->id) }}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
+                        <a href="{{ route('product.edit',$i->id) }}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         {{-- Delete Icon --}}
                         <form method="POST" class="dlt-form" action="{{ route('product.destroy',$i->id) }}">
                             @method('DELETE')

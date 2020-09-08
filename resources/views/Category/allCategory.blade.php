@@ -30,7 +30,7 @@
 
                 <tr>
                     <th>Category Name</th>
-                    <th>Category Description</th>
+                    <th style="max-width: 600px; width: 600px">Category Description</th>
                     <th>Action</th>
                 </tr>
             </thead>

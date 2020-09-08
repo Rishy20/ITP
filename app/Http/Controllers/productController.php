@@ -38,10 +38,10 @@ class productController extends Controller
         $inv =Inventory::all();
         $brand = Brand::all();
         $vendor = Vendor::all();
+        $last = DB::table('products')->latest()->first();
+        $barcode = $last->barcode;
 
-
-
-        return view('Product.addProduct',compact('cat','inv','brand','vendor'));
+        return view('Product.addProduct',compact('cat','inv','brand','vendor','barcode'));
 
     }
 
@@ -54,9 +54,8 @@ class productController extends Controller
     public function store(Request $request)
     {
         Product::create($request->all());
-
         Session::put('message', 'Success!');
-        return redirect()->back();
+        return redirect('/product');
 
     }
 
@@ -79,7 +78,12 @@ class productController extends Controller
      */
     public function edit($id)
     {
-        //
+        $p = Product::findOrFail($id);
+        $cat =Category::all();
+        $inv =Inventory::all();
+        $brand = Brand::all();
+        $vendor = Vendor::all();
+        return view('Product.editProduct',compact('p','cat','inv','brand','vendor'));
     }
 
     /**
