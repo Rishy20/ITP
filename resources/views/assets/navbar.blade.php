@@ -63,6 +63,15 @@
         <li class="pos-nav-li">
             <a href="{{ route('brand.index') }}">Manage Brands</a>
         </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('inventories.index') }}">Manage Inventories</a>
+        </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('stock-transfers.index') }}">Stock Transfer</a>
+        </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('inventory-counts.index') }}">Inventory Counts</a>
+        </li>
 
         <li class="pos-nav-li">
             <a href="{{ route('promotion.index') }}">Manage Promotions</a>

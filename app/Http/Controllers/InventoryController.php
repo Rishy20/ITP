@@ -6,6 +6,7 @@ use App\Inventory;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class InventoryController extends Controller
 {
@@ -16,6 +17,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
+        // Get all inventories from the database and pass them to inventory index view
         $inventories = Inventory::all();
         return view('inventories.index')->with('inventories', $inventories);
     }
@@ -40,8 +42,10 @@ class InventoryController extends Controller
     {
         // Validate inputs
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|max:50',
+            'address' => 'max:200'
         ]);
+        Session::put('message', 'Success!');
 
         // Create inventory
         $inventory = new Inventory([
@@ -66,7 +70,7 @@ class InventoryController extends Controller
         $inventory_items = DB::table('inventory_items')->where('inventory_id', $inventory->id)->get();
         $products = Product::findMany($inventory_items->pluck('product_id'));
 
-        // Assign each product to the inventory item with a matching product id
+        // Assign each product to the corresponding inventory item (check for matching product ids)
         foreach ($inventory_items as $inventory_item)
             foreach ($products as $product)
                 if ($inventory_item->product_id == $product->id)
@@ -84,6 +88,7 @@ class InventoryController extends Controller
      */
     public function edit(Inventory $inventory)
     {
+        // Return inventory edit view with the corresponding inventory as a parameter
         return view('inventories.edit')->with('inventory', $inventory);
     }
 
@@ -107,6 +112,7 @@ class InventoryController extends Controller
 
         // Save inventory and redirect to index
         $inventory->save();
+        Session::put('message', 'Success!');
         return redirect('inventories');
     }
 
@@ -121,6 +127,7 @@ class InventoryController extends Controller
     {
         // Delete inventory and redirect to index
         $inventory->delete();
+        Session::put('message', 'Success!');
         return redirect('inventories');
     }
 }

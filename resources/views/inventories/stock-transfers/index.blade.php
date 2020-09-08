@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="pg-heading">
-    <div class="pg-title">Inventories</div>
+    <div class="pg-title">Stock Transfers</div>
 </div>
 @if(session('message'))
 <div class="message">
@@ -19,36 +19,30 @@
     <div class="section-content">
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <a href="{{ route('inventory-counts.index') }}">
-                <div class="add-btn">Inventory Counts</div>
-            </a>
-            <a href="{{ route('stock-transfers.index') }}">
-                <div class="add-btn">Stock Transfers</div>
-            </a>
-            <a href="{{ route('inventories.create') }}">
-                <div class="add-btn">Add Inventory</div>
+            <a href="{{ route('stock-transfers.create') }}">
+                <div class="add-btn">Add Stock Transfer</div>
             </a>
             <thead class="table-head">
                 <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Quantity</th>
+                    <th>Reference #</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($inventories as $inventory)
+                @foreach($stock_transfers as $stock_transfer)
                     <tr>
-                        <td>
-                            <a href="{{ route('inventories.show', $inventory) }}" style="color: #058DE9">{{ $inventory->name }}</a>
-                        </td>
-                        <td>{{ $inventory->address }}</td>
-                        <td>{{ $inventory->qty }}</td>
+                        <td>{{$stock_transfer->reference}}</td>
+                        <td>{{$stock_transfer->source_name}}</td>
+                        <td>{{$stock_transfer->destination_name}}</td>
+                        <td>{{$stock_transfer->status}}</td>
 
                         <td class="action-icon">
-                            <a href="{{ route('inventories.edit', $inventory) }}"><i class="fas fa-pen"></i></a>
+                            <a href="{{ route('stock-transfers.edit', $stock_transfer) }}"><i class="fas fa-pen"></i></a>
                             <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                            <form method="POST" class="dlt-form" action="{{ route('inventories.destroy', $inventory) }}">
+                            <form method="POST" class="dlt-form" action="{{ route('stock-transfers.destroy', $stock_transfer) }}">
                                 @method('DELETE')  {{-- Spoof form method as 'DELETE' to comply with destroy route --}}
                                 @csrf
 

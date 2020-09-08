@@ -5,25 +5,31 @@
     <a href="{{ route('inventories.index') }}">
         <i class="fa fa-arrow-left pg-back"></i>
     </a>
-    <div class="pg-title">Inventories</div>
+    <div class="pg-title">Add Inventory</div>
 </div>
 
 <div class="section">
     <div class="section-title">
-        Add Inventory
+        Inventory Information
         <hr>
     </div>
     <div class="section-content">
-        <form method="POST" action="{{ route('inventories.store') }}">
+        <form method="POST" class="needs-validation" action="{{ route('inventories.store') }}" novalidate>
             @csrf
             <div class="row">
                 <div class="col">
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Inventory name">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Inventory Name" required>
                     <label for="name" class="float-label">Inventory Name</label>
+                    <div class="invalid-feedback">
+                        Please enter a name
+                    </div>
                 </div>
                 <div class="col">
-                    <input type="text" id="address" name="address" class="form-control" placeholder="Inventory address">
+                    <input type="text" id="address" name="address" class="form-control" placeholder="Inventory Address" required>
                     <label for="address" class="float-label">Inventory Address</label>
+                    <div class="invalid-feedback">
+                        Please enter an address
+                    </div>
                 </div>
             </div>
             <div class="row submit-row">
