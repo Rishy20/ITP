@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
-use App\Sale;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -14,6 +11,6 @@ class ReportController extends Controller
     }
 
     public function generateReport() {
-        return view('reports.sales.by_item');
+        return view('reports.sales.product-wise-sales');
     }
 }

@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="pg-heading">
-    <div class="pg-title">Sales (by items) Report</div>
+    <div class="pg-title">Product-wise Sales Report</div>
 </div>
 
 <div class="section">
