@@ -50,6 +50,9 @@ class CustomerController extends Controller
             'city' => 'required',
             
         ]);
+        Customer::create($request->all());
+        return redirect()->back();
+        
 
         $cust = new Customer;
 

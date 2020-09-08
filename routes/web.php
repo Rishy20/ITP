@@ -19,8 +19,8 @@ use Milon\Barcode\PDF417;
 
 Route::resource('/customer', 'CustomerController');
 
+Route::resource('/promotion', 'PromotionController');
 
-Route::resource('/cusfolder', 'PromotionController');
 
 
 
