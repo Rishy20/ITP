@@ -51,23 +51,10 @@ class CustomerController extends Controller
 
         ]);
         Customer::create($request->all());
-        return redirect('/customer');
-
-
-        $cust = new Customer;
-
-        $cust->firstname = $request->input('firstname');
-        $cust->lastname = $request->input('lastname');
-        $cust->gender = $request->input('gender');
-        $cust->dob = $request->input('dob');
-        $cust->email = $request->input('email');
-        $cust->phone = $request->input('phone');
-        $cust->streetaddress = $request->input('streetaddress');
-        $cust->city = $request->input('city');
-
-        $cust->save();
         Session::put('message', 'Success!');
         return redirect('/customer');
+
+
     }
 
     /**
