@@ -46,7 +46,7 @@ class ExchangeController extends Controller
             'customerID'=>'required',
             'salesmanID'=>'required',
             'amount'=>'required',
-            'date'=>'required',
+
 
         ]);
         Exchange::create($request->all());
@@ -94,7 +94,7 @@ class ExchangeController extends Controller
             'customerID'=>'required',
             'salesmanID'=>'required',
             'amount'=>'required',
-            'date'=>'required',
+
 
 
         ]);
@@ -105,7 +105,7 @@ class ExchangeController extends Controller
         $exchanges->customerID=$request->input('customerID');
         $exchanges->salesmanID=$request->input('salesmanID');
         $exchanges->amount=$request->input('amount');
-        $exchanges->date=$request->input('date');
+
 
           $exchanges->save();
           Session::put('message', 'Success!');
