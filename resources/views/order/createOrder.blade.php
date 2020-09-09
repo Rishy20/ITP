@@ -14,7 +14,7 @@
   <div class="section-content" > {{-- Start of sectionContent--}}
       {{-- Start of Form --}}
 
-    <form method="post" action="{{ route('purchase.store')}}">
+    <form method="post" class="needs-validation" action="{{ route('purchase.store')}}" novalidate>
               @csrf
 
               <div class="row">
@@ -23,12 +23,18 @@
                   <label for="username" class="float-label">Date</label>
                 </div> --}}
                 <div class="col">
-                    <input  type="text" class="form-control" name="vendorID" placeholder="Vendor ID">
+                    <input  type="text" class="form-control" name="vendorID" placeholder="Vendor ID" required>
                     <label class="float-label">Vendor ID</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                   </div>
                 <div class="col">
-                    <input type="date" class="form-control" name="expectedDate" placeholder="Expected Date">
+                    <input type="date" class="form-control" name="expectedDate" placeholder="Expected Date" required>
                     <label class="float-label">Expected Date</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
               </div>
               {{-- <div class="row">

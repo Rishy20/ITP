@@ -60,10 +60,11 @@
                     <td class="action-icon">
                         <a href="{{ route('product.edit',$i->id) }}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         {{-- Delete Icon --}}
-                        <form method="POST" class="dlt-form" action="{{ route('product.destroy',$i->id) }}">
+                        <button type="submit" id="dlt-btn{{ $i->id }}" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $i->id }}" action="{{ route('product.destroy',$i->id) }}">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+
                         </form>
                     </td>
                 </tr>

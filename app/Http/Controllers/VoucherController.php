@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class VoucherController extends Controller
 {
@@ -43,6 +44,7 @@ class VoucherController extends Controller
             ]);
 
         Voucher::create($request->all());
+        Session::put('message', 'Success!');
         return redirect('/voucher');
     }
 
@@ -83,6 +85,7 @@ class VoucherController extends Controller
         $voucher->exp = $request->input('exp');
 
         $voucher->save();
+        Session::put('message', 'Success!');
         return redirect('/voucher');
     }
 
@@ -92,10 +95,11 @@ class VoucherController extends Controller
      * @param  \App\Voucher  $voucher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Voucher $voucher)
+    public function destroy($id)
     {
         $voucher = Voucher::findOrFail($id);
         $voucher->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

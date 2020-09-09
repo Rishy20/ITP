@@ -13,6 +13,7 @@
 
     </div>
 </div>
+{{ Session::forget('message') }}
 @endif
 <div class="section">
 
@@ -39,8 +40,8 @@
 
                         <td class="action-icon">
                             <a href="{{ route('inventory-counts.edit', $inventory_count) }}"><i class="fas fa-pen"></i></a>
-                            <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                            <form method="POST" class="dlt-form" action="{{ route('inventory-counts.destroy', $inventory_count) }}">
+                            <button type="submit" class="dlt-btn" id="dlt-btn{{ $inventory_count->id }}"><i class="fas fa-trash-alt"></i></button>
+                            <form method="POST" class="dlt-form" id="dlt-form{{ $inventory_count->id }}" action="{{ route('inventory-counts.destroy', $inventory_count) }}">
                                 @method('DELETE')  {{-- Spoof form method as 'DELETE' to comply with destroy route --}}
                                 @csrf
 

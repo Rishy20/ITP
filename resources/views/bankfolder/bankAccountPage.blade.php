@@ -27,8 +27,8 @@
                 </div>
 
                 <div class="col">
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required/>
-                    <label for="name" class="float-label">Account Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Account Holder's Name" required/>
+                    <label for="name" class="float-label">Account Holder's Name</label>
                     <div class="invalid-feedback">
                         Please fill out this field
                     </div>

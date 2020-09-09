@@ -5,7 +5,9 @@
     <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Add Products</div>
 </div>
-<form method="post" class="needs-validation" action="{{route('product.store')}}" novalidate>
+<form method="post" class="needs-validation" action="{{route('product.update',$p->id)}}" novalidate>
+
+    @method('patch')
 <div class="row">
     <div class="col-md-8">
 
@@ -174,7 +176,9 @@
                             <select class="form-control inv-select" name="inv" required>
                                 <option value="" disabled selected hidden>Select an Inventory</option>
                                 @foreach($inv as $i)
-                                <option  value="{{$i->id}}">{{$i->name}} </option>
+                                <option @foreach($inven as $t)
+                                @if($i->id == $t->inventory_id) selected @endif
+                                @endforeach  value="{{$i->id}}">{{$i->name}} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">

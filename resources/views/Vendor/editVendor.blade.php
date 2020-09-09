@@ -7,7 +7,7 @@
         <div class="pg-title">Edit Vendor</div>
     </div>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="section"> {{-- Start of Section 1--}}
                 <div class="section-title">
                     Vendor Information

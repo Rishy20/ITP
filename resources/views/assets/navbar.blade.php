@@ -77,6 +77,9 @@
             <a href="{{ route('promotion.index') }}">Manage Promotions</a>
         </li>
         <li class="pos-nav-li">
+            <a href="{{ route('purchase.index') }}">Manage Purchases</a>
+        </li>
+        <li class="pos-nav-li">
             <a href="{{ route('barcode') }}">Print Labels</a>
         </li>
 
@@ -98,6 +101,9 @@
         </li>
         <li class="pos-nav-li">
             <a href="{{ route('voucher.index') }}">Manage Vouchers</a>
+        </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('service.index') }}">Manage Services</a>
         </li>
 
     </ul>
@@ -156,6 +162,10 @@
         <li class="pos-nav-li">
             <a href="{{ route('attendance.create') }}">Mark Attendance</a>
         </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('salaryPayment.index') }}">Salary Payment</a>
+        </li>
+
     </ul>
 </nav>
 {{-- Setup Collapse  --}}
@@ -175,6 +185,9 @@
         </li>
         <li class="pos-nav-li">
             <a href="{{ route('vendors.index') }}">Manage Vendors</a>
+        </li>
+        <li class="pos-nav-li">
+            <a href="{{ route('vendorPayment.index') }}">Vendor Payment</a>
         </li>
     </ul>
 </nav>

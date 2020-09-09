@@ -171,7 +171,7 @@
                     <div class="col">
                         <div class="form-group inv-col">
                             <label class="inv-label">Inventory</label>
-                            <select class="form-control inv-select"  required>
+                            <select name="inventory"class="form-control inv-select"  required>
                                 <option value="" disabled selected hidden>Select an Inventory</option>
                                 @foreach($inv as $i)
                                 <option value="{{$i->id}}">{{$i->name}} </option>

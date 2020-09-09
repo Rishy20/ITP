@@ -7,43 +7,61 @@
         <div class="pg-title">Add Service</div>
     </div>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="section"> {{-- Start of Section 1--}}
                 <div class="section-title">
                     Service Information
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
-                    <form method="post" action="{{route('service.store')}}">
+                    <form method="post" class="needs-validation" action="{{route('service.store')}}" novalidate>
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <input type="text" id="Customer ID" name="customer_id" class="form-control" placeholder="Customer ID" />
+                                <input type="text" id="Customer ID" name="customer_id" class="form-control" placeholder="Customer ID" required/>
                                 <label for="Customer ID" class="float-label">Customer ID</label>
+                                <div class="invalid-feedback">
+                                    Please fill out this field
+                                </div>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="id" placeholder="Service ID">
+                                <input type="text" class="form-control" name="id" placeholder="Service ID" required>
                                 <label class="float-label">Service ID</label>
+                                <div class="invalid-feedback">
+                                    Please fill out this field
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="date" placeholder="Date">
+                                <input type="text" class="form-control" name="date" placeholder="Date" required>
                                 <label class="float-label">Date</label>
+                                <div class="invalid-feedback">
+                                    Please fill out this field
+                                </div>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="service_description" placeholder="Service Description">
+                                <input type="text" class="form-control" name="service_description" placeholder="Service Description" required>
                                 <label class="float-label">Service Description</label>
+                                <div class="invalid-feedback">
+                                    Please fill out this field
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" name="return_date" placeholder="Return Date">
+                                <input type="text" class="form-control" name="return_date" placeholder="Return Date" required>
                                 <label class="float-label">Return Date</label>
+                                <div class="invalid-feedback">
+                                    Please fill out this field
+                                </div>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="cost" placeholder="cost">
+                                <input type="text" class="form-control" name="cost" placeholder="cost" required>
                                 <label class="float-label">cost</label>
+                                <div class="invalid-feedback">
+                                    Please fill out this field
+                                </div>
                             </div>
                         </div>
 

@@ -2,11 +2,11 @@
 @section('content')
 
 <div class="pg-heading">
-  <a href="{{ route('salaryPayment.index') }}"><i class="fa fa-arrow-left pg-back"></i></a>  
+  <a href="{{ route('salaryPayment.index') }}"><i class="fa fa-arrow-left pg-back"></i></a>
   <div class="pg-title">Salary Payment</div>
 </div>
 
-<div class="section" style="height: 50%;width:50%"> {{-- Start of Section--}}
+<div class="section"> {{-- Start of Section--}}
   <div class="section-title">
       Payment for Employee's
       <hr>
@@ -14,37 +14,46 @@
   <div class="section-content" > {{-- Start of sectionContent--}}
       {{-- Start of Form --}}
 
-    <form method="post" action="{{ route('salaryPayment.store') }}" >
+    <form method="post" class="needs-validation" action="{{ route('salaryPayment.store') }}" novalidate >
               @csrf
               <div class="row">
                   <div class="col">
-                      <input type="text" class="form-control" name="staffID" placeholder="staffID">
+                      <input type="text" class="form-control" name="staffID" placeholder="staffID" required>
                       <label class="float-label">Satff ID</label>
+                      <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                   </div>
                   <div class="col">
-                    <input type="text" id="vendorId" name="amount" class="form-control" placeholder="Amount" />
+                    <input type="text" id="vendorId" name="amount" class="form-control" placeholder="Amount" required/>
                     <label for="vendorId" class="float-label">Amount</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                   </div>
               </div>
               <div class="row">
                 <div class="col">
-                    <input type="date" class="form-control" name="date" placeholder="Date">
+                    <input type="date" class="form-control" name="date" placeholder="Date" required>
                     <label class="float-label">Date</label>
+                    <div class="invalid-feedback">
+                        Please fill out this field
+                    </div>
                 </div>
                 <div class="col"></div>
               </div>
-              
+
 
 
               <hr>
               <div class="form-group">
                 <input type="search" name="add_products" id="add_products" class="form-control input-lg" placeholder="Enter Staff Member Name.." style="width: 50%" />
-                
+
               </div>
               <br>
 
               <table class="table hover table-striped table-borderless table-hover all-table">
-              
+
                 <thead class="table-head">
                     <tr>
                         <th>Staff ID</th>
@@ -71,12 +80,12 @@
                   </div>
               </div>
 
-              
+
           </form>
 
 
         </div> {{-- End  of sectionContent--}}
       </div> {{-- End  of section--}}
-      
+
 
 @endsection

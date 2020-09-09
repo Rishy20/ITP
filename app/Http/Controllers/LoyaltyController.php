@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Loyalty;
+use Illuminate\Support\Facades\Session;
+
 class LoyaltyController extends Controller
 {
     /**
@@ -45,6 +47,7 @@ class LoyaltyController extends Controller
         // ]);
 
         Loyalty::create($request->all());
+        Session::put('message', 'Success!');
         return redirect('/loyalty');
     }
 
@@ -91,6 +94,7 @@ class LoyaltyController extends Controller
 
         $input = $request->all();
         $loyalty->update($input);
+        Session::put('message', 'Success!');
         return redirect('/loyalty');
     }
 
@@ -105,6 +109,7 @@ class LoyaltyController extends Controller
 
         $loyalty = Loyalty::findOrFail($id);
         $loyalty->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

@@ -45,11 +45,11 @@
                     <td>{{ $v->email }}</td>
                     <td class="action-icon">
                         <a href="{{ route('vendors.edit',$v->id) }}"><i class="fas fa-pen"></i></a>
-
-                        <form method="POST" class="dlt-form"  action="{{ route('vendors.destroy',$v->id) }}">
+                        <button class="dlt-btn" id="dlt-btn{{ $v->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $v->id }}" action="{{ route('vendors.destroy',$v->id) }}">
                             @method('DELETE')
                             @csrf
-                            <button class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+
                         </form>
                     </td>
 

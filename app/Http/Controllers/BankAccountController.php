@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BankAccount;
+use Illuminate\Support\Facades\Session;
+
 class BankAccountController extends Controller
 {
     /**
@@ -37,7 +39,7 @@ class BankAccountController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           
+
             'number'=>'required|max:8',
             'name'=>'required',
             'type'=>'required',
@@ -46,6 +48,8 @@ class BankAccountController extends Controller
 
         ]);
         BankAccount::create($request->all());
+        Session::put('message', 'Success!');
+
         return redirect('/bank');
     }
 
@@ -82,7 +86,7 @@ class BankAccountController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-           
+
             'number'=>'required|max:8',
             'name'=>'required',
             'type'=>'required',
@@ -101,7 +105,8 @@ class BankAccountController extends Controller
         $banks->branchname=$request->input('branchname');
 
           $banks->save();
-          BankAccount::create($request->all());
+        //   BankAccount::create($request->all());
+        Session::put('message', 'Success!');
           return redirect('/bank');
 
     }
@@ -116,7 +121,7 @@ class BankAccountController extends Controller
     {
         $banks = BankAccount::find($id);
         $banks->delete();
-
+        Session::put('message', 'Success!');
         return redirect('/bank');
     }
 }

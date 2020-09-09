@@ -4,7 +4,16 @@
 <div class="pg-heading">
     <div class="pg-title">Promotion Details</div>
 </div>
-
+@if(session('message'))
+<div class="message">
+    <div class="message-success">
+        <i class="far fa-check-circle message-icon"></i>
+        <span class="message-text">Success!</span>
+        <span class="message-text-sub">You're awesome!!!</span>
+    </div>
+</div>
+{{ Session::forget('message') }}
+@endif
 <div class="section"> {{-- Start of Section--}}
 
     <div class="section-content"> {{-- Start of sectionContent--}}
@@ -38,8 +47,8 @@
                     <td class="action-icon">
                     <a href = "{{ route('promotion.edit', $row->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         {{-- Delete Icon --}}
-                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                        <form method="POST" class="dlt-form" action="{{route('promotion.destroy',$row->id)}}">
+                        <button type="submit" class="dlt-btn" id="dlt-btn{{ $row->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $row->id }}" action="{{route('promotion.destroy',$row->id)}}">
                             @method('DELETE')
                             @csrf
 

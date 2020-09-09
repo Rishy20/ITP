@@ -95,7 +95,7 @@ class brandController extends Controller
         $brand=Brand::findOrFail($id);
         $brand->delete();
         Session::put('message', 'Success!');
-        return redirect('/brand');
+        return redirect()->back();
 
     }
 }

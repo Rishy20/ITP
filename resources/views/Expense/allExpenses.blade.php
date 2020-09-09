@@ -46,8 +46,8 @@
                     <td>{{$e->created_at}}</td>
                     <td class="action-icon">
                         <a onclick="editExpense({{ $e->id }})"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
-                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                        <form method="POST" class="dlt-form" action="{{ route('expense.destroy',$e->id)}}">
+                        <button type="submit" class="dlt-btn" id="dlt-btn{{ $e->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $e->id }}" action="{{ route('expense.destroy',$e->id)}}">
                             @method('DELETE')
                             @csrf
 

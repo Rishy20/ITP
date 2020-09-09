@@ -54,8 +54,8 @@
                     </td>
                     <td class="action-icon">
                         <a href="{{ route('user.edit',$us->id) }}"><i class="fas fa-pen"></i></a>
-                        <button class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                        <form method="POST" class="dlt-form"  action="{{ route('user.destroy',$us->id) }}">
+                        <button class="dlt-btn" id="dlt-btn{{ $us->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $us->id }}"  action="{{ route('user.destroy',$us->id) }}">
                             @method('DELETE')
                             @csrf
                         </form>

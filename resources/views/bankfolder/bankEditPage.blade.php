@@ -27,8 +27,8 @@
   </div>
 
   <div class="col">
-    <input type="text" class="form-control" name="name" id="name" value="{{ $banks->name}}" placeholder="Account Name" required/>
-    <label for="name" class="float-label">User Name</label>
+    <input type="text" class="form-control" name="name" id="name" value="{{ $banks->name}}" placeholder="Account Holder's Name" required/>
+    <label for="name" class="float-label">Account Holder's Name</label>
     <div class="invalid-feedback">
         Please fill out field
     </div>

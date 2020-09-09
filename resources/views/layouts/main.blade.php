@@ -55,7 +55,8 @@
 
         $(document).ready(function() {
             $('#myTable').DataTable({
-                "dom": '<"top"f><t><"bottom"lip>'
+                "order": []
+                , "dom": '<"top"f><t><"bottom"lip>'
                 , language: {
                     search: "_INPUT_"
                     , searchPlaceholder: "🔎 Search"
@@ -71,9 +72,12 @@
                     }, 3000);
                 });
                 $('.dlt-btn').click(function() {
+                    var btnid = this.id;
+                    var formid = btnid.replace(/[^0-9]/g, '');
+                    var formClass = '#dlt-form' + formid;
 
                     if (confirm('Are you sure you want to delete?')) {
-                        $('.dlt-form').submit();
+                        $(formClass).submit();
                     }
                 });
             });

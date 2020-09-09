@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SalaryPayment;
+use Illuminate\Support\Facades\Session;
 
 class SalaryPaymentController extends Controller
 {
@@ -37,6 +38,7 @@ class SalaryPaymentController extends Controller
     public function store(Request $request)
     {
         SalaryPayment::create($request->all());
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 
@@ -76,6 +78,7 @@ class SalaryPaymentController extends Controller
 
         $input = $request->all();
         $salaryPayment->update($input);
+        Session::put('message', 'Success!');
         return redirect('/salaryPayment');
     }
 
@@ -89,6 +92,7 @@ class SalaryPaymentController extends Controller
     {
         $salaryPayment = SalaryPayment::findOrFail($id);
         $salaryPayment->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

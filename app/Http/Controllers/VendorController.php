@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class VendorController extends Controller
 {
@@ -48,7 +49,8 @@ class VendorController extends Controller
         // 'phone_no'=>'required|max:50',
         // ]);
         Vendor::create($request->all());
-        return redirect()->back();
+        Session::put('message', 'Success!');
+        return redirect('/vendors');
     }
 
     /**
@@ -87,6 +89,7 @@ class VendorController extends Controller
         $vendor = Vendor::findOrFail($id);
         $input=$request->all();
         $vendor->update($input);
+        Session::put('message', 'Success!');
         return redirect('/vendors');
     }
 
@@ -99,7 +102,9 @@ class VendorController extends Controller
     public function destroy($id)
     {
         $vendor = Vendor::findOrFail($id);
+
         $vendor->delete();
+        Session::put('message', 'Success!');
         return redirect()->back();
     }
 }

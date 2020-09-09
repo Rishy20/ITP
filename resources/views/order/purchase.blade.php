@@ -13,8 +13,18 @@
   <i class="fa fa-arrow-left pg-back"></i>
   <div class="pg-title">Purchase Order</div>
 </div>
+@if(session('message'))
+<div class="message">
+    <div class="message-success">
+        <i class="far fa-check-circle message-icon"></i>
+        <span class="message-text">Success!</span>
+        <span class="message-text-sub">You're awesome!!!</span>
 
-<div class="section" style="height: 100%;width:100%"> {{-- Start of Section--}}
+    </div>
+</div>
+{{ Session::forget('message') }}
+@endif
+<div class="section" > {{-- Start of Section--}}
   <div class="section-title">
       Order Details
       <hr>
@@ -49,10 +59,11 @@
                 <td>{{ $row->expectedDate}}</td>
                 <td class="action-icon">
                     <a href="{{ route('purchase.edit',$row['id'])}}"><i class="fas fa-pen"></i></a>
-                    <form method="POST" class="dlt-form" action="{{ route('purchase.destroy',$row['id']) }}">
+                    <button type="submit" class="dlt-btn" id="dlt-btn{{ $row['id'] }}"><i class="fas fa-trash-alt"></i></button>
+                    <form method="POST" class="dlt-form" id="dlt-form{{ $row['id'] }}" action="{{ route('purchase.destroy',$row['id']) }}">
                         @method('DELETE')
                         @csrf
-                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
+
                     </form>
                 </td>
             </tr>

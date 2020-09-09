@@ -54,6 +54,11 @@ class productController extends Controller
     public function store(Request $request)
     {
         Product::create($request->all());
+        $inv = $request->inventory;
+        $last = DB::table('products')->latest()->first();
+        $pid = $last->id;
+        $qty = $request->Qty;
+        DB::insert('insert into inventory_items (inventory_id, product_id,qty,created_at,updated_at) values (?, ?,?,?,?)', [$inv,$pid,$qty,now(),now()]);
         Session::put('message', 'Success!');
         return redirect('/product');
 
@@ -79,11 +84,13 @@ class productController extends Controller
     public function edit($id)
     {
         $p = Product::findOrFail($id);
+        $inven =  DB::table('inventory_items')->where('product_id', $id)->get();
+
         $cat =Category::all();
         $inv =Inventory::all();
         $brand = Brand::all();
         $vendor = Vendor::all();
-        return view('Product.editProduct',compact('p','cat','inv','brand','vendor'));
+        return view('Product.editProduct',compact('p','cat','inv','brand','vendor','inven'));
     }
 
     /**
@@ -95,7 +102,11 @@ class productController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product=Product::findOrFail($id);
+        $input=$request->all();
+        $product->update($input);
+        Session::put('message', 'Success!');
+        return redirect('/product');
     }
 
     /**

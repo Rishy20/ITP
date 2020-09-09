@@ -5,7 +5,17 @@
 
     <div class="pg-title">Attendance</div>
 </div>
+@if(session('message'))
+<div class="message">
+    <div class="message-success">
+        <i class="far fa-check-circle message-icon"></i>
+        <span class="message-text">Success!</span>
+        <span class="message-text-sub">You're awesome!!!</span>
 
+    </div>
+</div>
+{{ Session::forget('message') }}
+@endif
 <div class="section"> {{-- Start of Section--}}
 
     <div class="section-content"> {{-- Start of sectionContent--}}
@@ -39,8 +49,8 @@
 
                     <td class="action-icon">
                         <a href="{{ route('attendance.edit',$att->id) }}"><i class="fas fa-pen"></i></a>
-                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                        <form method="POST" class="dlt-form" action="{{ route('attendance.destroy',$att->id) }}">
+                        <button type="submit" class="dlt-btn" id="dlt-btn{{ $i->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $i->id }}" action="{{ route('attendance.destroy',$att->id) }}">
                             @method('DELETE')
                             @csrf
                         </form>

@@ -62,8 +62,8 @@
 
                     <td class="action-icon">
                         <a href="{{ route('employee.edit',$emp->id) }}"><i class="fas fa-pen"></i></a>
-                        <button type="submit" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
-                        <form method="POST" class="dlt-form" action="{{ route('employee.destroy',$emp->id) }}">
+                        <button type="submit" class="dlt-btn" id="dlt-btn{{ $emp->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $emp->id }}" action="{{ route('employee.destroy',$emp->id) }}">
                             @method('DELETE')
                             @csrf
 

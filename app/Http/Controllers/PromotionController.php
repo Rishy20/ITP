@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Promotion;
+use Illuminate\Support\Facades\Session;
 
 class PromotionController extends Controller
 {
@@ -42,7 +43,7 @@ class PromotionController extends Controller
             'discount' => 'required',
             'startdate' => 'required',
             'enddate' => 'required',
-            
+
 
         ]);
         Promotion::create($request->all());
@@ -57,7 +58,7 @@ class PromotionController extends Controller
         $prms->enddate = $request->input('enddate');
 
         $prms->save();
-
+        Session::put('message', 'Success!');
         return redirect('/promotion');
 
 
@@ -96,14 +97,14 @@ class PromotionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-           
+
             'promotionname' => 'required',
             'promotiontype' => 'required',
             'discount' => 'required',
             'startdate' => 'required',
             'enddate' => 'required',
-            
-            
+
+
         ]);
 
         $prms = Promotion::find($id);
@@ -115,7 +116,7 @@ class PromotionController extends Controller
         $prms->enddate = $request->input('enddate');
 
         $prms->save();
-
+        Session::put('message', 'Success!');
         return redirect('/promotion');
     }
 
@@ -129,8 +130,8 @@ class PromotionController extends Controller
     {
         $prms = Promotion::find($id);
         $prms->delete();
+        Session::put('message', 'Success!');
 
-       
         return redirect('/promotion');
     }
 }
