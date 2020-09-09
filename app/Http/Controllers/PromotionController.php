@@ -47,18 +47,19 @@ class PromotionController extends Controller
 
         ]);
         Promotion::create($request->all());
-        return redirect()->back();
-
-        $prms = new Promotion;
-
-        $prms->promotionname = $request->input('promotionname');
-        $prms->promotiontype = $request->input('promotiontype');
-        $prms->discount = $request->input('discount');
-        $prms->startdate = $request->input('startdate');
-        $prms->enddate = $request->input('enddate');
-
-        $prms->save();
         Session::put('message', 'Success!');
+        return redirect('/promotion');
+
+        // $prms = new Promotion;
+
+        // $prms->promotionname = $request->input('promotionname');
+        // $prms->promotiontype = $request->input('promotiontype');
+        // $prms->discount = $request->input('discount');
+        // $prms->startdate = $request->input('startdate');
+        // $prms->enddate = $request->input('enddate');
+
+        // $prms->save();
+        // Session::put('message', 'Success!');
         return redirect('/promotion');
 
 

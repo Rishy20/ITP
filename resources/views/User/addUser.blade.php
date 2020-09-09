@@ -34,14 +34,14 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                <input type="password" class="form-control" name="password" id="pass" placeholder="Password" required>
                                 <label class="float-label">Password</label>
                                 <div class="invalid-feedback">
                                     Please enter a password
                                   </div>
                             </div>
                             <div class="col">
-                                <input type="password" class="form-control" name="repass" placeholder="Re-enter Password" required>
+                                <input type="password" class="form-control" name="repass" id="repass" placeholder="Re-enter Password" required>
                                 <label class="float-label">Re-enter Password</label>
                                 <div class="invalid-feedback">
                                     Please enter a password
