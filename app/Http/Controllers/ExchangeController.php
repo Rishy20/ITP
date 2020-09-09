@@ -42,9 +42,9 @@ class ExchangeController extends Controller
     {
         $request->validate([
 
-            'productID'=>'required|max:5',
-            'customerID'=>'required|max:3',
-            'salesmanID'=>'required|max:3',
+            'productID'=>'required',
+            'customerID'=>'required',
+            'salesmanID'=>'required',
             'amount'=>'required',
             'date'=>'required',
 
