@@ -7,53 +7,53 @@ use App\Product;
 use Livewire\Component;
 use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 class SelectProducts extends Component
 {
     public $products;
     public $dbproducts;
     public $index = 1;
     public $items = array();
-    public $labelQty;
+
     public function mount()
     {
-        $this->products = Product::orderBy('id','DESC')->get();
+        $this->products = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
     }
 
-    public function addProduct($id)
+    public function addProduct($id,$vid)
     {
 
-        $prd =  Product::where('id', '=', $id)->get();
+        if($vid){
+            $prd =  DB::select('select p.id,v.id as vid,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id Where v.product_id = ? and v.id = ?',[$id,$vid]);
+        }else{
+            $prd =  DB::select('select p.id,v.id as vid,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id Where p.id = ?',[$id]);
+        }
 
-        foreach ($prd as $pr) {
 
-
+        $this->products = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
+        foreach ($prd as $prs) {
             array_push($this->items, [
                 'num' =>  $this->index++,
-                'code' => $pr->pcode,
-                'name' => $pr->name,
-                'qty' => $pr->Qty,
-                'barcode' => $pr->barcode,
-                'sellingPrice' => $pr->sellingPrice,
-                'lqty'=>$pr->Qty
+                'code' => $prs->pcode,
+                'name' => $prs->name,
+                'size' => $prs->size,
+                'color' => $prs->color,
             ]);
         }
+
+    }
+    public function remove($index){
+
+            unset($this->items[$index]);
+            $this->products = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
+
     }
 
-    public function updateQty($value,$index){
-
-        $index = $index - 1;
-        $this->items[$index]['lqty'] = $value;
-    }
 
     public function render()
     {
         return view('livewire.select-products');
     }
-    public function createPDF(Request $request) {
 
-
-        $request->session()->put('item', $this->items);
-        return redirect()->route('printBarcode');
-
-      }
 }

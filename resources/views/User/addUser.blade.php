@@ -36,30 +36,30 @@
                             <div class="col">
                                 <input type="password" class="form-control" name="password" id="pass" placeholder="Password" required>
                                 <label class="float-label">Password</label>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback " id="passcr1" >
                                     Please enter a password
                                   </div>
                             </div>
                             <div class="col">
                                 <input type="password" class="form-control" name="repass" id="repass" placeholder="Re-enter Password" required>
                                 <label class="float-label">Re-enter Password</label>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback " id="passcr2">
                                     Please enter a password
                                   </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="password" class="form-control" name="pin" placeholder="PIN" required>
+                                <input type="password" class="form-control" id="pin" name="pin" placeholder="PIN" required>
                                 <label class="float-label">Pin</label>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="pincr1" >
                                     Please enter a pin
                                   </div>
                             </div>
                             <div class="col">
-                                <input type="password" class="form-control" name="repin" placeholder="Re-enter PIN" required>
+                                <input type="password" class="form-control" id="repin" name="repin" placeholder="Re-enter PIN" required>
                                 <label class="float-label">Re-enter Pin</label>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="pincr2">
                                     Please enter a pin
                                   </div>
                             </div>
@@ -102,4 +102,47 @@
         </div>
     </div>
 </div>{{-- End of addUser --}}
+<script>
+
+        $('#repass').change(function(){
+        var pass = $('#pass').val();
+		var repass = $('#repass').val();
+		var n = document.getElementById('pass');
+		var re = document.getElementById('repass');
+
+        if(pass != repass){
+            n.classList.add("is-invalid");
+			re.classList.add("is-invalid");
+            document.getElementById('passcr1').innerHTML = "Passwords do not match";
+            document.getElementById('passcr2').innerHTML = "Passwords do not match";
+    }else{
+        n.classList.remove("is-invalid");
+			re.classList.remove("is-invalid");
+            document.getElementById('passcr1').innerHTML = "Please enter a password";
+            document.getElementById('passcr2').innerHTML = "Please enter a password";
+    }
+    });
+
+    $('#repin').change(function(){
+        var pin = $('#pin').val();
+		var repin = $('#repin').val();
+		var n = document.getElementById('pin');
+		var re = document.getElementById('repin');
+
+        if(pin != repin){
+            n.classList.add("is-invalid");
+			re.classList.add("is-invalid");
+            document.getElementById('pincr1').innerHTML = "Pins do not match";
+            document.getElementById('pincr2').innerHTML = "Pins do not match";
+    }else{
+        n.classList.remove("is-invalid");
+			re.classList.remove("is-invalid");
+            document.getElementById('pincr1').innerHTML = "Please enter a pin";
+            document.getElementById('pincr2').innerHTML = "Please enter a pin";
+    }
+    });
+
+
+
+</script>
 @endsection

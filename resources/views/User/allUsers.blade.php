@@ -28,6 +28,9 @@
                 <a href="{{ route('user.create') }}">Export User</a>
             </div>
             <div class="add-btn">
+                <a href="{{ route('role.create') }}">Add User Role</a>
+            </div>
+            <div class="add-btn">
                 <a href="{{ route('user.create') }}">Add User</a>
             </div>
 

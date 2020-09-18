@@ -42,7 +42,7 @@ class UserRoleController extends Controller
 
         userRole::create($request->all());
         Session::put('message', 'Success!');
-        return redirect()->back();
+        return redirect('/role');
     }
 
     /**

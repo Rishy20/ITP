@@ -234,7 +234,7 @@
         var discount = $('#discount').val();
         var profit = (sprice-discount)-cprice;
         $('#profit').val(profit);
-    })
+    });
 
 </script>
 

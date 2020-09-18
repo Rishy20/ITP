@@ -40,7 +40,8 @@ Route::resource('employee', 'EmployeeController');
 Route::resource('voucher', 'VoucherController');
 
 Route::resource('attendance', 'AttendanceController');
-
+Route::patch('/updateAttendance','AttendanceController@updateAttendance')->name('attendance.updateAttendance');
+Route::patch('/empout','AttendanceController@markOut')->name('attendance.markout');
 //Route::get('/employees', 'EmployeeController@index');
 //Route::get('/create', 'EmployeeController@create');
 //Route::post('/store', 'EmployeeController@store')->name('employees.store');

@@ -509,6 +509,14 @@ input:checked + .slider:before {
 .item-table-row {
     background-color: rgba(243, 243, 243, 0.28);
 }
+.backend .item-table-head {
+    /* background-color: #f0f4f4; */
+    background-color: #5c8bab !important;
+    color: white !important;
+}
+.backend .item-table-row {
+    background-color: rgb(255 255 255 / 76%);
+}
 .pos .table {
     text-align: center;
 }
@@ -885,6 +893,7 @@ input:checked + .slider:before {
     padding: 10px 20px;
 }
 
+
 .pos-sub-display-content{
     padding: 12px 20px;
 }
@@ -925,6 +934,12 @@ button:focus{
     border:none;
     margin-bottom: 20px;
 
+}
+.emp-attendance .pos-sub-display-title{
+    background-color:#3e505c ;
+}
+.emp-attendance .add-sub-btn{
+    background-color:#3e505c ;
 }
 .payment-btn{
 
@@ -1057,6 +1072,9 @@ button:focus{
     padding-left: 40px ;
     padding-top: 20px;
 }
+.emp-check{
+    padding-left: 20px;
+}
 .permission-check .form-check-label{
     margin-left: 12px;
 }
@@ -1086,7 +1104,8 @@ button:focus{
 
 /*******Select Products for Barcode *******/
 .selectProductsContent .item-display{
-    height: 60vh;
+    min-height: 60vh;
+    height: 100%;
 }
 .selectProductsContent .item-display .table{
     text-align: center;
@@ -1096,8 +1115,8 @@ button:focus{
 }
 
 .selectProductsContent .dropdown-menu{
-    height: 50%;
-    width: 94%;
+    height: 60%;
+    width: 97%;
 }
 .selectProductsContent .item-display{
     margin-top: 0px;
@@ -1178,9 +1197,7 @@ button:focus{
     bottom: 115px;
     left: 48px;
 }
-.none{
-    display: none;
-}
+
 .ministats .col{
     background-color: #fff;
     margin: 20px;
@@ -1240,6 +1257,36 @@ button:focus{
 
 .login-controller .invalid-feedback{
     width: 50%;
+}
+.emp-attendance{
+    width: 500px;
+}
+
+.none{
+    display: none;
+}
+.block{
+    display: block;
+}
+/* .sec-promotion{
+    padding: 15px;
+} */
+.sec-promotion{
+    height: auto;
+}
+.sec-promotion .section-title{
+    padding-left: 0;
+}
+.sec-promotion .row{
+    padding: 10px 8px;
+}
+.promotion .search-textbox{
+    font-size: 18px;
+}
+
+.cancel{
+    color: rgb(182, 46, 46);
+    font-size: 22px;
 }
 
 /* .barcode .store-name{
