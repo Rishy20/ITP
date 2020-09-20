@@ -15,7 +15,7 @@
                                 <table class="table table-borderless">
 
                                 @foreach($products as $pr)
-                                   <tr wire:click="show({{$pr->id}})" >
+                                   <tr wire:click="show({{$pr->id}})"  onclick="addProduct({{ $pr->id }},3)" >
 
                                     <td class="pr-code">
                                         {{ $pr->pcode }}
@@ -89,7 +89,7 @@
 </div>
 @endif
     <div class="item-display">
-        <table class="table">
+        <table class="table" id="selectedProducts">
             <thead class="item-table-head">
                 <tr>
                     <th scope="col">#</th>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Product;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -46,15 +47,18 @@ class Variant extends Component
     }
     public function mount(){
 
+        $this->sprice = $_COOKIE['price'];
         $product = Product::all();
         $key = sizeof($product)-1;
         $this->barcode = $product[$key]['barcode']+1;
     }
     public function showSize($i){
+
         $this->size = explode(",",$i);
         if($i == ""){
             $this->size=null;
         }
+        // $sprice = $_COOKIE['sprice'];
     }
     public function showColor($i){
         $this->color = explode(",",$i);

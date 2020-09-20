@@ -145,8 +145,42 @@
 <div class="row mt-4 mb-4">
     <div class="col-md-9">
 
+        <div class="section"> {{-- Start of Section--}}
+            <div class="section-title">
+                Promotion Type
+                <hr>
+            </div>
 
-        <livewire:select-products />
+            <div class="section-content promotion"> {{-- Start of sectionContent--}}
+                {{-- Start of Form --}}
+
+                <form method="post" class="needs-validation" action="{{route('promotion.store')}}" novalidate>
+
+                    @csrf
+
+                    <div class="row pb-2">
+                        <div class="col">
+                            Select Promotion type
+                        </div>
+
+                    </div>
+                    <div class="row pb-0 pt-2">
+                        <div class="col">
+                        <select class="custom-select" name="promotiontype" id="typeSel">
+                            <option value="all" id="allPrd">All Products</option>
+                            <option value="specific">Specific Products</option>
+                        </select>
+                    </div>
+                    </div>
+        <livewire:select-products :product="$prd" />
+        <div class="row submit-row mt-3">
+            <div class="col">
+                <input class="btn-submit" type="submit" value="Save">
+            </div>
+        </div>
+
+    </div> {{-- End  of sectionContent--}}
+</div> {{-- End  of section--}}
 
 
 </div>
@@ -240,22 +274,15 @@
             cell6.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
             cell7.innerHTML = index;
             cell7.className = 'none';
-            // cell6.innerHTML = '<input class="fas fa-times cancel" onclick="cancel('+index+')"></input>';
-
             arr.push([array[value]['id'],array[value]['vid']]);
 
             }
-
-
         }
         var s = JSON.stringify(arr);
         document.cookie = "promotions = "+s;
     }
-    // function cancel(id){
 
-    //     var selectedProducts = document.getElementById("selectedProducts");
-    //     selectedProducts.deleteRow(id);
-    // }
+
     $('#selectedProducts').on('click', '#remove', function(e){
 
         var index = $(this).closest('tr').index();
@@ -272,7 +299,7 @@
             table.rows[i].cells[6].innerHTML = num-1;
         }
 
-    })
+    });
 
 
 
@@ -281,11 +308,3 @@
 </script>
 @endsection
 
-{{--
-    Important points to consider
-    * The labels should be below the input box
-    * All the input boxes should have a placeholder
-    * The class name of the label should be "float-label"
-    * The class name of the submit button should be "btn-submit"
-    * The row containing the submit button should have a class of submit-row
---}}

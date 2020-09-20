@@ -107,10 +107,45 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+
+           
+
         });
 
 
+        function addProduct(id,vid){
 
+var complex = <?php echo json_encode($prd); ?>;
+complex.forEach(myFunction);
+function myFunction(index,value,array){
+
+    var selectedProducts = document.getElementById("selectedProducts");
+    if(array[value]['id'] == id ){
+    var row = selectedProducts.insertRow();
+    row.className = 'item-table-row';
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    var index = num;
+    cell1.innerHTML = 1;
+    cell2.innerHTML = array[value]['pcode'];
+    cell3.innerHTML = array[value]['name'];
+    // cell4.innerHTML = array[value]['size'];
+    // cell5.innerHTML = array[value]['color'];
+    // cell6.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
+    // cell7.innerHTML = index;
+    // cell7.className = 'none';
+    // arr.push([array[value]['id'],array[value]['vid']]);
+
+    }
+}
+// var s = JSON.stringify(arr);
+// document.cookie = "promotions = "+s;
+}
 
         $(document).ready(function() {
             // $(".search-textbox").focus(function() {

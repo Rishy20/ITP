@@ -556,10 +556,13 @@ input:checked + .slider:before {
     margin-top: 15px;
     background-color: #2bbdb9;
 }
-.btn {
-    background-color: transparent;
-    border: none;
+.pay-btn{
     width: 100%;
+}
+.btn {
+    /* background-color: transparent; */
+    border: none;
+    /* width: 100%; */
     text-align: left;
     outline: none;
 }
@@ -1289,64 +1292,33 @@ button:focus{
     font-size: 22px;
 }
 
-/* .barcode .store-name{
-    font-size: 16px;
-    font-weight: 800;
-    font-family: serif;
-}
-.ll,.kur{
-    font-weight: 800;
-    line-height: 1.2;
-}
-.ll{
-    font-size: 18px;
-}
-.kur{
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-.barcode-img{
-    text-align: center;
-}
-.barcode{
-    height: 75px;
-    width: 128px;
-    text-align: center;
-
-    background-color: white;
-    padding: 10px;
-    border: 1px solid #777777;
+.period-selector{
     display: inline-block;
-}
-.pr-details{
-    font-size: 10px;
-    margin-top: 5px;
-}
-.barcode-price{
-
-    font-weight: 800;
-    transform: rotate(-90deg);
-    text-align: right;
-    position: relative;
-    bottom: 6px;
-    right: -90px;
+    float: right;
+    width: 15%;
 
 }
 
-.barcode-price-print{
-
-    font-weight: 800;
-    transform: rotate(-90deg);
-    text-align: right;
-    font-size: 20px;
-    position: relative;
-    top:10px;
-    left:90px;
-
+.daterange{
+    font-size: 16px;
+    padding: 6px;
+    text-align: center;
+    border: 1px solid #ced4da;
+    margin-left: 15px;
+    width: 20%;
+    display: none;
 }
-.rs{
-    font-size: 14px;
-} */
+
+.dash{
+    margin-left: 15px;
+}
+.p-select, .daterange,.dash{
+    float: right;
+}
+.period-selector select{
+    text-align: center;
+    text-align-last:center;
+}
 
 .value-button {
     display: inline-block;
