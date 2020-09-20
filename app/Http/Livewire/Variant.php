@@ -47,7 +47,6 @@ class Variant extends Component
     }
     public function mount(){
 
-        $this->sprice = $_COOKIE['price'];
         $product = Product::all();
         $key = sizeof($product)-1;
         $this->barcode = $product[$key]['barcode']+1;

@@ -816,6 +816,7 @@ input:checked + .slider:before {
     z-index: 100;
     top: 50%;
     left: 50%;
+    display: none;
     -ms-transform: translate(-10%, -50%);
     transform: translate(-10%, -50%);
     margin: 0;
@@ -904,12 +905,15 @@ input:checked + .slider:before {
     width: 100%;
     border: 1px solid #ced4da;
 }
-.pos-sub-display .close-btn{
+.close-btn{
     float: right;
     border: none;
     background: none;
     color: white;
-
+}
+.var-display .close-btn{
+    /* background-color: rgb(182, 46, 46); */
+    color: rgb(182, 46, 46);
 }
 
 button:focus{

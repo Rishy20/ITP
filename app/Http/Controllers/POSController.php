@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
+use App\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -15,8 +17,10 @@ class POSController extends Controller
      */
     public function index()
     {
-        $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
-        return view('POS.pos',compact('prd'));
+        // $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,p.sellingPrice,p.discount,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
+       $prd = Product::all();
+       $var = Variant::all();
+        return view('POS.pos',compact('prd','var'));
     
     }
 
