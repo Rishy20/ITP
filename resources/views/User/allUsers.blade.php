@@ -25,7 +25,10 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
-                <a href="{{ route('user.create') }}">Export User</a>
+                <a href="{{ route('user.report') }}" target="_blank">Export User</a>
+            </div>
+            <div class="add-btn">
+                <a href="{{ route('role.create') }}">Add User Role</a>
             </div>
             <div class="add-btn">
                 <a href="{{ route('user.create') }}">Add User</a>

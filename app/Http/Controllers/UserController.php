@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-
+use PDF;
 class UserController extends Controller
 {
     /**
@@ -125,6 +125,23 @@ class UserController extends Controller
         Session::put('message', 'Success!');
         return redirect()->back();
     }
+
+    public function createReport(Request $request){
+
+        $user =  DB::select('select u.id, username,display_name,password,pin,status,roleId,Role_name,u.created_at from users u, user_roles ur where u.roleId = ur.id');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('user',$user);
+
+
+        $pdf =  PDF::loadView('User.userReport',$user);
+
+        // // download PDF file with download method
+        return $pdf->stream('user.pdf');
+        return view('User.userReport',compact('user'));
+    }
+
 
     public function login()
     {

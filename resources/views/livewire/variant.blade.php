@@ -14,7 +14,7 @@
                             </h6>
                         </div>
                         <div class="col-md-10">
-                            <input type="text" wire:model.lazy="svalue" value="{{ $svalue }}" wire:change="showSize($event.target.value)" name="size" class="form-control " placeholder="Enter sizes seperated with commas" />
+                            <input type="text" wire:model.lazy="svalue" value="{{ $svalue }}" wire:change="showSize($event.target.value)" name="size" class="form-control " id="size" placeholder="Enter sizes seperated with commas" />
                             {{-- <label  class="float-label">Size</label> --}}
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                             </h6>
                         </div>
                         <div class="col-md-10">
-                            <input type="text" name="color" value="{{ $cvalue }}" wire:model.lazy="cvalue" wire:change="showColor($event.target.value)" class="form-control size-var" placeholder="Enter colours seperated with commas" />
+                            <input type="text" name="color" value="{{ $cvalue }}" wire:model.lazy="cvalue" wire:change="showColor($event.target.value)" class="form-control size-var " id="color" placeholder="Enter colours seperated with commas" />
                             {{-- <label  class="float-label">Color</label> --}}
 
                         </div>
@@ -51,6 +51,7 @@
                                 </tr>
 
                                 @if($size && $color)
+
                                 <?php $i = 0?>
                                 @foreach ($size as $skey=>$svalue)
                                 @foreach ($color as $ckey=>$cvalue)
@@ -61,17 +62,17 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rs.</span>
                                             </div>
-                                            <input type="text" name="price-variant" wire:model.lazy="vprice.{{ $i }}" class="form-control price-var" placeholder="0.00" value="{{ $sprice }}"/>
+                                            <input type="text" name="price_variant[{{ $i }}]" class="form-control price-var" value="{{ Cookie::get('price') }}" placeholder="0.00" />
                                         </div>
                                     </td>
                                     <td class="qty-td">
                                         <div class="input-group number-spinner">
                                             <div class="input-group-prepend minus-btn">
-                                                <button class="btn btn-dark" data-dir="dwn"><i class="fas fa-minus"></i></button>
+                                                <button type="button" class="btn btn-dark" data-dir="dwn"><i class="fas fa-minus"></i></button>
                                             </div>
-                                            <input type="text" name="qty-variant" wire:model="vqty.{{ $i }}" value="0" class="form-control qty-spinner" />
+                                            <input type="text" name="qty_variant[{{ $i }}]" value="0" class="form-control qty-spinner" onfocus="this.value=''" />
                                             <div class="input-group-append plus-btn">
-                                                <button class="btn btn-dark" data-dir="up"><i class="fas fa-plus"></i></button>
+                                                <button type="button" class="btn btn-dark" data-dir="up"><i class="fas fa-plus"></i></button>
                                             </div>
                                         </div>
 
@@ -83,7 +84,7 @@
                                 @endforeach
 
                                 @elseif ($size)
-                                <?php $i=1 ?>
+                                <?php $i=0 ?>
                                 @foreach ($size as $key=>$value)
 
                                 <tr>
@@ -93,17 +94,17 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rs.</span>
                                             </div>
-                                            <input type="text" name="pricevariant{{ $i }}" wire:model.lazy="vprice.{{ $key }}" class="form-control price-var"  value="{{ $sprice }}"  placeholder="0.00" />
+                                            <input type="text" name="price_variant[{{ $i }}]" class="form-control price-var"  placeholder="0.00" />
                                         </div>
                                     </td>
                                     <td class="qty-td">
                                         <div class="input-group number-spinner">
                                             <div class="input-group-prepend minus-btn">
-                                                <button class="btn btn-dark" data-dir="dwn"><i class="fas fa-minus"></i></button>
+                                                <button type="button" class="btn btn-dark" data-dir="dwn"><i class="fas fa-minus"></i></button>
                                             </div>
-                                            <input type="text" name="qtyvariant{{ $i }}" value="0"  wire:model="vqty.{{ $key }}"  class="form-control qty-spinner" />
+                                            <input type="text" name="qty_variant[{{ $i }}]" value="0"   class="form-control qty-spinner" onfocus="this.value=''" />
                                             <div class="input-group-append plus-btn">
-                                                <button class="btn btn-dark" data-dir="up"><i class="fas fa-plus"></i></button>
+                                                <button type="button" class="btn btn-dark" data-dir="up"><i class="fas fa-plus"></i></button>
                                             </div>
                                         </div>
 
@@ -112,6 +113,7 @@
                                 <?php $i++ ?>
                                 @endforeach
                                 @else
+                                <?php $i=0 ?>
                                 @foreach ($color as $key=>$value)
                                 <tr>
                                     <td>{{ $value }}</td>
@@ -120,22 +122,23 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rs.</span>
                                             </div>
-                                            <input type="text" name="price-variant" wire:model.lazy="vprice.{{ $key }}"  class="form-control price-var" value="{{ $sprice }}" placeholder="0.00" />
+                                            <input type="text" name="price_variant[{{ $i }}]" class="form-control price-var"  placeholder="0.00" />
                                         </div>
                                     </td>
                                     <td class="qty-td">
                                         <div class="input-group number-spinner">
                                             <div class="input-group-prepend minus-btn">
-                                                <button class="btn btn-dark" data-dir="dwn"><i class="fas fa-minus"></i></button>
+                                                <button type="button" class="btn btn-dark" data-dir="dwn"><i class="fas fa-minus"></i></button>
                                             </div>
-                                            <input type="text" name="qty-variant" value="0" wire:model="vqty.{{ $key }}"  class="form-control qty-spinner" />
+                                            <input type="text" name="qty_variant[{{ $i }}]" value="0"  class="form-control qty-spinner" onfocus="this.value=''" />
                                             <div class="input-group-append plus-btn">
-                                                <button class="btn btn-dark" data-dir="up"><i class="fas fa-plus"></i></button>
+                                                <button type="button" class="btn btn-dark" data-dir="up"><i class="fas fa-plus"></i></button>
                                             </div>
                                         </div>
 
                                     </td>
                                 </tr>
+                                <?php $i++ ?>
                                 @endforeach
 
                                 @endif

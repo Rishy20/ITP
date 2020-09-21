@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "bootstrap-input-spinner": "^1.13.19",
+        "moment": "^2.28.0",
         "overlayscrollbars": "^1.13.0"
     }
 }
