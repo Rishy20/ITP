@@ -16,7 +16,9 @@ class CreatePromotionsTable extends Migration
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
             $table->string('promotionname');
+            $table->string('description');
             $table->string('promotiontype');
+            $table->string('discounttype');
             $table->string('discount');
             $table->string('startdate');
             $table->string('enddate');

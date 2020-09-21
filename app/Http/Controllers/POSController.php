@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\userRole;
+use App\Product;
+use App\Variant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class UserRoleController extends Controller
+class POSController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +17,11 @@ class UserRoleController extends Controller
      */
     public function index()
     {
-        $role = userRole::all();
-
-        return view ('User.allUserRole',compact('role'));
+        // $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,p.sellingPrice,p.discount,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
+       $prd = Product::all();
+       $var = Variant::all();
+        return view('POS.pos',compact('prd','var'));
+    
     }
 
     /**
@@ -28,7 +31,7 @@ class UserRoleController extends Controller
      */
     public function create()
     {
-        return view('User.addUserRole');
+        //
     }
 
     /**
@@ -39,10 +42,7 @@ class UserRoleController extends Controller
      */
     public function store(Request $request)
     {
-
-        userRole::create($request->all());
-        Session::put('message', 'Success!');
-        return redirect('/role');
+        //
     }
 
     /**
@@ -53,7 +53,7 @@ class UserRoleController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -64,9 +64,7 @@ class UserRoleController extends Controller
      */
     public function edit($id)
     {
-        $role = userRole::find($id);
-
-        return view('User.editUserRole',compact('role'));
+        //
     }
 
     /**
@@ -78,16 +76,10 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $user = User::findOrFail($id);
-        // $user->username = $request->input('username');
-        // $user->display_name = $request->input('display_name');
-        // $user->roleId = $request->input('roleId');
-        // $user->save();
-        // return redirect('/user');
-        Session::put('message', 'Success!');
+        //
     }
 
-    /*
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -95,11 +87,6 @@ class UserRoleController extends Controller
      */
     public function destroy($id)
     {
-         $role = userRole::findOrFail($id);
-         Session::put('message', 'Success!');
-
-        $role->delete();
-         return redirect()->back();
+        //
     }
 }
-

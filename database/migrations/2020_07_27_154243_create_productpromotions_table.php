@@ -15,8 +15,12 @@ class CreateProductpromotionsTable extends Migration
     {
         Schema::create('productpromotions', function (Blueprint $table) {
             $table->id();
-            $table->string('promotionid');
-            $table->string('productid');
+            $table->unsignedBigInteger('promotionid');
+            $table->unsignedBigInteger('productid');
+            $table->unsignedBigInteger('variantid')->nullable($value=true);
+            $table->foreign('promotionid')->references('id')->on('promotions')->cascadeOnDelete();
+            $table->foreign('productid')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreign('variantid')->references('id')->on('variants')->cascadeOnDelete();
             $table->timestamps();
         });
     }

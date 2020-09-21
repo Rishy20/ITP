@@ -11,7 +11,7 @@
         <div class="col">
             <div class="section"> {{-- Start of Section 1--}}
 
-                <livewire:select-products />
+                <livewire:select-products-barcode />
             </div> {{-- End  of section 1--}}
         </div>
 
@@ -31,10 +31,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 $(".dropdown-menu tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+
             });
+            $('.mdb-select').materialSelect();
     });
     $(document).ready(function() {
-                $('.mdb-select').materialSelect();
+                // $('.mdb-select').materialSelect();
             });
 </script>
 @endsection

@@ -63,7 +63,6 @@ class ProductDropdown extends Component
         $p =  Product::where('barcode', '=', $bcode)->get();
         $this->query = '';
         $this->products = '';
-
         $this->addDropdown($p);
     }
     public function render()
