@@ -63,9 +63,9 @@
 
                         {{ $products->links() }}
                     </div>
-                    <div class="col">
-                        <p>Barcode Scan</p>
-                    </div>
+{{--                    <div class="col">--}}
+{{--                        <p>Barcode Scan</p>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

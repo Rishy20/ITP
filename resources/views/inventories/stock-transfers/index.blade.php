@@ -43,7 +43,7 @@
                         <td class="action-icon">
                             <a href="{{ route('stock-transfers.edit', $stock_transfer) }}"><i class="fas fa-pen"></i></a>
                             <button type="submit" class="dlt-btn" id="dlt-btn{{ $stock_transfer->id }}"><i class="fas fa-trash-alt"></i></button>
-                            <form method="POST" class="dlt-form" id="dlt-form{{ $tock_transfer->id }}" action="{{ route('stock-transfers.destroy', $stock_transfer) }}">
+                            <form method="POST" class="dlt-form" id="dlt-form{{ $stock_transfer->id }}" action="{{ route('stock-transfers.destroy', $stock_transfer) }}">
                                 @method('DELETE')  {{-- Spoof form method as 'DELETE' to comply with destroy route --}}
                                 @csrf
 

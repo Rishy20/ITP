@@ -40,7 +40,7 @@
             <tbody>
                 @foreach($inventories as $inventory)
                     <tr>
-                        <td>
+                        <td class="font-weight-bold">
                             <a href="{{ route('inventories.show', $inventory) }}" style="color: #058DE9">{{ $inventory->name }}</a>
                         </td>
                         <td>{{ $inventory->address }}</td>

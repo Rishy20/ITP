@@ -75,9 +75,9 @@
 
                         {{ $products->links() }}
                     </div>
-                    <div class="col">
-                        <p>Barcode Scan</p>
-                    </div>
+{{--                    <div class="col">--}}
+{{--                        <p>Barcode Scan</p>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
                                         <span wire:loading wire:target="addTransferItem">LOADING...</span>
                                     </th>
                                     <th class="table-head col-2">
-                                        <span wire:loading.remove wire:target="addTransferItem">Quantity</span>
+                                        <span wire:loading.remove wire:target="addTransferItem">Transfer Qty</span>
                                     </th>
                                     <th class="table-head col-2">
                                         <span wire:loading.remove wire:target="addTransferItem">Source Qty</span>
@@ -109,7 +109,7 @@
                                         </div>
                                     </th>
                                     <th class="table-head col-2">
-                                        <span wire:loading.remove wire:target="addTransferItem">Dest. Qty</span>
+                                        <span wire:loading.remove wire:target="addTransferItem">Destination Qty</span>
                                     </th>
                                 </tr>
                             </thead>

@@ -70,6 +70,14 @@ class StockTransferForm extends Component
             if (!(isset($inventory_item->product)))
                 $inventory_items->forget($key);
 
+        // Remove inventory items that have already been added
+        foreach ($inventory_items as $key=> $inventory_item) {
+            foreach ($this->transfer_items as $transfer_item) {
+                if ($transfer_item == $inventory_item->product->id)
+                    $inventory_items->forget($key);
+            }
+        }
+
         return ['inventory_items' => $inventory_items, 'products' => $products];
     }
 
