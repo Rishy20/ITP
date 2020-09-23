@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Category;
+
 use App\Inventory;
 use App\Product;
+use App\Variant;
 use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -21,6 +23,7 @@ class productController extends Controller
      */
     public function index()
     {
+
         $product =DB::select('select p.id,p.pcode,p.name,p.description,p.brand,p.catID,p.sellingPrice,p.costPrice,p.discount,p.Qty,v.first_name,v.last_name from products p, vendors v where p.supplierId = v.id ');
 
         return view('Product.allProduct',compact('product'));
@@ -38,6 +41,7 @@ class productController extends Controller
         $inv =Inventory::all();
         $brand = Brand::all();
         $vendor = Vendor::all();
+
         $last = DB::table('products')->latest()->first();
         $barcode = $last->barcode+1;
 
@@ -53,12 +57,63 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         Product::create($request->all());
         $inv = $request->inventory;
         $last = DB::table('products')->latest()->first();
         $pid = $last->id;
         $qty = $request->Qty;
         DB::insert('insert into inventory_items (inventory_id, product_id,qty,created_at,updated_at) values (?, ?,?,?,?)', [$inv,$pid,$qty,now(),now()]);
+
+        $last = DB::table('products')->latest()->first();
+        $pId = $last->id;
+        $size = explode(",",$request->size);
+        $color = explode(",",$request->color);
+
+        if($size && $color){
+            $i = 0;
+            foreach($size as $skey=>$svalue){
+                foreach($color as $ckey=>$cvalue){
+
+                        $var = new Variant();
+                        $var->product_id = $pId;
+                        $var->size = $svalue;
+                        $var->color= $cvalue;
+                        $var->price = $request->price_variant[$i];
+                        $var->quantity = $request->qty_variant[$i];
+                        $var->save();
+                        $i++;
+                }
+            }
+        }else if($size){
+            $i = 0;
+            foreach($size as $key=>$value){
+                $var = new Variant();
+                $var->product_id = $pId;
+                        $var->size = $value;
+                        $var->price = $request->price_variant[$i];
+                        $var->quantity = $request->qty_variant[$i];
+                        $var->save();
+                        $i++;
+
+            }
+        }else if($color){
+            $i = 0;
+            foreach($color as $key=>$value){
+                $var = new Variant();
+                $var->product_id = $pId;
+                        $var->color= $value;
+                        $var->price = $request->price_variant[$i];
+                        $var->quantity = $request->qty_variant[$i];
+                        $var->save();
+                        $i++;
+
+            }
+        }
+
+        return redirect('/product');
+
+
         Session::put('message', 'Success!');
         return redirect('/product');
 

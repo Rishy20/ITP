@@ -6,8 +6,8 @@
         <a href="{{ route('employee.index',$employee->id)}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Edit Employee</div>
     </div>
-   
-        
+
+
             <div class="section"> {{-- Start of Section 1--}}
                 <div class="section-title">
                     Employee Information
@@ -18,7 +18,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="row">
-                            
+
                             <div class="col">
                                 <input type="text" id="fname" name="fname" class="form-control" value="{{ $employee->fname }}" placeholder="First Name" />
                                 <label for="fname" class="float-label">First Name</label>
@@ -38,7 +38,7 @@
                                 <label for="address" class="float-label">Address</label>
                             </div>
                         </div>
-            
+
                         <div class="row">
                             <div class="col">
                                 <input type="text" id="mobile" name="mobile" class="form-control" value="{{ $employee->mobile }}"placeholder="Phone(Mobile)" />
@@ -48,21 +48,21 @@
                                 <input type="text" id="home" name="home" class="form-control" value="{{ $employee->home }}"placeholder="Phone(Home)" />
                                 <label for="home" class="float-label">Phone(Home) </label>
                             </div>
-                        </div> 
-            
+                        </div>
+
                             <div class="row">
                             <div class="col">
                                 <input type="date" id="birthday" name="birthday" class="form-control" value="{{ $employee->birthday }}"placeholder="Birthday" />
-                                <label for="birthday" class="float-label">Birthday</label> 
+                                <label for="birthday" class="float-label">Birthday</label>
                             </div>
                             <div class="col">
                                 <input type="date" id="joined_date" name="joined_date" class="form-control" value="{{ $employee->joined_date }}"placeholder="Joined Date" />
                                 <label for="joined_date" class="float-label">Joined Date</label>
                             </div>
-                        </div> 
+                        </div>
                     </div>
             </div>
- 
+
                         <div class="section"> {{-- Start of Section--}}
                             <div class="section-title">
                                 Salary Details
@@ -71,7 +71,7 @@
                             <div class="section-content"> {{-- Start of sectionContent--}}
                                 {{-- Start of Form --}}
                                 <form method="post" action="{{route('employee.update',$employee->id)}}">
-            
+
                         <div class="row">
                             <div class="col">
                                 <input type="text" id="target" name="target" class="form-control" value="{{ $employee->target }}"placeholder="Target" />
@@ -100,7 +100,8 @@
                         </div>
                 </div> {{-- End  of sectionContent--}}
             </div> {{-- End  of section 1--}}
-    
-  
+
+
+
 </div>{{-- End of addUser --}}
 @endsection

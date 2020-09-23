@@ -110,7 +110,7 @@
                     <textarea name="description" class="pos-sub-txtArea" rows=5></textarea>
                 </div>
             </div>
-            <input type="text" value="4" name="userId" hidden>
+            <input type="text" value="22" name="userId" hidden>
             <div class="action-btn-row">
 
                 <input type="submit" class="add-sub-btn" value="Add" />
@@ -172,7 +172,7 @@
                     <textarea name="description" id="descriptionEdit" class="pos-sub-txtArea" rows=5></textarea>
                 </div>
             </div>
-            <input type="text" value="4" name="userId" hidden>
+            <input type="text" value="22" name="userId" hidden>
             <input type="text" name="id" id="editExpenseId" hidden>
             <div class="action-btn-row">
 

@@ -13,13 +13,14 @@ class CreateAttendancesTable extends Migration
      */
     public function up()
     {
+        date_default_timezone_set('Asia/Colombo');
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('e_id');
             $table->foreign('e_id')->references('id')->on('employees')->cascadeOnDelete();
-            $table->date('date');
-            $table->time('in');
-            $table->time('out');
+            // $table->date('date');
+            $table->time('in')->default( date('H:i'));
+            $table->time('out')->default( date('H:i') );
             $table->timestamps();
         });
     }
