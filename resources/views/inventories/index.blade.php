@@ -20,6 +20,9 @@
     <div class="section-content">
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+            <div class="add-btn">
+                <a href="{{ route('inventories.report') }}" target="_blank">Export Inventories</a>
+            </div>
             <a href="{{ route('inventory-counts.index') }}">
                 <div class="add-btn">Inventory Counts</div>
             </a>

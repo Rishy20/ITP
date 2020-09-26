@@ -7,6 +7,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class InventoryController extends Controller
 {
@@ -129,5 +130,14 @@ class InventoryController extends Controller
         $inventory->delete();
         Session::put('message', 'Success!');
         return redirect('inventories');
+    }
+
+    public function createReport(Request $request){
+        $inventories = Inventory::all();
+        view()->share('inventories',$inventories);
+        $pdf =  PDF::loadView('inventories.report', $inventories);
+
+        // Download the PDF file with download method
+        return $pdf->stream('inventories.pdf');
     }
 }

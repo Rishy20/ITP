@@ -115,3 +115,5 @@ Route::get('inventory-counts/{inventory_count}/replace', 'InventoryCountControll
 
 Route::get('/reports', 'ReportController@index')->name('reports.index');
 Route::get('/reports/{report}', 'ReportController@generateReport')->name('reports.generate');
+Route::get('/inventory-report','InventoryController@createReport')->name('inventories.report');
+
