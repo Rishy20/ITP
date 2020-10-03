@@ -112,8 +112,15 @@ Route::resource('inventories', 'InventoryController');
 Route::resource('stock-transfers', 'StockTransferController');
 Route::resource('inventory-counts', 'InventoryCountController');
 Route::get('inventory-counts/{inventory_count}/replace', 'InventoryCountController@replace')->name('inventory-counts.replace');
+Route::get('/inventory-report','InventoryController@createReport')->name('inventories.report');
 
 Route::get('/reports', 'ReportController@index')->name('reports.index');
-Route::get('/reports/{report}', 'ReportController@generateReport')->name('reports.generate');
-Route::get('/inventory-report','InventoryController@createReport')->name('inventories.report');
+//Route::get('/reports/product-wise-sales', 'ReportController@productWiseSales')->name('reports.product-wise-sales');
+//Route::get('/reports/stock-transfer-summary', 'ReportController@stockTransferSummary')->name('reports.stock-transfer-summary');
+Route::get('/reports/product-wise-stock', 'ReportController@productWiseStock')->name('reports.product-wise-stock');
+Route::get('/reports/export-product-wise-stock', 'ReportController@exportProductWiseStock')->name('reports.export-product-wise-stock');
+Route::get('/reports/category-wise-stock', 'ReportController@categoryWiseStock')->name('reports.category-wise-stock');
+Route::get('/reports/export-category-wise-stock', 'ReportController@exportCategoryWiseStock')->name('reports.export-category-wise-stock');
+Route::get('/reports/supplier-wise-stock', 'ReportController@supplierWiseStock')->name('reports.supplier-wise-stock');
+Route::get('/reports/export-supplier-wise-stock', 'ReportController@exportSupplierWiseStock')->name('reports.export-supplier-wise-stock');
 

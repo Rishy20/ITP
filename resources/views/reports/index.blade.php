@@ -53,8 +53,10 @@
                     <hr>
                 </div>
 
+                {{-- Sales Category --}}
                 <div class="list-group category" id="sales" hidden>
-                    <a class="list-group-item list-group-item-action" id="product-wise-sales" role="tabpanel" href="{{ route('reports.generate', 'product-wise-sales') }}">
+                    <a class="list-group-item list-group-item-action" id="product-wise-sales" role="tabpanel"
+                       href="#">
                         <i class="fa fa-tshirt mr-3"></i>
                         Product-wise Sales Report
                     </a>
@@ -75,10 +77,32 @@
                         Salesman-wise Sales Report
                     </a>
                 </div>
+
+                {{-- Inventory Category --}}
                 <div class="list-group category" id="inventory" hidden>
-                    <a class="list-group-item list-group-item-action" id="stock-transfer" role="tabpanel" href="#">
+                    {{-- Stock Transfer Summary Report --}}
+                    <a class="list-group-item list-group-item-action" id="stock-transfer" role="tabpanel"
+                       href="#">
                         <i class="fa fa-shuttle-van mr-3"></i>
                         Stock Transfer Summary Report
+                    </a>
+                    {{-- Product-wise Stock Report --}}
+                    <a class="list-group-item list-group-item-action" id="product-wise-stock" role="tabpanel"
+                       href="{{ route('reports.product-wise-stock') }}">
+                        <i class="fa fa-tshirt mr-3"></i>
+                        Product-wise Stock Report
+                    </a>
+                    {{-- Category-wise Stock Report --}}
+                    <a class="list-group-item list-group-item-action" id="category-wise-stock" role="tabpanel"
+                       href="{{ route('reports.category-wise-stock') }}">
+                        <i class="fa fa-tags mr-3"></i>
+                        Category-wise Stock Report
+                    </a>
+                    {{-- Supplier-wise Stock Report --}}
+                    <a class="list-group-item list-group-item-action" id="supplier-wise-stock" role="tabpanel"
+                       href="{{ route('reports.supplier-wise-stock') }}">
+                        <i class="fa fa-store-alt mr-3"></i>
+                        Supplier-wise Stock Report
                     </a>
                 </div>
                 <div class="list-group category" id="payments" hidden>
