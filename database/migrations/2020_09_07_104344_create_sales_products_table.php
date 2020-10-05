@@ -14,14 +14,17 @@ class CreateSalesProductsTable extends Migration
     public function up()
     {
         Schema::create('sales_products', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('saleId');
             $table->unsignedBigInteger('pid');
+            $table->unsignedBigInteger('vid')->nullable();
             $table->integer('qty');
             $table->integer('price');
             $table->integer('discount');
             $table->foreign('saleId')->references('id')->on('sales')->cascadeOnDelete();
             $table->foreign('pid')->references('id')->on('products')->cascadeOnDelete();
-            $table->primary(['saleId','pid']);
+            $table->foreign('vid')->references('id')->on('variants')->cascadeOnDelete();
+            // $table->primary(['saleId','pid','vid']);
             $table->timestamps();
         });
     }

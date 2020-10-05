@@ -95,7 +95,6 @@ class productController extends Controller
                         $var->quantity = $request->qty_variant[$i];
                         $var->save();
                         $i++;
-
             }
         }else if($color){
             $i = 0;

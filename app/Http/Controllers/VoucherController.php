@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class VoucherController extends Controller
@@ -57,6 +58,13 @@ class VoucherController extends Controller
     public function show(Voucher $voucher)
     {
         //
+    }
+
+    public function getLastIndex(){
+
+        $last = DB::table('vouchers')->latest()->first();
+        $voucherId = $last->id;
+        return $voucherId;
     }
 
     /**

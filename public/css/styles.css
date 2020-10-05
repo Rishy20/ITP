@@ -533,6 +533,9 @@ input:checked + .slider:before {
     padding: 10px;
     margin-bottom: 15px;
 }
+.mini-display-btn{
+    width: 100%;
+}
 .s-icon {
     color: #5c8bab;
     font-size: 30px;
@@ -660,6 +663,59 @@ input:checked + .slider:before {
     background-color: #80bdff21;
     cursor: pointer;
 }
+
+#cus, #emp{
+    display:none;
+}
+.table-qty,.table-discount{
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    font-weight: 600;
+}
+.discount-plus{
+    background: transparent;
+    border: none;
+    outline: none;
+}
+.pos-discount{
+    border: 1px solid #d8cfcf;
+    padding: 20px;
+    font-size: 16px;
+    width: 70%;
+    height: 125px;
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: #495057;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+
+}
+/******* Outer Radio Circle before checked ******/
+.pos-discount input[type="radio"]:after {
+
+    top: -5px;
+    left: -1px;
+
+}
+/******* Outer Radio Circle ******/
+.pos-discount input[type="radio"]:checked:before {
+
+    top: -5px;
+    left: -1px;
+
+}
+/******* Inner Radio Circle ******/
+input[type="radio"]:checked:after {
+
+    top: -33px;
+    left: 3px;
+
+}
+/******End of Radio Button*******/
 
 /*****Variants*****/
  /* .inv-label{
@@ -925,9 +981,12 @@ button:focus{
     height: 100%;
     left: 0;
     right: 0;
-
     background-color: rgba(46, 45, 45, 0.1);
     display: none;
+}
+.pos-discount .full-pg{
+    background-color: transparent;
+    position: fixed;
 }
 .block{
     display: block;
@@ -1290,10 +1349,13 @@ button:focus{
 .promotion .search-textbox{
     font-size: 18px;
 }
-
+.discount-plus{
+    color:#256ea1;
+}
 .cancel{
     color: rgb(182, 46, 46);
     font-size: 22px;
+    cursor: pointer;
 }
 
 .period-selector{
@@ -1344,4 +1406,7 @@ button:focus{
 
   .value-button:hover {
     cursor: pointer;
+  }
+  #percents{
+      display: none;
   }
