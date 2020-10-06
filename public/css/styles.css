@@ -573,6 +573,12 @@ input:checked + .slider:before {
 .btn:focus {
     outline: none;
 }
+.btn:hover{
+    color: white;
+}
+.mini-display-btn:hover{
+    color: black;
+}
 .pay,
 .pay-value {
     color: white;
@@ -890,6 +896,9 @@ input[type="radio"]:checked:after {
     outline: none;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+.var-disabled{
+    border: 2px solid #b1b1b1;
 }
 .wrapper {
 

@@ -7,32 +7,35 @@
                         <i class="fas fa-search"></i>
                     </div>
 
-                    <form class="search-bar" wire:submit.prevent="sub">
-                        <input type="text" wire:model.debounce="query" id="prdSearch" class="search-textbox form-control" data-toggle="dropdown" placeholder="Find Products By Name, Number or Barcode">
+                    <form class="search-bar" id="posSearch">
+                        <input type="text"  id="prdSearch" class="search-textbox form-control" data-toggle="dropdown" placeholder="Find Products By Name, Number or Barcode">
                         <div class="dropdown-menu product-overlay" aria-labelledby="dropdownMenuButton">
 
 
-                            <table class="table table-borderless">
+                            <table class="table table-borderless" id="productSearchTable">
 
-                                @foreach($products as $pr)
-                                <tr onclick="addProducts({{$pr->id}})">
-                                    <!-- wire:click="show({{$pr->id}})"   -->
-                                    <!-- wire:click="show({{$pr->id}})" -->
-                                    <td class="pr-code">
-                                        {{ $pr->pcode }}
-                                    </td>
-                                    <td class="pr-name">
-                                        {{ $pr->name }}
-                                    </td>
-                                    <td class="pr-qty">
-                                        {{ $pr->Qty }}
-                                    </td>
-                                    <td class="pr-price">
-                                        Rs. {{ $pr->sellingPrice }}
-                                    </td>
 
-                                </tr>
-                                @endforeach
+
+                            @foreach($products as $pr)
+                            <tr >
+
+                            <td class="pr-code">
+                                {{ $pr->pcode }}
+                            </td>
+                            <td class="pr-name">
+                                {{ $pr->name }}
+                            </td>
+                            <td class="pr-qty">
+                                {{ $pr->Qty }}
+                            </td>
+                            <td class="pr-price">
+                                Rs. {{ $pr->sellingPrice }}
+                            </td>
+                            <td class="none">
+                                {{$pr->id}}
+                            </td>
+                        </tr>
+                            @endforeach
                             </table>
 
                         </div>
