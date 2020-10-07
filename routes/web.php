@@ -69,6 +69,7 @@ Auth::routes();
 // Route::get('/editOrder','EditPurchaseOrderController@index')->name('editOrder');
 
 Route::resource('purchase', 'PurchaseController');
+Route::get('/purchaseReport','PurchaseController@createReport')->name('purchase.report');
 
 
 // Route::get('/loyalty','AllLoyaltyController@index')->name('allLoyalty');
@@ -88,12 +89,16 @@ Route::get('/barcode', 'BarcodeController@index')->name('barcode');
 Route::get('/barcodeprint', 'BarcodeController@createPDF')->name('printBarcode');
 
 Route::resource('loyalty', 'LoyaltyController');
+Route::get('/loyaltyReport','LoyaltyController@createReport')->name('loyalty.report');
 
 // Route::get('/vendorPayment','VendorPaymentController@index')->name('vendorPayment');
 // Route::get('/salaryPayment','SalaryPaymentController@index')->name('salaryPayment');
 
 Route::resource('vendorPayment', 'VendorPaymentController');
+Route::get('/vendorPaymentReport','VendorPaymentController@createReport')->name('vendorPayment.report');
+
 Route::resource('salaryPayment', 'SalaryPaymentController');
+Route::get('/salaryPaymentReport','SalaryPaymentController@createReport')->name('salaryPayment.report');
 
 Auth::routes();
 

@@ -27,12 +27,12 @@
                         </div>
 
                         <br>
-                        <div class="section-title">
+                         <div class="section-title">
                             Add Customers
                             <hr>
                         </div>
-                        <br>
-
+                       
+{{--
                         <div class="form-group">
                             <input type="search" name="add_customer" id="add_customer" class="form-control input-lg" placeholder="Enter Customer Name" style="width: 50%" />
 
@@ -61,8 +61,8 @@
                                     <td>Row 1 Data 2</td>
                                     <td>Row 1 Data 2</td>
                                 </tr> --}}
-                            </tbody>
-                        </table>
+                       {{--    </tbody>
+                        </table> --}}
 
 
                         {{-- <div class="row submit-row">
@@ -70,7 +70,7 @@
                                 <input class="btn-submit" type="submit" value="Submit">
                             </div>
                         </div> --}}
-
+                        <livewire:select-customers/>
                 </div> {{-- End  of sectionContent--}}
             </div> {{-- End  of section 1--}}
 
@@ -155,6 +155,76 @@
         value--;
         document.getElementById('points').value = value;
     }
+    var num = 0;
+    var del = 0;
+    var arr = [];
+    $(document).ready(function() {
+        // Search Products
+        $("#cusSearch").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".dropdown-menu tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+       
+
+    });
+
+    function addCustomer(id){
+
+        var complex = <?php echo json_encode($customer); ?>;
+        complex.forEach(myFunction);
+        function myFunction(index,value,array){
+
+
+            var selectedCustomers = document.getElementById("selectedCustomers");
+            if(array[value]['id'] == id){
+            var row = selectedCustomers.insertRow();
+            row.className = 'item-table-row';
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
+            var index = num;
+            cell1.innerHTML = ++num;
+            cell2.innerHTML = array[value]['id'];
+            cell3.innerHTML = array[value]['firstname'] + ' ' + array[value]['lastname'];
+            cell4.innerHTML = array[value]['gender'];
+            cell5.innerHTML = array[value]['city'];
+            cell6.innerHTML = array[value]['phone'];
+            cell7.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
+            cell8.innerHTML = index;
+            cell8.className = 'none';
+            arr.push([array[value]['id']]);
+
+            }
+        }   
+        var s = JSON.stringify(arr);
+        document.cookie = "customers = "+s;
+    }
+
+
+$('#selectedCustomers').on('click', '#remove', function(e){
+
+var index = $(this).closest('tr').index();
+var table = document.getElementById("selectedCustomers");
+var delrow = table.rows[index].cells[7].innerHTML;
+arr.splice(delrow,1);
+var n = JSON.stringify(arr);
+document.cookie = "customers = "+n;
+$(this).closest('tr').remove();
+var x = table.rows.length;
+num = 0;
+for(i=1; i<=x;i++){
+    table.rows[i].cells[0].innerHTML = ++num;
+    table.rows[i].cells[7].innerHTML = num-1;
+}
+
+});
 </script>
 
 @endsection

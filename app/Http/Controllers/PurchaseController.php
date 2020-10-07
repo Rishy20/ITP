@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Purchase;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class PurchaseController extends Controller
 {
@@ -111,5 +112,21 @@ class PurchaseController extends Controller
         $purchase->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    public function createReport(Request $request){
+
+        $purchase =  Purchase::all()->toArray();
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('purchase',$purchase);
+
+
+        $pdf =  PDF::loadView('order.purchaseReport',$purchase);
+
+        // // download PDF file with download method
+        return $pdf->stream('purchase.pdf');
+        return view('order.purchaseReport',compact('purchase'));
     }
 }

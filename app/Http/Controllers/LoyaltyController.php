@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Loyalty;
+use App\Customer;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class LoyaltyController extends Controller
 {
@@ -26,7 +28,8 @@ class LoyaltyController extends Controller
      */
     public function create()
     {
-        return view('Loyalty.addLoyalty');
+        $customer = Customer::all();
+        return view('Loyalty.addLoyalty',compact('customer'));
 
     }
 
@@ -112,4 +115,21 @@ class LoyaltyController extends Controller
         Session::put('message', 'Success!');
         return redirect()->back();
     }
+
+    public function createReport(Request $request){
+
+        $loyalty =  Loyalty::all()->toArray();
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('loyalty',$loyalty);
+
+
+        $pdf =  PDF::loadView('Loyalty.loyaltyReport',$loyalty);
+
+        // // download PDF file with download method
+        return $pdf->stream('loyalty.pdf');
+        return view('Loyalty.loyaltyReport',compact('loyalty'));
+    }
+
 }

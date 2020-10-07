@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\VendorPayment;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class VendorPaymentController extends Controller
 {
@@ -46,7 +47,7 @@ class VendorPaymentController extends Controller
 
         VendorPayment::create($request->all());
         Session::put('message', 'Success!');
-        return redirect()->back();
+        return redirect('/vendorPayment');
     }
 
     /**
@@ -101,5 +102,22 @@ class VendorPaymentController extends Controller
         $vendorPayment->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    
+    public function createReport(Request $request){
+
+        $vendorPayment =  VendorPayment::all()->toArray();
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('vendorPayment',$vendorPayment);
+
+
+        $pdf =  PDF::loadView('VendorPayment.vendorPaymentReport',$vendorPayment);
+
+        // // download PDF file with download method
+        return $pdf->stream('vendorPayment.pdf');
+        return view('VendorPayment.vendorPaymentReport',compact('vendorPayment'));
     }
 }

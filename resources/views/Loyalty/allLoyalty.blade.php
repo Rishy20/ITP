@@ -23,6 +23,9 @@
             <div class="add-btn">
                 <a href="{{ route('loyalty.create') }}">Add Loyalty</a>
             </div>
+            <div class="add-btn">
+                <a href="{{ route('loyalty.report') }}" target="_blank">Export Loyalty</a>
+            </div>
             <thead class="table-head">
                 <tr>
                     <th>Loyalty Name</th>
