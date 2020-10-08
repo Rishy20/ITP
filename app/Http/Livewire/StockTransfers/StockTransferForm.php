@@ -6,7 +6,6 @@ use App\Inventory;
 use App\Product;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class StockTransferForm extends Component
 {
@@ -54,7 +53,7 @@ class StockTransferForm extends Component
             }
         }
 
-        return ['inventory_items' => $inventory_items, 'products' => $products];
+        return $inventory_items;
     }
 
 
@@ -72,12 +71,10 @@ class StockTransferForm extends Component
             return view('livewire.stock-transfers.not-enough-inventories');
 
         // Get inventory items
-        $inventory_items = $this->getInventoryItems()['inventory_items'];  // Get inventory items for search
-        $products = $this->getInventoryItems()['products'];
+        $inventory_items = $this->getInventoryItems();
 
-        $this->dispatchBrowserEvent('contentChanged');
+        $this->dispatchBrowserEvent('contentChanged');  // Fire browser event to refresh data
 
-        return view('livewire.stock-transfers.stock-transfer-form')->with('inventory_items', $inventory_items)
-            ->with('products', $products);
+        return view('livewire.stock-transfers.stock-transfer-form')->with('inventory_items', $inventory_items);
     }
 }
