@@ -19,28 +19,39 @@
         </div>
         <div class="login-container">
             <h4 class="login-title">BACK OFFICE</h4>
-            <form method="POST" action="{{ route('validate') }}" class="needs-validation" novalidate>
+            <form method="POST" action="{{ route('login.admin') }}" class="needs-validation" novalidate>
                 @csrf
                 <div class="form-group">
-                    <input type="text" id="fname" name="username" class="form-control" placeholder="Enter Username" required />
-                    <label for="fname" class="float-label">Username</label>
+                    <input type="text" id="name" name="username" class="form-control @error('email') is-invalid @enderror " placeholder="Enter Username"   value="{{ old('email') }}" required />
+                    <label for="name" class="float-label">Username</label>
                     <div class="invalid-feedback">
                         Please enter a username
                     </div>
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required />
+                    <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password"  required />
                     <label for="password" class="float-label">Password</label>
                     <div class="invalid-feedback">
                         Please enter a Password
                     </div>
+
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
                 </div>
-                @if(session('fail'))
+                {{-- @if(session('fail'))
                 <div class="invalid-credentials">
                     Invalid Credentials, Please Try again!
                 </div>
                 {{ Session::forget('fail') }}
-                @endif
+                @endif --}}
                 <input type="submit" class="login-btn" value="SIGN IN"></input>
             </form>
         </div>

@@ -13,7 +13,7 @@ class CreateLoyaltyCustomerTable extends Migration
      */
     public function up()
     {
-        Schema::create('loyalty-customer', function (Blueprint $table) {
+        Schema::create('loyalty_customer', function (Blueprint $table) {
             $table->string('loyaltyId');
             $table->string('customerId');
             $table->string('loyaltyTypeId');

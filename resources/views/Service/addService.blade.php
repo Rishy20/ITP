@@ -18,11 +18,22 @@
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <input type="text" id="Customer ID" name="customer_id" class="form-control" placeholder="Customer ID" required/>
+                                <input type="text" id="Customer ID" name="customer_id" class="form-control" placeholder="Customer ID" data-toggle="dropdown" required/>
                                 <label for="Customer ID" class="float-label">Customer ID</label>
+                                <ul class="dropdown-menu">
+                                    <input class="form-control" id="cusSearch" type="text" placeholder="Search..">
+                                    <li ><span class="sid">Hello</span><span class="sname">Rishard</span></li>
+                                </ul>
                                 <div class="invalid-feedback">
                                     Please fill out this field
                                 </div>
+
+
+
+
+
+
+                                  {{-- <label class="mdb-main-label">Label example</label> --}}
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" name="id" placeholder="Service ID" required>
@@ -80,4 +91,7 @@
         </div>
     </div>
 </div>{{-- End of addService --}}
+
+
+
 @endsection

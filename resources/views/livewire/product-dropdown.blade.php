@@ -7,57 +7,57 @@
                         <i class="fas fa-search"></i>
                     </div>
 
-                    <form class="search-bar" wire:submit.prevent="sub">
-                        <input type="text" wire:model.debounce="query" id="prdSearch" class="search-textbox form-control" data-toggle="dropdown" placeholder="Find Products By Name, Number or Barcode">
+                    <form class="search-bar" id="posSearch">
+                        <input type="text"  id="prdSearch" class="search-textbox form-control" data-toggle="dropdown" placeholder="Find Products By Name, Number or Barcode">
                         <div class="dropdown-menu product-overlay" aria-labelledby="dropdownMenuButton">
 
 
-                            <table class="table table-borderless">
+                            <table class="table table-borderless" id="productSearchTable">
 
-                                @foreach($products as $pr)
-                                <tr onclick="addProducts({{$pr->id}})">
-                                    <!-- wire:click="show({{$pr->id}})"   -->
-                                    <!-- wire:click="show({{$pr->id}})" -->
-                                    <td class="pr-code">
-                                        {{ $pr->pcode }}
-                                    </td>
-                                    <td class="pr-name">
-                                        {{ $pr->name }}
-                                    </td>
-                                    <td class="pr-qty">
-                                        {{ $pr->Qty }}
-                                    </td>
-                                    <td class="pr-price">
-                                        Rs. {{ $pr->sellingPrice }}
-                                    </td>
 
-                                </tr>
-                                @endforeach
+
+                            @foreach($products as $pr)
+                            <tr >
+
+                            <td class="pr-code">
+                                {{ $pr->pcode }}
+                            </td>
+                            <td class="pr-name">
+                                {{ $pr->name }}
+                            </td>
+                            <td class="pr-qty">
+                                {{ $pr->Qty }}
+                            </td>
+                            <td class="pr-price">
+                                Rs. {{ $pr->sellingPrice }}
+                            </td>
+                            <td class="none">
+                                {{$pr->id}}
+                            </td>
+                        </tr>
+                            @endforeach
                             </table>
 
                         </div>
+
                     </form>
 
 
 
 
-                    {{-- <div class="load-spinner " wire:loading wire:target="query">
-                <div class="spinner-border text-secondary" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-            </div> --}}
-                    <button class="v-btn btn ">
-                        <i class="fas fa-gift sub-icon"></i><span class="sub-btn-txt"> Voucher</span>
+
+                    <button class="v-btn btn" id="voucher">
+                        <i class="fas fa-gift sub-icon"></i><span class="sub-btn-txt">Voucher</span>
                     </button>
-                    <button class="v-btn btn ">
-                        <i class="fas fa-exchange-alt sub-icon"></i><span class="sub-btn-txt"> Exchange</span>
+                    <button class="v-btn btn " id="exchange">
+                        <i class="fas fa-exchange-alt sub-icon"></i><span class="sub-btn-txt">Exchange</span>
                     </button>
 
 
                 </div>
 
             </div>
-            
+
             <div class="var-display" id="selectSize">
                 <div class="var-display-title">
                     Select a Size
@@ -66,14 +66,14 @@
                 <hr>
                 <div class="var-display-content" id="sizeContent">
 
-<!--                    
+<!--
                     <button class="var-btn"">36</button> -->
-                    
+
 
 
                 </div>
             </div>
-          
+
 
             <div class="var-display" id="selectColour">
                 <div class="var-display-title">
@@ -83,24 +83,27 @@
                 <hr>
                 <div class="var-display-content" id="colorContent">
 
-        
-    
+
+
                 </div>
             </div>
-           
+
             <div class="item-display">
                 <table class="table" id="selectedProducts">
-                    <thead class="item-table-head">
-                        <tr>
+
+                        <tr class="item-table-head">
+
                             <th scope="col">#</th>
                             <th scope="col">Item Code</th>
                             <th scope="col">Item Name</th>
-                            <th scope="col">Quantity</th>
+                            <th scope="col" style="width: 60px">Quantity</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Discount</th>
+                            <th scope="col" style="width: 60px">Discount</th>
                             <th scope="col">Total</th>
+                            <th></th>
+
                         </tr>
-                    </thead>
+
                     <tbody>
                         <!-- @if($items)
 
@@ -146,17 +149,17 @@
                 <div class="mini-display">
                     <button class="mini-display-btn btn" data-toggle="dropdown">
                         <i class="fas fa-user-circle s-icon"></i>
-                        @if (!$sid)
-                        <span class="s-text">Add a Salesman</span>
-                        @else
-                        <span class="s-text"><span class="sid">{{ $sid }}</span><span class="sname">{{ $sname}} </span></span>
-                        @endif
+
+                        <span class="s-text" id="adds">Add a Salesman</span>
+
+                        <span class="s-text" id="emp"><span class="sid" id="sid"></span><span class="sname" id="sname"></span></span>
+
 
                     </button>
                     <ul class="dropdown-menu">
                         <input class="form-control" id="myInput" type="text" placeholder="Search..">
                         @foreach($employee as $emp)
-                        <li wire:click="updateSalesman({{ $emp->id }})"><span class="sid">{{ $emp->id }}</span><span class="sname">{{ $emp->fname . ' '. $emp->lname }} </span></li>
+                        <li onclick="addEmployee({{$emp->id}})" ><span class="sid">{{ $emp->id }}</span><span class="sname">{{ $emp->fname . ' '. $emp->lname }} </span></li>
                         @endforeach
                     </ul>
                 </div>
@@ -164,16 +167,13 @@
                 <div class="mini-display">
                     <button class="mini-display-btn btn" data-toggle="dropdown">
                         <i class="fas fa-users s-icon"></i>
-                        @if (!$cusid)
-                        <span class="s-text">Add a Customer</span>
-                        @else
-                        <span class="s-text"><span class="sid">{{ $cusphone }}</span><span class="sname">{{ $cusname}} </span></span>
-                        @endif
+                        <span class="s-text" id="addc">Add a Customer</span>
+                        <span class="s-text" id="cus"><span class="sid" id="cid"></span><span class="sname" id="cname"> </span></span>
                     </button>
                     <ul class="dropdown-menu">
                         <input class="form-control" id="cusSearch" type="text" placeholder="Search..">
                         @foreach($customer as $cus)
-                        <li wire:click="updateCustomer({{ $cus->id }})"><span class="sid">{{ $cus->phone }}</span><span class="sname">{{ $cus->firstname . ' '. $cus->lastname }} </span></li>
+                        <li onclick="addCustomers({{$cus->id}})" ><span class="sid">{{ $cus->phone }}</span><span class="sname">{{ $cus->firstname . ' '. $cus->lastname }} </span></li>
                         @endforeach
                     </ul>
                 </div>
@@ -181,34 +181,86 @@
                 <hr class="price-display-rule">
                 <div class="display-info">
                     <span class="display-text">No of Items</span>
-                    <span class="display-values">{{ $noOfItems }}</span>
+                    <span class="display-values" id="nitems">0</span>
                 </div>
                 <hr class="price-display-rule">
                 <div class="display-info">
-                    <span class="display-text">Discount</span>
-                    <span class="display-values">Rs.{{ $discount }}</span>
+                    <span class="display-text">Discount &nbsp;  <button class="discount-plus" ><i class="fas fa-plus-circle"></i></button> </span>
+                    <span class="display-values" id="discount">Rs.0</span>
+
+                    <div class="pos-discount" >
+                        <div class="full-pg" id="discountBg"></div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                            <input type="radio" name="discount-type"  id="cash"  required checked>
+                            <label class="form-check-label" for="cash">
+                                Cash
+                            </label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="radio" name="discount-type" id="percentage" required>
+                            <label class="form-check-label" for="percentage">
+                                Percentage
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div id="amount" class="mt-4">
+                        <div class="row " >
+                            <div class="col-sm-3 form-check-label font-weight-bold pt-2 ">
+                                Discount
+                            </div>
+                            <div class="col-sm-8 input-group mb-3 ml-2 pl-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Rs</span>
+                                </div>
+
+                                <input type="text" id="discamnt" class="form-control" placeholder="0.00" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="percents" class="mt-4">
+
+                        <div class="row ">
+                            <div class="col-sm-3 form-check-label font-weight-bold pt-2 ">
+                                Discount
+                            </div>
+                            <div class="col-sm-8 input-group mb-3">
+                                <input type="text" id="percentageDisc" class="form-control" placeholder="0" >
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
+
                 <hr class="price-display-rule">
                 <div class="display-info">
                     <span class="display-text">Subtotal</span>
-                    <span class="display-values">Rs.{{ $subtotal }}</span>
+                    <span class="display-values" id="subtotal">Rs.0</span>
                 </div>
                 <hr class="price-display-rule">
                 <div class="display-info">
                     <span class="display-text">Taxes</span>
-                    <span class="display-values">Rs.{{ $tax }}</span>
+                    <span class="display-values">Rs.0</span>
                 </div>
                 <hr class="price-display-rule">
                 <div class="display-info">
                     <span class="display-text">Total</span>
-                    <span class="display-values">Rs.{{ $total }}</span>
+                    <span class="display-values" id="total">Rs.0</span>
                 </div>
 
-                <div class="pay-btn-div" id="payBtn">
-                    <button class="pay-btn btn">
+                <div class="pay-btn-div">
+
+                    <button class="pay-btn btn" id="payBtn">
                         <span class="pay">PAY</span>
-                        <span class="pay-value">Rs.{{ $total }}</span>
+                        <span class="pay-value" id="paytotal">Rs.0</span>
                     </button>
+
                 </div>
 
                 <div class="sub-btn-div">
@@ -285,8 +337,8 @@
         </div>
     </div>
     {{-- End of Add Expense Model --}}
-    <div class="full-pg" id="fadeBgPay"></div>
-    <div class="pos-sub-display pos-pay" id="posSubPay">
+    <div class="full-pg" id="fadeBgVoucher"></div>
+    <div class="pos-sub-display pos-pay product-overlay" id="posSubPay">
 
         <div class="pos-sub-display-title">
             <span class="title">Pay</span>
@@ -295,14 +347,17 @@
 
         <div class="pos-sub-display-content">
 
-            <form>
+            <div class="row">
+                <div class="col" id="pay-col">
+
+
                 <div class="row mt-2">
                     <div class="col-md-5">
                         <h4 class="pos-pay-total pt-3">Amount To Pay</h4>
                     </div>
                     <div class="col-md-7">
                         <div class="total-rect">
-                            <div class="total-rect-value"> Rs.{{ $total }}</div>
+                            <span class="rs-pay">Rs.</span><span class="total-rect-value" id="amnt-total">{{ $total }}</span>
                         </div>
                     </div>
                 </div>
@@ -312,7 +367,17 @@
                     </div>
                     <div class="col-md-7">
                         <div class="total-rect">
-                            <span class="rs-pay">Rs.</span><input type="text" class="amnt-tend" value="{{ $total }}" />
+                            <span class="rs-pay">Rs.</span><input type="text" id="amnt-tend" class="amnt-tend" placeholder="0" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-5">
+                        <h4 class="pos-pay-total pt-3">Balance</h4>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="total-rect">
+                            <span class="rs-pay">Rs.</span><span class="total-rect-value" id="balance">0</span>
                         </div>
                     </div>
                 </div>
@@ -321,19 +386,391 @@
                         <button class="payment-btn" wire:click="makeSale">Cash</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Card</button>
+                        <button class="payment-btn" id="cardbtn">Card</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Loyalty</button>
+                        <button class="payment-btn" id="loyaltybtn">Loyalty</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Voucher</button>
+                        <button class="payment-btn" id="voucherbtn">Voucher</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Split</button>
+                        <button class="payment-btn" id="splitbtn">Split</button>
                     </div>
                 </div>
 
+                <div class="row pay-options" id="cardOptions">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Card Type</label>
+                            <select class="form-control">
+                                <option value="Visa">VISA</option>
+                                <option value="Master">Master Card</option>
+                                <option value="Amex">American Express</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Last 4 digits</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row pay-options" id="voucherOptions">
+                  {{-- <livewire:voucher-payment /> --}}
+                  <div class="col">
+                    <div class="form-group">
+                        <label>Voucher Code</label>
+                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
+                        <div class="load-spinner">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="pay-options" id="splitOptions">
+                    <div class="row" id="method1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Method 1</label>
+                            <select class="form-control" id="pay-method1">
+                                <option value="Cash" id="cash">Cash</option>
+                                <option value="Card" id="card">Card</option>
+                                <option value="Loyalty" id="loyalty">Loyalty</option>
+                                <option value="Voucher" id="voucherSelect">Voucher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row pay-options" id="cardOptions1">
+                    <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Card Type</label>
+                            <select class="form-control">
+                                <option value="Visa">VISA</option>
+                                <option value="Master">Master Card</option>
+                                <option value="Amex">American Express</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Last 4 digits</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="row pay-options" id="voucherOptions1">
+                  {{-- <livewire:voucher-payment /> --}}
+                  <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                        <label>Voucher Code</label>
+                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
+                        <div class="load-spinner">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div class="row" id="method2">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Method 2</label>
+                            <select class="form-control" id="pay-method2">
+                                <option value="Cash" id="cash">Cash</option>
+                                <option value="Card" id="card">Card</option>
+                                <option value="Loyalty" id="loyalty">Loyalty</option>
+                                <option value="Voucher" id="voucherSelect">Voucher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pay-options" id="cardOptions2">
+                    <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Card Type</label>
+                            <select class="form-control">
+                                <option value="Visa">VISA</option>
+                                <option value="Master">Master Card</option>
+                                <option value="Amex">American Express</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Last 4 digits</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="row pay-options" id="voucherOptions2">
+                    <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                        <label>Voucher Code</label>
+                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
+                        <div class="load-spinner">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+                </div>
+
+                <div class="row " id="loyaltyOptions">
+                    <div class="pay-options">
+                    <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Customer Mobile</label>
+                        <input type="text" id="cusMobile"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Redeem Points</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" />
+
+                    </div>
+                </div>
+                </div>
+            </div>
+                <button class="btn pay-model-btn mt-2">Redeem Points</button>
+            </div>
+
+
+                <button class="btn pay-model-btn">PAY</button>
+
+            </div>
+            <div class="col-md-4 pay-customer">
+                <div class="row cus-heading">
+                    <h5 >CUSTOMER DETAILS</h5>
+                </div>
+               <div class="row">
+                   <div class="col">
+                       First Name :
+                   </div>
+                   <div class="col" id="fname">
+
+                    </div>
+               </div>
+               <div class="row">
+                <div class="col" >
+                    Last Name :
+                </div>
+                <div class="col" id="lname">
+
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Membership :
+                </div>
+                <div class="col">
+                    Platinum
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Points :
+                </div>
+                <div class="col">
+                    1000
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Mobile :
+                </div>
+                <div class="col" id="mobile">
+
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                   City :
+                </div>
+                <div class="col" id="city">
+
+                 </div>
+            </div>
+            <div class="load-spinner-cus">
+                <div class="spinner-border text-secondary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+            </div>
+
+            </div>
+        </div>
+
+
         </div>
     </div>
+
+ {{-- /****** Add Voucher Model ******/ --}}
+ <div class="full-pg" id="fadeBgVoucher"></div>
+ <div class="pos-sub-display" id="posSubVoucher">
+
+     <div class="pos-sub-display-title">
+         <span class="title">Voucher</span>
+         <button class="close-btn" id="closeBtnVoucher"><i class="fas fa-window-close"></i></button>
+     </div>
+
+     <div class="pos-sub-display-content">
+
+
+             <div class="row">
+
+                 <div class="col">
+                    <div class="form-group">
+                        <label>Voucher Id</label>
+                        <input type="text" id="vou_id" name="vou_id" class="form-control" />
+                    </div>
+                </div>
+                <div class="col">
+                     <div class="form-group">
+                         <label>Amount</label>
+                         <input type="text" id="vou_amount" name="amount" class="form-control" />
+                     </div>
+                    </div>
+             </div>
+             <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>ExpiryDate</label>
+                        <input type="date" id="vou_exp" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 1 year')); ?>" name="exp-date" class="form-control" />
+                    </div>
+                </div>
+            </div>
+             <div class="action-btn-row">
+                 <input type="button" class="add-sub-btn" id="addVoucherBtn" value="Add" />
+             </div>
+
+     </div>
+ </div>
+ {{-- End of Add Voucher Model --}}
+
+   {{-- /****** Add Service Model ******/ --}}
+   <div class="full-pg" id="fadeBgService"></div>
+   <div class="pos-sub-display" id="posSubService">
+
+       <div class="pos-sub-display-title">
+           <span class="title">Service</span>
+           <button class="close-btn" id="closeBtnService"><i class="fas fa-window-close"></i></button>
+       </div>
+
+       <div class="pos-sub-display-content">
+
+
+               <div class="row">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Service ID</label>
+                            <input type="text" name="sid" id="serviceId" class="form-control" />
+                        </div>
+                    </div>
+
+                   <div class="col">
+                       <div class="form-group">
+                           <label>Customer</label>
+                           <input type="text" id="serviceCustomer" name="customer_id" class="form-control" data-toggle="dropdown" required/>
+                           <ul class="dropdown-menu service-cus-dropdown">
+                               <input class="form-control" id="cusSearch" type="text" placeholder="Search..">
+                               @foreach($customer as $cus)
+                               <li onclick="addServiceCustomer({{$cus->id}})" ><span class="sid">{{ $cus->phone }}</span><span class="sname">{{ $cus->firstname}} </span></li>
+                               @endforeach
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+               <div class="row">
+                   <div class="col">
+                    <div class="form-group">
+                        <label>Return Date</label>
+                        <input type="date" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 7 days')); ?>" id="serviceReturn" class="form-control" />
+                    </div>
+                   </div>
+                   <div class="col">
+                    <div class="form-group">
+                        <label>Cost</label>
+                        <input type="text" id="serviceCost" name="sid" class="form-control" />
+                    </div>
+                   </div>
+               </div>
+
+
+               <div class="form-group pl-2 pr-2">
+                   <div class="row">
+                       <label>Description</label>
+                   </div>
+                   <div class="row">
+                       <textarea name="description" id="serviceDescription" class="pos-sub-txtArea" rows=5></textarea>
+                   </div>
+               </div>
+               <input type="text" value="1" name="userId" hidden>
+               <div class="action-btn-row">
+
+                   <input type="submit" onclick="addService()" class="add-sub-btn" value="Add" />
+
+               </div>
+
+       </div>
+   </div>
+   {{-- End of Add Expense Model --}}
+
+
 </div>
