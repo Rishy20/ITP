@@ -75,31 +75,17 @@ class StockTransferController extends Controller
 
         for ($i = 0; $i < count($transfer_items); $i++) {
             $product_id = $transfer_items[$i];
-            $qty = $quantities[$i];
+            $transfer_qty = $quantities[$i];
 
             // Save transfer items
             DB::table('stock_transfer_items')
-                ->insert(['transfer_id' => $transfer_id, 'product_id' => $product_id, 'qty' => $qty,
+                ->insert(['transfer_id' => $transfer_id, 'product_id' => $product_id, 'transfer_qty' => $transfer_qty,
                     'created_at' => now(), 'updated_at' => now()]);
+        }
 
-            // Decrement the selected quantity from source inventory
-            DB::table('inventory_items')->where('inventory_id', $source)->where('product_id', $product_id)
-                ->decrement('qty', $qty);
-
-            // Check if the selected product exist in destination inventory
-            if (DB::table('inventory_items')->where('inventory_id', $destination)->where('product_id', $product_id)->first()) {
-                // If the product exists, increment its respective quantity by the given value
-                DB::table('inventory_items')->where('inventory_id', $destination)->where('product_id', $product_id)
-                    ->increment('qty', $qty);
-            }
-            else {  // If the product does not exist in destination inventory, insert a new row for it
-                DB::table('inventory_items')->insert(['inventory_id' => $destination, 'product_id' => $product_id, 'qty' => $qty,
-                    'created_at' => now(), 'updated_at' => now()]);
-            }
-
-            // If the quantity in source inventory is 0 after the transaction, delete the item from that inventory
-            if (DB::table('inventory_items')->where('inventory_id', $source)->where('product_id', $product_id)->first()->qty == 0)
-                DB::table('inventory_items')->where('inventory_id', $source)->where('product_id', $product_id)->delete();
+        // Do changes to stock quantities only if the transfer is completed
+        if ($stock_transfer->completed) {
+            $this->updateQuantities($stock_transfer);
         }
 
         return redirect('stock-transfers');
@@ -152,7 +138,42 @@ class StockTransferController extends Controller
         return redirect('stock-transfers');
     }
 
+    public function updateQuantities(StockTransfer $stockTransfer) {
+        $source = $stockTransfer->source;
+        $destination = $stockTransfer->destination;
+
+        $transfer_items = DB::table('stock_transfer_items')->join('products', 'stock_transfer_items.product_id', '=', 'products.id')
+            ->join('inventory_items', 'inventory_items.product_id', '=', 'stock_transfer_items.product_id')
+            ->where('inventory_id', '=', $stockTransfer->source)->where('transfer_id', '=', $stockTransfer->id)->get();
+
+        foreach ($transfer_items as $transfer_item) {
+            $product_id = $transfer_item->product_id;
+            $transfer_qty = $transfer_item->transfer_qty;
+
+            // Decrement the selected quantity from source inventory
+            DB::table('inventory_items')->where('inventory_id', $source)->where('product_id', $product_id)
+                ->decrement('qty', $transfer_qty);
+
+            // Check if the selected product exist in destination inventory
+            if (DB::table('inventory_items')->where('inventory_id', $destination)->where('product_id', $product_id)->first()) {
+                // If the product exists, increment its respective quantity by the given value
+                DB::table('inventory_items')->where('inventory_id', $destination)->where('product_id', $product_id)
+                    ->increment('qty', $transfer_qty);
+            } else {  // If the product does not exist in destination inventory, insert a new row for it
+                DB::table('inventory_items')->insert(['inventory_id' => $destination, 'product_id' => $product_id, 'qty' => $transfer_qty,
+                    'created_at' => now(), 'updated_at' => now()]);
+            }
+
+            // If the quantity in source inventory is 0 after the transaction, delete the item from that inventory
+            if (DB::table('inventory_items')->where('inventory_id', $source)->where('product_id', $product_id)->first()->qty == 0)
+                DB::table('inventory_items')->where('inventory_id', $source)->where('product_id', $product_id)->delete();
+        }
+
+    }
+
     public function complete(StockTransfer $stock_transfer) {
+        $this->updateQuantities($stock_transfer);
+
         $stock_transfer->completed = true;
         $stock_transfer->save();
 
