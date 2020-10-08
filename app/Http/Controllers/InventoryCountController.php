@@ -19,14 +19,8 @@ class InventoryCountController extends Controller
     {
         $inventory_counts = InventoryCount::all();
 
-        foreach ($inventory_counts as $inventory_count) {
+        foreach ($inventory_counts as $inventory_count)
             $inventory_count->outlet_name = Inventory::find($inventory_count->outlet)->name;
-
-            if ($inventory_count->completed)
-                $inventory_count->status = "Completed";
-            else
-                $inventory_count->status = "Pending";
-        }
 
         return view('inventories.inventory-counts.index')->with('inventory_counts', $inventory_counts);
     }
@@ -66,6 +60,9 @@ class InventoryCountController extends Controller
             'reference' => $request->input('reference'),
             'outlet' => $outlet
         ]);
+
+        if ($request->input('completed') == "on")
+            $inventory_count->completed = true;
 
         // Save inventory count
         $inventory_count->save();
@@ -160,6 +157,13 @@ class InventoryCountController extends Controller
                     ->where('product_id', $counted_item->product_id)->update(['qty' => $counted_item->actual_qty]);
             }
         }
+
+        return redirect('inventory-counts');
+    }
+
+    public function complete(InventoryCount $inventory_count) {
+        $inventory_count->completed = true;
+        $inventory_count->save();
 
         return redirect('inventory-counts');
     }

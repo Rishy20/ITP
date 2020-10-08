@@ -21,11 +21,6 @@ class StockTransferController extends Controller
         foreach ($stock_transfers as $stock_transfer) {
             $stock_transfer->source_name = Inventory::find($stock_transfer->source)->name;
             $stock_transfer->destination_name = Inventory::find($stock_transfer->destination)->name;
-
-            if ($stock_transfer->completed)
-                $stock_transfer->status = "Completed";
-            else
-                $stock_transfer->status = "Pending";
         }
 
         return view('inventories.stock-transfers.index')->with('stock_transfers', $stock_transfers);
@@ -69,6 +64,9 @@ class StockTransferController extends Controller
             'source' => $source,
             'destination' => $destination,
         ]);
+
+        if ($request->input('completed') == "on")
+            $stock_transfer->completed = true;
 
         // Save stock transfer
         $stock_transfer->save();
@@ -151,6 +149,13 @@ class StockTransferController extends Controller
     {
         // Delete stock transfer and redirect to index
         $stockTransfer->delete();
+        return redirect('stock-transfers');
+    }
+
+    public function complete(StockTransfer $stock_transfer) {
+        $stock_transfer->completed = true;
+        $stock_transfer->save();
+
         return redirect('stock-transfers');
     }
 }

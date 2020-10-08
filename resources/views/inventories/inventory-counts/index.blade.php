@@ -36,15 +36,29 @@
                     <tr>
                         <td>{{ $inventory_count->reference }}</td>
                         <td>{{ $inventory_count->outlet_name }}</td>
-                        <td>{{ $inventory_count->status }}</td>
+                        <td>
+                            @if ($inventory_count->completed)
+                                <span><i class="fa fa-check text-success"></i>
+                                    &nbsp;Completed
+                                </span>
+                            @else
+                                <span><i class="fa fa-circle" style="color: #058de9"></i>
+                                    &nbsp;Ongoing</span>
+                            @endif
+                        </td>
 
                         <td class="action-icon">
-                            <a href="{{ route('inventory-counts.edit', $inventory_count) }}"><i class="fas fa-pen"></i></a>
+                            @if (!$inventory_count->completed)
+                                <a href="{{ route('inventory-counts.complete', $inventory_count) }}"><i class="fas fa-check"></i></a>
+                                <a href="{{ route('inventory-counts.edit', $inventory_count) }}"><i class="fas fa-pen"></i></a>
+                            @else
+                                <i style="margin: 0 44px"></i>
+                            @endif
+
                             <button type="submit" class="dlt-btn" id="dlt-btn{{ $inventory_count->id }}"><i class="fas fa-trash-alt"></i></button>
                             <form method="POST" class="dlt-form" id="dlt-form{{ $inventory_count->id }}" action="{{ route('inventory-counts.destroy', $inventory_count) }}">
                                 @method('DELETE')  {{-- Spoof form method as 'DELETE' to comply with destroy route --}}
                                 @csrf
-
                             </form>
                         </td>
                     </tr>

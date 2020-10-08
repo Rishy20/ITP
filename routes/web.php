@@ -110,8 +110,10 @@ Route::patch('/pin/{id}','UserController@updatePin')->name('user.pin');
 Route::resource('brand', 'brandController');
 Route::resource('inventories', 'InventoryController');
 Route::resource('stock-transfers', 'StockTransferController');
+Route::get('stock-transfers/{stock_transfer}/complete', 'StockTransferController@complete')->name('stock-transfers.complete');
 Route::resource('inventory-counts', 'InventoryCountController');
 Route::get('inventory-counts/{inventory_count}/replace', 'InventoryCountController@replace')->name('inventory-counts.replace');
+Route::get('inventory-counts/{inventory_count}/complete', 'InventoryCountController@complete')->name('inventory-counts.complete');
 Route::get('/inventory-report','InventoryController@createReport')->name('inventories.report');
 
 Route::get('/reports', 'ReportController@index')->name('reports.index');
