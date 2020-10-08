@@ -32,7 +32,6 @@ class StockTransferForm extends Component
         $inventory_items = DB::table('inventory_items')->join('products', 'inventory_items.product_id',
             '=', 'products.id')->where('inventory_id', $this->source)->get();
 
-        // Assign each product to the corresponding inventory item (check for matching product ids)
         foreach ($inventory_items as $inventory_item) {
             // Get destination inventory's quantity and add it to source inventory item as a property
             $inventory_item->destination_qty = DB::table('inventory_items')

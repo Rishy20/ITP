@@ -111,7 +111,7 @@
 
                         <div class="float-right">
                             <input type="checkbox" name="completed" id="completed">
-                            <label for="completed" class="mr-4 mt-2">Mark as completed</label>
+                            <label for="completed" class="mr-4 mt-2">Mark as received</label>
                         </div>
                     </div>
                 </div>

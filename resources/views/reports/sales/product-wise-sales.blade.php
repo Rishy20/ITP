@@ -2,6 +2,9 @@
 @section('content')
 
 <div class="pg-heading">
+    <a href="{{ redirect()->back() }}">
+        <i class="fa fa-arrow-left pg-back"></i>
+    </a>
     <div class="pg-title">Product-wise Sales Report</div>
 </div>
 
@@ -24,7 +27,8 @@
                 <tr>
                     <th>Product Name</th>
                     <th>Quantity Sold</th>
-                    <th>Sales</th>
+                    <th>Sales (Inc. Tax)</th>
+                    <th>Sales (Exc. Tax)</th>
                     <th>Purchase Cost</th>
                     <th>Gross Profit</th>
                     <th>Margin %</th>

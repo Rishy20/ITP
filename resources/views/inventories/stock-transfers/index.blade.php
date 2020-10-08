@@ -41,7 +41,7 @@
                         <td>
                             @if ($stock_transfer->completed)
                                 <span><i class="fa fa-check text-success"></i>
-                                    &nbsp;Completed
+                                    &nbsp;Received
                                 </span>
                             @else
                                 <span><i class="fa fa-circle" style="color: #058de9"></i>
