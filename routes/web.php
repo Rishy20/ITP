@@ -28,6 +28,9 @@ Route::get('/userReport','UserController@createReport')->name('user.report');
 
 Route::resource('/bank','BankAccountController');
 Route::resource('/exchange','ExchangeController');
+Route::get('/bankReport','BankAccountController@createReport')->name('banks.report');
+Route::get('/exchangeReport','ExchangeController@createReport')->name('exchanges.report');      
+
 
 
 Route::get('/', function () {
