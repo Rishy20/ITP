@@ -45,11 +45,7 @@
 
 
 
-                    {{-- <div class="load-spinner " wire:loading wire:target="query">
-                <div class="spinner-border text-secondary" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-            </div> --}}
+
                     <button class="v-btn btn" id="voucher">
                         <i class="fas fa-gift sub-icon"></i><span class="sub-btn-txt">Voucher</span>
                     </button>
@@ -342,7 +338,7 @@
     </div>
     {{-- End of Add Expense Model --}}
     <div class="full-pg" id="fadeBgVoucher"></div>
-    <div class="pos-sub-display pos-pay" id="posSubPay">
+    <div class="pos-sub-display pos-pay product-overlay" id="posSubPay">
 
         <div class="pos-sub-display-title">
             <span class="title">Pay</span>
@@ -351,14 +347,17 @@
 
         <div class="pos-sub-display-content">
 
-            <form>
+            <div class="row">
+                <div class="col" id="pay-col">
+
+
                 <div class="row mt-2">
                     <div class="col-md-5">
                         <h4 class="pos-pay-total pt-3">Amount To Pay</h4>
                     </div>
                     <div class="col-md-7">
                         <div class="total-rect">
-                            <div class="total-rect-value"> Rs.{{ $total }}</div>
+                            <span class="rs-pay">Rs.</span><span class="total-rect-value" id="amnt-total">{{ $total }}</span>
                         </div>
                     </div>
                 </div>
@@ -368,7 +367,17 @@
                     </div>
                     <div class="col-md-7">
                         <div class="total-rect">
-                            <span class="rs-pay">Rs.</span><input type="text" class="amnt-tend" value="{{ $total }}" />
+                            <span class="rs-pay">Rs.</span><input type="text" id="amnt-tend" class="amnt-tend" placeholder="0" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-5">
+                        <h4 class="pos-pay-total pt-3">Balance</h4>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="total-rect">
+                            <span class="rs-pay">Rs.</span><span class="total-rect-value" id="balance">0</span>
                         </div>
                     </div>
                 </div>
@@ -377,19 +386,277 @@
                         <button class="payment-btn" wire:click="makeSale">Cash</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Card</button>
+                        <button class="payment-btn" id="cardbtn">Card</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Loyalty</button>
+                        <button class="payment-btn" id="loyaltybtn">Loyalty</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Voucher</button>
+                        <button class="payment-btn" id="voucherbtn">Voucher</button>
                     </div>
                     <div class="col">
-                        <button class="payment-btn">Split</button>
+                        <button class="payment-btn" id="splitbtn">Split</button>
                     </div>
                 </div>
-            </form>
+
+                <div class="row pay-options" id="cardOptions">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Card Type</label>
+                            <select class="form-control">
+                                <option value="Visa">VISA</option>
+                                <option value="Master">Master Card</option>
+                                <option value="Amex">American Express</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Last 4 digits</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row pay-options" id="voucherOptions">
+                  {{-- <livewire:voucher-payment /> --}}
+                  <div class="col">
+                    <div class="form-group">
+                        <label>Voucher Code</label>
+                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
+                        <div class="load-spinner">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="pay-options" id="splitOptions">
+                    <div class="row" id="method1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Method 1</label>
+                            <select class="form-control" id="pay-method1">
+                                <option value="Cash" id="cash">Cash</option>
+                                <option value="Card" id="card">Card</option>
+                                <option value="Loyalty" id="loyalty">Loyalty</option>
+                                <option value="Voucher" id="voucherSelect">Voucher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row pay-options" id="cardOptions1">
+                    <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Card Type</label>
+                            <select class="form-control">
+                                <option value="Visa">VISA</option>
+                                <option value="Master">Master Card</option>
+                                <option value="Amex">American Express</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Last 4 digits</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="row pay-options" id="voucherOptions1">
+                  {{-- <livewire:voucher-payment /> --}}
+                  <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                        <label>Voucher Code</label>
+                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
+                        <div class="load-spinner">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div class="row" id="method2">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Method 2</label>
+                            <select class="form-control" id="pay-method2">
+                                <option value="Cash" id="cash">Cash</option>
+                                <option value="Card" id="card">Card</option>
+                                <option value="Loyalty" id="loyalty">Loyalty</option>
+                                <option value="Voucher" id="voucherSelect">Voucher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pay-options" id="cardOptions2">
+                    <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Card Type</label>
+                            <select class="form-control">
+                                <option value="Visa">VISA</option>
+                                <option value="Master">Master Card</option>
+                                <option value="Amex">American Express</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Last 4 digits</label>
+                            <input type="text" name="amount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="row pay-options" id="voucherOptions2">
+                    <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                        <label>Voucher Code</label>
+                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
+                        <div class="load-spinner">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+                </div>
+
+                <div class="row " id="loyaltyOptions">
+                    <div class="pay-options">
+                    <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Customer Mobile</label>
+                        <input type="text" id="cusMobile"  name="amount" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Redeem Points</label>
+                        <input type="text" name="amount" id="voucherAmount" class="form-control" />
+
+                    </div>
+                </div>
+                </div>
+            </div>
+                <button class="btn pay-model-btn mt-2">Redeem Points</button>
+            </div>
+
+
+                <button class="btn pay-model-btn">PAY</button>
+
+            </div>
+            <div class="col-md-4 pay-customer">
+                <div class="row cus-heading">
+                    <h5 >CUSTOMER DETAILS</h5>
+                </div>
+               <div class="row">
+                   <div class="col">
+                       First Name :
+                   </div>
+                   <div class="col" id="fname">
+
+                    </div>
+               </div>
+               <div class="row">
+                <div class="col" >
+                    Last Name :
+                </div>
+                <div class="col" id="lname">
+
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Membership :
+                </div>
+                <div class="col">
+                    Platinum
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Points :
+                </div>
+                <div class="col">
+                    1000
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Mobile :
+                </div>
+                <div class="col" id="mobile">
+
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                   City :
+                </div>
+                <div class="col" id="city">
+
+                 </div>
+            </div>
+            <div class="load-spinner-cus">
+                <div class="spinner-border text-secondary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+            </div>
+
+            </div>
+        </div>
+
+
         </div>
     </div>
 
@@ -435,6 +702,75 @@
      </div>
  </div>
  {{-- End of Add Voucher Model --}}
+
+   {{-- /****** Add Service Model ******/ --}}
+   <div class="full-pg" id="fadeBgService"></div>
+   <div class="pos-sub-display" id="posSubService">
+
+       <div class="pos-sub-display-title">
+           <span class="title">Service</span>
+           <button class="close-btn" id="closeBtnService"><i class="fas fa-window-close"></i></button>
+       </div>
+
+       <div class="pos-sub-display-content">
+
+
+               <div class="row">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Service ID</label>
+                            <input type="text" name="sid" id="serviceId" class="form-control" />
+                        </div>
+                    </div>
+
+                   <div class="col">
+                       <div class="form-group">
+                           <label>Customer</label>
+                           <input type="text" id="serviceCustomer" name="customer_id" class="form-control" data-toggle="dropdown" required/>
+                           <ul class="dropdown-menu service-cus-dropdown">
+                               <input class="form-control" id="cusSearch" type="text" placeholder="Search..">
+                               @foreach($customer as $cus)
+                               <li onclick="addServiceCustomer({{$cus->id}})" ><span class="sid">{{ $cus->phone }}</span><span class="sname">{{ $cus->firstname}} </span></li>
+                               @endforeach
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+               <div class="row">
+                   <div class="col">
+                    <div class="form-group">
+                        <label>Return Date</label>
+                        <input type="date" value="<?php echo date('Y-m-d', strtotime(date('Y-m-d'). ' + 7 days')); ?>" id="serviceReturn" class="form-control" />
+                    </div>
+                   </div>
+                   <div class="col">
+                    <div class="form-group">
+                        <label>Cost</label>
+                        <input type="text" id="serviceCost" name="sid" class="form-control" />
+                    </div>
+                   </div>
+               </div>
+
+
+               <div class="form-group pl-2 pr-2">
+                   <div class="row">
+                       <label>Description</label>
+                   </div>
+                   <div class="row">
+                       <textarea name="description" id="serviceDescription" class="pos-sub-txtArea" rows=5></textarea>
+                   </div>
+               </div>
+               <input type="text" value="1" name="userId" hidden>
+               <div class="action-btn-row">
+
+                   <input type="submit" onclick="addService()" class="add-sub-btn" value="Add" />
+
+               </div>
+
+       </div>
+   </div>
+   {{-- End of Add Expense Model --}}
 
 
 </div>

@@ -35,7 +35,7 @@
                     <a href="#">Mark Attendance</a>
                 </li>
                 <li class="pos-nav-li">
-                    <a href="#">About</a>
+                    <a href="#" id="addService">Add Service</a>
                 </li>
                 <li class="pos-nav-li">
                     <a href="#">About</a>
@@ -146,12 +146,27 @@
                 $('#fadeBg').removeClass('block');
 
             });
-            // //Pay Model
-            // $('#payBtn').on('click', function() {
-            //     $('#posSubPay').toggleClass('block');
-            //     $('#fadeBgPay').toggleClass('block');
+            //Pay Model
+            $('#payBtn').on('click', function() {
+                var t = $('#amnt-total').html(total);
 
-            // });
+                $('#posSubPay').toggleClass('block');
+                $('#fadeBgPay').toggleClass('block');
+
+
+
+            });
+            $('#amnt-tend').on('keyup',function(){
+                   calculateBalance();
+            });
+
+            function calculateBalance(){
+                var amountTend = $('#amnt-tend').val();
+                    var t = $('#amnt-total').html();
+                    var balance = amountTend - t;
+                    $('#balance').html(balance);
+            }
+
             $('#closeBtnSize').on('click', function() {
                 $('#selectSize').hide();
             });
@@ -164,7 +179,19 @@
 
             });
 
+            //Service model
 
+            $('#addService').on('click', function() {
+                $('#posSubService').toggleClass('block');
+                $('#fadeBgService').toggleClass('block');
+                $('#sidebar').removeClass('active');
+                $('#serviceId').val(serviceId);
+            });
+            $('#closeBtnService').on('click', function() {
+                $('#posSubService').removeClass('block');
+                $('#fadeBgService').removeClass('block');
+
+            });
 
             var voucherId = 1000;
 
@@ -175,6 +202,14 @@
                      voucherId = data;
                      voucherId++;
             });
+
+            // $.get("serviceid", function(data, status){
+            //         console.log(data);
+            //          serviceId = data;
+            //          serviceId++;
+            // });
+
+
             //Voucher Model
              $('#voucher').on('click', function() {
 
@@ -293,10 +328,7 @@
                         var discount = 0;
                         cell1.innerHTML = ++num;
                         cell2.innerHTML = $('#vou_id').val();
-
-
                         cell3.innerHTML = 'Voucher' ;
-
                         cell4.innerHTML = '<input type="text" value="1" class="table-qty" disabled/>';
                         cell5.innerHTML = price;
                         cell6.innerHTML = '<input type="text" value="'+discount+'" class="table-discount"/>';
@@ -337,7 +369,7 @@
         });
 
 
-            $('#payBtn').click(function(){
+            $('#payBtn1').click(function(){
 
                 if($('#adds').is(":visible")){
                     alert("Please select a Salesman")
@@ -516,6 +548,69 @@
                     }
                 });
         }
+
+        function addServiceCustomer(id){
+
+                serviceCus = id;
+                var customer = <?php echo json_encode($cust); ?>;
+                customer.forEach(function(index, value, array){
+
+                    if (array[value]['id'] == id) {
+                        $('#serviceCustomer').val(array[value]['firstname']+' '+array[value]['lastname']);
+                    }
+                });
+        }
+
+        function addService(){
+
+                if($('#serviceCustomer').val().length == 0){
+                    alert("Please select a Customer");
+                }else if($('#serviceCost').val().length == 0){
+                    alert("Please enter a Cost");
+                }else  if($('#serviceDescription').val().length == 0){
+                    alert("Please enter a Description");
+                }else{
+
+
+
+                $('#posSubService').removeClass('block');
+                $('#fadeBgService').removeClass('block');
+
+
+                let id = $('#serviceId').val();
+                let customer_id = serviceCus;
+                let return_date = $('#serviceReturn').val();
+                let description = $('#serviceDescription').val();
+                let cost = $('#serviceCost').val();
+                let user = 22;
+                let _token   = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    url:"/service",
+                    type:"POST",
+                    data:{
+                        id : id,
+                        customer_id:customer_id,
+                        return_date:return_date,
+                        service_description:description,
+                        cost:cost,
+                        user_id:user,
+                        _token:_token
+                    },
+                    success:function(response){
+
+                    },
+                });
+
+                $('#serviceId').val('');
+                $('#serviceDescription').val('');
+                $('#serviceCustomer').val('');
+                $('#serviceCost').val('');
+                serviceId++;
+                serviceCus = '';
+                }
+        }
+
         var num = 0;
         var del = 0;
         var arr = [];
@@ -531,6 +626,8 @@
         var seledSize;
         var cus;
         var emp;
+        var serviceCus;
+        var serviceId = {{$serviceId}};
         var qty,discount,price,total;
 
         function showSize() {
@@ -980,6 +1077,167 @@
                     table.rows[i].cells[9].innerHTML = num-1;
                 }
 });
+//pay Model
+
+$('#cardbtn').click(function(){
+    $('#cardOptions').toggle();
+    $('#voucherOptions').hide();
+    $('#splitOptions').hide();
+    $('.pay-model-btn').toggle();
+    $('#cardOptions2').hide();
+    $('#voucherOptions2').hide();
+    $('#cardOptions1').hide();
+    $('#voucherOptions1').hide();
+})
+$('#voucherbtn').click(function(){
+    $('#cardOptions').hide();
+    $('#voucherOptions').toggle();
+    $('#splitOptions').hide();
+    $('.pay-model-btn').toggle();
+    $('#cardOptions2').hide();
+    $('#voucherOptions2').hide();
+    $('#cardOptions1').hide();
+    $('#voucherOptions1').hide();
+})
+$('#loyaltybtn').click(function(){
+    $('#pay-col').addClass('col-md-8');
+    $('.pos-pay').addClass('pos-loyalty-width');
+    $('.pay-customer').show();
+    $('#loyaltyOptions').toggle();
+    $('#loyaltyOptions .pay-model-btn').toggle();
+})
+
+$('#splitbtn').click(function(){
+    // $('#cardOptions').hide();
+    $('#splitOptions').toggle();
+    $('#voucherOptions').hide();
+    $('#cardOptions').hide();
+    $('#cardOptions2').hide();
+    $('#voucherOptions2').hide();
+    $('#cardOptions1').hide();
+    $('#voucherOptions1').hide();
+    $('.pay-model-btn').toggle();
+})
+
+
+$('#pay-method1').click(function(){
+    if($("#pay-method1 #cash").is(':selected')){
+        $('#cardOptions1').hide();
+        $('#voucherOptions1').hide();
+    }
+    if($("#pay-method1 #card").is(':selected')){
+        $('#voucherOptions1').hide();
+        $('#cardOptions1').show();
+    }
+    if($("#pay-method1 #voucherSelect").is(':selected')){
+        $('#voucherOptions1').show();
+        $('#cardOptions1').hide();
+    }
+})
+$('#pay-method2').click(function(){
+    if($("#pay-method2 #cash").is(':selected')){
+        $('#cardOptions2').hide();
+        $('#voucherOptions2').hide();
+    }
+    if($("#pay-method2 #card").is(':selected')){
+        $('#cardOptions2').show();
+        $('#voucherOptions2').hide();
+    }
+    if($("#pay-method2 #voucherSelect").is(':selected')){
+        $('#cardOptions2').hide();
+        $('#voucherOptions2').show();
+    }
+})
+//setup before functions
+let typingTimer;                //timer identifier
+let doneTypingInterval = 1000;  //time in ms (5 seconds)
+let myInput = document.getElementById('voucherCode');
+
+//on keyup, start the countdown
+myInput.addEventListener('keyup', () => {
+    clearTimeout(typingTimer);
+    if (myInput.value) {
+        typingTimer = setTimeout(getAmount, doneTypingInterval);
+    }
+});
+
+let cusMobile = document.getElementById('cusMobile');
+cusMobile.addEventListener('keyup', () => {
+    clearTimeout(typingTimer);
+    if (cusMobile.value) {
+        typingTimer = setTimeout(getCustomer, doneTypingInterval);
+    }
+});
+//user is "finished typing," do something
+
+
+function getAmount(){
+    var vcode = $('#voucherCode').val();
+    var url = "voucheramount/"+vcode;
+    console.log(url);
+    $('.load-spinner').show();
+    $.get(url, function(data, status){
+
+        if(data != -1){
+            $('#voucherAmount').val(data);
+            $('#amnt-tend').val(data);
+            $('.load-spinner').hide();
+            var amountTend = $('#amnt-tend').val();
+            var t = $('#amnt-total').html();
+            var balance = amountTend - t;
+            $('#balance').html(balance);
+        }else{
+            alert("Voucher Expired!");
+            $('.load-spinner').hide();
+        }
+
+    }).fail(function(err,status){
+        $('#voucherAmount').val('Voucher not Found');
+        $('.load-spinner').hide();
+    });
+}
+function getCustomer(){
+    var mobile = $('#cusMobile').val();
+    var url = "customermobile/"+mobile;
+    // console.log(url);
+    $('.load-spinner-cus').show();
+    $('.pay-customer').addClass('opacity4');
+    $.get(url, function(data, status){
+
+        if(data.length != 0){
+            $('#fname').html(data[0]['firstname']);
+            $('#lname').html(data[0]['lastname']);
+            $('#mobile').html(data[0]['phone']);
+            $('#city').html(data[0]['city']);
+            $('.load-spinner-cus').hide();
+            $('.pay-customer').removeClass('opacity4');
+        }else{
+            $('.load-spinner-cus').hide();
+            $('.pay-customer').removeClass('opacity4');
+            alert("Customer not found");
+        }
+
+
+        // if(data != -1){
+        //     $('#voucherAmount').val(data);
+        //     $('#amnt-tend').val(data);
+        //     $('.load-spinner').hide();
+        //     var amountTend = $('#amnt-tend').val();
+        //     var t = $('#amnt-total').html();
+        //     var balance = amountTend - t;
+        //     $('#balance').html(balance);
+        // }else{
+        //     alert("Voucher Expired!");
+        //     $('.load-spinner').hide();
+        // }
+
+    }).fail(function(err,status){
+        $('.load-spinner-cus').hide();
+        $('.pay-customer').removeClass('opacity4');
+        alert("Customer not found");
+    });
+}
+
     </script>
 </body>
 

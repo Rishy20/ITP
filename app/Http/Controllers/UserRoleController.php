@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Session;
 
 class UserRoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
 
     /**
      * Display a listing of the resource.
@@ -65,6 +69,7 @@ class UserRoleController extends Controller
     public function edit($id)
     {
         $role = userRole::find($id);
+
 
         return view('User.editUserRole',compact('role'));
     }

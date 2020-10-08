@@ -26,55 +26,19 @@ class POSController extends Controller
     public function index()
     {
 
-        // $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,p.sellingPrice,p.discount,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
-        // $var = DB::table('variants')
-        // ->where('product_id','=',1)
-        // ->where('size','=',null)
-        // ->where('color','=',null)
-        // ->get();
-        // $var = json_decode($var,true);
-        // if(!empty($var)){
-        //     dd("Hekko");
-        // }
-        // dd($var);
-    //     $size = "";
-    //     $color = "";
-    //     $var = DB::table('variants')
-    //         ->where('product_id','=','1')
-    //         ->where('size','=',$size)
-    //         ->where('color','=',$color)
-    //         ->get();
-    //         $var = json_decode($var,true);
-    // if(!empty($var)){
-    //     $sp = new SalesProduct();
-    //     $sp->saleId = 56;
-    //     $sp->pid = 1;
-    //     $sp->vid = $var[0]['id'];
-    //     $sp->qty =10;
-    //     $sp->price = 1000;
-    //     $sp->discount = 1500;
-    //     $sp->save();
-    // }else{
-    //     $sp = new SalesProduct();
-    //     $sp->saleId = 55;
-    //     $sp->pid = 1;
-    //     $sp->qty = 20;
-    //     $sp->price = 2000;
-    //     $sp->discount = 100;
-    //     $sp->save();
-    //     dd("Hello");
-    // }
-    // $vou = new Voucher();
-    // $vou->id = 7;
-    // $vou->amount = 1000;
-    // $vou->exp = '2021/10/05';
-    // $vou->save();
-
        $prd = Product::all();
        $var = Variant::all();
        $cust = Customer::all();
        $emp = Employee::all();
-        return view('POS.pos',compact('prd','var','cust','emp'));
+       $last = DB::table('services')->latest()->first();
+
+       if($last == null){
+           $serviceId = 1;
+       }else{
+            $serviceId = ($last->id) + 1;
+       }
+
+        return view('POS.pos',compact('prd','var','cust','emp','serviceId'));
 
     }
 
@@ -290,7 +254,6 @@ class POSController extends Controller
                     $sp->price = $pr[1];
                     $sp->discount = $pr[2];
                     $sp->save();
-
                     $p = Product::find($pr[0]);
                     $qty = $p->Qty;
                     Product::where('id',$pr[0])->update(['Qty'=>$qty-$pr[5]]);
@@ -379,5 +342,13 @@ class POSController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getCustomer($mobile){
+        $cus = DB::table('customers')
+        ->where('phone','=',$mobile)
+        ->get();
+
+        return $cus;
     }
 }

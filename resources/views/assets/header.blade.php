@@ -5,7 +5,7 @@
                 <div class="header-store">Leatherline</div>
                 <div class="header-time"><livewire:time/></div>
                 <div class="header-user">
-                    <i class="fas fa-user-circle header-icon"></i> Rishard Akram
+                    <i class="fas fa-user-circle header-icon"></i> {{Auth::user()->display_name}}
                 </div>
             </div>
     </div>

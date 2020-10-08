@@ -5,6 +5,9 @@
     <div class="pg-heading">
         <a href="{{ route('user.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Add User</div>
+        <div class="demo-btn">
+            Demo
+        </div>
     </div>
     <div class="row">
         <div class="col-md-9">
@@ -103,6 +106,26 @@
     </div>
 </div>{{-- End of addUser --}}
 <script>
+
+    //Demo Button
+
+    $(".demo-btn").click(function(){
+        $("input[name='username']").val("Rishard");
+        $("input[name='display_name']").val("Rishard Akram");
+        $("input[name='password']").val("admin1234");
+        $("input[name='repass']").val("admin1234");
+        $("input[name='pin']").val("1234");
+        $("input[name='repin']").val("1234");
+    });
+
+
+
+
+
+
+
+
+
 
         $('#repass').change(function(){
         var pass = $('#pass').val();

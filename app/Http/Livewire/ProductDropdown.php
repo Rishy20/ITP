@@ -39,7 +39,6 @@ class ProductDropdown extends Component
     public $cusphone;
     public function mount()
     {
-
         $this->products = Product::all();
         $this->employee = Employee::all();
         $this->customer = Customer::all();

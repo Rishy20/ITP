@@ -7,6 +7,7 @@ use charlieuki\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
 
 class PrintController extends Controller
 {
+
     public function test()
     {
         // Set params

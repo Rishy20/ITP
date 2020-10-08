@@ -99,11 +99,15 @@ Route::resource('loyalty', 'LoyaltyController');
 Route::resource('vendorPayment', 'VendorPaymentController');
 Route::resource('salaryPayment', 'SalaryPaymentController');
 Route::get('voucherid', 'VoucherController@getLastIndex')->name('voucher.id');
+Route::get('serviceid', 'ServiceController@getLastIndex');
+Route::get('voucheramount/{id}', 'VoucherController@getVoucherAmount');
+Route::get('customermobile/{mobile}', 'POSController@getCustomer');
 
 Route::get('posproduct', 'POSController@returnProducts');
 Auth::routes();
 
-Route::resource('admin', 'AdminController');
+Route::get('/admin/login','Auth\LoginAdminController@index')->name('login.admin');
+Route::post('/admin/login','Auth\LoginAdminController@login')->name('login.admin');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('user', 'UserController');

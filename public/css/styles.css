@@ -327,6 +327,23 @@ input[type="radio"]:checked:after {
     border-radius: 3px;
     box-shadow: 6px 5px 8px rgba(43, 189, 185, 0.1);
 }
+.demo-btn{
+
+    padding: 10px 20px;
+    margin-right: 15px;
+    background-color: #2bbdb9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    box-shadow: 6px 5px 8px rgba(43, 189, 185, 0.1);
+    display: inline-block;
+    right: 35px;
+    position: absolute;
+}
 /******* Start of Action icon ******/
 /* Pencil Edit icon */
 .action-icon a {
@@ -477,9 +494,10 @@ input:checked + .slider:before {
 }
 .load-spinner{
     position: absolute;
-    right: 30%;
-    top: 9px;
-    display: inline-block;
+    right: 5%;
+    top: 34px;
+    display: none ;
+    /* display: inline-block; */
     opacity: 0.2;
 }
 .v-btn{
@@ -598,6 +616,7 @@ input:checked + .slider:before {
     font-weight: 600;
     font-size: 12px;
     padding: 15px 11px;
+    width: 100%;
     text-align: center;
 }
 .sub-icon {
@@ -954,21 +973,30 @@ input[type="radio"]:checked:after {
     border-top: none;
     box-shadow: 8px 8px 6px rgb(190 190 190 / 20%);
 }
-
+/* #posSubService{
+    display: block;
+} */
 .pos-sub-display-title{
     font-size: 25px;
     background-color: #256ea1;
     color: white;
     padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
 }
 
 
 .pos-sub-display-content{
     padding: 12px 20px;
+
+    margin-top: 60px;
 }
+
 .pos-sub-txtArea{
     width: 100%;
     border: 1px solid #ced4da;
+    padding: 5px 20px;
 }
 .close-btn{
     float: right;
@@ -1027,13 +1055,43 @@ button:focus{
     margin-bottom: 20px;
 }
 .pos-pay{
-
+    max-height: 85vh;
+    z-index: 10;
     width: 700px;
 
 }
+.pos-loyalty-width{
+    width:1000px;
+}
+.pay-customer{
+    border: 1px solid #d8cfcf;
+    display: none;
+    /* padding: 0 10px; */
+
+}
+.pay-customer .row{
+    margin-top: 15px;
+    margin-left: 5px;
+}
+.row.cus-heading{
+    margin-top: 0;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 15px 10px 10px 10px;
+    background-color: #192b3c;
+    color: white;
+}
+.cus-heading h5{
+    text-align: center;
+    font-weight: 600;
+    /* text-decoration: underline; */
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .amnt-tend{
     width: 80%;
-
+    margin-left: 10px;
     border: none;
 }
 .rs-pay{
@@ -1055,9 +1113,65 @@ button:focus{
     text-align: center;
     padding-top: 12px;
 }
+.pay-options{
+    border:1px solid #d8cfcf;
+    padding: 6px;
+    margin-left: 5px !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px !important;
+}
+#cardOptions{
+    display: none;
+}
+#voucherOptions{
+    display: none;
+}
+#cardOptions1{
+    display: none;
+}
+#voucherOptions1{
+    display: none;
+}
+#cardOptions2{
+    display: none;
+}
+#voucherOptions2{
+    display: none;
+}
+#splitOptions{
+    display: none;
+}
+#loyaltyOptions{
+    padding: 10px;
+    display: none;
+}
+.load-spinner-cus{
+    margin-left: auto;
+    text-align: center;
+    margin-right: auto;
+    display: none;
+
+}
+.opacity4{
+    opacity: 0.4;
+}
+.pay-model-btn{
+    width: 100%;
+    color: white;
+    background-color: #192b3c;
+    padding: 10px;
+    text-align: center;
+    font-size: 30px;
+    display: none;
+    font-weight: 600;
+}
 .dropdown-menu{
     width: 79%;
     padding:10px;
+}
+.service-cus-dropdown{
+    width: 90%;
 }
 .dropdown-menu li {
     color: black;
