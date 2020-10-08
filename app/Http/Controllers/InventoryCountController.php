@@ -114,7 +114,18 @@ class InventoryCountController extends Controller
      */
     public function edit(InventoryCount $inventoryCount)
     {
-        //
+        $inventories = Inventory::all();
+
+        $counted_items = DB::table('counted_items')->join('products', 'counted_items.product_id', '=', 'products.id')
+            ->join('inventory_items', 'inventory_items.product_id', '=', 'counted_items.product_id')
+            ->where('inventory_id', '=', $inventoryCount->outlet)->where('count_id', '=', $inventoryCount->id)->get();
+
+        // Get inventory items
+        $inventory_items = DB::table('inventory_items')->join('products', 'inventory_items.product_id',
+            '=', 'products.id')->where('inventory_id', $inventoryCount->outlet)->get();
+
+        return view('inventories.inventory-counts.edit')->with('inventory_count', $inventoryCount)
+            ->with('inventories', $inventories)->with('inventory_items', $inventory_items)->with('counted_items', $counted_items);
     }
 
     /**
@@ -126,7 +137,54 @@ class InventoryCountController extends Controller
      */
     public function update(Request $request, InventoryCount $inventoryCount)
     {
-        //
+        // Validate inputs
+        $request->validate([
+            'reference' => 'required|max:20',
+            'counted_items' => 'required'
+        ]);
+
+        // Get inputs from request
+        $counted_items = $request->input('counted_items');
+        $actual_quantities = $request->input('actual_quantities');
+
+        $inventoryCount->reference = $request->input('reference');
+
+        if ($request->input('completed') == "on")
+            $inventoryCount->completed = true;
+
+        // Save inventory count
+        $inventoryCount->save();
+
+        $count_id = $inventoryCount->id;
+        $outlet = $inventoryCount->outlet;
+
+        // Delete previous counted items
+        DB::table('counted_items')->where('count_id', '=', $count_id)->delete();
+
+        for ($i = 0; $i < count($counted_items); $i++) {
+            $product_id = $counted_items[$i];
+            $actual_qty = $actual_quantities[$i];
+
+            // Get expected quantity
+            $expected_qty = DB::table('inventory_items')->where('inventory_id', $outlet)
+                ->where('product_id', $product_id)->first()->qty;
+
+            // Save new counted items
+            DB::table('counted_items')
+                ->insert(['count_id' => $count_id, 'product_id' => $product_id, 'actual_qty' => $actual_qty,
+                    'difference' => $actual_qty - $expected_qty, 'created_at' => now(), 'updated_at' => now()]);
+        }
+
+        // Get the saved counted items to pass into summary view
+        $counted_items = DB::table('counted_items')->where('count_id', $count_id)->get();
+
+        foreach ($counted_items as $counted_item) {
+            $counted_item->product = Product::find($counted_item->product_id);
+            $counted_item->expected_qty = DB::table('inventory_items')->where('inventory_id', $outlet)
+                ->where('product_id', $counted_item->product_id)->first()->qty;
+        }
+
+        return view('inventories.inventory-counts.summary')->with('inventory_count', $inventoryCount)->with('counted_items', $counted_items);
     }
 
     /**
