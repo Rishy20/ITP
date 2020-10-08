@@ -29,8 +29,8 @@
 
 }
 .barcode{
-    height: 75px;
-    width: 140px;
+    height: 90px;
+    width: 170px;
     text-align: center;
     background-color: white;
     padding: 10px;
@@ -45,8 +45,11 @@
 }
 .pr-details{
     font-size: 10px;
+    margin-top: 5px;
 
 }
+
+
 .barcode-price{
 
     font-weight: 800;
@@ -66,8 +69,8 @@
     text-align: right;
     font-size: 16px;
     position: relative;
-    top:-25px;
-    left:68px;
+    top:-15px;
+    left:83px;
 
 }
 .rs{
@@ -108,8 +111,10 @@
                                 <div class="ll">LEATHER LINE</div>
                                 <div class="kur">KURUNEGALA</div>
                             </div>
+
+
                             <div class="barcode-img">
-                                <?php echo DNS1D::getBarcodeHTML($data['barcode'], 'C128',1.2,40,'black', true); ?>
+                                <?php echo DNS1D::getBarcodeHTML($data['barcode'], 'C128',1.7,48,'black', true); ?>
                             </div>
 
                             <div class="pr-details">{{ $data['code'] }} {{ $data['name'] }}</div>

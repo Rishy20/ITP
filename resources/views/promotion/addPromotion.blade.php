@@ -75,9 +75,9 @@
             <div class="section-content"> {{-- Start of sectionContent--}}
                 {{-- Start of Form --}}
 
-                <form method="post" class="needs-validation" action="{{route('promotion.store')}}" novalidate>
+                {{-- <form method="post" class="needs-validation" action="{{route('promotion.store')}}" novalidate>
 
-                    @csrf
+                    @csrf --}}
                     <div class="row">
                         <label class="form-check-label font-weight-bold">
                             Type
@@ -89,7 +89,7 @@
                             <option value="cash" id="cash" >Cash</option>
                             <option value="percentage" id="percentage">Percentage</option>
                         </select>
-
+                    </div>
                         {{-- <div class="col-sm-5">
                             <input type="radio" name="promotionname" id="cash" placeholder="Promotion Name" required checked>
                             <label class="form-check-label" for="cash">
@@ -103,7 +103,7 @@
                             </label>
                         </div> --}}
 
-                    </div>
+
                     <div id="amount">
                         <div class="row">
                             <label class="form-check-label font-weight-bold pt-2">

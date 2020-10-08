@@ -16,7 +16,7 @@ class CreateUserRolesTable extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
             $table->string('Role_name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->boolean('addUser')->default(0);
             $table->boolean('viewUser')->default(0);
             $table->boolean('updateUser')->default(0);

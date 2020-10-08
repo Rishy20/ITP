@@ -79,13 +79,17 @@ Route::resource('purchase', 'PurchaseController');
 // Route::post('/addLoyalty','AddLoyaltyController@store');
 // Route::get('/editLoyalty','EditLoyaltyController@index')->name('editLoyalty');
 
-Route::get('/pos', 'POSController@index');
+Route::resource('/pos', 'POSController');
 Route::get('/login', function(){
     return view('login');
 });
+
 Route::get('/role', function(){
     return view('User.addUserRole');
 });
+Route::get('print/test', 'PrintController@test');
+
+
 
 Route::get('/barcode', 'BarcodeController@index')->name('barcode');
 Route::get('/barcodeprint', 'BarcodeController@createPDF')->name('printBarcode');
@@ -97,8 +101,16 @@ Route::resource('loyalty', 'LoyaltyController');
 
 Route::resource('vendorPayment', 'VendorPaymentController');
 Route::resource('salaryPayment', 'SalaryPaymentController');
+Route::get('voucherid', 'VoucherController@getLastIndex')->name('voucher.id');
+Route::get('serviceid', 'ServiceController@getLastIndex');
+Route::get('voucheramount/{id}', 'VoucherController@getVoucherAmount');
+Route::get('customermobile/{mobile}', 'POSController@getCustomer');
 
+Route::get('posproduct', 'POSController@returnProducts');
 Auth::routes();
+
+Route::get('/admin/login','Auth\LoginAdminController@index')->name('login.admin');
+Route::post('/admin/login','Auth\LoginAdminController@login')->name('login.admin');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('user', 'UserController');

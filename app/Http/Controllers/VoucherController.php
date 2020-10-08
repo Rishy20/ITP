@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
 class VoucherController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,6 +64,25 @@ class VoucherController extends Controller
     public function show(Voucher $voucher)
     {
         //
+    }
+
+    public function getLastIndex(){
+
+        $last = DB::table('vouchers')->latest()->first();
+        $voucherId = $last->id;
+        return $voucherId;
+    }
+
+    public function getVoucherAmount($id){
+
+        $voucher = Voucher::find($id);
+
+        if($voucher->exp > date("Y-m-d")){
+            return $voucher->amount;
+        }else{
+            return -1;
+        }
+
     }
 
     /**

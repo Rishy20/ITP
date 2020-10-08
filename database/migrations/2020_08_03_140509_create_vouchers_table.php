@@ -14,7 +14,7 @@ class CreateVouchersTable extends Migration
     public function up()
     {
         Schema::create('vouchers', function (Blueprint $table) {
-            $table->increments('id')->unique;
+            $table->id()->from(1000);
             $table->float('amount');
             $table->date('exp');
             $table->timestamps();
