@@ -22,6 +22,9 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
+            <a href="{{ route('employee.report') }}" target="_blank">Export Employees</a>
+            </div>
+            <div class="add-btn">
                 <a href="{{ route('employee.create') }}">Add Employee</a>
             </div>
             <thead class="table-head">

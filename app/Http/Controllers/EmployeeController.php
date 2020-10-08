@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class EmployeeController extends Controller
 {
@@ -16,7 +18,11 @@ class EmployeeController extends Controller
     public function index()
     {
         $employee = Employee::all();
+
+        //$employee =  DB::select('select fname, lname, nic, address, mobile, home, joined_date, target, salary, salary_type, commission from employees emp');
         return view ('Employee.show',compact('employee'));
+
+        
         //return Employee::all();
         //dd($request->all());
         //return view('employees.index');
@@ -140,5 +146,21 @@ class EmployeeController extends Controller
         $employee->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    public function createReport(Request $request){
+
+        $employee =  DB::select('select e.id,fname, lname, nic, address, mobile, home, joined_date, target, salary, salary_type, commission from employees e');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('employee',$employee);
+
+
+        $pdf =  PDF::loadView('Employee.employeeReport',$employee);
+
+        // // download PDF file with download method
+        return $pdf->stream('employee.pdf');
+        return view('Employee.employeeReport',compact('employee'));
     }
 }

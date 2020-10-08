@@ -8,6 +8,7 @@ use DateInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class AttendanceController extends Controller
 {
@@ -160,5 +161,22 @@ class AttendanceController extends Controller
         $attendance->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    public function createReport(Request $request){
+
+        //$attendance =  DB::select('select a.id, in, out from attendances a, fname e where a.fname = e.fname');
+        $attendance =  DB::select('select a.id,a.created_at,a.in,a.out,a.e_id,e.id as eid,e.fname,e.lname from employees e LEFT JOIN attendances a ON e.id = a.e_id');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('attendance',$attendance);
+
+
+        $pdf =  PDF::loadView('Attendance.attendanceReport',$attendance);
+
+        // // download PDF file with download method
+        return $pdf->stream('attendance.pdf');
+        return view('Attendance.attendanceReport',compact('attendance'));
     }
 }

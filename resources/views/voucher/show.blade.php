@@ -20,6 +20,9 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+        <div class="add-btn">
+            <a href="{{ route('voucher.report') }}" target="_blank">Export Vouchers</a>
+            </div>
             <div class="add-btn">
                 <a href="{{ route('voucher.create') }}">Add Voucher</a>
             </div>

@@ -22,12 +22,16 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+        <div class="add-btn">
+            <a href="{{ route('attendance.report') }}" target="_blank">Export Attendance</a>
+            </div>
             <div class="add-btn" >
                 <a href="#"  id="staffOut">Staff Out</a>
             </div>
             <div class="add-btn"  >
                 <a href="#" id="staffIn">Staff In</a>
             </div>
+            
             <thead class="table-head">
                 <tr>
 
