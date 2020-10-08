@@ -83,16 +83,20 @@ class InventoryCountController extends Controller
                     'difference' => $actual_qty - $expected_qty, 'created_at' => now(), 'updated_at' => now()]);
         }
 
-        // Get the saved counted items to pass into summary view
-        $counted_items = DB::table('counted_items')->where('count_id', $count_id)->get();
+        if ($inventory_count->completed) {
+            // Get the saved counted items to pass into summary view
+            $counted_items = DB::table('counted_items')->where('count_id', $inventory_count->id)->get();
 
-        foreach ($counted_items as $counted_item) {
-            $counted_item->product = Product::find($counted_item->product_id);
-            $counted_item->expected_qty = DB::table('inventory_items')->where('inventory_id', $outlet)
-                ->where('product_id', $counted_item->product_id)->first()->qty;
+            foreach ($counted_items as $counted_item) {
+                $counted_item->product = Product::find($counted_item->product_id);
+                $counted_item->expected_qty = DB::table('inventory_items')->where('inventory_id', $inventory_count->outlet)
+                    ->where('product_id', $counted_item->product_id)->first()->qty;
+            }
+
+            return view('inventories.inventory-counts.summary')->with('inventory_count', $inventory_count)->with('counted_items', $counted_items);
         }
 
-        return view('inventories.inventory-counts.summary')->with('inventory_count', $inventory_count)->with('counted_items', $counted_items);
+        return redirect('inventory-counts');
     }
 
     /**
@@ -175,16 +179,21 @@ class InventoryCountController extends Controller
                     'difference' => $actual_qty - $expected_qty, 'created_at' => now(), 'updated_at' => now()]);
         }
 
-        // Get the saved counted items to pass into summary view
-        $counted_items = DB::table('counted_items')->where('count_id', $count_id)->get();
+        if ($inventoryCount->completed) {
+            // Get the saved counted items to pass into summary view
+            $counted_items = DB::table('counted_items')->where('count_id', $inventoryCount->id)->get();
 
-        foreach ($counted_items as $counted_item) {
-            $counted_item->product = Product::find($counted_item->product_id);
-            $counted_item->expected_qty = DB::table('inventory_items')->where('inventory_id', $outlet)
-                ->where('product_id', $counted_item->product_id)->first()->qty;
+            foreach ($counted_items as $counted_item) {
+                $counted_item->product = Product::find($counted_item->product_id);
+                $counted_item->expected_qty = DB::table('inventory_items')->where('inventory_id', $inventoryCount->outlet)
+                    ->where('product_id', $counted_item->product_id)->first()->qty;
+            }
+
+            return view('inventories.inventory-counts.summary')->with('inventory_count', $inventoryCount)->with('counted_items', $counted_items);
         }
 
-        return view('inventories.inventory-counts.summary')->with('inventory_count', $inventoryCount)->with('counted_items', $counted_items);
+
+        return redirect('inventory-counts');
     }
 
     /**
@@ -223,6 +232,15 @@ class InventoryCountController extends Controller
         $inventory_count->completed = true;
         $inventory_count->save();
 
-        return redirect('inventory-counts');
+        // Get the saved counted items to pass into summary view
+        $counted_items = DB::table('counted_items')->where('count_id', $inventory_count->id)->get();
+
+        foreach ($counted_items as $counted_item) {
+            $counted_item->product = Product::find($counted_item->product_id);
+            $counted_item->expected_qty = DB::table('inventory_items')->where('inventory_id', $inventory_count->outlet)
+                ->where('product_id', $counted_item->product_id)->first()->qty;
+        }
+
+        return view('inventories.inventory-counts.summary')->with('inventory_count', $inventory_count)->with('counted_items', $counted_items);
     }
 }
