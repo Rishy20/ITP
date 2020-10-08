@@ -16,7 +16,7 @@ class CreateStockTransferItemsTable extends Migration
         Schema::create('stock_transfer_items', function (Blueprint $table) {
             $table->foreignId('transfer_id')->references('id')->on('stock_transfers')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->integer('qty')->default(0);
+            $table->integer('transfer_qty')->default(0);
             $table->timestamps();
             $table->primary(['transfer_id', 'product_id']);
         });

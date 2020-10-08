@@ -110,7 +110,40 @@ class StockTransferController extends Controller
      */
     public function edit(StockTransfer $stockTransfer)
     {
-        //
+        $inventories = Inventory::all();
+
+        $transfer_items = DB::table('stock_transfer_items')->join('products', 'stock_transfer_items.product_id', '=', 'products.id')
+            ->join('inventory_items', 'inventory_items.product_id', '=', 'stock_transfer_items.product_id')
+            ->where('inventory_id', '=', $stockTransfer->source)->where('transfer_id', '=', $stockTransfer->id)->get();
+
+        foreach ($transfer_items as $transfer_item) {
+            // Get destination inventory's quantity and add it to source inventory item as a property
+            $transfer_item->destination_qty = DB::table('inventory_items')
+                ->where('inventory_id', $stockTransfer->destination)->where('product_id', $transfer_item->id)
+                ->pluck('qty')->first();
+
+            // If destination qty is null (if product does not exist in destination inventory), assign 0
+            if (!$transfer_item->destination_qty)
+                $transfer_item->destination_qty = 0;
+        }
+
+        // Get inventory items
+        $inventory_items = DB::table('inventory_items')->join('products', 'inventory_items.product_id',
+            '=', 'products.id')->where('inventory_id', $stockTransfer->source)->get();
+
+        foreach ($inventory_items as $inventory_item) {
+            // Get destination inventory's quantity and add it to source inventory item as a property
+            $inventory_item->destination_qty = DB::table('inventory_items')
+                ->where('inventory_id', $stockTransfer->destination)->where('product_id', $inventory_item->id)
+                ->pluck('qty')->first();
+
+            // If destination qty is null (if product does not exist in destination inventory), assign 0
+            if (!$inventory_item->destination_qty)
+                $inventory_item->destination_qty = 0;
+        }
+
+        return view('inventories.stock-transfers.edit')->with('stock_transfer', $stockTransfer)
+            ->with('inventories', $inventories)->with('inventory_items', $inventory_items)->with('transfer_items', $transfer_items);
     }
 
     /**
@@ -122,7 +155,46 @@ class StockTransferController extends Controller
      */
     public function update(Request $request, StockTransfer $stockTransfer)
     {
-        //
+        // Validate inputs
+        $request->validate([
+            'reference' => 'required|max:20',
+            'transfer_items' => 'required'
+        ]);
+
+        // Get inputs from request
+        $transfer_items = $request->input('transfer_items');
+        $quantities = $request->input('quantities');
+
+        // Create stock transfer
+        $stockTransfer->reference = $request->input('reference');
+
+        if ($request->input('completed') == "on")
+            $stockTransfer->completed = true;
+
+        // Save stock transfer
+        $stockTransfer->save();
+
+        $transfer_id = $stockTransfer->id;
+
+        // Delete previous transfer items
+        DB::table('stock_transfer_items')->where('transfer_id', '=', $transfer_id)->delete();
+
+        for ($i = 0; $i < count($transfer_items); $i++) {
+            $product_id = $transfer_items[$i];
+            $transfer_qty = $quantities[$i];
+
+            // Save new transfer items
+            DB::table('stock_transfer_items')
+                ->insert(['transfer_id' => $transfer_id, 'product_id' => $product_id, 'transfer_qty' => $transfer_qty,
+                    'created_at' => now(), 'updated_at' => now()]);
+        }
+
+        // Do changes to stock quantities only if the transfer is completed
+        if ($stockTransfer->completed) {
+            $this->updateQuantities($stockTransfer);
+        }
+
+        return redirect('stock-transfers');
     }
 
     /**
@@ -138,7 +210,7 @@ class StockTransferController extends Controller
         return redirect('stock-transfers');
     }
 
-    public function updateQuantities(StockTransfer $stockTransfer) {
+    private function updateQuantities(StockTransfer $stockTransfer) {
         $source = $stockTransfer->source;
         $destination = $stockTransfer->destination;
 
