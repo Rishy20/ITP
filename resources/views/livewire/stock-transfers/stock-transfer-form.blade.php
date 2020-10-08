@@ -53,8 +53,8 @@
                                 @if(count($inventory_items) > 0)
                                     @foreach($inventory_items as $inventory_item)
                                         <tr style="cursor: pointer" class="inventory_item" onclick='addItem(@json($inventory_item))'>
-                                            <td class="text-left">{{ $inventory_item->product->pcode }}</td>
-                                            <td class="text-left">{{ $inventory_item->product->name }}</td>
+                                            <td class="text-left">{{ $inventory_item->pcode }}</td>
+                                            <td class="text-left">{{ $inventory_item->name }}</td>
                                             <td class="text-right">{{ $inventory_item->qty }}</td>
                                             <td class="text-right">{{ $inventory_item->destination_qty }}</td>
                                         </tr>
@@ -174,8 +174,8 @@
             item_trans_qty_input.setAttribute('style', 'width: 72px');
             item_trans_qty_input.stepUp(1);
 
-            item_code.innerHTML = item['product']['pcode'];
-            item_name.innerHTML = item['product']['name'];
+            item_code.innerHTML = item['pcode'];
+            item_name.innerHTML = item['name'];
             item_source_qty.innerHTML = item['qty'];
             item_dest_qty.innerHTML = item['destination_qty'];
 

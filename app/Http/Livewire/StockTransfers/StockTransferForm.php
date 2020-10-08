@@ -28,29 +28,20 @@ class StockTransferForm extends Component
 
 
     private function getInventoryItems() {
-        // Get inventory items and the corresponding product ids from database
-        $inventory_items = DB::table('inventory_items')->where('inventory_id', $this->source)->get();
-        $product_ids = $inventory_items->pluck('product_id');
-
-        // Get products matching the product ids and the search query
-        $products = Product::whereIn('id', $product_ids)->get();
+        // Get inventory items
+        $inventory_items = DB::table('inventory_items')->join('products', 'inventory_items.product_id',
+            '=', 'products.id')->where('inventory_id', $this->source)->get();
 
         // Assign each product to the corresponding inventory item (check for matching product ids)
         foreach ($inventory_items as $inventory_item) {
-            foreach ($products as $product) {
-                if ($inventory_item->product_id == $product->id) {
-                    $inventory_item->product = $product;  // Add product as a property to the inventory item
+            // Get destination inventory's quantity and add it to source inventory item as a property
+            $inventory_item->destination_qty = DB::table('inventory_items')
+                ->where('inventory_id', $this->destination)->where('product_id', $inventory_item->id)
+                ->pluck('qty')->first();
 
-                    // Get destination inventory's quantity and add it to source inventory item as a property
-                    $inventory_item->destination_qty = DB::table('inventory_items')
-                        ->where('inventory_id', $this->destination)->where('product_id', $product->id)
-                        ->pluck('qty')->first();
-
-                    // If destination qty is null (if product does not exist in destination inventory), assign 0
-                    if (!$inventory_item->destination_qty)
-                        $inventory_item->destination_qty = 0;
-                }
-            }
+            // If destination qty is null (if product does not exist in destination inventory), assign 0
+            if (!$inventory_item->destination_qty)
+                $inventory_item->destination_qty = 0;
         }
 
         return $inventory_items;
