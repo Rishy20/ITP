@@ -17,27 +17,27 @@
 
                 <div class="list-group" role="tablist">
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#sales" role="tab" onclick="categorySection('Sales')">
-                        <i class="fa fa-shopping-cart mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-shopping-cart"></i></div>
                         Sales
                     </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#inventory" role="tab" onclick="categorySection('Inventory')">
-                        <i class="fa fa-book mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-book"></i></div>
                         Inventory
                     </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#product" role="tab" onclick="categorySection('Product')">
-                        <i class="fa fa-tshirt mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-tshirt"></i></div>
                         Product
                     </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#customer" role="tab" onclick="categorySection('Customers')">
-                        <i class="fa fa-people-arrows mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-people-arrows"></i></div>
                         Customer
                     </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#payment" role="tab" onclick="categorySection('Payments')">
-                        <i class="fa fa-dollar-sign mr-4"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-dollar-sign"></i></div>
                         Payment
                     </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#custom" role="tab" onclick="categorySection('Custom Reports')">
-                        <i class="fa fa-cog mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-cog"></i></div>
                         Custom Reports
                     </a>
                 </div>
@@ -57,23 +57,23 @@
                 <div class="list-group category" id="sales" hidden>
                     <a class="list-group-item list-group-item-action" id="product-wise-sales" role="tabpanel"
                        href="#">
-                        <i class="fa fa-tshirt mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-tshirt"></i></div>
                         Product-wise Sales Report
                     </a>
                     <a class="list-group-item list-group-item-action" id="category-wise-sales" role="tabpanel" href="#">
-                        <i class="fa fa-list mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-list"></i></div>
                         Category-wise Sales Report
                     </a>
                     <a class="list-group-item list-group-item-action" id="supplier-wise-sales" role="tabpanel" href="#">
-                        <i class="fa fa-building mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-building"></i></div>
                         Supplier-wise Sales Report
                     </a>
                     <a class="list-group-item list-group-item-action" id="customer-wise-sales" role="tabpanel" href="#">
-                        <i class="fa fa-user mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-user"></i></div>
                         Customer-wise Sales Report
                     </a>
                     <a class="list-group-item list-group-item-action" id="salesman-wise-sales" role="tabpanel" href="#">
-                        <i class="fa fa-hospital-user mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-hospital-user"></i></div>
                         Salesman-wise Sales Report
                     </a>
                 </div>
@@ -83,25 +83,31 @@
                     {{-- Stock Transfer Summary Report --}}
                     <a class="list-group-item list-group-item-action" id="stock-transfer" role="tabpanel"
                        href="{{ route('reports.stock-transfer-summary') }}">
-                        <i class="fa fa-shuttle-van mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-shuttle-van"></i></div>
                         Stock Transfer Summary Report
+                    </a>
+                    {{-- Stock Valuation Report --}}
+                    <a class="list-group-item list-group-item-action" id="stock-valuation" role="tabpanel"
+                       href="{{ route('reports.stock-valuation') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-book-open"></i></div>
+                        Stock Valuation Report
                     </a>
                     {{-- Product-wise Stock Report --}}
                     <a class="list-group-item list-group-item-action" id="product-wise-stock" role="tabpanel"
                        href="{{ route('reports.product-wise-stock') }}">
-                        <i class="fa fa-tshirt mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-tshirt"></i></div>
                         Product-wise Stock Report
                     </a>
                     {{-- Category-wise Stock Report --}}
                     <a class="list-group-item list-group-item-action" id="category-wise-stock" role="tabpanel"
                        href="{{ route('reports.category-wise-stock') }}">
-                        <i class="fa fa-tags mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-tags"></i></div>
                         Category-wise Stock Report
                     </a>
                     {{-- Supplier-wise Stock Report --}}
                     <a class="list-group-item list-group-item-action" id="supplier-wise-stock" role="tabpanel"
                        href="{{ route('reports.supplier-wise-stock') }}">
-                        <i class="fa fa-store-alt mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-store-alt"></i></div>
                         Supplier-wise Stock Report
                     </a>
                 </div>
@@ -111,20 +117,20 @@
                     {{-- Zero Stock Product Report --}}
                     <a class="list-group-item list-group-item-action" id="zero-stock" role="tabpanel"
                        href="{{ route('reports.zero-stock-product') }}">
-                        <i class="fa fa-book mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-book"></i></div>
                         Zero Stock Product Report
                     </a>
                     {{-- Minus Stock Product Report --}}
                     <a class="list-group-item list-group-item-action" id="minus-stock" role="tabpanel"
                        href="{{ route('reports.minus-stock-product') }}">
-                        <i class="fa fa-book mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-book"></i></div>
                         Minus Stock Product Report
                     </a>
                 </div>
 
                 <div class="list-group category" id="payment" hidden>
                     <a class="list-group-item list-group-item-action" id="total-expense" role="tabpanel" href="#">
-                        <i class="fa fa-money-bill mr-3"></i>
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-money-bill"></i></div>
                         Total Expense Report
                     </a>
                 </div>

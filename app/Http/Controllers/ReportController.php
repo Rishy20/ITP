@@ -86,6 +86,23 @@ class ReportController extends Controller
         return $pdf->stream('stock-transfer-summary.pdf');
     }
 
+    public function stockValuation() {
+        $products = DB::table('products')->join('categories', 'products.catID', '=', 'categories.id')
+            ->select('products.*', DB::raw('categories.name AS category_name'))->get();
+
+        return view('reports.inventory.stock-valuation')->with('products', $products);
+    }
+
+    public function exportStockValuation() {
+        $products = DB::table('products')->join('categories', 'products.catID', '=', 'categories.id')
+            ->select('products.*', DB::raw('categories.name AS category_name'))->get();
+
+        view()->share('products', $products);
+        $pdf =  PDF::loadView('reports.inventory.export.stock-valuation', $products);
+
+        return $pdf->stream('stock-valuation.pdf');
+    }
+
     public function productWiseStock() {
         $products = Product::all();
 
