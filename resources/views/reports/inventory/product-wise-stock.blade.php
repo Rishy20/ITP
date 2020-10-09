@@ -22,7 +22,8 @@
                 <tr>
                     <th>Product Code</th>
                     <th>Product Name</th>
-                    <th>Stock Quantity</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +31,8 @@
                     <tr>
                         <td>{{ $product->pcode }}</td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->Qty }}</td>
+                        <td>{{ $product->category_name }}</td>
+                        <td class="text-right">{{ $product->Qty }}</td>
                     </tr>
                 @endforeach
             </tbody>

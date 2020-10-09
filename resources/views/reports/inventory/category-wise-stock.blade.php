@@ -21,14 +21,14 @@
             <thead class="table-head">
                 <tr>
                     <th>Category</th>
-                    <th>Stock Quantity</th>
+                    <th>Quantity</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($categories as $category)
                     <tr>
                         <td>{{ $category->name }}</td>
-                        <td>{{ $category->qty }}</td>
+                        <td class="text-right">{{ $category->qty }}</td>
                     </tr>
                 @endforeach
             </tbody>

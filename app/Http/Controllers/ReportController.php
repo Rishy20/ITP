@@ -104,13 +104,16 @@ class ReportController extends Controller
     }
 
     public function productWiseStock() {
-        $products = Product::all();
+        $products = DB::table('products')->join('categories', 'products.catID', '=', 'categories.id')
+            ->select('products.*', DB::raw('categories.name AS category_name'))->get();
 
         return view('reports.inventory.product-wise-stock')->with('products', $products);
     }
 
     public function exportProductWiseStock() {
-        $products = Product::all();
+        $products = DB::table('products')->join('categories', 'products.catID', '=', 'categories.id')
+            ->select('products.*', DB::raw('categories.name AS category_name'))->get();
+
         view()->share('products', $products);
         $pdf =  PDF::loadView('reports.inventory.export.product-wise-stock', $products);
 

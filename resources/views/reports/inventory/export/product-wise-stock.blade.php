@@ -114,14 +114,16 @@
             <tr class="table-head">
                 <th>Product Code</th>
                 <th>Product Name</th>
-                <th>Stock Quantity</th>
+                <th>Category</th>
+                <th>Quantity</th>
             </tr>
             <tbody>
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->pcode }}</td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->Qty }}</td>
+                        <td>{{ $product->category_name }}</td>
+                        <td style="text-align: right">{{ $product->Qty }}</td>
                     </tr>
                 @endforeach
             </tbody>
