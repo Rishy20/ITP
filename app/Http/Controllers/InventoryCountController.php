@@ -227,6 +227,9 @@ class InventoryCountController extends Controller
                 DB::table('inventory_items')->where('inventory_id', $inventory_count->outlet)
                     ->where('product_id', $counted_item->product_id)->update(['qty' => $counted_item->actual_qty]);
             }
+
+            // Adjust overall quantity value in product table
+            DB::table('products')->where('id', $counted_item->product_id)->increment('Qty', $counted_item->difference);
         }
 
         return redirect('inventory-counts');
