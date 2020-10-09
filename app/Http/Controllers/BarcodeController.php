@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
 class BarcodeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function index(){
         return view('Barcode.selectProducts');
     }
