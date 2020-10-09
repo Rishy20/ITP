@@ -112,15 +112,15 @@
         <table class="all-table table-striped">
 
             <tr class="table-head">
-                <th>Product Name</th>
                 <th>Product Code</th>
+                <th>Product Name</th>
                 <th>Stock Quantity</th>
             </tr>
             <tbody>
                 @foreach($products as $product)
                     <tr>
-                        <td>{{ $product->name }}</td>
                         <td>{{ $product->pcode }}</td>
+                        <td>{{ $product->name }}</td>
                         <td>{{ $product->Qty }}</td>
                     </tr>
                 @endforeach
