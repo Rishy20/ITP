@@ -24,17 +24,17 @@
                         <i class="fa fa-book mr-3"></i>
                         Inventory
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#payments" role="tab" onclick="categorySection('Payments')">
-                        <i class="fa fa-dollar-sign mr-4"></i>
-                        Payments
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#product" role="tab" onclick="categorySection('Product')">
+                        <i class="fa fa-tshirt mr-3"></i>
+                        Product
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#customers" role="tab" onclick="categorySection('Customers')">
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#customer" role="tab" onclick="categorySection('Customers')">
                         <i class="fa fa-people-arrows mr-3"></i>
-                        Customers
+                        Customer
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#users" role="tab" onclick="categorySection('Users')">
-                        <i class="fa fa-user mr-3"></i>
-                        Users
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#payment" role="tab" onclick="categorySection('Payments')">
+                        <i class="fa fa-dollar-sign mr-4"></i>
+                        Payment
                     </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#custom" role="tab" onclick="categorySection('Custom Reports')">
                         <i class="fa fa-cog mr-3"></i>
@@ -105,7 +105,24 @@
                         Supplier-wise Stock Report
                     </a>
                 </div>
-                <div class="list-group category" id="payments" hidden>
+
+                {{-- Product Category --}}
+                <div class="list-group category" id="product" hidden>
+                    {{-- Zero Stock Product Report --}}
+                    <a class="list-group-item list-group-item-action" id="zero-stock" role="tabpanel"
+                       href="{{ route('reports.zero-stock-product') }}">
+                        <i class="fa fa-book mr-3"></i>
+                        Zero Stock Product Report
+                    </a>
+                    {{-- Minus Stock Product Report --}}
+                    <a class="list-group-item list-group-item-action" id="minus-stock" role="tabpanel"
+                       href="{{ route('reports.minus-stock-product') }}">
+                        <i class="fa fa-book mr-3"></i>
+                        Minus Stock Product Report
+                    </a>
+                </div>
+
+                <div class="list-group category" id="payment" hidden>
                     <a class="list-group-item list-group-item-action" id="total-expense" role="tabpanel" href="#">
                         <i class="fa fa-money-bill mr-3"></i>
                         Total Expense Report

@@ -138,4 +138,8 @@ Route::get('/reports/category-wise-stock', 'ReportController@categoryWiseStock')
 Route::get('/reports/export-category-wise-stock', 'ReportController@exportCategoryWiseStock')->name('reports.export-category-wise-stock');
 Route::get('/reports/supplier-wise-stock', 'ReportController@supplierWiseStock')->name('reports.supplier-wise-stock');
 Route::get('/reports/export-supplier-wise-stock', 'ReportController@exportSupplierWiseStock')->name('reports.export-supplier-wise-stock');
+Route::get('/reports/zero-stock-product', 'ReportController@zeroStockProduct')->name('reports.zero-stock-product');
+Route::get('/reports/export-zero-stock-product', 'ReportController@exportZeroStockProduct')->name('reports.export-zero-stock-product');
+Route::get('/reports/minus-stock-product', 'ReportController@minusStockProduct')->name('reports.minus-stock-product');
+Route::get('/reports/export-minus-stock-product', 'ReportController@exportMinusStockProduct')->name('reports.export-minus-stock-product');
 

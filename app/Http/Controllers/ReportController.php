@@ -139,4 +139,35 @@ class ReportController extends Controller
 
         return $pdf->stream('supplier-wise-stock.pdf');
     }
+
+
+    // Product Reports
+
+    public function zeroStockProduct() {
+        $products = Product::where('Qty', '=', 0)->get();
+
+        return view('reports.product.zero-stock-product')->with('products', $products);
+    }
+
+    public function exportZeroStockProduct() {
+        $products = Product::where('Qty', '=', 0)->get();
+        view()->share('products', $products);
+        $pdf =  PDF::loadView('reports.product.export.zero-stock-product', $products);
+
+        return $pdf->stream('zero-stock-product.pdf');
+    }
+
+    public function minusStockProduct() {
+        $products = Product::where('Qty', '<', 0)->get();
+
+        return view('reports.product.minus-stock-product')->with('products', $products);
+    }
+
+    public function exportMinusStockProduct() {
+        $products = Product::where('Qty', '<', 0)->get();
+        view()->share('products', $products);
+        $pdf =  PDF::loadView('reports.product.export.minus-stock-product', $products);
+
+        return $pdf->stream('minus-stock-product.pdf');
+    }
 }
