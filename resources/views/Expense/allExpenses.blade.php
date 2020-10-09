@@ -21,6 +21,9 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+            <div class="add-btn">
+                <a href="{{ route('expense.report') }}" target="_blank">Export Expense</a>
+            </div>
             <div class="add-btn"> {{-- Add button --}}
                 <a href="#" id="addexpense1">Add Expense</a> {{-- Enter the name of the add btn --}}
             </div>

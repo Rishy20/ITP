@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
+use PDF;
 class CategoryController extends Controller
 {
     /**
@@ -15,8 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
         $category= Category::all();
+
         return view ('Category.allCategory',compact('category'));
     }
 
@@ -97,5 +98,21 @@ class CategoryController extends Controller
         Session::put('message', 'Success!');
         return redirect()->back();
 
+    }
+
+    public function createReport(Request $request){
+
+        $cat =  DB::select('select c.name,c.description,count(catID) as count  from categories c , products p where p.catID = c.id group by p.catID ');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('cat',$cat);
+
+
+        $pdf =  PDF::loadView('Category.categoryReport',$cat);
+
+        // // download PDF file with download method
+        return $pdf->stream('categories.pdf');
+        return view('Category.categoryReport',compact('cat'));
     }
 }

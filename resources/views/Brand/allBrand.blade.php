@@ -21,8 +21,8 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route('brand.create') }}">Export Brands</a> {{-- Enter the name of the add btn --}}
+            <div class="add-btn">
+                <a href="{{ route('brand.report') }}" target="_blank">Export Brand</a>
             </div>
             <div class="add-btn"> {{-- Add button --}}
                 <a href="{{ route('brand.create') }}">Add Brand</a> {{-- Enter the name of the add btn --}}
@@ -31,7 +31,7 @@
 
                 <tr>
                     <th>Brand Name</th>
-                    <th>Brand Description</th>
+                    <th style="max-width: 600px; width: 600px">Brand Description</th>
                     <th>Action</th>
                 </tr>
             </thead>

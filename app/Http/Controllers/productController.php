@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class productController extends Controller
 {
@@ -23,6 +24,8 @@ class productController extends Controller
      */
     public function index()
     {
+
+
 
         $product =DB::select('select p.id,p.pcode,p.name,p.description,p.brand,p.catID,p.sellingPrice,p.costPrice,p.discount,p.Qty,v.first_name,v.last_name from products p, vendors v where p.supplierId = v.id ');
 
@@ -178,4 +181,21 @@ class productController extends Controller
 
         return redirect()->back();
     }
+
+    public function createReport(Request $request){
+
+        $product =  DB::select('select p.pcode ,p.name as pname ,c.name as cname,b.name  as bname ,p.Qty,v.size,v.color,p.costPrice,p.sellingPrice,ven.company_name from products p left join categories c on p.catID = c.id left join brands b on p.brand = b.id left join variants v on p.id = v.product_id left join vendors ven on p.supplierId = ven.id');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('pro',$product);
+
+
+        $pdf =  PDF::loadView('Product.productReport',$product);
+
+        // // download PDF file with download method
+        return $pdf->stream('products.pdf');
+        return view('Product.productReport',compact('pro'));
+    }
 }
+

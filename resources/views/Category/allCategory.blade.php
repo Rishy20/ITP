@@ -19,8 +19,8 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route('category.create') }}">Export Categories</a> {{-- Enter the name of the add btn --}}
+            <div class="add-btn">
+                <a href="{{ route('category.report') }}" target="_blank">Export Categories</a>
             </div>
             <div class="add-btn"> {{-- Add button --}}
                 <a href="{{ route('category.create') }}">Add Category</a> {{-- Enter the name of the add btn --}}
