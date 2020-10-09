@@ -14,7 +14,8 @@
         <hr>
     </div>
     <div class="section-content">
-        <form method="POST" action="{{ route('role.store') }}">
+        <form method="POST" action="{{ route('role.update',$role->id) }}">
+            @method('Patch')
             @csrf
             <div class="row">
                 <div class="col-md-2">

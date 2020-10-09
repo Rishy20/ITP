@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\Session;
 
 class POSController extends Controller
 {
+
+
+
+
+    public function __construct(){
+        $this->middleware('auth:pos');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -92,6 +100,9 @@ class POSController extends Controller
           $store_website = 'yourmart.com';
           $tax_percentage = 0;
           $discount = $request->discount;
+          $type = $request->type;
+          $amount = $request->amount;
+          $balance = $request->balance;
           $transaction_id = $saleId;
           $items = array();
           // Set items
@@ -175,6 +186,15 @@ class POSController extends Controller
 
           // Set Discount
           $printer->setDiscount($discount);
+
+          //Set Type
+          $printer->setType($type);
+
+          //Set Amount
+          $printer->setAmount($amount);
+
+          //Set Balance
+          $printer->setBalance($balance);
 
           // Calculate total
           $printer->calculateSubTotal();

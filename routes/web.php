@@ -76,11 +76,16 @@ Route::resource('purchase', 'PurchaseController');
 // Route::post('/addLoyalty','AddLoyaltyController@store');
 // Route::get('/editLoyalty','EditLoyaltyController@index')->name('editLoyalty');
 
-Route::resource('/pos', 'POSController');
+// Route::resource('/pos', 'POSController');
+
 Route::get('/login', function(){
     return view('login');
 });
-
+Route::get('poslogin', 'Auth\LoginPosController@index');
+Route::get('/pos',"POSController@index")->name('pos');
+Route::post('/pos',"POSController@store")->name('pos');
+Route::get('/pos/login',"Auth\LoginPosController@index")->name('pos.login');
+Route::post('/pos/login',"Auth\LoginPosController@login")->name('pos.login');
 Route::get('/role', function(){
     return view('User.addUserRole');
 });

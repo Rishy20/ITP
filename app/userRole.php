@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class userRole extends Model
 {
     protected $fillable = [
-      'Role_name','description','addUser','viewUser','updateUser','deleteUser',
+      'id','Role_name','description','addUser','viewUser','updateUser','deleteUser',
       'inactivateUser','addUserRole','viewUserRole','updateUserRole','deleteUserRole','addProduct',
       'viewProduct','updateProduct','deleteProduct','showCostPrice','editQuantity','editPrice','printbarcodes',
       'exportProducts','addStaff','viewStaff','updateStaff','deleteStaff','edit_staff_attendance','mark_staff_attendance',

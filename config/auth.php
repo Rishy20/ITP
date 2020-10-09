@@ -50,6 +50,11 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'pos' => [
+            'driver' => 'session',
+            'provider' => 'pos',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -75,6 +80,10 @@ return [
             'model' => App\User::class,
         ],
         'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
+        'pos' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],

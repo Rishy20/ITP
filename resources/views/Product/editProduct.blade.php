@@ -124,17 +124,18 @@
             </div>
             <div class="section-content">
                 <div class="row">
+                    @if($role->showCostPrice)
                     <div class="col">
-                        <input type="text" name="costPrice" id="cprice" value="{{ $p->costPrice }}"   class="form-control" placeholder="Cost Price" required />
+                        <input type="text" name="costPrice" id="cprice" value="{{ $p->costPrice }}"   class="form-control" placeholder="Cost Price" required  @if(!$role->editPrice)disabled @endif/>
                         <label class="float-label">Cost Price</label>
                         <div class="invalid-feedback">
                             Please enter Cost Price
                         </div>
-
-
                     </div>
+                    @endif
                     <div class="col">
-                        <input type="text" class="form-control" id="sprice" value="{{ $p->sellingPrice }}"   name="sellingPrice" placeholder="Selling Price" required>
+
+                        <input type="text" class="form-control" id="sprice" value="{{ $p->sellingPrice }}"   name="sellingPrice" placeholder="Selling Price" required @if(!$role->editPrice)disabled @endif>
                         <label class="float-label">Selling Price</label>
                         <div class="invalid-feedback">
                             Please enter a Selling Price
@@ -195,7 +196,11 @@
                 </div>
                 <div class="row qty-row">
                     <div class="col">
+                        @if($role->editQuantity)
                         <input type="text" name="Qty" class="form-control" value="{{ $p->Qty }}"  placeholder="Quantity" required/>
+                        @else
+                        <input type="text" name="Qty" class="form-control" value="{{ $p->Qty }}"  placeholder="Quantity" disabled/>
+                        @endif
                         <label class="float-label">Quantity</label>
                         <div class="invalid-feedback">
                             Please enter Quantity

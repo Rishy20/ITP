@@ -7,10 +7,13 @@ use App\Category;
 
 use App\Inventory;
 use App\Product;
+use App\User;
+use App\userRole;
 use App\Variant;
 use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -28,9 +31,17 @@ class productController extends Controller
     public function index()
     {
 
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        $role = userRole::find($user->roleId);
         $product =DB::select('select p.id,p.pcode,p.name,p.description,p.brand,p.catID,p.sellingPrice,p.costPrice,p.discount,p.Qty,v.first_name,v.last_name from products p, vendors v where p.supplierId = v.id ');
+        if($role->viewProduct){
+            return view('Product.allProduct',compact('product','role'));
+        }else{
+            return view('noaccess');
+        }
 
-        return view('Product.allProduct',compact('product'));
+
 
     }
 
@@ -49,7 +60,16 @@ class productController extends Controller
         $last = DB::table('products')->latest()->first();
         $barcode = $last->barcode+1;
 
-        return view('Product.addProduct',compact('cat','inv','brand','vendor','barcode'));
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        $role = userRole::find($user->roleId);
+
+        if($role->addProduct){
+            return view('Product.addProduct',compact('cat','inv','brand','vendor','barcode'));
+        }else{
+            return view('noaccess');
+        }
+
 
     }
 
@@ -149,7 +169,16 @@ class productController extends Controller
         $brand = Brand::all();
         $vendor = Vendor::all();
 
-        return view('Product.editProduct',compact('p','cat','inv','brand','vendor','inven','var'));
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        $role = userRole::find($user->roleId);
+
+        if($role->updateProduct){
+            return view('Product.editProduct',compact('p','cat','inv','brand','vendor','inven','var','role'));
+        }else{
+            return view('noaccess');
+        }
+
     }
 
     /**

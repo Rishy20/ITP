@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique()->nullable($value = false);
             $table->string('display_name')->nullable($value = false);
             $table->string('password')->nullable($value = false);
-            $table->integer('pin')->nullable($value = false);
+            $table->integer('pin')->nullable($value = false)->unique();
             $table->boolean('status')->default(1);
             $table->unsignedBigInteger('roleId');
             $table->foreign('roleId')->references('id')->on('user_roles')->cascadeOnDelete();

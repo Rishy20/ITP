@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\userRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -17,7 +21,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        // dd(Auth::user()->id);
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        $role = userRole::find($user->roleId);
+
+        if($role->viewDashboardStatistics){
+            return view('dashboard');
+        }else{
+            return view('noaccess');
+        }
+
     }
 
     /**

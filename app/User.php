@@ -2,14 +2,16 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\Authenticatable as AuthAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+
 class User extends Authenticatable
 {
     use Notifiable;
-    protected $guard = 'admin';
+    protected $guard = 'pos';
 
     /**
      * The attributes that are mass assignable.

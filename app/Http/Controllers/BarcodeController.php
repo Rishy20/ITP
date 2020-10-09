@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\User;
+use App\userRole;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use PDF;
 use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
@@ -16,7 +19,15 @@ class BarcodeController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        return view('Barcode.selectProducts');
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        $role = userRole::find($user->roleId);
+
+        if($role->printbarcodes){
+            return view('Barcode.selectProducts');
+        }else{
+            return view('noaccess');
+        }
     }
     public function show(){
 

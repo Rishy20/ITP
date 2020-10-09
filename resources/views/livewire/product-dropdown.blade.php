@@ -383,7 +383,7 @@
                 </div>
                 <div class="row mt-5">
                     <div class="col">
-                        <button class="payment-btn" wire:click="makeSale">Cash</button>
+                        <button class="payment-btn" id="cashbtn">Cash</button>
                     </div>
                     <div class="col">
                         <button class="payment-btn" id="cardbtn">Card</button>
@@ -403,7 +403,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Card Type</label>
-                            <select class="form-control">
+                            <select class="form-control" id="cardSelect">
                                 <option value="Visa">VISA</option>
                                 <option value="Master">Master Card</option>
                                 <option value="Amex">American Express</option>
@@ -413,9 +413,10 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Last 4 digits</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="text" id="cardDigits" class="form-control" />
                         </div>
                     </div>
+                    <button class="btn pay-model-btn">PAY</button>
                 </div>
                 <div class="row pay-options" id="voucherOptions">
                   {{-- <livewire:voucher-payment /> --}}
@@ -437,6 +438,7 @@
                         </div>
                     </div>
                 </div>
+                <button class="btn pay-model-btn">PAY</button>
                 </div>
                 <div class="pay-options" id="splitOptions">
                     <div class="row" id="method1">
@@ -454,7 +456,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Amount</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="text" name="amount"  id="method1Amount" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -465,7 +467,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Card Type</label>
-                            <select class="form-control">
+                            <select class="form-control" id="split1card">
                                 <option value="Visa">VISA</option>
                                 <option value="Master">Master Card</option>
                                 <option value="Amex">American Express</option>
@@ -475,7 +477,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Last 4 digits</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="text" name="amount" class="form-control" id="split1digits"/>
                         </div>
                     </div>
                 </div>
@@ -486,15 +488,15 @@
                   <div class="col">
                     <div class="form-group">
                         <label>Voucher Code</label>
-                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                        <input type="text" id="split1VoucherCode"  name="amount" class="form-control" />
                     </div>
 
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
-                        <div class="load-spinner">
+                        <input type="text" name="amount" id="split1VoucherAmount" class="form-control" disabled />
+                        <div class="load-spinner spinner1">
                             <div class="spinner-border text-secondary" role="status">
                                 <span class="sr-only">Loading...</span>
                               </div>
@@ -518,7 +520,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Amount</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="text" name="amount" id="method2Amount" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -528,7 +530,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Card Type</label>
-                            <select class="form-control">
+                            <select class="form-control"  id="split2card">
                                 <option value="Visa">VISA</option>
                                 <option value="Master">Master Card</option>
                                 <option value="Amex">American Express</option>
@@ -538,7 +540,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Last 4 digits</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="text" name="amount"  id="split2digits" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -548,15 +550,15 @@
                   <div class="col">
                     <div class="form-group">
                         <label>Voucher Code</label>
-                        <input type="text" id="voucherCode"  name="amount" class="form-control" />
+                        <input type="text" id="split2VoucherCode"  name="amount" class="form-control" />
                     </div>
 
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" name="amount" id="voucherAmount" class="form-control" disabled />
-                        <div class="load-spinner">
+                        <input type="text" name="amount" id="split2VoucherAmount" class="form-control" disabled />
+                        <div class="load-spinner spinner2">
                             <div class="spinner-border text-secondary" role="status">
                                 <span class="sr-only">Loading...</span>
                               </div>
@@ -565,7 +567,7 @@
                 </div>
                 </div>
             </div>
-
+            <button class="btn pay-model-btn">PAY</button>
 
                 </div>
 

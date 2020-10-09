@@ -63,7 +63,7 @@
                             <livewire:time />
                         </div>
                         <div class="header-user pos-header-user">
-                            <i class="fas fa-user-circle header-icon"></i> Rishard Akram
+                            <i class="fas fa-user-circle header-icon"></i> {{Auth::user()->display_name}}
                         </div>
                     </div>
                 </div>
@@ -150,10 +150,15 @@
             $('#payBtn').on('click', function() {
                 var t = $('#amnt-total').html(total);
 
+                if(arr.length == 0){
+                    alert("Please add Items")
+                }else if($('#adds').is(":visible")){
+                    alert("Please select a Salesman")
+                }else{
                 $('#posSubPay').toggleClass('block');
                 $('#fadeBgPay').toggleClass('block');
 
-
+                }
 
             });
             $('#amnt-tend').on('keyup',function(){
@@ -368,12 +373,84 @@
             updateStats();
         });
 
+        $('#cashbtn').click(function(){
 
-            $('#payBtn1').click(function(){
+            if($("#amnt-tend").val().length == 0){
+                alert("Please enter an amount ");
+            }else{
+                var type = "Cash";
+                var amountTend = $("#amnt-tend").val();
+                var balance = $("#balance").html();
+                printBill(type,amountTend,balance);
+            }
+        });
+        $('#cardOptions .pay-model-btn').click(function(){
+            if($('#cardDigits').val() == ''){
+                alert("Please enter the last 4 digits of the card");
+            }else{
+                var type = $('#cardSelect').val();
+                var amountTend = $("#amnt-total").html();
+                var balance = 0;
+                printBill(type,amountTend,balance);
+            }
+        });
+        $('#voucherOptions .pay-model-btn').click(function(){
+            if($('#voucherCode').val() == ''){
+                alert("Please enter the voucher code");
+            }else if(isNaN($('#voucherAmount').val())){
+                alert("Invalid Voucher code");
+            }else{
+                var type = "Voucher "+$('#voucherCode').val();
+                var amountTend = $('#voucherAmount').val();
+                var balance = $("#balance").html();
+                printBill(type,amountTend,balance);
+            }
+        });
 
-                if($('#adds').is(":visible")){
-                    alert("Please select a Salesman")
-                }else{
+        $('#splitOptions .pay-model-btn').click(function(){
+
+            var method1 = $('#pay-method1').val();
+            var method2 = $('#pay-method2').val();
+            var m1Amount = $('#method1Amount').val();
+            var m2Amount = $('#method2Amount').val();
+            var type = "split";
+            var card1,digits1,vc1,va1,card2,digits2,vc2,va2
+
+
+
+            if($("#pay-method1 #card").is(':selected')){
+                card1 = $('#split1card').val();
+                digits1 = $('#split2digits').val();
+
+            }
+            if($("#pay-method1 #voucherSelect").is(':selected')){
+                vc1 = $("#split1VoucherCode").val();
+                va1 = $("#split1VoucherAmount").val();
+            }
+
+
+            if($("#pay-method2 #cash").is(':selected')){
+                $('#method2Amount').removeAttr('disabled');
+            }
+            if($("#pay-method2 #card").is(':selected')){
+                card2 = $('#split2card').val();
+                digits2 = $('#split2digits').val();
+
+            }
+            if($("#pay-method2 #voucherSelect").is(':selected')){
+                vc2 = $("#split2VoucherCode").val();
+                va2 = $("#split2VoucherAmount").val();
+            }
+
+        })
+
+
+
+
+
+           function printBill(typ,amnt,bal){
+
+
 
                 let items = JSON.stringify(arr);
                 let vou = JSON.stringify(voucher)
@@ -381,6 +458,9 @@
                 let staff = emp;
                 let tot = total;
                 let disc = discount;
+                let type = typ;
+                let amount = amnt;
+                let balance = bal;
                 let _token   = $('meta[name="csrf-token"]').attr('content');
                 updateProductSearchQuantity(items);
                 $("tr").remove(".item-table-row");
@@ -394,6 +474,11 @@
                         $('#cus').hide();
                         cus = 0;
                         emp = 0;
+                        $("#amnt-total").html('');
+                        $("#amnt-tend").val('');
+                        $("#balance").html('');
+                        $('#posSubPay').removeClass('block');
+                         $('#fadeBgPay').removeClass('block');
 
                 $.ajax({
                     url:"/pos",
@@ -405,6 +490,9 @@
                         total:tot,
                         discount:disc,
                         voucher:vou,
+                        type:type,
+                        amount:amount,
+                        balance:balance,
                         _token:_token
                     },
                     success:function(response){
@@ -423,9 +511,9 @@
             //     updateProductSearchQuantity(data);
             // });
 
-            }
 
-            });
+
+            }
 
             $('#posSearch').submit(function(e){
                 e.preventDefault();
@@ -1083,7 +1171,9 @@ $('#cardbtn').click(function(){
     $('#cardOptions').toggle();
     $('#voucherOptions').hide();
     $('#splitOptions').hide();
-    $('.pay-model-btn').toggle();
+    $('#cardOptions .pay-model-btn').toggle();
+    $('#voucherOptions .pay-model-btn').hide();
+    $('#splitOptions .pay-model-btn').hide();
     $('#cardOptions2').hide();
     $('#voucherOptions2').hide();
     $('#cardOptions1').hide();
@@ -1093,7 +1183,9 @@ $('#voucherbtn').click(function(){
     $('#cardOptions').hide();
     $('#voucherOptions').toggle();
     $('#splitOptions').hide();
-    $('.pay-model-btn').toggle();
+    $('#cardOptions .pay-model-btn').hide();
+    $('#splitOptions .pay-model-btn').hide();
+    $('#voucherOptions .pay-model-btn').toggle();
     $('#cardOptions2').hide();
     $('#voucherOptions2').hide();
     $('#cardOptions1').hide();
@@ -1116,7 +1208,7 @@ $('#splitbtn').click(function(){
     $('#voucherOptions2').hide();
     $('#cardOptions1').hide();
     $('#voucherOptions1').hide();
-    $('.pay-model-btn').toggle();
+    $('#splitOptions .pay-model-btn').toggle();
 })
 
 
@@ -1124,10 +1216,12 @@ $('#pay-method1').click(function(){
     if($("#pay-method1 #cash").is(':selected')){
         $('#cardOptions1').hide();
         $('#voucherOptions1').hide();
+        $('#method1Amount').removeAttr('disabled');
     }
     if($("#pay-method1 #card").is(':selected')){
         $('#voucherOptions1').hide();
         $('#cardOptions1').show();
+        $('#method1Amount').removeAttr('disabled');
     }
     if($("#pay-method1 #voucherSelect").is(':selected')){
         $('#voucherOptions1').show();
@@ -1138,10 +1232,12 @@ $('#pay-method2').click(function(){
     if($("#pay-method2 #cash").is(':selected')){
         $('#cardOptions2').hide();
         $('#voucherOptions2').hide();
+        $('#method2Amount').removeAttr('disabled');
     }
     if($("#pay-method2 #card").is(':selected')){
         $('#cardOptions2').show();
         $('#voucherOptions2').hide();
+        $('#method2Amount').removeAttr('disabled');
     }
     if($("#pay-method2 #voucherSelect").is(':selected')){
         $('#cardOptions2').hide();
@@ -1168,8 +1264,40 @@ cusMobile.addEventListener('keyup', () => {
         typingTimer = setTimeout(getCustomer, doneTypingInterval);
     }
 });
-//user is "finished typing," do something
+let m1Voucher = document.getElementById('split1VoucherCode');
+m1Voucher.addEventListener('keyup', () => {
+    clearTimeout(typingTimer);
+    if (m1Voucher.value) {
+        typingTimer = setTimeout(getm1VoucherAmount, doneTypingInterval);
+    }
+});
+let m2Voucher = document.getElementById('split2VoucherCode');
+m2Voucher.addEventListener('keyup', () => {
+    clearTimeout(typingTimer);
+    if (m2Voucher.value) {
+        typingTimer = setTimeout(getm2VoucherAmount, doneTypingInterval);
+    }
+});
 
+var m1Amnt = $('#method1Amount').val();
+var m2Amnt = $('#method2Amount').val();
+
+function updatePayBalance(){
+    var tot = +m1Amnt + +m2Amnt
+    $('#amnt-tend').val(tot);
+
+    var t = $('#amnt-total').html();
+    var balance = tot - t;
+    $('#balance').html(balance);
+}
+$('#method1Amount').keyup(function(){
+    m1Amnt = $('#method1Amount').val();
+    updatePayBalance();
+})
+$('#method2Amount').keyup(function(){
+    m2Amnt = $('#method2Amount').val();
+    updatePayBalance();
+})
 
 function getAmount(){
     var vcode = $('#voucherCode').val();
@@ -1196,6 +1324,7 @@ function getAmount(){
         $('.load-spinner').hide();
     });
 }
+
 function getCustomer(){
     var mobile = $('#cusMobile').val();
     var url = "customermobile/"+mobile;
@@ -1217,24 +1346,66 @@ function getCustomer(){
             alert("Customer not found");
         }
 
-
-        // if(data != -1){
-        //     $('#voucherAmount').val(data);
-        //     $('#amnt-tend').val(data);
-        //     $('.load-spinner').hide();
-        //     var amountTend = $('#amnt-tend').val();
-        //     var t = $('#amnt-total').html();
-        //     var balance = amountTend - t;
-        //     $('#balance').html(balance);
-        // }else{
-        //     alert("Voucher Expired!");
-        //     $('.load-spinner').hide();
-        // }
-
     }).fail(function(err,status){
         $('.load-spinner-cus').hide();
         $('.pay-customer').removeClass('opacity4');
         alert("Customer not found");
+    });
+}
+function getm1VoucherAmount(){
+    var vcode = $('#split1VoucherCode').val();
+    var url = "voucheramount/"+vcode;
+    console.log(url);
+    $('.spinner1').show();
+    $.get(url, function(data, status){
+
+        if(data != -1){
+            $('#split1VoucherAmount').val(data);
+            $('#method1Amount').val(data);
+            $('#method1Amount').attr('disabled','disabled');
+            m1Amnt = $('#method1Amount').val();
+            $('.spinner1').hide();
+            updatePayBalance();
+            // var amountTend = $('#amnt-tend').val();
+            // var t = $('#amnt-total').html();
+            // var balance = amountTend - t;
+            // $('#balance').html(balance);
+        }else{
+            alert("Voucher Expired!");
+            $('.load-spinner').hide();
+        }
+
+    }).fail(function(err,status){
+        $('#split1VoucherAmount').val('Voucher not Found');
+        $('.load-spinner').hide();
+    });
+}
+function getm2VoucherAmount(){
+    var vcode = $('#split2VoucherCode').val();
+    var url = "voucheramount/"+vcode;
+    console.log(url);
+    $('.spinner2').show();
+    $.get(url, function(data, status){
+
+        if(data != -1){
+            $('#split2VoucherAmount').val(data);
+            $('#method2Amount').val(data);
+            $('#method2Amount').attr('disabled','disabled');
+            $('.spinner2').hide();
+            m2Amnt = $('#method2Amount').val();
+            updatePayBalance();
+            // var amountTend = $('#amnt-tend').val();
+            // var t = $('#amnt-total').html();
+            // var balance = amountTend - t;
+            // $('#balance').html(balance);
+        }else{
+            alert("Voucher Expired!");
+            $('.load-spinner').hide();
+        }
+
+    }).fail(function(err,status){
+        $('#split2VoucherAmount').val('Voucher not Found');
+        $('.load-spinner').hide();
     });
 }
 

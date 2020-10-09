@@ -30,10 +30,15 @@
                     <th>Product code</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
-                    <th>C.Price</th>
+                    @if ($role->showCostPrice)
+                        <th>C.Price</th>
+                    @endif
                     <th>S.Price</th>
                     <th>Vendor</th>
-                    <th>Actions</th>
+                    @if ($role->updateProduct || $role->deleteProduct)
+                        <th>Actions</th>
+                    @endif
+
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +49,9 @@
                     <td>{{$i->pcode}}</td>
                     <td>{{$i->name}}</td>
                     <td>{{$i->Qty}}</td>
-                    <td>{{$i->costPrice}}</td>
+                    @if ($role->showCostPrice)
+                        <td>{{$i->costPrice}}</td>
+                    @endif
                     <td>{{$i->sellingPrice}}</td>
                     <td>{{$i->first_name." ".$i->last_name}}</td>
 
@@ -57,16 +64,21 @@
                         {{-- </label> --}}
                         {{-- End of toggle switch --}}
                     {{-- </td> --}}
+                    @if ($role->updateProduct || $role->deleteProduct)
                     <td class="action-icon">
+                        @if($role->updateProduct)
                         <a href="{{ route('product.edit',$i->id) }}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
+                        @endif
+                        @if ($role->deleteProduct)
                         {{-- Delete Icon --}}
                         <button type="submit" id="dlt-btn{{ $i->id }}" class="dlt-btn"><i class="fas fa-trash-alt"></i></button>
                         <form method="POST" class="dlt-form" id="dlt-form{{ $i->id }}" action="{{ route('product.destroy',$i->id) }}">
                             @method('DELETE')
                             @csrf
-
                         </form>
+                        @endif
                     </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
