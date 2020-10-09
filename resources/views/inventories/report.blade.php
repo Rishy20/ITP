@@ -109,11 +109,6 @@
         <div class="pg-title">
             INVENTORY DETAIL REPORT
         </div>
-        <div class="period">
-            <span class="from">20-09-2020 &nbsp;</span>
-            <span class="to">to &nbsp;</span>
-            <span class="to_date">20-10-2020</span>
-        </div>
         <hr class="hr">
         <table class="all-table table-striped">
 
@@ -125,12 +120,12 @@
             </tr>
             <tbody>
                 @foreach($inventories as $inventory)
-                <tr>
-                    <td>{{ $inventory->name }}</td>
-                    <td>{{ $inventory->address }}</td>
-                    <td>{{ $inventory->qty }}</td>
-                    <td>{{ $inventory->created_at }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ $inventory->name }}</td>
+                        <td>{{ $inventory->address }}</td>
+                        <td>{{ $inventory->qty }}</td>
+                        <td>{{ $inventory->created_at }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
