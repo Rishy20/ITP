@@ -4,6 +4,9 @@
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Add Category</div>
+    <div class="demo-btn">
+        Demo
+    </div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
@@ -26,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <textarea class="form-control" name="description" placeholder="Category Description"></textarea>
+                    <textarea id="description" class="form-control" name="description" placeholder="Category Description"></textarea>
                     <label class="float-label">Category Description</label>
                 </div>
             </div>
@@ -39,6 +42,18 @@
         </form>
         {{-- End of Form --}}
     </div> {{-- End  of sectionContent--}}
+    <script>
+
+$(".demo-btn").click(function(){
+        $("input[name='name']").val("Boots");
+        $("#description").val("A boot is a type of footwear which covers at least the foot and usually the ankle, and sometimes extends up to the knee or even the hip. They come in every imaginable variation of height, color, material and style. Most have a heel which is clearly distinguishable from the rest of the sole, even if the two are made of one piece.");
+
+    });
+
+
+    </script>
+
+
 </div> {{-- End  of section--}}
 
 @endsection

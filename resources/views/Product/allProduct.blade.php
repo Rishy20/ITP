@@ -31,6 +31,7 @@
                     <th>Product Name</th>
                     <th>Quantity</th>
                     <th>C.Price</th>
+
                     <th>S.Price</th>
                     <th>Vendor</th>
                     <th>Actions</th>

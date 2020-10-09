@@ -4,6 +4,9 @@
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Add Products</div>
+    <div class="demo-btn">
+        Demo
+    </div>
 </div>
 <form method="post" class="needs-validation" action="{{route('product.store')}}" novalidate>
     <div class="row">
@@ -40,7 +43,7 @@
 
                     <div class="row">
                         <div class="col">
-                            <textarea name="description" class="form-control" rows="5" placeholder="Description"></textarea>
+                            <textarea id="description" name="description" class="form-control" rows="5" placeholder="Description"></textarea>
                             <label class="float-label">Description</label>
                         </div>
                     </div>
@@ -63,7 +66,7 @@
                                 <label class="br-label">Brand</label>
 
 
-                                <select class="form-control br-select" name="brand" required>
+                                <select id="brand" class="form-control br-select" name="brand" required>
                                     <option value="" disabled selected hidden>Select a Brand</option>
                                     @foreach($brand as $b)
                                     <option value="{{$b->id}}">{{$b->name}} </option>
@@ -81,7 +84,7 @@
                                 <label class="cat-label">Category</label>
 
 
-                                <select class="form-control cat-select" name="catID" required>
+                                <select id="cat" class="form-control cat-select" name="catID" required>
                                     <option value="" disabled selected hidden>Select a Category</option>
                                     @foreach($cat as $i)
                                     <option value="{{$i->id}}">{{$i->name}} </option>
@@ -97,7 +100,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label class="sup-label">Supplier</label>
-                                <select class="form-control sup-select" name="supplierId" required>
+                                <select id="sup" class="form-control sup-select" name="supplierId" required>
                                     <option value="" disabled selected hidden>Select a Supplier</option>
                                     @foreach($vendor as $v)
                                     <option value="{{$v->id}}">{{$v->first_name}}</option>
@@ -171,7 +174,7 @@
                         <div class="col">
                             <div class="form-group inv-col">
                                 <label class="inv-label">Inventory</label>
-                                <select name="inventory" class="form-control inv-select" required>
+                                <select id="inventory" name="inventory" class="form-control inv-select" required>
                                     <option value="" disabled selected hidden>Select an Inventory</option>
                                     @foreach($inv as $i)
                                     <option value="{{$i->id}}">{{$i->name}} </option>
@@ -267,6 +270,35 @@
             var profit = (sprice - discount) - cprice;
             $('#profit').val(profit);
         });
+
+
+
+
+
+$(".demo-btn").click(function(){
+        $("input[name='name']").val("Nike pro");
+        $("input[name='pcode']").val("IGN2000");
+        $("#description").val("Nike Pro is our iconic innovation that uses pressurized air in a durable, flexible membrane to provide lightweight cushioning. The air compresses on impact and then immediately returns to its original shape and volume, ready for the next impact.");
+        $("#brand").val("3");
+        $("#cat").val("22");
+        $("#sup").val("7");
+        $("input[name='costPrice']").val("5000");
+        $("input[name='sellingPrice']").val("6500");
+        $("input[name='discount']").val("500");
+        $("input[name='profit']").val("1000");
+        $("#inventory").val("5");
+
+        $("input[name='Qty']").val("20");
+        $("input[name='reorder_level']").val("5");
+
+
+
+    });
+
+
+
+
+
 
     </script>
 
