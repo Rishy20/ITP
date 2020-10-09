@@ -82,7 +82,7 @@
                 <div class="list-group category" id="inventory" hidden>
                     {{-- Stock Transfer Summary Report --}}
                     <a class="list-group-item list-group-item-action" id="stock-transfer" role="tabpanel"
-                       href="#">
+                       href="{{ route('reports.stock-transfer-summary') }}">
                         <i class="fa fa-shuttle-van mr-3"></i>
                         Stock Transfer Summary Report
                     </a>

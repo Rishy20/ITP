@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Inventory;
 use App\Product;
+use App\StockTransfer;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
@@ -26,9 +29,61 @@ class ReportController extends Controller
     // Inventory Reports
 
     public function stockTransferSummary() {
-        $products = Product::all();
+        $stock_transfers = DB::table('stock_transfers')->join('stock_transfer_items', 'stock_transfers.id', '=',
+            'stock_transfer_items.transfer_id')->groupBy('stock_transfers.id')
+            ->select('stock_transfers.*', DB::raw('SUM(stock_transfer_items.transfer_qty) AS units'))->get();
 
-        return view('reports.inventory.stock-transfer-summary');
+        foreach ($stock_transfers as $stock_transfer) {
+            $stock_transfer->updated_at = date('Y-m-d', strtotime($stock_transfer->updated_at));
+
+            $stock_transfer->source_name = Inventory::where('id', $stock_transfer->source)->pluck('name')->first();
+            $stock_transfer->dest_name = Inventory::where('id', $stock_transfer->destination)->pluck('name')->first();
+
+            if ($stock_transfer->completed)
+                $stock_transfer->status = "Received";
+            else
+                $stock_transfer->status = "Pending";
+        }
+
+        return view('reports.inventory.stock-transfer-summary')->with('stock_transfers', $stock_transfers);
+    }
+
+    public function exportStockTransferSummary(Request $request) {
+        // Validate inputs
+        $request->validate([
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
+
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $stock_transfers = StockTransfer::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        $items = DB::table('stock_transfer_items')->get();
+
+        foreach ($stock_transfers as $stock_transfer) {
+            $stock_transfer->source_name = Inventory::where('id', $stock_transfer->source)->pluck('name')->first();
+            $stock_transfer->dest_name = Inventory::where('id', $stock_transfer->destination)->pluck('name')->first();
+
+            if ($stock_transfer->completed)
+                $stock_transfer->status = "Received";
+            else
+                $stock_transfer->status = "Pending";
+
+            // Get total transfer units of each stock transfer and assign it as a property
+            $units = 0;
+            foreach ($items as $item) {
+                if ($item->transfer_id == $stock_transfer->id)
+                    $units += $item->transfer_qty;
+            }
+            $stock_transfer->units = $units;
+        }
+
+        view()->share(['stock_transfers' => $stock_transfers, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.inventory.export.stock-transfer-summary', [$stock_transfers, $start_date, $end_date]);
+
+        return $pdf->stream('stock-transfer-summary.pdf');
     }
 
     public function productWiseStock() {

@@ -130,7 +130,8 @@ Route::get('/inventory-report','InventoryController@createReport')->name('invent
 
 Route::get('/reports', 'ReportController@index')->name('reports.index');
 //Route::get('/reports/product-wise-sales', 'ReportController@productWiseSales')->name('reports.product-wise-sales');
-//Route::get('/reports/stock-transfer-summary', 'ReportController@stockTransferSummary')->name('reports.stock-transfer-summary');
+Route::get('/reports/stock-transfer-summary', 'ReportController@stockTransferSummary')->name('reports.stock-transfer-summary');
+Route::post('/reports/export-stock-transfer-summary', 'ReportController@exportStockTransferSummary')->name('reports.export-stock-transfer-summary');
 Route::get('/reports/product-wise-stock', 'ReportController@productWiseStock')->name('reports.product-wise-stock');
 Route::get('/reports/export-product-wise-stock', 'ReportController@exportProductWiseStock')->name('reports.export-product-wise-stock');
 Route::get('/reports/category-wise-stock', 'ReportController@categoryWiseStock')->name('reports.category-wise-stock');
