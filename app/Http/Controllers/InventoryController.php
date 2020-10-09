@@ -24,6 +24,19 @@ class InventoryController extends Controller
     {
         // Get all inventories from the database and pass them to inventory index view
         $inventories = Inventory::all();
+
+        // Assign total quantity of each inventory by getting the total of inventory items quantities
+        foreach ($inventories as $inventory) {
+            $items = DB::table('inventory_items')->where('inventory_id', $inventory->id)->get();
+            $total_qty = 0;
+
+            foreach ($items as $item) {
+                $total_qty += $item->qty;
+            }
+
+            $inventory->qty = $total_qty;
+        }
+
         return view('inventories.index')->with('inventories', $inventories);
     }
 
