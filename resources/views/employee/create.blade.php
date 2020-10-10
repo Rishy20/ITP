@@ -2,9 +2,13 @@
 @section('content')
 
 <div class="pg-heading">
-    <a href="{{ route('employee.index') }}"<i class="fa fa-arrow-left pg-back"></i></a>
+    <a href="{{ route('employee.index') }}"><i class="fa fa-arrow-left pg-back"></i></a>
     <div class="pg-title">Add Employees</div>
+    <div class="demo-btn">
+            Demo
+        </div>
 </div>
+
 <form method="post" class="needs-validation" action=" {{route('employee.store')}}" novalidate>
 <div class="section"> {{-- Start of Section--}}
     <div class="section-title">
@@ -143,5 +147,37 @@
         {{-- End of Form --}}
     </div> {{-- End  of sectionContent--}}
 </div> {{-- End  of section--}}
+
+<script>
+
+    //Demo Button
+
+    $(".demo-btn").click(function(){
+        $("input[name='fname']").val("Jayani");
+        $("input[name='lname']").val("Wickramathilaka");
+        $("input[name='nic']").val("985830460V");
+        $("input[name='address']").val("Kurunegala");
+        $("input[name='mobile']").val("0715647700");
+        $("input[name='home']").val("0372278970");
+        //$("input[name='birthday']").val(getDate());
+        $("input[name='joined_date']").val("25/05/2015");
+        $("input[name='target']").val("50 sales");
+        $("input[name='salary']").val("1500.00");
+        $("input[name='salary_type']").val("daily");
+        $("input[name='commission']").val("0.5");
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+ </script>
 
 @endsection
