@@ -47,7 +47,8 @@
                         <tbody>
                             @if(count($inventory_items) > 0)
                                 @foreach($inventory_items as $inventory_item)
-                                    <tr style="cursor: pointer" class="inventory_item" onclick='countItem(@json($inventory_item))'>
+                                    <tr style="cursor: pointer" class="inventory_item" onclick='countItem(@json($inventory_item))'
+                                        id="{{ "row_".$inventory_item->product_id }}">
                                         <td class="text-left">{{ $inventory_item->pcode }}</td>
                                         <td class="text-left">{{ $inventory_item->name }}</td>
                                         <td class="text-right">{{ $inventory_item->qty }}</td>
@@ -117,6 +118,8 @@
     let inventory_items_table;
 
     function countItem(item) {
+        $('#row_' + item['product_id']).toggle("highlight");
+
         let exist = false;
 
         if (counted_items.length > 0) {
@@ -131,8 +134,6 @@
                 counted_items.push(item);
                 addTableRow(item);
                 addHiddenInput(item);
-            } else {
-                document.getElementById('actual_qty_' + item['product_id']).stepUp(1);
             }
         } else {
             counted_items.push(item);
@@ -150,6 +151,9 @@
         let item_name = document.createElement('td');
         let item_expected_qty = document.createElement('td');
         let item_actual_qty = document.createElement('td');
+        let remove_btn = document.createElement('button');
+
+        tr.setAttribute('id', 'added_row_' + item['product_id']);
 
         item_expected_qty.setAttribute('class', 'text-right');
         item_actual_qty.setAttribute('class', 'text-right');
@@ -168,7 +172,14 @@
         item_name.innerHTML = item['name'];
         item_expected_qty.innerHTML = item['qty'];
 
+        remove_btn.setAttribute('class', 'btn btn-danger btn-sm ml-3');
+        remove_btn.setAttribute('onclick', 'removeItem(JSON.parse(\'' + JSON.stringify(item) + '\'))');
+        let cross_icon = document.createElement('i');
+        cross_icon.setAttribute('class', 'fa fa-times');
+
+        remove_btn.appendChild(cross_icon);
         item_actual_qty.appendChild(item_actual_qty_input);
+        item_actual_qty.appendChild(remove_btn);
         tr.append(item_code, item_name, item_expected_qty, item_actual_qty);
         counted_items_tbody.appendChild(tr);
     }
@@ -184,6 +195,25 @@
         form.appendChild(counted_item_ids);
     }
 
+    function removeItem(item) {
+        $('#row_' + item['product_id']).toggle("highlight");
+
+        // Remove existing hidden input
+        $('input[name="counted_items[]"][value="' + item['product_id'] + '"]').remove();
+
+        // Remove item from transfer items table
+        $('#added_row_' + item['product_id']).remove();
+
+        // Remove item from transfer_items array
+        for (let i = 0; i < counted_items.length; i++) {
+            if (counted_items[i]['product_id'] === item['product_id'])
+                counted_items.splice(i, 1);
+        }
+
+        if (counted_items.length === 0)
+            document.getElementById('no_items_added').removeAttribute('hidden');
+    }
+
     $(document).ready(function () {
         inventory_items_table = $('#inventory_items').DataTable({
             "order": [], "dom": '<"top"f><t><"bottom"lip>',
@@ -197,6 +227,7 @@
         for (let i = 0; i < counted_items.length; i++) {
             addTableRow(counted_items[i]);
             addHiddenInput(counted_items[i]);
+            $('#row_' + counted_items[i]['product_id']).hide();
         }
     })
 </script>

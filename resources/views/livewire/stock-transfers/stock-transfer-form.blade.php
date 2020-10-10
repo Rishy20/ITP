@@ -52,7 +52,8 @@
                             <tbody>
                                 @if(count($inventory_items) > 0)
                                     @foreach($inventory_items as $inventory_item)
-                                        <tr style="cursor: pointer" class="inventory_item" onclick='addItem(@json($inventory_item))'>
+                                        <tr style="cursor: pointer" class="inventory_item" onclick='addItem(@json($inventory_item))'
+                                            id="{{ "row_".$inventory_item->product_id }}">
                                             <td class="text-left">{{ $inventory_item->pcode }}</td>
                                             <td class="text-left">{{ $inventory_item->name }}</td>
                                             <td class="text-right">{{ $inventory_item->qty }}</td>
@@ -94,7 +95,7 @@
                                     <th class="table-head">Product Name</th>
                                     <th class="table-head">Transfer Qty</th>
                                     <th class="table-head">Source Qty</th>
-                                    <th class="table-head">Destination Qty</th>
+                                    <th class="table-head">Dest. Qty</th>
                                 </tr>
                             </thead>
                             <tbody id="trans-items">
@@ -124,6 +125,8 @@
         let inventory_items_table;
 
         function addItem(item) {
+            $('#row_' + item['product_id']).toggle("highlight");
+
             let exist = false;
 
             if (transfer_items.length > 0) {
@@ -138,8 +141,6 @@
                     transfer_items.push(item);
                     addTableRow(item);
                     addHiddenInput(item);
-                } else {
-                    document.getElementById('trans_qty_' + item['product_id']).stepUp(1);
                 }
             } else {
                 transfer_items.push(item);
@@ -158,6 +159,9 @@
             let item_trans_qty = document.createElement('td');
             let item_source_qty = document.createElement('td');
             let item_dest_qty = document.createElement('td');
+            let remove_btn = document.createElement('button');
+
+            tr.setAttribute('id', 'added_row_' + item['product_id']);
 
             item_trans_qty.setAttribute('class', 'text-right');
             item_source_qty.setAttribute('class', 'text-right');
@@ -179,6 +183,13 @@
             item_source_qty.innerHTML = item['qty'];
             item_dest_qty.innerHTML = item['destination_qty'];
 
+            remove_btn.setAttribute('class', 'btn btn-danger btn-sm ml-3');
+            remove_btn.setAttribute('onclick', 'removeItem(JSON.parse(\'' + JSON.stringify(item) + '\'))');
+            let cross_icon = document.createElement('i');
+            cross_icon.setAttribute('class', 'fa fa-times');
+
+            remove_btn.appendChild(cross_icon);
+            item_dest_qty.appendChild(remove_btn);
             item_trans_qty.appendChild(item_trans_qty_input);
             tr.append(item_code, item_name, item_trans_qty, item_source_qty, item_dest_qty);
             trans_items_tbody.appendChild(tr);
@@ -193,6 +204,25 @@
             trans_item_ids.setAttribute('value', item['product_id']);
 
             form.appendChild(trans_item_ids);
+        }
+
+        function removeItem(item) {
+            $('#row_' + item['product_id']).toggle("highlight");
+
+            // Remove existing hidden input
+            $('input[name="transfer_items[]"][value="' + item['product_id'] + '"]').remove();
+
+            // Remove item from transfer items table
+            $('#added_row_' + item['product_id']).remove();
+
+            // Remove item from transfer_items array
+            for (let i = 0; i < transfer_items.length; i++) {
+                if (transfer_items[i]['product_id'] === item['product_id'])
+                    transfer_items.splice(i, 1);
+            }
+
+            if (transfer_items.length === 0)
+                document.getElementById('no_items_added').removeAttribute('hidden');
         }
 
         $(document).ready(function () {
