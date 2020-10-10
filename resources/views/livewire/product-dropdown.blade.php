@@ -774,5 +774,115 @@
    </div>
    {{-- End of Add Expense Model --}}
 
+   {{-- Staff In Attendance --}}
+<div class="full-pg" id="fadeBg1"></div>
+<div class="pos-sub-display emp-attendance" id="staffInModel">
+
+    <div class="pos-sub-display-title">
+        <span class="title">Staff In</span>
+        <button class="close-btn" id="closeBtn1"><i class="fas fa-window-close"></i></button>
+    </div>
+
+    <div class="pos-sub-display-content">
+
+        <form method="POST" id="staffInForm" class="needs-validation" action="{{route('attendance.store')}}" novalidate>
+            @csrf
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="pt-2">
+                        Arrival Time
+                    </h6>
+                </div>
+                <div class="col-md-8">
+                    @php
+                        date_default_timezone_set('Asia/Colombo');
+                    @endphp
+                    <input type="time" name="arrival" class="form-control " value="{{ date('H:i') }}" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="pt-3">
+                        Select Employees
+                    </h6>
+                </div>
+                <div class="col-md-8">
+                    @foreach($employee as $e)
+                    <div class="form-check permission-check emp-check">
+                        <input name="emp[{{ $e->id }}]" class="form-check-input" type="checkbox" value="1" id="emp_name_{{ $e->id }}">
+                        <label class="form-check-label" for="emp_name_{{ $e->id }}">
+                            {{ $e->fname." ".$e->lname }}
+                        </label>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+            <div class="action-btn-row mt-4">
+
+                <input type="submit" class="add-sub-btn" value="Mark" />
+
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- End of Staff In Attendance --}}
+
+{{-- Staff Out Attendance --}}
+<div class="full-pg" id="fadeBg2"></div>
+<div class="pos-sub-display emp-attendance" id="staffOutModel">
+
+    <div class="pos-sub-display-title">
+        <span class="title">Staff Out</span>
+        <button class="close-btn" id="closeBtn2"><i class="fas fa-window-close"></i></button>
+    </div>
+
+    <div class="pos-sub-display-content">
+
+        <form method="POST" class="needs-validation" action="{{route('attendance.markout')}}" novalidate>
+            @csrf
+            @method('patch')
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="pt-2">
+                        Time
+                    </h6>
+                </div>
+                <div class="col-md-8">
+                    @php
+                        date_default_timezone_set('Asia/Colombo');
+                    @endphp
+                    <input type="time" name="time" class="form-control " value="{{ date('H:i') }}" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h6 class="pt-3">
+                        Select Employees
+                    </h6>
+                </div>
+                <div class="col-md-8">
+                    @foreach($employee as $e)
+                    <div class="form-check permission-check emp-check">
+                        <input name="emp[{{ $e->id }}]" class="form-check-input" type="checkbox" value="1" id="emp_name_{{ $e->id }}">
+                        <label class="form-check-label" for="emp_name_{{ $e->id }}">
+                            {{ $e->fname." ".$e->lname }}
+                        </label>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+            <div class="action-btn-row mt-4">
+
+                <input type="submit" class="add-sub-btn" value="Mark" />
+
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- End of Staff Out Attendance --}}
 
 </div>

@@ -7,6 +7,7 @@ use App\Employee;
 use App\Exchange;
 use App\Product;
 use App\Sale;
+use App\SalesPayment;
 use App\SalesProduct;
 use App\SalesVoucher;
 use App\Variant;
@@ -15,6 +16,8 @@ use charlieuki\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+
+use function PHPSTORM_META\type;
 
 class POSController extends Controller
 {
@@ -196,6 +199,16 @@ class POSController extends Controller
           //Set Balance
           $printer->setBalance($balance);
 
+          if($type === 'split'){
+            //Set Method1
+            $printer->setMethod1($request->method1);
+            //Set Method2
+            $printer->setMethod2($request->method2);
+            //Set Method1 Amount
+            $printer->setm1Amount($request->meth1Amount);
+            //Set Method2 Amount
+            $printer->setm2Amount($request->meth2Amount);
+          }
           // Calculate total
           $printer->calculateSubTotal();
           $printer->calculateGrandTotal();
@@ -296,6 +309,80 @@ class POSController extends Controller
 
 
         }
+
+
+        if($request->type !== 'split'){
+
+            if($request->type === 'Cash'){
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = $request->type;
+                $sp->amount = $request->amount;
+                $sp->save();
+            }else if($request->method1 === "Card"){
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = $request->type;
+                $sp->amount = $request->amount;
+                $sp->last_four_digits = $request->digits1;
+                $sp->save();
+            }else if($request->method1 === "Voucher"){
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = "Voucher";
+                $sp->amount = $request->amount;
+                $sp->voucherId = $request->voucher1;
+                $sp->save();
+            }
+
+        }else{
+
+            if($request->method1 === 'Cash'){
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = $request->method1;
+                $sp->amount = $request->meth1Amount;
+                $sp->save();
+            }else if($request->method1 === "Visa" || $request->method1 === "Amex" || $request->method1 === "Master"){
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = $request->method1;
+                $sp->amount = $request->meth1Amount;
+                $sp->last_four_digits = $request->digits1;
+                $sp->save();
+            }else {
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = "Voucher";
+                $sp->amount = $request->meth1Amount;
+                $sp->voucherId= $request->voucher1;
+                $sp->save();
+            }
+
+            if($request->method2 === 'Cash'){
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = $request->method2;
+                $sp->amount = $request->meth2Amount;
+                $sp->save();
+            }else if($request->method2 === "Visa" || $request->method2 === "Amex" || $request->method2 === "Master"){
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = $request->method2;
+                $sp->amount = $request->meth2Amount;
+                $sp->last_four_digits = $request->digits2;
+                $sp->save();
+            }else{
+                $sp = new SalesPayment();
+                $sp->salesId = $saleId;
+                $sp->payment_type = "Voucher";
+                $sp->amount = $request->meth2Amount;
+                $sp->voucherId= $request->voucher2;
+                $sp->save();
+            }
+
+        }
+
 
         foreach($voucher as $v){
             $vou = new Voucher();

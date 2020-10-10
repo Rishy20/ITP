@@ -500,6 +500,10 @@ input:checked + .slider:before {
     /* display: inline-block; */
     opacity: 0.2;
 }
+.load-spinner-return{
+    right: 35px;
+    top: 10px;
+}
 .v-btn{
     background-color: #5c8bab !important;
     color: white;

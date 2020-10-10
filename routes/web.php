@@ -90,13 +90,14 @@ Route::get('/role', function(){
     return view('User.addUserRole');
 });
 Route::get('print/test', 'PrintController@test');
-
+Route::get('/vendorproduct/{id}',"ProductReturnController@getVendorProducts");
 
 
 Route::get('/barcode', 'BarcodeController@index')->name('barcode');
 Route::get('/barcodeprint', 'BarcodeController@createPDF')->name('printBarcode');
 
 Route::resource('loyalty', 'LoyaltyController');
+Route::resource('return', 'ProductReturnController');
 
 // Route::get('/vendorPayment','VendorPaymentController@index')->name('vendorPayment');
 // Route::get('/salaryPayment','SalaryPaymentController@index')->name('salaryPayment');

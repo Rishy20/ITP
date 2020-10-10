@@ -32,7 +32,10 @@
                     <a href="#" id="addexpense">Add Expense</a>
                 </li>
                 <li class="pos-nav-li">
-                    <a href="#">Mark Attendance</a>
+                    <a href="#" id="staffIn">Staff In</a>
+                </li>
+                <li class="pos-nav-li">
+                    <a href="#" id="staffOut">Staff Out</a>
                 </li>
                 <li class="pos-nav-li">
                     <a href="#" id="addService">Add Service</a>
@@ -135,6 +138,14 @@
             $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
             });
+
+            $("#staffInForm").submit(function( event ) {
+
+                var staffIn = $( this ).serializeArray();
+                var si = JSON.stringify(staffIn);
+                // console.log( si);
+                event.preventDefault();
+            });
             //Expense Model
             $('#addexpense').on('click', function() {
                 $('#posSubExpense').toggleClass('block');
@@ -145,6 +156,27 @@
                 $('#posSubExpense').removeClass('block');
                 $('#fadeBg').removeClass('block');
 
+            });
+            //Staff In
+            $('#staffIn').on('click', function() {
+                $('#staffInModel').toggleClass('block');
+                $('#fadeBg1').toggleClass('block');
+                $('#sidebar').removeClass('active');
+            });
+            $('#closeBtn1').on('click', function() {
+
+                $('#staffInModel').removeClass('block');
+                $('#fadeBg1').removeClass('block');
+            });
+            //Staff Out
+            $('#staffOut').on('click', function() {
+                $('#sidebar').removeClass('active');
+                $('#staffOutModel').toggleClass('block');
+                $('#fadeBg2').toggleClass('block');
+            });
+            $('#closeBtn2').on('click', function() {
+                $('#staffOutModel').removeClass('block');
+                $('#fadeBg2').removeClass('block');
             });
             //Pay Model
             $('#payBtn').on('click', function() {
@@ -389,9 +421,10 @@
                 alert("Please enter the last 4 digits of the card");
             }else{
                 var type = $('#cardSelect').val();
+                var cdigits = $('#cardDigits').val();
                 var amountTend = $("#amnt-total").html();
                 var balance = 0;
-                printBill(type,amountTend,balance);
+                printBill(type,amountTend,balance,"Card",0,0,0,cdigits,0,0,0);
             }
         });
         $('#voucherOptions .pay-model-btn').click(function(){
@@ -401,9 +434,11 @@
                 alert("Invalid Voucher code");
             }else{
                 var type = "Voucher "+$('#voucherCode').val();
+                var vcode = $('#voucherCode').val();
                 var amountTend = $('#voucherAmount').val();
                 var balance = $("#balance").html();
-                printBill(type,amountTend,balance);
+                printBill(type,amountTend,balance,"Voucher",0,0,0,0,0,vcode,0);
+
             }
         });
 
@@ -413,19 +448,24 @@
             var method2 = $('#pay-method2').val();
             var m1Amount = $('#method1Amount').val();
             var m2Amount = $('#method2Amount').val();
+            var bal = $('#balance').html();
+            var tot = +m1Amount + +m2Amount;
             var type = "split";
             var card1,digits1,vc1,va1,card2,digits2,vc2,va2
 
 
 
             if($("#pay-method1 #card").is(':selected')){
+
                 card1 = $('#split1card').val();
                 digits1 = $('#split2digits').val();
+                method1 = card1;
 
             }
             if($("#pay-method1 #voucherSelect").is(':selected')){
                 vc1 = $("#split1VoucherCode").val();
                 va1 = $("#split1VoucherAmount").val();
+                method1 = "Voucher "+$("#split1VoucherCode").val();
             }
 
 
@@ -435,23 +475,25 @@
             if($("#pay-method2 #card").is(':selected')){
                 card2 = $('#split2card').val();
                 digits2 = $('#split2digits').val();
+                method2 = card2;
 
             }
             if($("#pay-method2 #voucherSelect").is(':selected')){
                 vc2 = $("#split2VoucherCode").val();
                 va2 = $("#split2VoucherAmount").val();
+                method2 = "Voucher "+$("#split2VoucherCode").val();
             }
-
+            printBill(type,tot,bal,method1,method2,m1Amount,m2Amount,digits1,digits2,vc1,vc2);
         })
 
 
 
 
 
-           function printBill(typ,amnt,bal){
+           function printBill(typ,amnt,bal,meth1,meth2,m1Amnt,m2Amnt,digits1,digits2,vc1,vc2){
 
 
-
+            console.log(typ,amnt,bal,meth1,meth2,m1Amnt,m2Amnt,digits1,digits2,vc1,vc2);
                 let items = JSON.stringify(arr);
                 let vou = JSON.stringify(voucher)
                 let customer = cus;
@@ -461,6 +503,14 @@
                 let type = typ;
                 let amount = amnt;
                 let balance = bal;
+                let method1 = meth1;
+                let method2 = meth2;
+                let meth1Amount = m1Amnt;
+                let meth2Amount = m2Amnt;
+                let voucher1Code = vc1;
+                let voucher2Code = vc2;
+                let card1Digits = digits1;
+                let card2Digits = digits2;
                 let _token   = $('meta[name="csrf-token"]').attr('content');
                 updateProductSearchQuantity(items);
                 $("tr").remove(".item-table-row");
@@ -478,7 +528,34 @@
                         $("#amnt-tend").val('');
                         $("#balance").html('');
                         $('#posSubPay').removeClass('block');
-                         $('#fadeBgPay').removeClass('block');
+                        $('#fadeBgPay').removeClass('block');
+                        $('#pay-method1').val('Cash');
+                        $('#pay-method2').val('Cash');
+                        $('#method1Amount').val('');
+                        $('#method2Amount').val('');
+                        $('#voucherCode').val('');
+                        $('#voucherAmount').val('');
+                        $('#split1VoucherCode').val('');
+                        $('#split2VoucherCode').val('');
+                        $('#split1VoucherAmount').val('');
+                        $('#split2VoucherAmount').val('');
+                        $('#split2digits').val('');
+                        $('#split1digits').val('');
+                        $('#cardDigits').val('');
+                        $('#splitOptions').hide();
+                        $('#voucherOptions').hide();
+                        $('#cardOptions').hide();
+                        $('#cardOptions2').hide();
+                        $('#voucherOptions2').hide();
+                        $('#cardOptions1').hide();
+                        $('#voucherOptions1').hide();
+                        $('#cardOptions .pay-model-btn').hide();
+                        $('#voucherOptions .pay-model-btn').hide();
+                        $('#splitOptions .pay-model-btn').hide();
+                        $('#method1Amount').removeAttr('disabled');
+                        $('#method2Amount').removeAttr('disabled');
+
+
 
                 $.ajax({
                     url:"/pos",
@@ -493,6 +570,14 @@
                         type:type,
                         amount:amount,
                         balance:balance,
+                        method1:method1,
+                        method2:method2,
+                        meth1Amount:meth1Amount,
+                        meth2Amount:meth2Amount,
+                        voucher1:voucher1Code,
+                        voucher2:voucher2Code,
+                        digits1:card1Digits,
+                        digits2:card2Digits,
                         _token:_token
                     },
                     success:function(response){
@@ -1197,6 +1282,9 @@ $('#loyaltybtn').click(function(){
     $('.pay-customer').show();
     $('#loyaltyOptions').toggle();
     $('#loyaltyOptions .pay-model-btn').toggle();
+    $('#cardOptions .pay-model-btn').hide();
+    $('#splitOptions .pay-model-btn').hide();
+    $('#voucherOptions .pay-model-btn').hide();
 })
 
 $('#splitbtn').click(function(){
@@ -1208,6 +1296,8 @@ $('#splitbtn').click(function(){
     $('#voucherOptions2').hide();
     $('#cardOptions1').hide();
     $('#voucherOptions1').hide();
+    $('#cardOptions .pay-model-btn').hide();
+    $('#voucherOptions .pay-model-btn').hide();
     $('#splitOptions .pay-model-btn').toggle();
 })
 
@@ -1405,7 +1495,7 @@ function getm2VoucherAmount(){
 
     }).fail(function(err,status){
         $('#split2VoucherAmount').val('Voucher not Found');
-        $('.load-spinner').hide();
+        $('.spinner2').hide();
     });
 }
 
