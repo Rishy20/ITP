@@ -108,3 +108,18 @@ class VendorController extends Controller
         return redirect()->back();
     }
 }
+public function createReport(Request $request){
+
+    $user =  DB::select('select u.id, username,display_name,password,pin,status,roleId,Role_name,u.created_at from users u, user_roles ur where u.roleId = ur.id');
+
+    // // return view ('Barcode.printBarcode',compact('product'));
+
+    view()->share('vendor',$vendor);
+
+
+    $pdf =  PDF::loadView('vendor.vendorReport',$vendor);
+
+    // // download PDF file with download method
+    return $pdf->stream('vendor.pdf');
+    return view('vendor.vendorReport',compact('vendor'));
+}

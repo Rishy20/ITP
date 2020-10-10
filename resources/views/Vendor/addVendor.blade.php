@@ -5,6 +5,9 @@
     <div class="pg-heading">
         <a href="{{ route('vendors.index') }}"<i class="fa fa-arrow-left pg-back"></i> </a>
         <div class="pg-title">Add Vendor</div>
+        <div class="demo-btn">
+            Demo
+        </div>
     </div>
     <div class="row">
         <div class="col-md-9">
@@ -88,10 +91,26 @@
             </div> {{-- End  of section 1--}}
         </div>
 
+
                     </form>
                 </div>{{-- End of sectionContent--}}
             </div>{{-- End of section 2--}}
         </div>
     </div>
 </div>{{-- End of addVendor --}}
+<script>
+    //Demo Button
+    $(".demo-btn").click(function(){
+        $("input[name='username']").val("Rashmika");
+        $("input[name='display_name']").val("Rashmika Dulaj");
+        $("input[name='password']").val("admin1234");
+        $("input[name='repass']").val("admin1234");
+        $("input[name='pin']").val("1234");
+        $("input[name='repin']").val("1234");
+    });
+
+
+</script>
 @endsection
+
+

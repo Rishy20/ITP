@@ -110,3 +110,20 @@ class ServiceController extends Controller
         return redirect()->back();
     }
 }
+
+public function createReport(Request $request){
+
+    $service =  DB::select('select service.id, username,display_name,password,pin,status,roleId,Role_name,u.created_at from users u,
+    service_roles ur where s.roleId = service.id');
+
+    // // return view ('Barcode.printBarcode',compact('product'));
+
+    view()->share('service',$service);
+
+
+    $pdf =  PDF::loadView('Service.serviceReport',$service);
+
+    // // download PDF file with download method
+    return $pdf->stream('service.pdf');
+    return view('Service.serviceReport',compact('service'));
+}
