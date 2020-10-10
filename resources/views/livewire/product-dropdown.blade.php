@@ -272,8 +272,8 @@
                     <button class="sub-btn btn mr-2">
                         <i class="fas fa-parking sub-icon"></i><span class="sub-btn-txt"> Park Sale</span>
                     </button>
-                    <button class="sub-btn btn">
-                        <i class="fas fa-trash-alt sub-icon"></i><span class="sub-btn-txt"> Discard Sale</span>
+                    <button class="sub-btn btn" id="discardSale">
+                        <i class="fas fa-trash-alt sub-icon" ></i><span class="sub-btn-txt"> Discard Sale</span>
                     </button>
 
 

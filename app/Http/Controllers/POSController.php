@@ -156,15 +156,6 @@ class POSController extends Controller
           }
 
 
-          // $items = [
-          //     [
-          //         'name' => 'French Fries (tera)',
-          //         'pcode' => 'IGN1500',
-          //         'qty' => 2,
-          //         'price' => 650,
-          //     ],
-          // ];
-
           // Init printer
           $printer = new ReceiptPrinter;
           $printer->init(

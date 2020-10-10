@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SalaryPayment;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class SalaryPaymentController extends Controller
 {
@@ -43,7 +44,7 @@ class SalaryPaymentController extends Controller
     {
         SalaryPayment::create($request->all());
         Session::put('message', 'Success!');
-        return redirect()->back();
+        return redirect('/salaryPayment');
     }
 
     /**
@@ -98,5 +99,21 @@ class SalaryPaymentController extends Controller
         $salaryPayment->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    public function createReport(Request $request){
+
+        $salaryPayment =  SalaryPayment::all()->toArray();
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('salaryPayment',$salaryPayment);
+
+
+        $pdf =  PDF::loadView('StaffPayment.staffPaymentReport',$salaryPayment);
+
+        // // download PDF file with download method
+        return $pdf->stream('StaffPayment.pdf');
+        return view('StaffPayment.staffPaymentReport',compact('salaryPayment'));
     }
 }

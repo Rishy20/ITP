@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Loyalty;
+use App\Customer;
+use App\LoyaltyCustomer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class LoyaltyController extends Controller
 {
@@ -30,7 +34,8 @@ class LoyaltyController extends Controller
      */
     public function create()
     {
-        return view('Loyalty.addLoyalty');
+        $customer = Customer::all();
+        return view('Loyalty.addLoyalty',compact('customer'));
 
     }
 
@@ -42,15 +47,33 @@ class LoyaltyController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // $request->validate([
-        //     'loyaltyName' => 'required|max:20',
-        //     'minimumPointRequired' => 'required|min:100',
-        //     'tierPoints' => 'required|max:100000',
-        //     'points' => 'required'
-        // ]);
 
-        Loyalty::create($request->all());
+        $request->validate([
+            'loyaltyName' => 'required|max:20',
+            'minimumPointRequired' => 'required|min:0',
+            'tierPoints' => 'required|max:100000',
+            'points' => 'required'
+        ]);
+
+        // Loyalty::create($request->all());
+
+        $c = $_COOKIE['customers'];
+        $customer = json_decode($c,true);
+
+        $last = DB::table('loyalty')->latest()->first();
+        $loyaltyid = $last->id;
+        $pointsonSignUp = $last->points;
+        setcookie("customers","",time()-3600);
+        foreach($customer as $cu){
+
+            $cus = new LoyaltyCustomer();
+            $cus->loyaltyId = $loyaltyid;
+            $cus->customerId = $cu[0];
+            $cus->points = $pointsonSignUp;
+            $cus->save();
+        }
+
+
         Session::put('message', 'Success!');
         return redirect('/loyalty');
     }
@@ -116,4 +139,21 @@ class LoyaltyController extends Controller
         Session::put('message', 'Success!');
         return redirect()->back();
     }
+
+    public function createReport(Request $request){
+
+        $loyalty =  Loyalty::all()->toArray();
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('loyalty',$loyalty);
+
+
+        $pdf =  PDF::loadView('Loyalty.loyaltyReport',$loyalty);
+
+        // // download PDF file with download method
+        return $pdf->stream('loyalty.pdf');
+        return view('Loyalty.loyaltyReport',compact('loyalty'));
+    }
+
 }

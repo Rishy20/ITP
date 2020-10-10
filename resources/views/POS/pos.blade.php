@@ -1499,6 +1499,54 @@ function getm2VoucherAmount(){
     });
 }
 
+//Discard Sale
+
+$('#discardSale').click(function(){
+
+        $("tr").remove(".item-table-row");
+        updateStats();
+        arr.splice(0,arr.length);
+        voucher.splice(0,voucher.length);
+        num = 0;
+        $('#adds').show();
+        $('#emp').hide();
+        $('#addc').show();
+        $('#cus').hide();
+        cus = 0;
+        emp = 0;
+        $("#amnt-total").html('');
+        $("#amnt-tend").val('');
+        $("#balance").html('');
+        $('#posSubPay').removeClass('block');
+        $('#fadeBgPay').removeClass('block');
+        $('#pay-method1').val('Cash');
+        $('#pay-method2').val('Cash');
+        $('#method1Amount').val('');
+        $('#method2Amount').val('');
+        $('#voucherCode').val('');
+        $('#voucherAmount').val('');
+        $('#split1VoucherCode').val('');
+        $('#split2VoucherCode').val('');
+        $('#split1VoucherAmount').val('');
+        $('#split2VoucherAmount').val('');
+        $('#split2digits').val('');
+        $('#split1digits').val('');
+        $('#cardDigits').val('');
+        $('#splitOptions').hide();
+        $('#voucherOptions').hide();
+        $('#cardOptions').hide();
+        $('#cardOptions2').hide();
+        $('#voucherOptions2').hide();
+        $('#cardOptions1').hide();
+        $('#voucherOptions1').hide();
+        $('#cardOptions .pay-model-btn').hide();
+        $('#voucherOptions .pay-model-btn').hide();
+        $('#splitOptions .pay-model-btn').hide();
+        $('#method1Amount').removeAttr('disabled');
+        $('#method2Amount').removeAttr('disabled');
+
+
+})
     </script>
 </body>
 

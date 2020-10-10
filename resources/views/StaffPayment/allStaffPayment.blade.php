@@ -27,6 +27,9 @@
             <div class="add-btn">
                 <a href="{{ route('salaryPayment.create') }}">+ Add Staff Payment</a>
             </div>
+            <div class="add-btn">
+                <a href="{{ route('salaryPayment.report') }}" target="_blank">Export Staff Payment</a>
+            </div>
             <thead class="table-head">
                 <tr>
                     <th>Pay ID</th>

@@ -69,6 +69,7 @@ Auth::routes();
 // Route::get('/editOrder','EditPurchaseOrderController@index')->name('editOrder');
 
 Route::resource('purchase', 'PurchaseController');
+Route::get('/purchaseReport','PurchaseController@createReport')->name('purchase.report');
 
 
 // Route::get('/loyalty','AllLoyaltyController@index')->name('allLoyalty');
@@ -98,16 +99,20 @@ Route::get('/barcodeprint', 'BarcodeController@createPDF')->name('printBarcode')
 
 Route::resource('loyalty', 'LoyaltyController');
 Route::resource('return', 'ProductReturnController');
+Route::get('/loyaltyReport','LoyaltyController@createReport')->name('loyalty.report');
 
 // Route::get('/vendorPayment','VendorPaymentController@index')->name('vendorPayment');
 // Route::get('/salaryPayment','SalaryPaymentController@index')->name('salaryPayment');
 
 Route::resource('vendorPayment', 'VendorPaymentController');
+Route::get('/vendorPaymentReport','VendorPaymentController@createReport')->name('vendorPayment.report');
+
 Route::resource('salaryPayment', 'SalaryPaymentController');
 Route::get('voucherid', 'VoucherController@getLastIndex')->name('voucher.id');
 Route::get('serviceid', 'ServiceController@getLastIndex');
 Route::get('voucheramount/{id}', 'VoucherController@getVoucherAmount');
 Route::get('customermobile/{mobile}', 'POSController@getCustomer');
+Route::get('/salaryPaymentReport','SalaryPaymentController@createReport')->name('salaryPayment.report');
 
 Route::get('posproduct', 'POSController@returnProducts');
 Auth::routes();

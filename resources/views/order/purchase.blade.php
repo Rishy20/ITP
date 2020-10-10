@@ -36,12 +36,15 @@
         <div class="add-btn">
           <a href="{{ route('purchase.create') }}">+ Add new</a>
         </div>
+        <div class="add-btn">
+            <a href="{{ route('purchase.report') }}" target="_blank">Export Purchase</a>
+        </div>
         <thead class="table-head">
             <tr>
                 <th>Order ID</th>
                 {{-- <th>Product ID</th>
                 <th>Product Name</th> --}}
-                <th>Vendor</th>
+                <th>Vendor ID</th>
                 <th>Date</th>
                 <th>Total</th>
                 <th>Expected Date</th>

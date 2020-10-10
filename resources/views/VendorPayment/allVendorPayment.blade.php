@@ -27,6 +27,9 @@
             <div class="add-btn">
                 <a href="{{ route('vendorPayment.create') }}">+ Add Vendor Payment</a>
             </div>
+            <div class="add-btn">
+                <a href="{{ route('vendorPayment.report') }}" target="_blank">Export Loyalty</a>
+            </div>
             <thead class="table-head">
                 <tr>
                     <th>Payment ID</th>
