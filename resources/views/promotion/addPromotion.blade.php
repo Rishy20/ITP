@@ -1,6 +1,15 @@
 @extends('layouts.main')
 @section('content')
 
+<div class="addPromotion"> {{-- Start of addUser --}}
+    <div class="pg-heading">
+        <a href="{{ route('promotion.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
+        <div class="pg-title">Add Promotion</div>
+        <div class="demo-btn">
+            Demo
+        </div>
+</div>
+
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Create Promotion</div>
@@ -303,6 +312,19 @@
 
 
 
+</script>
+
+<script>
+    //Demo Button
+    $(".demo-btn").click(function(){
+        $("input[name='promotionname']").val("Christmas");
+        $("input[name='description']").val("sdsff");
+       // $("input[name='startdate']").val("");
+       // $("input[name='enddate']").val("");
+     
+        
+    });
+       
 </script>
 @endsection
 
