@@ -3,7 +3,7 @@
 
 <div class="editVendor"> {{-- Start of editVendor --}}
     <div class="pg-heading">
-        <i class="fa fa-arrow-left pg-back"></i>
+        <a href="{{ route('vendors.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Edit Vendor</div>
     </div>
     <div class="row">
