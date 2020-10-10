@@ -28,11 +28,11 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-tshirt"></i></div>
                         Product
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#customer" role="tab" onclick="categorySection('Customers')">
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#customer" role="tab" onclick="categorySection('Customer')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-people-arrows"></i></div>
                         Customer
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#payment" role="tab" onclick="categorySection('Payments')">
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#payment" role="tab" onclick="categorySection('Payment')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-dollar-sign"></i></div>
                         Payment
                     </a>
@@ -126,12 +126,20 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-book"></i></div>
                         Minus Stock Product Report
                     </a>
+                    {{-- Supplier Purchase Report --}}
+                    <a class="list-group-item list-group-item-action" id="supplier-purchase" role="tabpanel"
+                       href="{{ route('reports.supplier-purchase') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-building"></i></div>
+                        Supplier Purchase Report
+                    </a>
                 </div>
 
+                {{-- Payment Category --}}
                 <div class="list-group category" id="payment" hidden>
-                    <a class="list-group-item list-group-item-action" id="total-expense" role="tabpanel" href="#">
-                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-money-bill"></i></div>
-                        Total Expense Report
+                    <a class="list-group-item list-group-item-action" id="supplier-payment" role="tabpanel"
+                       href="{{ route('reports.supplier-payment') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-building"></i></div>
+                        Supplier Payment Report
                     </a>
                 </div>
 

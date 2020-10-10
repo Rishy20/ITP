@@ -9,7 +9,6 @@ use App\SalaryPayment;
 use App\Sale;
 use App\StockTransfer;
 use App\VendorPayment;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -188,6 +187,72 @@ class ReportController extends Controller
         $pdf =  PDF::loadView('reports.product.export.minus-stock-product', $products);
 
         return $pdf->stream('minus-stock-product.pdf');
+    }
+
+    public function supplierPurchase() {
+        $supplier_purchases = DB::table('purchase')->join('vendors', 'purchase.vendorID', '=',
+            'vendors.id')->select('purchase.*', 'vendors.first_name', 'vendors.last_name', 'vendors.company_name')
+            ->get();
+
+        foreach ($supplier_purchases as $purchase) {
+            $purchase->updated_at = date('Y-m-d', strtotime($purchase->updated_at));
+            $purchase->name = $purchase->last_name . ', ' . $purchase->first_name;
+        }
+        return view('reports.product.supplier-purchase')->with('supplier_purchases', $supplier_purchases);
+    }
+
+    public function exportSupplierPurchase(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $supplier_purchases = DB::table('purchase')->join('vendors', 'purchase.vendorID', '=',
+            'vendors.id')->whereBetween('purchase.updated_at', [$start_date, $end_date])
+            ->select('purchase.*', 'vendors.first_name', 'vendors.last_name', 'vendors.company_name')->get();
+
+        foreach ($supplier_purchases as $purchase) {
+            $purchase->updated_at = date('Y-m-d', strtotime($purchase->updated_at));
+            $purchase->name = $purchase->last_name . ', ' . $purchase->first_name;
+        }
+
+        view()->share(['supplier_purchases' => $supplier_purchases, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.product.export.supplier-purchase', [$supplier_purchases, $start_date, $end_date]);
+
+        return $pdf->stream('supplier-purchase.pdf');
+    }
+
+
+    // Payment Reports
+
+    public function supplierPayment() {
+        $supplier_pays = DB::table('vendor_payment')->join('vendors', 'vendor_payment.vendorID', '=',
+            'vendors.id')->select('vendor_payment.*', 'vendors.first_name', 'vendors.last_name', 'vendors.company_name')
+            ->get();
+
+        foreach ($supplier_pays as $pay) {
+            $pay->updated_at = date('Y-m-d', strtotime($pay->updated_at));
+            $pay->name = $pay->last_name . ', ' . $pay->first_name;
+        }
+
+        return view('reports.payment.supplier-payment')->with('supplier_pays', $supplier_pays);
+    }
+
+    public function exportSupplierPayment(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $supplier_pays = DB::table('vendor_payment')->join('vendors', 'vendor_payment.vendorID', '=',
+            'vendors.id')->whereBetween('vendor_payment.updated_at', [$start_date, $end_date])
+            ->select('vendor_payment.*', 'vendors.first_name', 'vendors.last_name', 'vendors.company_name')->get();
+
+        foreach ($supplier_pays as $pay) {
+            $pay->updated_at = date('Y-m-d', strtotime($pay->updated_at));
+            $pay->name = $pay->last_name . ', ' . $pay->first_name;
+        }
+
+        view()->share(['supplier_pays' => $supplier_pays, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.payment.export.supplier-payment', [$supplier_pays, $start_date, $end_date]);
+
+        return $pdf->stream('supplier-payment.pdf');
     }
 
 
