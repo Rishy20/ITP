@@ -36,9 +36,9 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-dollar-sign"></i></div>
                         Payment
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#custom" role="tab" onclick="categorySection('Custom Reports')">
-                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-cog"></i></div>
-                        Custom Reports
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#other" role="tab" onclick="categorySection('Other')">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-file"></i></div>
+                        Other
                     </a>
                 </div>
             </div>
@@ -132,6 +132,16 @@
                     <a class="list-group-item list-group-item-action" id="total-expense" role="tabpanel" href="#">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-money-bill"></i></div>
                         Total Expense Report
+                    </a>
+                </div>
+
+                {{-- Other Category --}}
+                <div class="list-group category" id="other" hidden>
+                    {{-- Day-End Report --}}
+                    <a class="list-group-item list-group-item-action" id="day-end" role="tabpanel"
+                       href="{{ route('reports.day-end') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-calendar"></i></div>
+                        Day-End Report
                     </a>
                 </div>
             </div>

@@ -144,4 +144,6 @@ Route::get('/reports/zero-stock-product', 'ReportController@zeroStockProduct')->
 Route::get('/reports/export-zero-stock-product', 'ReportController@exportZeroStockProduct')->name('reports.export-zero-stock-product');
 Route::get('/reports/minus-stock-product', 'ReportController@minusStockProduct')->name('reports.minus-stock-product');
 Route::get('/reports/export-minus-stock-product', 'ReportController@exportMinusStockProduct')->name('reports.export-minus-stock-product');
+Route::get('/reports/day-end', 'ReportController@dayEnd')->name('reports.day-end');
+Route::post('/reports/export-day-end', 'ReportController@exportDayEnd')->name('reports.export-day-end');
 
