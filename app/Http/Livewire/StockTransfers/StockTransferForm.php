@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\StockTransfers;
 
 use App\Inventory;
-use App\Product;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 

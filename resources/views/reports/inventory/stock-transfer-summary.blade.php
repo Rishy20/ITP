@@ -16,10 +16,10 @@
             <input type="hidden" name="start_date" id="start_date">
             <input type="hidden" name="end_date" id="end_date">
 
-            <table id="data_table" class="table hover table-striped table-borderless table-hover all-table">
+            <table id="data_table" class="table table-striped table-borderless table-hover all-table">
                 <button type="submit" class="add-btn">Export Report</button>
-                <div class="float-right pr-3 pt-1">
-                    <div id="date_range" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                <div class="float-right pr-3">
+                    <div id="date_range" style="background: #fff; cursor: pointer; padding: 9px 18px; border: 1px solid #ccc; width: 100%">
                         <i class="fa fa-calendar"></i>&nbsp;
                         <span></span> <i class="fa fa-caret-down"></i>
                     </div>
