@@ -17,6 +17,7 @@ class CreateVendorPaymentTable extends Migration
             $table->id();
             $table->unsignedBigInteger('vendorID');
             $table->foreign('vendorID')->references('id')->on('vendors');
+            $table->foreign('bankID')->references('id')->on('bank_accounts')->nullable()->onDelete('cascade');
             $table->string('paymentType');
             $table->double('amount');
             $table->date('date');

@@ -10,6 +10,10 @@ use PDF;
 
 class LoyaltyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -73,8 +77,9 @@ class LoyaltyController extends Controller
      */
     public function edit($id)
     {
+        $customer = Customer::all();
         $loyalty = Loyalty::find($id);
-        return view('Loyalty.editLoyalty', compact('loyalty', 'id'));
+        return view('Loyalty.editLoyalty', compact('loyalty', 'id','customer'));
     }
 
     /**

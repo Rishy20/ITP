@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ServiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +56,7 @@ class ServiceController extends Controller
 
             Service::create($request->all());
             Session::put('message', 'Success!');
-            return redirect()->back();
+            // return redirect()->back();
     }
 
     /**
@@ -108,5 +113,12 @@ class ServiceController extends Controller
         $service->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    public function getLastIndex(){
+
+        $last = DB::table('services')->latest()->first();
+        $serviceId = $last->id;
+        return $serviceId;
     }
 }

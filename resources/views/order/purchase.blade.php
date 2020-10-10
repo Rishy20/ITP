@@ -44,7 +44,7 @@
                 <th>Order ID</th>
                 {{-- <th>Product ID</th>
                 <th>Product Name</th> --}}
-                <th>Vendor ID</th>
+                <th>Vendor Name</th>
                 <th>Date</th>
                 <th>Total</th>
                 <th>Expected Date</th>

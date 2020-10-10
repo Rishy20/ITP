@@ -173,7 +173,7 @@
                     <div class="col">
                         <div class="form-group inv-col">
                             <label class="inv-label">Inventory</label>
-                            <select class="form-control inv-select" name="inv" required>
+                            <select class="form-control inv-select" name="inventory" required>
                                 <option value="" disabled selected hidden>Select an Inventory</option>
                                 @foreach($inv as $i)
                                 <option @foreach($inven as $t)
@@ -219,30 +219,80 @@
         </div>
     </div>
 </div>
-    @livewire('variant')
+    @livewire('variant',['var'=>$var])
 
 <script>
 
-var cprice = $('#cprice').val();
-        var sprice = $('#sprice').val();
-        var discount = $('#discount').val();
-        var profit = (sprice-discount)-cprice;
-        $('#profit').val(profit);
+    $(document).ready(function(){
+        var variant = <?php echo json_encode($var); ?>;
+        var list = document.getElementsByClassName('price-var');
+        var listq = document.getElementsByClassName('qty-spinner');
 
-    $('#sprice').change(function(){
         var cprice = $('#cprice').val();
-        var sprice = $('#sprice').val();
-        var discount = $('#discount').val();
-        var profit = (sprice-discount)-cprice;
-        $('#profit').val(profit);
+            var sprice = $('#sprice').val();
+            var discount = $('#discount').val();
+            var profit = (sprice - discount) - cprice;
+            $('#profit').val(profit);
+
+        variant.forEach(function(index, value, array){
+
+            list[value].value = array[value]['price'];
+            listq[value].value = array[value]['quantity'];
+
+        });
+
     });
-    $('#discount').change(function(){
-        var cprice = $('#cprice').val();
-        var sprice = $('#sprice').val();
-        var discount = $('#discount').val();
-        var profit = (sprice-discount)-cprice;
-        $('#profit').val(profit);
-    })
+
+$('#sprice').change(function() {
+            var cprice = $('#cprice').val();
+            var sprice = $('#sprice').val();
+            var discount = $('#discount').val();
+            var profit = (sprice - discount) - cprice;
+            $('#profit').val(profit);
+
+            var list = document.getElementsByClassName('price-var');
+            var sprice = $('#sprice').val();
+            var n;
+                for (n = 0; n < list.length; ++n) {
+                    list[n].value = sprice;
+                }
+
+        });
+
+        $('#size').change(function() {
+
+            var list = document.getElementsByClassName('price-var');
+            var sprice = $('#sprice').val();
+            var n;
+            setTimeout(function() {
+                for (n = 0; n < list.length; ++n) {
+                    list[n].value = sprice;
+                }
+            }, 750)
+
+        });
+
+        $('#color').change(function() {
+
+            var list = document.getElementsByClassName('price-var');
+            var sprice = $('#sprice').val();
+            var n;
+            setTimeout(function() {
+                for (n = 0; n < list.length; ++n) {
+                    list[n].value = sprice;
+                }
+            }, 750)
+
+        });
+
+        $('#discount').change(function() {
+            var cprice = $('#cprice').val();
+            var sprice = $('#sprice').val();
+            var discount = $('#discount').val();
+            var profit = (sprice - discount) - cprice;
+            $('#profit').val(profit);
+        });
+
 
 </script>
 

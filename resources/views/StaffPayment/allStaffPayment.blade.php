@@ -25,7 +25,7 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
-                <a href="{{ route('salaryPayment.create') }}">+ Add Staff Payment</a>
+                <a href="#" id="addStaffPayment">+ Add Staff Payment</a>
             </div>
             <div class="add-btn">
                 <a href="{{ route('salaryPayment.report') }}" target="_blank">Export Staff Payment</a>
@@ -63,4 +63,58 @@
     </div> {{-- End  of sectionContent--}}
 </div> {{-- End  of section--}}
 
+{{-- Add Staff Payment --}}
+<div class="full-pg" id="fadeBg1"></div>
+<div class="pos-sub-display emp-attendance" id="staffPaymentModel">
+
+    <div class="pos-sub-display-title">
+        <span class="title">Add Staff Payment</span>
+        <button class="close-btn" id="closeBtn1"><i class="fas fa-window-close"></i></button>
+    </div>
+
+    <div class="pos-sub-display-content">
+
+        <form method="POST" class="needs-validation" action="{{ route('salaryPayment.store') }}" novalidate>
+            @csrf
+            <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+            <thead class="table-head">
+                <tr>
+                    <th>Staff Member's Name</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            @foreach($employee as $row)
+            <tbody>
+                <tr>
+                    <td>{{ $row['fname'] }} {{  $row['lname']  }}</td>
+                    <input type="text" name="staffID" class="form-control" value="{{ $row->staffID }}" hidden/>
+                    <td><input type="text" id="empAmount" name="amount" class="form-control" placeholder="Amount"/></td>
+                </tr>
+            </tbody>
+            @endforeach
+            </table>
+            <div class="action-btn-row mt-4">
+
+                <input type="submit" class="add-sub-btn" value="Submit" />
+
+            </div>
+        
+        </form>
+    </div>
+</div>
+
+
+<script>
+
+$(document).ready(function() {
+        $('#addStaffPayment').on('click', function() {
+            $('#staffPaymentModel').toggleClass('block');
+            $('#fadeBg1').toggleClass('block');
+        });
+        $('#closeBtn1').on('click', function() {
+            $('#staffPaymentModel').removeClass('block');
+            $('#fadeBg1').removeClass('block');
+        });
+    });
+</script>
 @endsection

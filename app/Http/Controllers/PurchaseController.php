@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use App\Purchase;
 use Illuminate\Support\Facades\Session;
 use PDF;
+use App\Product;
+use Illuminate\Support\Facades\DB;
+use App\Vendor;
 
 class PurchaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +33,10 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('order.createOrder');
+        $vendor = Vendor::all();
+
+        $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
+        return view('order.createOrder',compact('prd','vendor'));
     }
 
     /**
@@ -70,8 +80,11 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
+        $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
+
         $purchase = Purchase::find($id);
-        return view('order.editPurchaseOrder',compact('purchase','id'));
+        $vendor = Vendor::all();
+        return view('order.editPurchaseOrder',compact('purchase','id','prd','vendor'));
     }
 
     /**

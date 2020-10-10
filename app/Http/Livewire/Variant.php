@@ -11,10 +11,10 @@ use Livewire\Component;
 
 class Variant extends Component
 {
-    public $size;
-    public $color;
-    public $svalue;
-    public $cvalue;
+    public $size = array();
+    public $color = array();
+    public $svalue ;
+    public $cvalue ;
     public $count = 0;
     public $inv;
     public $cat;
@@ -35,6 +35,7 @@ class Variant extends Component
     public $prqty;
     public $vprice = array();
     public $vqty = array();
+    private $var;
 
     public function increment()
     {
@@ -45,11 +46,22 @@ class Variant extends Component
     {
         $this->count--;
     }
-    public function mount(){
+    public function mount($var){
+
+      if($var != null){
+            foreach($var as $v){
+                array_push($this->size,$v->size);
+                array_push($this->color,$v->color);
+
+            }
+            $this->size = array_unique($this->size);
+            $this->color = array_unique($this->color);
+            $this->svalue = implode(",",$this->size);
+            $this->cvalue = implode(",",$this->color);
+        }
 
         $product = Product::all();
         $key = sizeof($product)-1;
-        $this->barcode = $product[$key]['barcode']+1;
     }
     public function showSize($i){
 

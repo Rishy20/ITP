@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use App\SalaryPayment;
 use Illuminate\Support\Facades\Session;
 use PDF;
+use App\Employee;
 
 class SalaryPaymentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +21,9 @@ class SalaryPaymentController extends Controller
      */
     public function index()
     {
+        $employee = Employee::all();
         $salaryPayment = SalaryPayment::all()->toArray();
-        return view('StaffPayment.allStaffPayment',compact('salaryPayment'));
+        return view('StaffPayment.allStaffPayment',compact('salaryPayment','employee'));
     }
 
     /**
@@ -27,7 +33,8 @@ class SalaryPaymentController extends Controller
      */
     public function create()
     {
-        return view('StaffPayment.addStaffPayment');
+        $employee = Employee::all();
+        return view('StaffPayment.addStaffPayment',compact('employee'));
     }
 
     /**
@@ -38,9 +45,10 @@ class SalaryPaymentController extends Controller
      */
     public function store(Request $request)
     {
+        $employee = Employee::all();
         SalaryPayment::create($request->all());
         Session::put('message', 'Success!');
-        return redirect('/salaryPayment');
+        return redirect('/salaryPayment',compact('employee'));
     }
 
     /**

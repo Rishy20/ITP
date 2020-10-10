@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 use App\VendorPayment;
 use Illuminate\Support\Facades\Session;
 use PDF;
+use App\Vendor;
+use App\BankAccount;
 
 class VendorPaymentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +22,7 @@ class VendorPaymentController extends Controller
      */
     public function index()
     {
+
         $vendorPayment = VendorPayment::all()->toArray();
         return view('VendorPayment.allVendorPayment',compact('vendorPayment'));
     }
@@ -27,7 +34,9 @@ class VendorPaymentController extends Controller
      */
     public function create()
     {
-        return view('VendorPayment.addVendorPayment');
+        $banks = BankAccount::all();
+        $vendor = Vendor::all();
+        return view('VendorPayment.addVendorPayment',compact('vendor','banks'));
     }
 
     /**
@@ -69,8 +78,10 @@ class VendorPaymentController extends Controller
      */
     public function edit($id)
     {
+        $banks = BankAccount::all();
+        $vendor = Vendor::all();
         $vendorPayment = VendorPayment::find($id);
-        return view('vendorPayment.editVendorPayment', compact('vendorPayment', 'id'));
+        return view('vendorPayment.editVendorPayment', compact('vendorPayment', 'id','vendor','banks'));
     }
 
     /**

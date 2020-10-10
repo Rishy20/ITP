@@ -215,7 +215,7 @@
             </div>
         </div>
     </div>
-    @livewire('variant')
+    @livewire('variant',['var'=>null])
 
     <script>
         $('#sprice').change(function() {

@@ -35,6 +35,7 @@
                     <th>Payment ID</th>
                     <th>Payment Type</th>
                     <th>Vendor ID</th>
+                    <th>Bank ID</th>
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Actions</th>
@@ -46,6 +47,7 @@
                     <td>{{ $row['id'] }}</td>
                     <td>{{ $row['paymentType'] }}</td>
                     <td>{{ $row['vendorID'] }}</td>
+                    <td>{{ $row['bankID'] }}</td>
                     <td>{{ $row['amount'] }}</td>
                     <td>{{ $row['date'] }}</td>
                     <td class="action-icon">
