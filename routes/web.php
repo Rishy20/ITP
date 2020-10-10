@@ -24,6 +24,7 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/backlogin','UserController@login');
 Route::post('/validates','UserController@loginValidate')->name('validate');
 Route::get('/userReport','UserController@createReport')->name('user.report');
+Route::get('/customerReport','CustomerController@createReport')->name('customer.report');
 
 
 Route::resource('/bank','BankAccountController');

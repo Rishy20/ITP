@@ -33,7 +33,7 @@
                 <th>Email</th>
                 <th>Phone</th>
 
-                <th>City</th>
+                <th>city</th>
                 <th>Actions</th>
                 </tr>
             </thead>
@@ -47,7 +47,6 @@
                 <td> {{ $row->dob }} </td>
                 <td> {{ $row->email }} </td>
                 <td> {{ $row->phone }} </td>
-
                 <td> {{ $row->city }} </td>
 
                     <td class="action-icon">
