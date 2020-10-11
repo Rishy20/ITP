@@ -21,14 +21,9 @@ class ReportController extends Controller
     {
         $this->middleware('auth:admin');
     }
+
     public function index() {
         return view('reports.index');
-    }
-
-    public function productWiseSales() {
-        $products = Product::all();
-
-        return view('reports.sales.product-wise-sales');
     }
 
 
@@ -161,25 +156,182 @@ class ReportController extends Controller
 
     // Sales Reports
 
-    public function totalExpense() {
-        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
-            'users.id')->select('expenses.*', 'users.display_name')->get();
-
-        return view('reports.sales.total-expense')->with('expenses', $expenses);
-    }
-
-    public function exportTotalExpense(Request $request) {
+    public function productWiseSales(Request $request) {
         $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
         $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
 
-        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
-            'users.id')->whereBetween('expenses.updated_at', [$start_date, $end_date])
-            ->select('expenses.*', 'users.display_name')->get();
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
 
-        view()->share(['expenses' => $expenses, 'start_date' => $start_date, 'end_date' => $end_date]);
-        $pdf =  PDF::loadView('reports.sales.export.total-expense', [$expenses, $start_date, $end_date]);
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+            $taxes = SalesProduct::all();
 
-        return $pdf->stream('total-expense.pdf');
+            foreach ($sales_products as $product) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $product->sale = $sale;
+                    }
+                }
+            }
+        } else
+            $sales_products = collect();
+
+        return view('reports.sales.product-wise-sales')->with('sales_products', $sales_products)
+            ->with('start_date', $start_date)->with('end_date', $end_date);
+    }
+
+    public function exportProductWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_products as $product) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $product->sale = $sale;
+                    }
+                }
+            }
+        } else
+            $sales_products = collect();
+
+        view()->share(['sales_products' => $sales_products, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.product-wise-sales', [$sales_products, $start_date, $end_date]);
+
+        return $pdf->stream('product-wise-sales.pdf');
+    }
+
+    public function categoryWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        if (!$sales->isEmpty()) {
+            $sales_categories = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->join('categories', 'products.catID', '=', 'categories.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('categories.id')
+                ->select('categories.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_categories as $category) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $category->sale = $sale;
+                    }
+                }
+            }
+        } else
+            $sales_categories = collect();
+
+        return view('reports.sales.category-wise-sales')->with('sales_categories', $sales_categories)
+            ->with('start_date', $start_date)->with('end_date', $end_date);
+    }
+
+    public function exportCategoryWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        if (!$sales->isEmpty()) {
+            $sales_categories = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->join('categories', 'products.catID', '=', 'categories.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('categories.id')
+                ->select('categories.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_categories as $category) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $category->sale = $sale;
+                    }
+                }
+            }
+        } else
+            $sales_categories = collect();
+
+        view()->share(['sales_categories' => $sales_categories, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.category-wise-sales', [$sales_categories, $start_date, $end_date]);
+
+        return $pdf->stream('category-wise-sales.pdf');
+    }
+
+    public function supplierWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        if (!$sales->isEmpty()) {
+            $sales_vendors = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->join('vendors', 'products.supplierId', '=', 'vendors.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('vendors.id')
+                ->select('vendors.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_vendors as $vendor) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $vendor->sale = $sale;
+                    }
+                }
+            }
+        } else
+            $sales_vendors = collect();
+
+        return view('reports.sales.supplier-wise-sales')->with('sales_vendors', $sales_vendors)
+            ->with('start_date', $start_date)->with('end_date', $end_date);
+    }
+
+    public function exportSupplierWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        if (!$sales->isEmpty()) {
+            $sales_vendors = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->join('vendors', 'products.supplierId', '=', 'vendors.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('vendors.id')
+                ->select('vendors.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_vendors as $vendor) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $vendor->sale = $sale;
+                    }
+                }
+            }
+        } else
+            $sales_vendors = collect();
+
+        view()->share(['sales_vendors' => $sales_vendors, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.supplier-wise-sales', [$sales_vendors, $start_date, $end_date]);
+
+        return $pdf->stream('supplier-wise-sales.pdf');
     }
 
     public function productReturn() {
@@ -202,6 +354,27 @@ class ReportController extends Controller
         $pdf =  PDF::loadView('reports.sales.export.product-return', [$returns, $start_date, $end_date]);
 
         return $pdf->stream('product-return.pdf');
+    }
+
+    public function totalExpense() {
+        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
+            'users.id')->select('expenses.*', 'users.display_name')->get();
+
+        return view('reports.sales.total-expense')->with('expenses', $expenses);
+    }
+
+    public function exportTotalExpense(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
+            'users.id')->whereBetween('expenses.updated_at', [$start_date, $end_date])
+            ->select('expenses.*', 'users.display_name')->get();
+
+        view()->share(['expenses' => $expenses, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.total-expense', [$expenses, $start_date, $end_date]);
+
+        return $pdf->stream('total-expense.pdf');
     }
 
     public function dailyProfit() {

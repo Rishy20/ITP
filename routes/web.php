@@ -129,7 +129,12 @@ Route::get('inventory-counts/{inventory_count}/complete', 'InventoryCountControl
 Route::get('/inventory-report','InventoryController@createReport')->name('inventories.report');
 
 Route::get('/reports', 'ReportController@index')->name('reports.index');
-//Route::get('/reports/product-wise-sales', 'ReportController@productWiseSales')->name('reports.product-wise-sales');
+Route::post('/reports/product-wise-sales', 'ReportController@productWiseSales')->name('reports.product-wise-sales');
+Route::post('/reports/export-product-wise-sales', 'ReportController@exportProductWiseSales')->name('reports.export-product-wise-sales');
+Route::post('/reports/category-wise-sales', 'ReportController@categoryWiseSales')->name('reports.category-wise-sales');
+Route::post('/reports/export-category-wise-sales', 'ReportController@exportCategoryWiseSales')->name('reports.export-category-wise-sales');
+Route::post('/reports/supplier-wise-sales', 'ReportController@supplierWiseSales')->name('reports.supplier-wise-sales');
+Route::post('/reports/export-supplier-wise-sales', 'ReportController@exportSupplierWiseSales')->name('reports.export-supplier-wise-sales');
 Route::get('/reports/total-expense', 'ReportController@totalExpense')->name('reports.total-expense');
 Route::post('/reports/export-total-expense', 'ReportController@exportTotalExpense')->name('reports.export-total-expense');
 Route::get('/reports/product-return', 'ReportController@productReturn')->name('reports.product-return');

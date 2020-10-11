@@ -5,13 +5,13 @@
         <a href="{{ route('reports.index') }}">
             <i class="fa fa-arrow-left pg-back"></i>
         </a>
-        <div class="pg-title">Product-wise Sales Report</div>
+        <div class="pg-title">Category-wise Sales Report</div>
     </div>
 
     <div class="section">
 
         <div class="section-content">
-            <form action="{{ route('reports.export-product-wise-sales') }}" target="_blank" method="POST">
+            <form action="{{ route('reports.export-category-wise-sales') }}" target="_blank" method="POST">
                 @csrf
                 <input type="hidden" name="start_date" id="start_date">
                 <input type="hidden" name="end_date" id="end_date">
@@ -26,21 +26,19 @@
 
                     <thead class="table-head">
                         <tr>
-                            <th>Product Code</th>
-                            <th>Product Name</th>
+                            <th>Category</th>
                             <th>Quantity Sold</th>
                             <th>Total Sales (Incl. Tax)</th>
                             <th>Total Sales (Excl. Tax)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($sales_products as $sales_product)
+                        @foreach($sales_categories as $sales_category)
                             <tr>
-                                <td>{{ $sales_product->pcode }}</td>
-                                <td>{{ $sales_product->name }}</td>
-                                <td class="text-right">{{ $sales_product->qty_sum }}</td>
-                                <td class="text-right">{{ $sales_product->sales_sum + $sales_product->sale->taxes }}</td>
-                                <td class="text-right">{{ $sales_product->sales_sum }}</td>
+                                <td>{{ $sales_category->name }}</td>
+                                <td class="text-right">{{ $sales_category->qty_sum }}</td>
+                                <td class="text-right">{{ $sales_category->sales_sum + $sales_category->sale->taxes }}</td>
+                                <td class="text-right">{{ $sales_category->sales_sum }}</td>
                             </tr>
                         @endforeach
                     </tbody>

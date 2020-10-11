@@ -55,16 +55,19 @@
 
                 {{-- Sales Category --}}
                 <div class="list-group category" id="sales" hidden>
-                    <a class="list-group-item list-group-item-action" id="product-wise-sales" role="tabpanel"
-                       href="#">
+                    {{-- Product-wise Sales Report --}}
+                    <a class="list-group-item list-group-item-action" id="product-wise-sales" role="tabpanel" href="#"
+                       data-toggle="modal" data-target="#date_range_select" onclick="updateForm('{{ route('reports.product-wise-sales') }}')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-tshirt"></i></div>
                         Product-wise Sales Report
                     </a>
-                    <a class="list-group-item list-group-item-action" id="category-wise-sales" role="tabpanel" href="#">
+                    <a class="list-group-item list-group-item-action" id="category-wise-sales" role="tabpanel" href="#"
+                       data-toggle="modal" data-target="#date_range_select" onclick="updateForm('{{ route('reports.category-wise-sales') }}')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-list"></i></div>
                         Category-wise Sales Report
                     </a>
-                    <a class="list-group-item list-group-item-action" id="supplier-wise-sales" role="tabpanel" href="#">
+                    <a class="list-group-item list-group-item-action" id="supplier-wise-sales" role="tabpanel" href="#"
+                       data-toggle="modal" data-target="#date_range_select" onclick="updateForm('{{ route('reports.supplier-wise-sales') }}')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-building"></i></div>
                         Supplier-wise Sales Report
                     </a>
@@ -158,7 +161,8 @@
                     </a>
                     {{-- Product-wise Profit Report --}}
                     <a class="list-group-item list-group-item-action" id="supplier-purchase" role="tabpanel"
-                       href="#" data-toggle="modal" data-target="#date_range_select">
+                       href="#" data-toggle="modal" data-target="#date_range_select"
+                       onclick="updateForm('{{ route('reports.product-wise-profit') }}')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
                         Product-wise Profit Report
                     </a>
@@ -194,7 +198,7 @@
                 <div class="modal fade" id="date_range_select" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('reports.product-wise-profit') }}" method="POST">
+                            <form id="date_range_form" method="POST">
                                 @csrf
                                 <input type="hidden" name="start_date" id="start_date">
                                 <input type="hidden" name="end_date" id="end_date">
@@ -240,6 +244,10 @@
             }
         }
 
+    }
+
+    function updateForm(action) {
+        $('#date_range_form').attr('action', action);
     }
 
     $(function() {
