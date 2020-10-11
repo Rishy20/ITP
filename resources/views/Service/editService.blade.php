@@ -3,7 +3,7 @@
 
 <div class="editSService"> {{-- Start of editService --}}
     <div class="pg-heading">
-        <i class="fa fa-arrow-left pg-back"></i>
+        <a href="{{ route('service.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Edit Service</div>
     </div>
     <div class="row">
