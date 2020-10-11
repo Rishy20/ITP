@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
+use PDF;
+
 class VoucherController extends Controller
 {
     public function __construct()
@@ -125,5 +127,21 @@ class VoucherController extends Controller
         $voucher->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+
+    public function createReport(Request $request){
+
+        $voucher =  DB::select('select v.id, amount, exp from vouchers v');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('voucher',$voucher);
+
+
+        $pdf =  PDF::loadView('Voucher.voucherReport',$voucher);
+
+        // // download PDF file with download method
+        return $pdf->stream('voucher.pdf');
+        return view('Voucher.voucherReport',compact('voucher'));
     }
 }
