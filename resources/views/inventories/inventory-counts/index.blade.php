@@ -28,6 +28,7 @@
                     <th>Reference #</th>
                     <th>Outlet</th>
                     <th>Status</th>
+                    <th>Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -46,6 +47,7 @@
                                     &nbsp;Ongoing</span>
                             @endif
                         </td>
+                        <td>{{ $inventory_count->created_at }}</td>
 
                         <td class="action-icon">
                             @if (!$inventory_count->completed)

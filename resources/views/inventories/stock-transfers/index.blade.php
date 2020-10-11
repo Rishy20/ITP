@@ -29,6 +29,7 @@
                     <th>Source</th>
                     <th>Destination</th>
                     <th>Status</th>
+                    <th>Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -48,6 +49,7 @@
                                     &nbsp;Pending</span>
                             @endif
                         </td>
+                        <td>{{ $stock_transfer->created_at }}</td>
 
                         <td class="action-icon">
                             @if(!$stock_transfer->completed)
