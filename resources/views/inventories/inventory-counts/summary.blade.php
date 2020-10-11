@@ -17,15 +17,17 @@
                 <table class="table table-sm">
                     <thead class="text-center table-dark">
                         <tr>
-                            <th class="col-6">Product Name</th>
-                            <th class="col-2">Expected Qty</th>
-                            <th class="col-2">Actual Qty</th>
-                            <th class="col-2">Difference</th>
+                            <th>Product Code</th>
+                            <th>Product Name</th>
+                            <th>Expected Qty</th>
+                            <th>Actual Qty</th>
+                            <th>Difference</th>
                         </tr>
                     </thead>
                     <tbody>
                     @foreach($counted_items as $counted_item)
                         <tr>
+                            <td>{{ $counted_item->product->pcode }}</td>
                             <td>{{ $counted_item->product->name }}</td>
                             <td class="text-right">{{ $counted_item->expected_qty }}</td>
                             <td class="text-right">{{ $counted_item->actual_qty }}</td>

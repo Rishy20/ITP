@@ -1,5 +1,5 @@
 <div>
-    <form method="POST" action="{{ route('stock-transfers.store') }}">
+    <form method="POST" action="{{ route('stock-transfers.store') }}" id="transfer_form">
         @csrf
 
         <div class="section">
@@ -17,6 +17,12 @@
                         </select>
                         <label for="source" class="float-label">Source Outlet</label>
                     </div>
+
+                    <button class="btn btn-secondary align-self-center" id="swap_inventories" wire:click="swapInventories"
+                            style="background-color: #058de9">
+                        <i class="fa fa-exchange-alt"></i>
+                    </button>
+
                     <div class="col">
                         <select wire:model="destination" id="destination" name="destination" class="form-control custom-select" required>
                             @foreach($inventories as $inventory)
@@ -33,50 +39,42 @@
 
                 <div class="row">
                     <div class="col">
-                        <input wire:model="search" type="text" id="search" name="search" class="form-control" placeholder="Search Items">
-                        <label for="search" class="float-label">Search Items</label>
 
-                        <table class="table table-sm table-hover my-2" id="result_table">
+                        <table id="inventory_items" class="table table-sm table-striped table-borderless table-hover all-table">
                             <thead>
                                 <tr class="text-center">
-                                    <th class="table-head col-6">
-                                        <span wire:loading.remove wire:target="source, destination, search">Product Name</span>
-                                        <span wire:loading wire:target="source, destination, search">LOADING...</span>
-                                    </th>
-                                    <th class="table-head col-3">
-                                        <span wire:loading.remove wire:target="source, destination, search">Source Qty</span>
-                                    </th>
-                                    <th class="table-head col-3">
-                                        <span wire:loading.remove wire:target="source, destination, search">Dest. Qty</span>
-                                        <div wire:loading wire:target="source, destination, search">
-                                            @for($i = 0; $i < 3; $i++)
-                                                <span class="spinner-grow" style="width: 1.2em; height: 1.2em"></span>
-                                            @endfor
-                                        </div>
-                                    </th>
+                                    <th class="table-head">Product Code</th>
+                                    <th class="table-head">Product Name</th>
+                                    <th class="table-head">Source Qty</th>
+                                    <th class="table-head">Dest. Qty</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(count($inventory_items) > 0)
                                     @foreach($inventory_items as $inventory_item)
-                                            <tr style="cursor: pointer" wire:click="addTransferItem({{ $inventory_item->product_id }})">
-                                                <td>{{ $inventory_item->product->name }}</td>
-                                                <td class="text-right">{{ $inventory_item->qty }}</td>
-                                                <td class="text-right">{{ $inventory_item->destination_qty }}</td>
-                                            </tr>
+                                        <tr style="cursor: pointer" class="inventory_item" onclick='addItem(@json($inventory_item))'
+                                            id="{{ "row_".$inventory_item->product_id }}">
+                                            <td class="text-left">{{ $inventory_item->pcode }}</td>
+                                            <td class="text-left">{{ $inventory_item->name }}</td>
+                                            <td class="text-right">{{ $inventory_item->qty }}</td>
+                                            <td class="text-right">{{ $inventory_item->destination_qty }}</td>
+                                        </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td class="text-center" colspan="3">No items found!</td>
+                                        <td class="text-center" colspan="4">No items found!</td>
                                     </tr>
                                 @endif
                             </tbody>
                         </table>
 
-                        {{ $products->links() }}
-                    </div>
-                    <div class="col">
-                        <p>Barcode Scan</p>
+                        <div class="text-center" id="spinner" hidden>
+                            <div class="spinner-border my-5" role="status"
+                                 style="color: #058de9; width: 3em; height: 3em">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -90,48 +88,20 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col">
-                        <table class="table table-sm table-bordered table-hover">
+                        <table class="table table-sm table-striped table-borderless table-hover">
                             <thead>
                                 <tr class="text-center">
-                                    <th class="table-head col-6">
-                                        <span wire:loading.remove wire:target="addTransferItem">Product Name</span>
-                                        <span wire:loading wire:target="addTransferItem">LOADING...</span>
-                                    </th>
-                                    <th class="table-head col-2">
-                                        <span wire:loading.remove wire:target="addTransferItem">Quantity</span>
-                                    </th>
-                                    <th class="table-head col-2">
-                                        <span wire:loading.remove wire:target="addTransferItem">Source Qty</span>
-                                        <div wire:loading wire:target="addTransferItem">
-                                            @for($i = 0; $i < 3; $i++)
-                                                <span class="spinner-grow" style="width: 1.2em; height: 1.2em"></span>
-                                            @endfor
-                                        </div>
-                                    </th>
-                                    <th class="table-head col-2">
-                                        <span wire:loading.remove wire:target="addTransferItem">Dest. Qty</span>
-                                    </th>
+                                    <th class="table-head">Product Code</th>
+                                    <th class="table-head">Product Name</th>
+                                    <th class="table-head">Transfer Qty</th>
+                                    <th class="table-head">Source Qty</th>
+                                    <th class="table-head">Dest. Qty</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if(count($transfer_item_objects) > 0)
-                                    @foreach($transfer_item_objects as $transfer_item)
-                                        <tr>
-                                            <td>{{ $transfer_item->product->name }}</td>
-                                            <td class="text-right">
-                                                <input type="number" name="quantities[]" min="1" max="{{ $transfer_item->qty }}" required/>
-                                            </td>
-                                            <td class="text-right">{{ $transfer_item->qty }}</td>
-                                            <td class="text-right">{{ $transfer_item->destination_qty }}</td>
-                                        </tr>
-
-                                        <input type="hidden" name="transfer_items[]" value="{{ $transfer_item->product->id }}"/>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td class="text-center" colspan="4">No items added...</td>
-                                    </tr>
-                                @endif
+                            <tbody id="trans-items">
+                                <tr id="no_items_added">
+                                    <td class="text-center" colspan="5">No items added...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -139,9 +109,167 @@
                 <div class="row submit-row">
                     <div class="col">
                         <input class="btn-submit" type="submit" value="Save">
+
+                        <div class="float-right">
+                            <input type="checkbox" name="completed" id="completed">
+                            <label for="completed" class="mr-4 mt-2">Mark as received</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+
+    <script>
+        let transfer_items = [];
+        let inventory_items_table;
+
+        function addItem(item) {
+            $('#row_' + item['product_id']).toggle("highlight");
+
+            let exist = false;
+
+            if (transfer_items.length > 0) {
+                for (let i = 0; i < transfer_items.length; i++) {
+                    if (item['product_id'] === transfer_items[i]['product_id']) {
+                        exist = true;
+                        break;
+                    }
+                }
+
+                if (!exist) {
+                    transfer_items.push(item);
+                    addTableRow(item);
+                    addHiddenInput(item);
+                }
+            } else {
+                transfer_items.push(item);
+                addTableRow(item);
+                addHiddenInput(item);
+            }
+        }
+
+        function addTableRow(item) {
+            let trans_items_tbody = document.getElementById('trans-items');
+            document.getElementById('no_items_added').setAttribute('hidden', '');
+
+            let tr = document.createElement('tr');
+            let item_code = document.createElement('td');
+            let item_name = document.createElement('td');
+            let item_trans_qty = document.createElement('td');
+            let item_source_qty = document.createElement('td');
+            let item_dest_qty = document.createElement('td');
+            let remove_btn = document.createElement('button');
+
+            tr.setAttribute('id', 'added_row_' + item['product_id']);
+
+            item_trans_qty.setAttribute('class', 'text-right');
+            item_source_qty.setAttribute('class', 'text-right');
+            item_dest_qty.setAttribute('class', 'text-right');
+
+            let item_trans_qty_input = document.createElement('input');
+            item_trans_qty_input.setAttribute('type', 'number');
+            item_trans_qty_input.setAttribute('name', 'quantities[]');
+            item_trans_qty_input.setAttribute('min', '1');
+            item_trans_qty_input.setAttribute('max', item['qty']);
+            item_trans_qty_input.setAttribute('required', '');
+            item_trans_qty_input.setAttribute('class', 'text-right');
+            item_trans_qty_input.setAttribute('id', 'trans_qty_' + item['product_id']);
+            item_trans_qty_input.setAttribute('style', 'width: 72px');
+            item_trans_qty_input.stepUp(1);
+
+            item_code.innerHTML = item['pcode'];
+            item_name.innerHTML = item['name'];
+            item_source_qty.innerHTML = item['qty'];
+            item_dest_qty.innerHTML = item['destination_qty'];
+
+            remove_btn.setAttribute('class', 'btn btn-danger btn-sm ml-3');
+            remove_btn.setAttribute('onclick', 'removeItem(JSON.parse(\'' + JSON.stringify(item) + '\'))');
+            let cross_icon = document.createElement('i');
+            cross_icon.setAttribute('class', 'fa fa-times');
+
+            remove_btn.appendChild(cross_icon);
+            item_dest_qty.appendChild(remove_btn);
+            item_trans_qty.appendChild(item_trans_qty_input);
+            tr.append(item_code, item_name, item_trans_qty, item_source_qty, item_dest_qty);
+            trans_items_tbody.appendChild(tr);
+        }
+
+        function addHiddenInput(item) {
+            let form = document.getElementById('transfer_form');
+
+            let trans_item_ids = document.createElement('input');
+            trans_item_ids.setAttribute('type', 'hidden');
+            trans_item_ids.setAttribute('name', 'transfer_items[]');
+            trans_item_ids.setAttribute('value', item['product_id']);
+
+            form.appendChild(trans_item_ids);
+        }
+
+        function removeItem(item) {
+            $('#row_' + item['product_id']).toggle("highlight");
+
+            // Remove existing hidden input
+            $('input[name="transfer_items[]"][value="' + item['product_id'] + '"]').remove();
+
+            // Remove item from transfer items table
+            $('#added_row_' + item['product_id']).remove();
+
+            // Remove item from transfer_items array
+            for (let i = 0; i < transfer_items.length; i++) {
+                if (transfer_items[i]['product_id'] === item['product_id'])
+                    transfer_items.splice(i, 1);
+            }
+
+            if (transfer_items.length === 0)
+                document.getElementById('no_items_added').removeAttribute('hidden');
+        }
+
+        $(document).ready(function () {
+            inventory_items_table = $('#inventory_items').DataTable({
+                "order": [], "dom": '<"top"f><t><"bottom"lip>',
+                language: {
+                    search: "_INPUT_" , searchPlaceholder: "🔎 Search"
+                }
+            });
+        })
+
+        document.getElementById('source').addEventListener("change", function () {
+            inventory_items_table.destroy();
+            document.getElementById('inventory_items').setAttribute('hidden', '');
+            document.getElementById('source').setAttribute('disabled', '');
+            document.getElementById('destination').setAttribute('disabled', '');
+            document.getElementById('swap_inventories').setAttribute('disabled', '');
+            document.getElementById('spinner').removeAttribute('hidden');
+        }, false)
+
+        document.getElementById('destination').addEventListener("change", function () {
+            inventory_items_table.destroy();
+            document.getElementById('inventory_items').setAttribute('hidden', '');
+            document.getElementById('source').setAttribute('disabled', '');
+            document.getElementById('destination').setAttribute('disabled', '');
+            document.getElementById('swap_inventories').setAttribute('disabled', '');
+            document.getElementById('spinner').removeAttribute('hidden');
+        }, false)
+
+        document.getElementById('swap_inventories').addEventListener("click", function () {
+            inventory_items_table.destroy();
+            document.getElementById('inventory_items').setAttribute('hidden', '');
+            document.getElementById('source').setAttribute('disabled', '');
+            document.getElementById('destination').setAttribute('disabled', '');
+            document.getElementById('swap_inventories').setAttribute('disabled', '');
+            document.getElementById('spinner').removeAttribute('hidden');
+        }, false)
+
+        window.addEventListener('contentChanged', event => {
+            inventory_items_table = $('#inventory_items').DataTable({
+                "order": [], "dom": '<"top"f><t><"bottom"lip>',
+                language: {
+                    search: "_INPUT_" , searchPlaceholder: "🔎 Search"
+                }
+            });
+
+            transfer_items = [];
+        });
+    </script>
 </div>

@@ -7,6 +7,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class InventoryController extends Controller
 {
@@ -23,6 +24,19 @@ class InventoryController extends Controller
     {
         // Get all inventories from the database and pass them to inventory index view
         $inventories = Inventory::all();
+
+        // Assign total quantity of each inventory by getting the total of inventory items quantities
+        foreach ($inventories as $inventory) {
+            $items = DB::table('inventory_items')->where('inventory_id', $inventory->id)->get();
+            $total_qty = 0;
+
+            foreach ($items as $item) {
+                $total_qty += $item->qty;
+            }
+
+            $inventory->qty = $total_qty;
+        }
+
         return view('inventories.index')->with('inventories', $inventories);
     }
 
@@ -133,5 +147,14 @@ class InventoryController extends Controller
         $inventory->delete();
         Session::put('message', 'Success!');
         return redirect('inventories');
+    }
+
+    public function createReport(Request $request){
+        $inventories = Inventory::all();
+        view()->share('inventories',$inventories);
+        $pdf =  PDF::loadView('inventories.report', $inventories);
+
+        // Download the PDF file with download method
+        return $pdf->stream('inventories.pdf');
     }
 }

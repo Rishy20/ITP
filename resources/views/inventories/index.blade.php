@@ -20,6 +20,9 @@
     <div class="section-content">
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+            <a href="{{ route('inventories.report') }}" target="_blank">
+                <div class="add-btn">Export Inventories</div>
+            </a>
             <a href="{{ route('inventory-counts.index') }}">
                 <div class="add-btn">Inventory Counts</div>
             </a>
@@ -40,7 +43,7 @@
             <tbody>
                 @foreach($inventories as $inventory)
                     <tr>
-                        <td>
+                        <td class="font-weight-bold">
                             <a href="{{ route('inventories.show', $inventory) }}" style="color: #058DE9">{{ $inventory->name }}</a>
                         </td>
                         <td>{{ $inventory->address }}</td>

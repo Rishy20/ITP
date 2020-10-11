@@ -1,5 +1,5 @@
 <div>
-    <form method="POST" action="{{ route('inventory-counts.store') }}">
+    <form method="POST" action="{{ route('inventory-counts.store') }}" id="count_form">
         @csrf
 
         <div class="section">
@@ -25,46 +25,39 @@
 
                 <div class="row">
                     <div class="col">
-                        <input wire:model="search" type="text" id="search" name="search" class="form-control" placeholder="Search Items">
-                        <label for="search" class="float-label">Search Items</label>
-
-                        <table class="table table-sm table-hover my-2" id="result_table">
+                        <table id="inventory_items" class="table table-sm table-striped table-borderless table-hover all-table">
                             <thead>
-                            <tr class="text-center">
-                                <th class="table-head col-8">
-                                    <span wire:loading.remove wire:target="outlet, search">Product Name</span>
-                                    <span wire:loading wire:target="outlet, search">LOADING...</span>
-                                </th>
-                                <th class="table-head col-4">
-                                    <span wire:loading.remove wire:target="outlet, search">Qty</span>
-                                    <div wire:loading wire:target="outlet, search">
-                                        @for($i = 0; $i < 3; $i++)
-                                            <span class="spinner-grow" style="width: 1.2em; height: 1.2em"></span>
-                                        @endfor
-                                    </div>
-                                </th>
-                            </tr>
+                                <tr class="text-center">
+                                    <th class="table-head">Product Code</th>
+                                    <th class="table-head">Product Name</th>
+                                    <th class="table-head">Existing Qty</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @if(count($inventory_items) > 0)
-                                @foreach($inventory_items as $inventory_item)
-                                    <tr style="cursor: pointer" wire:click="addCountedItem({{ $inventory_item->product_id }})">
-                                        <td>{{ $inventory_item->product->name }}</td>
-                                        <td class="text-right">{{ $inventory_item->qty }}</td>
+                                @if(count($inventory_items) > 0)
+                                    @foreach($inventory_items as $inventory_item)
+                                        <tr style="cursor: pointer" class="inventory_item" onclick='countItem(@json($inventory_item))'
+                                            id="{{ "row_".$inventory_item->product_id }}">
+                                            <td class="text-left">{{ $inventory_item->pcode }}</td>
+                                            <td class="text-left">{{ $inventory_item->name }}</td>
+                                            <td class="text-right">{{ $inventory_item->qty }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="text-center" colspan="3">No items found!</td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="text-center" colspan="3">No items found!</td>
-                                </tr>
-                            @endif
+                                @endif
                             </tbody>
                         </table>
 
-                        {{ $products->links() }}
-                    </div>
-                    <div class="col">
-                        <p>Barcode Scan</p>
+                        <div class="text-center" id="spinner" hidden>
+                            <div class="spinner-border my-5" role="status"
+                                 style="color: #058de9; width: 3em; height: 3em">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -78,44 +71,19 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col">
-                        <table class="table table-sm table-bordered table-hover">
+                        <table class="table table-sm table-striped table-borderless table-hover">
                             <thead>
-                            <tr class="text-center">
-                                <th class="table-head col-6">
-                                    <span wire:loading.remove wire:target="addCountedItem">Product Name</span>
-                                    <span wire:loading wire:target="addCountedItem">LOADING...</span>
-                                </th>
-                                <th class="table-head col-3">
-                                    <span wire:loading.remove wire:target="addCountedItem">Expected Qty</span>
-                                </th>
-                                <th class="table-head col-3">
-                                    <span wire:loading.remove wire:target="addCountedItem">Actual Qty</span>
-                                    <div wire:loading wire:target="addCountedItem">
-                                        @for($i = 0; $i < 3; $i++)
-                                            <span class="spinner-grow" style="width: 1.2em; height: 1.2em"></span>
-                                        @endfor
-                                    </div>
-                                </th>
-                            </tr>
+                                <tr class="text-center">
+                                    <th class="table-head">Product Code</th>
+                                    <th class="table-head">Product Name</th>
+                                    <th class="table-head">Expected Qty</th>
+                                    <th class="table-head">Actual Qty</th>
+                                </tr>
                             </thead>
-                            <tbody>
-                            @if(count($counted_item_objects) > 0)
-                                @foreach($counted_item_objects as $counted_item)
-                                    <tr>
-                                        <td>{{ $counted_item->product->name }}</td>
-                                        <td class="text-right">{{ $counted_item->qty }}</td>
-                                        <td class="text-right">
-                                            <input type="number" name="actual_quantities[]" min="0" required/>
-                                        </td>
-                                    </tr>
-
-                                    <input type="hidden" name="counted_items[]" value="{{ $counted_item->product->id }}"/>
-                                @endforeach
-                            @else
-                                <tr>
+                            <tbody id="counted-items">
+                                <tr id="no_items_added">
                                     <td class="text-center" colspan="4">No items added...</td>
                                 </tr>
-                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -123,9 +91,144 @@
                 <div class="row submit-row">
                     <div class="col">
                         <input class="btn-submit" type="submit" value="Save">
+
+                        <div class="float-right">
+                            <input type="checkbox" name="completed" id="completed">
+                            <label for="completed" class="mr-4 mt-2">Mark as completed</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+
+    <script>
+        let counted_items = [];
+        let inventory_items_table;
+
+        function countItem(item) {
+            $('#row_' + item['product_id']).toggle("highlight");
+
+            let exist = false;
+
+            if (counted_items.length > 0) {
+                for (let i = 0; i < counted_items.length; i++) {
+                    if (item['product_id'] === counted_items[i]['product_id']) {
+                        exist = true;
+                        break;
+                    }
+                }
+
+                if (!exist) {
+                    counted_items.push(item);
+                    addTableRow(item);
+                    addHiddenInput(item);
+                }
+            } else {
+                counted_items.push(item);
+                addTableRow(item);
+                addHiddenInput(item);
+            }
+        }
+
+        function addTableRow(item) {
+            let counted_items_tbody = document.getElementById('counted-items');
+            document.getElementById('no_items_added').setAttribute('hidden', '');
+
+            let tr = document.createElement('tr');
+            let item_code = document.createElement('td');
+            let item_name = document.createElement('td');
+            let item_expected_qty = document.createElement('td');
+            let item_actual_qty = document.createElement('td');
+            let remove_btn = document.createElement('button');
+
+            tr.setAttribute('id', 'added_row_' + item['product_id']);
+
+            item_expected_qty.setAttribute('class', 'text-right');
+            item_actual_qty.setAttribute('class', 'text-right');
+
+            let item_actual_qty_input = document.createElement('input');
+            item_actual_qty_input.setAttribute('type', 'number');
+            item_actual_qty_input.setAttribute('name', 'actual_quantities[]');
+            item_actual_qty_input.setAttribute('min', '0');
+            item_actual_qty_input.setAttribute('required', '');
+            item_actual_qty_input.setAttribute('class', 'text-right');
+            item_actual_qty_input.setAttribute('id', 'actual_qty_' + item['product_id']);
+            item_actual_qty_input.setAttribute('style', 'width: 72px');
+            item_actual_qty_input.stepUp(1);
+
+            item_code.innerHTML = item['pcode'];
+            item_name.innerHTML = item['name'];
+            item_expected_qty.innerHTML = item['qty'];
+
+            remove_btn.setAttribute('class', 'btn btn-danger btn-sm ml-3');
+            remove_btn.setAttribute('onclick', 'removeItem(JSON.parse(\'' + JSON.stringify(item) + '\'))');
+            let cross_icon = document.createElement('i');
+            cross_icon.setAttribute('class', 'fa fa-times');
+
+            remove_btn.appendChild(cross_icon);
+            item_actual_qty.appendChild(item_actual_qty_input);
+            item_actual_qty.appendChild(remove_btn);
+            tr.append(item_code, item_name, item_expected_qty, item_actual_qty);
+            counted_items_tbody.appendChild(tr);
+        }
+
+        function addHiddenInput(item) {
+            let form = document.getElementById('count_form');
+
+            let counted_item_ids = document.createElement('input');
+            counted_item_ids.setAttribute('type', 'hidden');
+            counted_item_ids.setAttribute('name', 'counted_items[]');
+            counted_item_ids.setAttribute('value', item['product_id']);
+
+            form.appendChild(counted_item_ids);
+        }
+
+        function removeItem(item) {
+            $('#row_' + item['product_id']).toggle("highlight");
+
+            // Remove existing hidden input
+            $('input[name="counted_items[]"][value="' + item['product_id'] + '"]').remove();
+
+            // Remove item from transfer items table
+            $('#added_row_' + item['product_id']).remove();
+
+            // Remove item from transfer_items array
+            for (let i = 0; i < counted_items.length; i++) {
+                if (counted_items[i]['product_id'] === item['product_id'])
+                    counted_items.splice(i, 1);
+            }
+
+            if (counted_items.length === 0)
+                document.getElementById('no_items_added').removeAttribute('hidden');
+        }
+
+        $(document).ready(function () {
+            inventory_items_table = $('#inventory_items').DataTable({
+                "order": [], "dom": '<"top"f><t><"bottom"lip>',
+                language: {
+                    search: "_INPUT_" , searchPlaceholder: "🔎 Search"
+                }
+            });
+        })
+
+        document.getElementById('outlet').addEventListener("change", function () {
+            inventory_items_table.destroy();
+            document.getElementById('inventory_items').setAttribute('hidden', '');
+            document.getElementById('outlet').setAttribute('disabled', '');
+            document.getElementById('spinner').removeAttribute('hidden');
+        }, false)
+
+        window.addEventListener('contentChanged', event => {
+            inventory_items_table = $('#inventory_items').DataTable({
+                "order": [], "dom": '<"top"f><t><"bottom"lip>',
+                language: {
+                    search: "_INPUT_" , searchPlaceholder: "🔎 Search"
+                }
+            });
+
+            counted_items = [];
+        });
+    </script>
+
 </div>

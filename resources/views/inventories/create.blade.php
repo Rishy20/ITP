@@ -6,6 +6,7 @@
         <i class="fa fa-arrow-left pg-back"></i>
     </a>
     <div class="pg-title">Add Inventory</div>
+    <div class="demo-btn">Demo</div>
 </div>
 
 <div class="section">
@@ -40,5 +41,13 @@
         </form>
     </div>
 </div>
+
+<script>
+    // JS for demo button
+    $(".demo-btn").click(function(){
+        $("input[name='name']").val("Warehouse");
+        $("input[name='address']").val("Malabe, Colombo");
+    });
+</script>
 
 @endsection

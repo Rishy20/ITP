@@ -29,6 +29,7 @@
                     <th>Source</th>
                     <th>Destination</th>
                     <th>Status</th>
+                    <th>Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -38,15 +39,29 @@
                         <td>{{$stock_transfer->reference}}</td>
                         <td>{{$stock_transfer->source_name}}</td>
                         <td>{{$stock_transfer->destination_name}}</td>
-                        <td>{{$stock_transfer->status}}</td>
+                        <td>
+                            @if ($stock_transfer->completed)
+                                <span><i class="fa fa-check text-success"></i>
+                                    &nbsp;Received
+                                </span>
+                            @else
+                                <span><i class="fa fa-circle" style="color: #058de9"></i>
+                                    &nbsp;Pending</span>
+                            @endif
+                        </td>
+                        <td>{{ $stock_transfer->created_at }}</td>
 
                         <td class="action-icon">
-                            <a href="{{ route('stock-transfers.edit', $stock_transfer) }}"><i class="fas fa-pen"></i></a>
+                            @if(!$stock_transfer->completed)
+                                <a href="{{ route('stock-transfers.complete', $stock_transfer) }}"><i class="fas fa-check"></i></a>
+                                <a href="{{ route('stock-transfers.edit', $stock_transfer) }}"><i class="fas fa-pen"></i></a>
+                            @else
+                                <i style="margin: 0 44px"></i>
+                            @endif
                             <button type="submit" class="dlt-btn" id="dlt-btn{{ $stock_transfer->id }}"><i class="fas fa-trash-alt"></i></button>
-                            <form method="POST" class="dlt-form" id="dlt-form{{ $tock_transfer->id }}" action="{{ route('stock-transfers.destroy', $stock_transfer) }}">
+                            <form method="POST" class="dlt-form" id="dlt-form{{ $stock_transfer->id }}" action="{{ route('stock-transfers.destroy', $stock_transfer) }}">
                                 @method('DELETE')  {{-- Spoof form method as 'DELETE' to comply with destroy route --}}
                                 @csrf
-
                             </form>
                         </td>
                     </tr>
