@@ -133,7 +133,7 @@
                         <td>{{ $stock_transfer->dest_name }}</td>
                         <td style="text-align: right">{{ $stock_transfer->units }}</td>
                         <td>{{ $stock_transfer->status }}</td>
-                        <td>{{ $stock_transfer->updated_at->format('Y-m-d') }}</td>
+                        <td>{{ $stock_transfer->updated_at }}</td>
                     </tr>
                 @endforeach
             </tbody>

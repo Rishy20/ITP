@@ -71,9 +71,9 @@ class DayEnd extends Component
         foreach ($vendor_pays as $vendor_pay)
             $total_vendor_pays += $vendor_pay->amount;
 
-        $sales_info = ['total_sales_incl_tax' => $total_sales + $total_tax, 'total_sales_excl_tax' => $total_sales,
-            'total_qty' => $total_qty, 'gross_profit' => $total_sales + $total_tax - $total_discount - $total_cost,
-            'net_profit' => $total_sales - $total_discount - $total_cost];
+        $sales_info = ['total_sales_incl_tax' => $total_sales, 'total_sales_excl_tax' => $total_sales - $total_tax,
+            'total_qty' => $total_qty, 'gross_profit' => $total_sales - $total_cost,
+            'net_profit' => $total_sales - $total_cost - $total_tax];
         $other_info = ['total_exchanges' => $total_exchanges, 'total_discount' => $total_discount];
         $inventory_info = ['total_value' => $total_inventory_value, 'total_qty' => $total_inventory_qty];
         $payment_info = ['salary_pays' => $total_salary_pays, 'vendor_pays' => $total_vendor_pays, 'total_pays' => $total_salary_pays + $total_vendor_pays];
