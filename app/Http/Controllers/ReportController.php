@@ -10,6 +10,7 @@ use App\Sale;
 use App\SalesProduct;
 use App\StockTransfer;
 use App\VendorPayment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -201,6 +202,110 @@ class ReportController extends Controller
         $pdf =  PDF::loadView('reports.sales.export.product-return', [$returns, $start_date, $end_date]);
 
         return $pdf->stream('product-return.pdf');
+    }
+
+    public function dailyProfit() {
+        return view('reports.sales.daily-profit');
+    }
+
+    public function exportDailyProfit(Request $request) {
+        $date = $request->input('date');
+
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($date));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($date));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        $profit = collect();
+        $profit->revenue = 0;
+        $profit->cost = 0;
+        $profit->gp = 0;
+        $profit->np = 0;
+        $profit->gp_margin = 0;
+        $profit->tax = 0;
+
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(products.costPrice) AS cost_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_products as $item) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $item->sale = $sale;
+                    }
+                }
+
+                $profit->revenue += $item->sales_sum;
+                $profit->cost += $item->cost_sum;
+                $profit->tax += $item->sale->taxes;
+            }
+
+            $profit->gp = $profit->revenue - $profit->cost;
+            $profit->np = $profit->revenue - $profit->cost - $profit->tax;
+            $profit->gp_margin += ($profit->gp / $profit->revenue) * 100;
+        }
+
+        view()->share(['profit' => $profit, 'date' => $date]);
+        $pdf =  PDF::loadView('reports.sales.export.daily-profit', [$profit, $date]);
+
+        return $pdf->stream('daily-profit.pdf');
+    }
+
+    public function monthlyProfit() {
+        return view('reports.sales.monthly-profit');
+    }
+
+    public function exportMonthlyProfit(Request $request) {
+        $date = $request->input('date');
+
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($date));
+        $temp_date = Carbon::createFromFormat('Y-m', $date)->endOfMonth();
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($temp_date));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        $profit = collect();
+        $profit->revenue = 0;
+        $profit->cost = 0;
+        $profit->gp = 0;
+        $profit->np = 0;
+        $profit->gp_margin = 0;
+        $profit->tax = 0;
+
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(products.costPrice) AS cost_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_products as $item) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $item->sale = $sale;
+                    }
+                }
+
+                $profit->revenue += $item->sales_sum;
+                $profit->cost += $item->cost_sum;
+                $profit->tax += $item->sale->discount;
+            }
+
+            $profit->gp = $profit->revenue - $profit->cost;
+            $profit->np = $profit->revenue - $profit->cost - $profit->tax;
+            if ($profit->revenue != 0)
+                $profit->gp_margin += ($profit->gp / $profit->revenue) * 100;
+        }
+
+        view()->share(['profit' => $profit, 'date' => $date]);
+        $pdf =  PDF::loadView('reports.sales.export.monthly-profit', [$profit, $date]);
+
+        return $pdf->stream('monthly-profit.pdf');
     }
 
 

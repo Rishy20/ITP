@@ -88,6 +88,18 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-backward"></i></div>
                         Product Return Report
                     </a>
+                    {{-- Daily Profit Report --}}
+                    <a class="list-group-item list-group-item-action" id="daily-profit" role="tabpanel"
+                       href="{{ route('reports.daily-profit') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
+                        Daily Profit Report
+                    </a>
+                    {{-- Monthly Profit Report --}}
+                    <a class="list-group-item list-group-item-action" id="monthly-profit" role="tabpanel"
+                       href="{{ route('reports.monthly-profit') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
+                        Monthly Profit Report
+                    </a>
                 </div>
 
                 {{-- Inventory Category --}}

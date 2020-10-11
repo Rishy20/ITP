@@ -154,6 +154,10 @@ Route::get('/reports/supplier-purchase', 'ReportController@supplierPurchase')->n
 Route::post('/reports/export-supplier-purchase', 'ReportController@exportSupplierPurchase')->name('reports.export-supplier-purchase');
 Route::post('/reports/product-wise-profit', 'ReportController@productWiseProfit')->name('reports.product-wise-profit');
 Route::post('/reports/export-product-wise-profit', 'ReportController@exportProductWiseProfit')->name('reports.export-product-wise-profit');
+Route::get('/reports/daily-profit', 'ReportController@dailyProfit')->name('reports.daily-profit');
+Route::post('/reports/export-daily-profit', 'ReportController@exportDailyProfit')->name('reports.export-daily-profit');
+Route::get('/reports/monthly-profit', 'ReportController@monthlyProfit')->name('reports.monthly-profit');
+Route::post('/reports/export-monthly-profit', 'ReportController@exportMonthlyProfit')->name('reports.export-monthly-profit');
 //Route::get('/reports/total-payment', 'ReportController@totalPayment')->name('reports.total-payment');
 //Route::post('/reports/export-total-payment', 'ReportController@exportTotalPayment')->name('reports.export-total-payment');
 Route::get('/reports/day-end', 'ReportController@dayEnd')->name('reports.day-end');
