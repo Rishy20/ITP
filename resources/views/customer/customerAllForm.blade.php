@@ -20,6 +20,9 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+            <div class="add-btn">
+                <a href="{{ route('customer.report') }}" target="_blank">Export Customers</a>
+                </div>
             <div class="add-btn"> {{-- Add button --}}
                 <a href="{{ route('customer.create')}}">Add Customer</a> {{-- Enter the name of the add btn --}}
             </div>
@@ -33,7 +36,7 @@
                 <th>Email</th>
                 <th>Phone</th>
 
-                <th>City</th>
+                <th>city</th>
                 <th>Actions</th>
                 </tr>
             </thead>
@@ -47,7 +50,6 @@
                 <td> {{ $row->dob }} </td>
                 <td> {{ $row->email }} </td>
                 <td> {{ $row->phone }} </td>
-
                 <td> {{ $row->city }} </td>
 
                     <td class="action-icon">

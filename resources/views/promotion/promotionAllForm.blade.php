@@ -22,6 +22,9 @@
             <div class="add-btn"> {{-- Add button --}}
                 <a href="{{ route('promotion.create')}}">Add Promotion</a> {{-- Enter the name of the add btn --}}
             </div>
+            {{-- <div class="add-btn">
+                <a href="{{ route('voucher.report') }}" target="_blank">Export Promotions</a>
+                </div> --}}
             <thead class="table-head">
                 <tr>
                 <th>ID</th>

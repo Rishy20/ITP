@@ -31,12 +31,13 @@ Route::get('/brndReport','brandController@createReport')->name('brand.report');
 Route::get('/productReport','productController@createReport')->name('product.report');
 Route::get('/expenseReport','expenseController@createReport')->name('expense.report');
 Route::get('/salesReport','salesController@createReport')->name('sales.report');
+Route::get('/customerReport','CustomerController@createReport')->name('customer.report');
 
 
 Route::resource('/bank','BankAccountController');
 Route::resource('/exchange','ExchangeController');
 Route::get('/bankReport','BankAccountController@createReport')->name('banks.report');
-Route::get('/exchangeReport','ExchangeController@createReport')->name('exchanges.report');      
+Route::get('/exchangeReport','ExchangeController@createReport')->name('exchanges.report');
 
 
 

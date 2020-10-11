@@ -3,9 +3,13 @@
 @extends('layouts.main')
 @section('content')
 
-<div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
-    <div class="pg-title">Create Customer</div>
+<div class="addCustomer"> {{-- Start of addUser --}}
+    <div class="pg-heading">
+        <a href="{{ route('customer.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
+        <div class="pg-title">Add Customer</div>
+        <div class="demo-btn">
+            Demo
+        </div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
@@ -99,13 +103,22 @@
     </div> {{-- End  of sectionContent--}}
 </div> {{-- End  of section--}}
 
+<script>
+    //Demo Button
+    $(".demo-btn").click(function(){
+        $("input[name='firstname']").val("Windy");
+        $("input[name='lastname']").val("Perera");
+        $("input[name='gender']").val("female");
+        $("input[name='dob']").val(moment("1994-03-28").format("YYYY-MM-DD"));
+        $("input[name='email']").val("wperera@gmail.com");
+        $("input[name='phone']").val("0335642258");
+        $("input[name='streetaddress']").val("1/57, Negombo road");
+        $("input[name='city']").val("Giriulla");
+
+    });
+
+</script>
+
 @endsection
 
-{{--
-    Important points to consider
-    * The labels should be below the input box
-    * All the input boxes should have a placeholder
-    * The class name of the label should be "float-label"
-    * The class name of the submit button should be "btn-submit"
-    * The row containing the submit button should have a class of submit-row
---}}
+

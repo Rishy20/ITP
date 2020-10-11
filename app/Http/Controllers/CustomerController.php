@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class CustomerController extends Controller
 {
@@ -136,4 +138,24 @@ class CustomerController extends Controller
         Session::put('message', 'Success!');
         return redirect('/customer');
     }
+
+
+
+
+    public function createReport(Request $request){
+
+        $customer =  DB::select('select ID, firstname,lastname,gender,dob,email,phone,streetaddress,city from customers');
+    
+        // // return view ('Barcode.printBarcode',compact('product'));
+    
+        view()->share('customer',$customer);
+    
+    
+        $pdf =  PDF::loadView('customer.customerReport',$customer);
+    
+        // // download PDF file with download method
+        return $pdf->stream('customer.pdf');
+        return view('customer.customerReport',compact('customer'));
+    }
 }
+
