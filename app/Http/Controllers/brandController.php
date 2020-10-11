@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
+use PDF;
 class brandController extends Controller
 {
     public function __construct()
@@ -46,6 +47,7 @@ class brandController extends Controller
     public function store(Request $request)
     {
         Brand::create($request->all());
+        return \redirect('/brand');
     }
 
     /**
@@ -102,4 +104,20 @@ class brandController extends Controller
         return redirect()->back();
 
     }
+    public function createReport(Request $request){
+
+        $brand =  DB::select('select b.name,b.description,count(brand) as count  from brands b , products p  where p.brand = b.id group by p.brand ');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('brand',$brand);
+
+
+        $pdf =  PDF::loadView('Brand.brandReport',$brand);
+
+        // // download PDF file with download method
+        return $pdf->stream('brands.pdf');
+        return view('Brand.brandReport',compact('brand'));
+    }
 }
+

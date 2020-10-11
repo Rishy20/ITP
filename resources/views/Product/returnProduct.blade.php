@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<div class="section"> {{-- Start of Section--}}
+<div class="section mb-4"> {{-- Start of Section--}}
     <div class="section-title">
         Select Products
         <hr>
@@ -78,23 +78,6 @@
                             <div class="dropdown-menu product-overlay" aria-labelledby="dropdownMenuButton" >
                                 <table class="table table-borderless" id="productSearchTable">
 
-                                    {{-- @foreach($prd as $pr)
-                                    <tr onclick="addProduct({{ $pr->id }},{{ $pr->vid }})">
-                                        <td class="pr-code">
-                                            {{ $pr->pcode }}
-                                        </td>
-                                        <td class="pr-name">
-                                            {{ $pr->name }}
-                                        </td>
-                                        <td class="pr-name">
-                                            {{ $pr->size }}
-                                        </td>
-                                        <td class="pr-name">
-                                            {{ $pr->color }}
-                                        </td>
-
-                                    </tr>
-                                    @endforeach --}}
                                 </table>
 
 
@@ -109,6 +92,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Item Code</th>
                                             <th scope="col">Item Name</th>
+                                            <th scope="col">Price</th>
                                             <th scope="col">Size</th>
                                             <th scope="col">Colour</th>
                                             <th scope="col" style="width: 100px">Qty</th>
@@ -124,6 +108,10 @@
                     </div>
                 </div> {{-- End  of sectionContent--}}
             </div>
+        </div>
+        <div class="return-total">
+            <h3 class="return-total-txt">Total</h3>
+            <div class="return-total-box"> Rs. <span id="return-tot-amount">0</span></div>
         </div>
     <div class="row submit-row mt-3">
         <div class="col">
@@ -193,28 +181,34 @@ function myFunction(index,value,array){
         var cell8 = row.insertCell(7);
         var cell9 = row.insertCell(8);
         var cell10 = row.insertCell(9);
+        var cell11 = row.insertCell(10);
         var index = num;
         cell1.innerHTML = ++num;
         cell2.innerHTML = array[value]['pcode'];
         cell3.innerHTML = array[value]['name'];
-        cell4.innerHTML = array[value]['size'];
-        cell5.innerHTML = array[value]['color'];
+        if(array[value]['price'] == null){
+            cell4.innerHTML = array[value]['costPrice'];
+        }else{
+            cell4.innerHTML = array[value]['price'];
+        }
+        cell5.innerHTML = array[value]['size'];
+        cell6.innerHTML = array[value]['color'];
 
-        console.log(array[value]['quantity']);
+
 
         if(array[value]['quantity'] == null){
-            cell6.innerHTML = '<input type="text" value="'+array[value]['Qty']+'" class="table-qty"/>';
+            cell7.innerHTML = '<input type="text" value="'+array[value]['Qty']+'" class="table-qty"/>';
         }else{
-            cell6.innerHTML = '<input type="text" value="'+array[value]['quantity']+'" class="table-qty"/>';
+            cell7.innerHTML = '<input type="text" value="'+array[value]['quantity']+'" class="table-qty"/>';
         }
 
-        cell7.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
-        cell8.innerHTML = index;
-        cell8.className = 'none';
-        cell9.innerHTML = array[value]['id'];
+        cell8.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
+        cell9.innerHTML = index;
         cell9.className = 'none';
-        cell10.innerHTML = array[value]['vid'];
+        cell10.innerHTML = array[value]['id'];
         cell10.className = 'none';
+        cell11.innerHTML = array[value]['vid'];
+        cell11.className = 'none';
 
         if(array[value]['quantity'] == null){
             arr.push([array[value]['id'],array[value]['vid'],array[value]['Qty']]);
@@ -224,70 +218,96 @@ function myFunction(index,value,array){
     }else if(vid.length == 0){
         if(array[value]['id'] == id){
             var row = selectedProducts.insertRow();
-            row.className = 'item-table-row';
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            var cell5 = row.insertCell(4);
-            var cell6 = row.insertCell(5);
-            var cell7 = row.insertCell(6);
-            var cell8 = row.insertCell(7);
-            var cell9 = row.insertCell(8);
-            var cell10 = row.insertCell(9);
-            var index = num;
-            cell1.innerHTML = ++num;
-            cell2.innerHTML = array[value]['pcode'];
-            cell3.innerHTML = array[value]['name'];
-            cell4.innerHTML = array[value]['size'];
-            cell5.innerHTML = array[value]['color'];
+        row.className = 'item-table-row';
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+        var cell9 = row.insertCell(8);
+        var cell10 = row.insertCell(9);
+        var cell11 = row.insertCell(10);
+        var index = num;
+        cell1.innerHTML = ++num;
+        cell2.innerHTML = array[value]['pcode'];
+        cell3.innerHTML = array[value]['name'];
+        cell4.innerHTML = array[value]['costPrice'];
+        cell5.innerHTML = array[value]['size'];
+        cell6.innerHTML = array[value]['color'];
 
-            console.log(array[value]['quantity']);
 
-            if(array[value]['quantity'] == null){
-                cell6.innerHTML = '<input type="text" value="'+array[value]['Qty']+'" class="table-qty"/>';
-            }else{
-                cell6.innerHTML = '<input type="text" value="'+array[value]['quantity']+'" class="table-qty"/>';
-            }
 
-            cell7.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
-            cell8.innerHTML = index;
-            cell8.className = 'none';
-            cell9.innerHTML = array[value]['id'];
-            cell9.className = 'none';
-            cell10.innerHTML = array[value]['vid'];
-            cell10.className = 'none';
+        if(array[value]['quantity'] == null){
+            cell7.innerHTML = '<input type="text" value="'+array[value]['Qty']+'" class="table-qty"/>';
+        }else{
+            cell7.innerHTML = '<input type="text" value="'+array[value]['quantity']+'" class="table-qty"/>';
+        }
 
-            if(array[value]['quantity'] == null){
-                arr.push([array[value]['id'],array[value]['vid'],array[value]['Qty']]);
-            }else{
-                arr.push([array[value]['id'],array[value]['vid'],array[value]['quantity']]);
-            }
+        cell8.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
+        cell9.innerHTML = index;
+        cell9.className = 'none';
+        cell10.innerHTML = array[value]['id'];
+        cell10.className = 'none';
+        cell11.innerHTML = array[value]['vid'];
+        cell11.className = 'none';
+
+        if(array[value]['quantity'] == null){
+            arr.push([array[value]['id'],array[value]['vid'],array[value]['Qty']]);
+        }else{
+            arr.push([array[value]['id'],array[value]['vid'],array[value]['quantity']]);
+        }
+
     }
+
     }
 
 }
-
+updateTotal();
 var s = JSON.stringify(arr);
 document.cookie = "returnproducts = "+s;
 }
 
+function updateTotal(){
+    var table = document.getElementById("selectedProducts");
+
+            var x = table.rows.length;
+            var qty = 0;
+            var total = 0;
+            var price = 0;
+            for(i=1;i<x;i++){
+                qty = qty +  parseInt($(table.rows[i].cells[6]).find('.table-qty').val());
+                price = price + parseInt(table.rows[i].cells[3].innerHTML);
+            }
+            console.log(qty,price);
+
+            total = price * qty;
+            total = format_number(total);
+            $('#return-tot-amount').html(total);
+
+}
+function format_number(n) {
+  return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+}
 
 $('#selectedProducts').on('click', '#remove', function(e){
 
-var index = $(this).closest('tr').index();
-var table = document.getElementById("selectedProducts");
-var delrow = table.rows[index].cells[6].innerHTML;
-arr.splice(delrow,1);
-var n = JSON.stringify(arr);
-document.cookie = "returnproducts = "+n;
-$(this).closest('tr').remove();
-var x = table.rows.length;
-num = 0;
-for(i=1; i<=x;i++){
-    table.rows[i].cells[0].innerHTML = ++num;
-    table.rows[i].cells[7].innerHTML = num-1;
-}
+    var index = $(this).closest('tr').index();
+    var table = document.getElementById("selectedProducts");
+    var delrow = table.rows[index].cells[7].innerHTML;
+    arr.splice(delrow,1);
+    var n = JSON.stringify(arr);
+    document.cookie = "returnproducts = "+n;
+    $(this).closest('tr').remove();
+    updateTotal();
+    var x = table.rows.length;
+    num = 0;
+    for(i=1; i<=x;i++){
+        table.rows[i].cells[0].innerHTML = ++num;
+        table.rows[i].cells[8].innerHTML = num-1;
+    }
 
 });
 $("#selectedProducts").on('change','.table-qty',function() {
@@ -298,8 +318,8 @@ $("#selectedProducts").on('change','.table-qty',function() {
                 product.forEach(function(index,value,array){
                         if (array[value]['pcode'] == table.rows[i].cells[1].innerHTML){
 
-                                var pid = table.rows[i].cells[8].innerHTML;
-                                var vid = table.rows[i].cells[9].innerHTML;
+                                var pid = table.rows[i].cells[9].innerHTML;
+                                var vid = table.rows[i].cells[10].innerHTML;
 
                                 for(j = 0; j < arr.length ; j++){
                                     if(pid.length > 0 && vid.length > 0){
@@ -315,6 +335,7 @@ $("#selectedProducts").on('change','.table-qty',function() {
                         }
                 });
                 var s = JSON.stringify(arr);
+                updateTotal();
                 document.cookie = "returnproducts = "+s;
 });
 

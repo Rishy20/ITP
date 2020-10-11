@@ -6,6 +6,7 @@ use App\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class ExpenseController extends Controller
 {
@@ -104,5 +105,20 @@ class ExpenseController extends Controller
         $expense->delete();
         Session::put('message', 'Success!');
         return redirect()->back();
+    }
+    public function createReport(Request $request){
+
+        $expense = DB::select('select e.id,type,description,e.created_at,amount,username from expenses e INNER JOIN users u ON e.userId=u.id' );
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('expense',$expense);
+
+
+        $pdf =  PDF::loadView('Expense.expenseReport',$expense);
+
+        // // download PDF file with download method
+        return $pdf->stream('expenses.pdf');
+        return view('Expense.expenseReport',compact('expense'));
     }
 }

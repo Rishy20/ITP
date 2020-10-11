@@ -41,6 +41,9 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+            <div class="add-btn">
+                <a href="{{ route('sales.report') }}" target="_blank">Export Sales</a>
+            </div>
             {{-- <div class="add-btn">
                 <a href="{{ route('user.create') }}">Add User</a>
     </div> --}}
@@ -53,13 +56,17 @@
             <th>Discount</th>
             <th>Date</th>
             <th>Actions</th>
+
+
         </tr>
     </thead>
     <tbody>
         @foreach($sale as $s)
 
 
-        <tr>
+
+    <tr onclick="window.location='{{route("sale.show",$s->id)}}';">
+
             <td>{{ $s->id }}</td>
             <td>{{ $s->fname.' '.$s->lname }}</td>
             <td>{{ $s->firstname.' '.$s->lastname }}</td>
@@ -76,7 +83,9 @@
 
                 </form>
             </td>
+
         </tr>
+
         @endforeach
 
     </tbody>
@@ -87,6 +96,7 @@
 {{-- <livewire:all-sales :sales="$sale"/> --}}
 
 <script type="text/javascript">
+
     $(document).ready(function() {
 
         FilterStart = moment().format("YYYY-MM-DD");

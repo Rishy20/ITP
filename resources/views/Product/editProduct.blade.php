@@ -302,8 +302,5 @@ $('#sprice').change(function() {
 </script>
 
 
-        {{-- @livewire('add-product', ['inv' => $inv, 'cat' => $cat, 'brand' => $brand, 'vendor' => $vendor]) --}}
-
-
 @endsection
 

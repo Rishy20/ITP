@@ -4,6 +4,9 @@
 <div class="pg-heading">
     <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">Add Brands</div>
+    <div class="demo-btn">
+        Demo
+    </div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
@@ -26,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <textarea class="form-control" name="description" placeholder="Brand Description"></textarea>
+                    <textarea id="description" class="form-control" name="description" placeholder="Brand Description"></textarea>
                     <label class="float-label">Brand Description</label>
                 </div>
             </div>
@@ -39,6 +42,20 @@
         </form>
         {{-- End of Form --}}
     </div> {{-- End  of sectionContent--}}
+
+    <script>
+
+        $(".demo-btn").click(function(){
+                $("input[name='name']").val("Puma");
+                $("#description").val("Puma shoes have a unique design, using the technology; the shoes’ moulds are injected with the light foam materials by L.I.F.T ");
+
+            });
+
+
+            </script>
+
+
+
 </div> {{-- End  of section--}}
 
 @endsection

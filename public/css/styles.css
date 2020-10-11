@@ -1105,7 +1105,6 @@ button:focus{
 
 .total-rect{
     border:1px solid #d8cfcf;
-
     padding: 6px;
     font-size: 30px;
     font-weight: 400;
@@ -1636,4 +1635,47 @@ button:focus{
     margin-top: 10px;
   }
 
+  .return-total-txt{
+    margin-left: 20px;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-right: 25px;
+  }
+  .return-total-box{
+
+    border: 1px solid #d8cfcf;
+    padding: 6px 12px;
+    display: inline-block;
+    height: 50px;
+    min-width: 250px;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+
+  }
+  .col-left{
+      text-align:  left;
+      font-size: 20px;
+      font-weight: 600;
+  }
+  .col-right{
+      text-align: right;
+      font-size: 20px;
+  }
+  .showSales .section .row{
+        padding: 15px 0px;
+  }
+.item-table-row{
+      cursor: pointer;
+}
+
+.return-remarks{
+    border: 2px solid #d8cfcf;
+    padding: 6px 12px;
+    min-height: 150px;
+    height: 100%;
+}
+#remarks-row{
+    padding: 0px 0px;
+}
 

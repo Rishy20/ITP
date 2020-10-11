@@ -19,8 +19,8 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route('product.create') }}">Export Products</a> {{-- Enter the name of the add btn --}}
+            <div class="add-btn">
+                <a href="{{ route('product.report') }}" target="_blank">Export Product</a>
             </div>
             <div class="add-btn"> {{-- Add button --}}
                 <a href="{{ route('product.create') }}">Add Product</a> {{-- Enter the name of the add btn --}}

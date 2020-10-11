@@ -16,6 +16,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class productController extends Controller
 {
@@ -52,6 +53,7 @@ class productController extends Controller
      */
     public function create()
     {
+
         $cat =Category::all();
         $inv =Inventory::all();
         $brand = Brand::all();
@@ -190,57 +192,117 @@ class productController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product=Product::findOrFail($id);
-        $input=$request->all();
-        $product->update($input);
 
-        $inv = $request->inventory;
-        $qty = $request->Qty;
-        DB::update('update inventory_items set qty = ?,inventory_id = ? where product_id = ?', [$qty,$inv,$id]);
+        $sc = DB::select('select size,color from variants where product_id = ?', [$id]);
+        $dbsize = array();
+        $dbcolor = array();
+
+        foreach($sc as $sc){
+            array_push($dbsize,$sc->size);
+            array_push($dbcolor,$sc->color);
+        }
+
+        // $product=Product::findOrFail($id);
+        // $input=$request->all();
+        // $product->update($input);
+
+        // $inv = $request->inventory;
+        // $qty = $request->Qty;
+        // DB::update('update inventory_items set qty = ?,inventory_id = ? where product_id = ? and invetory_id = ?', [$qty,$inv,$id,$inv]);
 
 
         $pId = $id;
         $size = explode(",",$request->size);
         $color = explode(",",$request->color);
-        DB::delete('delete from variants where product_id = ?', [$id]);
+        $size = array_filter($size);
+        $color = array_filter($color);
+        // dd($color,$dbcolor,array_diff($dbcolor,$color));
+        // dd($dbcolor,$dbsize, $size, $color,array_diff($dbsize,$size),array_diff($dbcolor,$color));
+
+        $s = array_diff($dbsize,$size);
+        foreach($s as $s){
+            DB::delete('delete from variants where product_id = ? and size = ?', [$id,$s]);
+        }
+        $s = array_diff($dbcolor,$color);
+        foreach($s as $s){
+            DB::delete('delete from variants where product_id = ? and color = ?', [$id,$s]);
+        }
 
         if($size && $color){
+
             $i = 0;
+
             foreach($size as $skey=>$svalue){
                 foreach($color as $ckey=>$cvalue){
 
-                        $var = new Variant();
-                        $var->product_id = $pId;
-                        $var->size = $svalue;
-                        $var->color= $cvalue;
-                        $var->price = $request->price_variant[$i];
-                        $var->quantity = $request->qty_variant[$i];
-                        $var->save();
+                        $var = Variant::where([
+                            'product_id' => $pId,
+                            'size' =>$svalue,
+                            'color'=>$cvalue
+                        ])->update([
+                            'price'=>$request->price_variant[$i],
+                            'quantity'=> $request->qty_variant[$i],
+                        ]);
+
+                        if($var == 0){
+                            $var = new Variant();
+                            $var->product_id = $pId;
+                            $var->size = $svalue;
+                            $var->color= $cvalue;
+                            $var->price = $request->price_variant[$i];
+                            $var->quantity = $request->qty_variant[$i];
+                            $var->save();
+                        }
                         $i++;
                 }
             }
         }else if($size){
             $i = 0;
             foreach($size as $key=>$value){
-                $var = new Variant();
-                $var->product_id = $pId;
-                        $var->size = $value;
-                        $var->price = $request->price_variant[$i];
-                        $var->quantity = $request->qty_variant[$i];
-                        $var->save();
-                        $i++;
+
+
+                $var = Variant::where([
+                    'product_id' => $pId,
+                    'size' =>$value,
+                ])->update([
+                    'price'=>$request->price_variant[$i],
+                    'quantity'=> $request->qty_variant[$i],
+                ]);
+
+                if($var == 0){
+
+                    $var = new Variant();
+                    $var->product_id = $pId;
+                    $var->size = $value;
+                    $var->price = $request->price_variant[$i];
+                    $var->quantity = $request->qty_variant[$i];
+                    $var->save();
+
+                }
+                $i++;
             }
         }else if($color){
             $i = 0;
             foreach($color as $key=>$value){
-                $var = new Variant();
-                $var->product_id = $pId;
-                        $var->color= $value;
-                        $var->price = $request->price_variant[$i];
-                        $var->quantity = $request->qty_variant[$i];
-                        $var->save();
-                        $i++;
 
+                $var = Variant::where([
+                    'product_id' => $pId,
+                    'color'=>$value
+                ])->update([
+                    'price'=>$request->price_variant[$i],
+                    'quantity'=> $request->qty_variant[$i],
+                ]);
+
+                if($var == 0){
+                    $var = new Variant();
+                    $var->product_id = $pId;
+                    $var->color= $value;
+                    $var->price = $request->price_variant[$i];
+                    $var->quantity = $request->qty_variant[$i];
+                    $var->save();
+
+                }
+                $i++;
             }
         }
 
@@ -265,4 +327,21 @@ class productController extends Controller
 
         return redirect()->back();
     }
+
+    public function createReport(Request $request){
+
+        $product =  DB::select('select p.pcode ,p.name as pname ,c.name as cname,b.name  as bname ,p.Qty,v.size,v.color,p.costPrice,p.sellingPrice,ven.company_name from products p left join categories c on p.catID = c.id left join brands b on p.brand = b.id left join variants v on p.id = v.product_id left join vendors ven on p.supplierId = ven.id');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('pro',$product);
+
+
+        $pdf =  PDF::loadView('Product.productReport',$product);
+
+        // // download PDF file with download method
+        return $pdf->stream('products.pdf');
+        return view('Product.productReport',compact('pro'));
+    }
 }
+

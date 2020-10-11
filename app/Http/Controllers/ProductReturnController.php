@@ -24,9 +24,9 @@ class ProductReturnController extends Controller
     public function index()
     {
 
-        $vendor = Vendor::all();
-        $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price,v.quantity,p.Qty from products p LEFT JOIN variants v ON p.id = v.product_id');
-        return view('Product.returnProduct',compact('vendor','prd'));
+        $returns = DB::select('select r.id, v.first_name, v.last_name,r.date, r.remarks from return_products r, vendors v where r.vendorId = v.id');
+        return view('Product.allReturn',compact('returns'));
+
     }
 
     /**
@@ -36,7 +36,9 @@ class ProductReturnController extends Controller
      */
     public function create()
     {
-        //
+        $vendor = Vendor::all();
+        $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,p.costPrice,v.size,v.color,v.price,v.quantity,p.Qty from products p LEFT JOIN variants v ON p.id = v.product_id');
+        return view('Product.returnProduct',compact('vendor','prd'));
     }
 
     /**
@@ -106,7 +108,16 @@ class ProductReturnController extends Controller
      */
     public function show($id)
     {
-        //
+        $returns = DB::select('select r.id, v.first_name, v.last_name,r.date, r.remarks from return_products r, vendors v where r.vendorId = v.id and r.id = ?',[$id]);
+        $tot = DB::select('select sum(p.costPrice * r.qty) as total from product_returns r, products p where r.productId = p.id and r.returnId = ? ',[$id]);
+        foreach($tot as $t){
+            $total = $t->total;
+        }
+       $product = DB::select('select r.id,pcode,p.name,v.size,v.color,r.qty,p.costPrice from product_returns r left join products p on r.productId = p.id left join variants v on r.variantId = v.id  where  r.returnId = ? ',[$id]);
+
+
+
+        return view('Product.showReturn',compact('returns','total','product'));
     }
 
     /**

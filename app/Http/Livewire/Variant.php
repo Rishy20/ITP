@@ -52,12 +52,15 @@ class Variant extends Component
             foreach($var as $v){
                 array_push($this->size,$v->size);
                 array_push($this->color,$v->color);
-
             }
             $this->size = array_unique($this->size);
             $this->color = array_unique($this->color);
+            $this->size = array_filter($this->size);
+            $this->color = array_filter($this->color);
             $this->svalue = implode(",",$this->size);
             $this->cvalue = implode(",",$this->color);
+
+
         }
 
         $product = Product::all();

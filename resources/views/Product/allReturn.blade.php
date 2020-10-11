@@ -2,8 +2,7 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
-    <div class="pg-title">All Brands</div>
+    <div class="pg-title">All Returns</div>
 </div>
 
 @if(session('message'))
@@ -21,31 +20,34 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <div class="add-btn">
+            {{-- <div class="add-btn">
                 <a href="{{ route('brand.report') }}" target="_blank">Export Brand</a>
-            </div>
+            </div> --}}
             <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route('brand.create') }}">Add Brand</a> {{-- Enter the name of the add btn --}}
+                <a href="{{ route('return.create') }}">Create Return</a> {{-- Enter the name of the add btn --}}
             </div>
             <thead class="table-head">
 
                 <tr>
-                    <th>Brand Name</th>
-                    <th style="max-width: 600px; width: 600px">Brand Description</th>
+                    <th>Return No.</th>
+                    <th style="max-width: 600px; width: 600px">Remarks</th>
+                    <th>Vendor</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($brand as $i)
-                <tr>
+                @foreach($returns as $i)
+                <tr onclick="window.location='{{route("return.show",$i->id)}}';">
 
-                    <td>{{$i->name}}</td>
-                    <td>{{$i->description}}</td>
-
+                    <td>{{$i->id}}</td>
+                    <td>{{$i->remarks}}</td>
+                    <td>{{$i->first_name .' '.$i->last_name}}</td>
+                    <td>{{$i->date}}</td>
                     <td class="action-icon">
-                        <a href="{{route('brand.edit',$i->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
+                        <a href="{{route('return.edit',$i->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         <button type="submit" class="dlt-btn" id="dlt-btn{{ $i->id }}"><i class="fas fa-trash-alt"></i></button>
-                        <form method="POST" class="dlt-form" id="dlt-form{{ $i->id }}" action="{{ route('brand.destroy',$i->id)}}">
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $i->id }}" action="{{ route('return.destroy',$i->id)}}">
                             @method('DELETE')
                             @csrf
 

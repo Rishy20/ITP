@@ -327,7 +327,7 @@
                         <textarea name="description" class="pos-sub-txtArea" rows=5></textarea>
                     </div>
                 </div>
-                <input type="text" value="1" name="userId" hidden>
+                <input type="text" value="{{Auth::user()->id}}" name="userId" hidden>
                 <div class="action-btn-row">
 
                     <input type="submit" class="add-sub-btn" value="Add" />
@@ -763,7 +763,7 @@
                        <textarea name="description" id="serviceDescription" class="pos-sub-txtArea" rows=5></textarea>
                    </div>
                </div>
-               <input type="text" value="1" name="userId" hidden>
+               <input type="text" value="{{Auth::user()->id}}" name="userId" hidden>
                <div class="action-btn-row">
 
                    <input type="submit" onclick="addService()" class="add-sub-btn" value="Add" />

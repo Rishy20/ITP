@@ -755,7 +755,7 @@
                 let return_date = $('#serviceReturn').val();
                 let description = $('#serviceDescription').val();
                 let cost = $('#serviceCost').val();
-                let user = 22;
+                let user = {{Auth::user()->id}};
                 let _token   = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({

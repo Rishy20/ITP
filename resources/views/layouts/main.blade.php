@@ -143,28 +143,35 @@
             FilterStart = moment().format("YYYY-MM-DD");
             FilterEnd = moment().format("YYYY-MM-DD");
             table.draw();
+            document.cookie = "timeperiod = 1";
+
         }else if($("#day2").is(':selected')){
             FilterStart = moment().subtract(1, 'days').format("YYYY-MM-DD");
             FilterEnd =  moment().subtract(1, 'days').format("YYYY-MM-DD");
             table.draw();
+            document.cookie = "timeperiod = 2";
 
         }else if($("#day7").is(':selected')){
             FilterStart = moment().subtract(6, 'days').format("YYYY-MM-DD");
             FilterEnd = moment().format("YYYY-MM-DD");
             table.draw();
+            document.cookie = "timeperiod = 7";
 
         }else if($("#day14").is(':selected')){
             FilterStart = moment().subtract(13, 'days').format("YYYY-MM-DD");
             FilterEnd = moment().format("YYYY-MM-DD");
             table.draw();
+            document.cookie = "timeperiod = 14";
         }else if($("#day30").is(':selected')){
             FilterStart = moment().startOf('month').format("YYYY-MM-DD");
             FilterEnd = moment().endOf('month').format("YYYY-MM-DD");
             table.draw();
+            document.cookie = "timeperiod = 30";
         }else if($("#day60").is(':selected')){
             FilterStart = moment().subtract(1, 'month').startOf('month').format("YYYY-MM-DD");
             FilterEnd = moment().subtract(1, 'month').endOf('month').format("YYYY-MM-DD");
             table.draw();
+            document.cookie = "timeperiod = 60";
         }
 
         if($("#date").is(':selected')){
@@ -177,6 +184,9 @@
         FilterStart = $('#start').val();
         FilterEnd = $('#end').val();
         table.draw();
+        document.cookie = "timeperiod = 100";
+        document.cookie = "start = " + FilterStart;
+        document.cookie = "end = " + FilterEnd;
     }
     </script>
 

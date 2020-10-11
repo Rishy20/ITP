@@ -33,6 +33,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
+
         $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
         return view('promotion.addPromotion',compact('prd'));
 
@@ -131,7 +132,9 @@ class PromotionController extends Controller
     public function edit($id)
     {
         $prms = Promotion::find($id);
-        return view('promotion.editPromotion',compact('prms','id'));
+        $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price from products p LEFT JOIN variants v ON p.id = v.product_id');
+        $promo = DB::select('select productid as pid,variantid as vid from productpromotions where promotionid = ?',[$id]);
+        return view('promotion.editPromotion',compact('prms','id','prd','promo'));
     }
 
     /**
@@ -143,26 +146,52 @@ class PromotionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        // $this->validate($request,[
 
-            'promotionname' => 'required',
-            'promotiontype' => 'required',
-            'discount' => 'required',
-            'startdate' => 'required',
-            'enddate' => 'required',
+        //     'promotionname' => 'required',
+        //     'promotiontype' => 'required',
+        //     'discount' => 'required',
+        //     'startdate' => 'required',
+        //     'enddate' => 'required',
 
 
-        ]);
+        // ]);
 
-        $prms = Promotion::find($id);
+        $pr = Promotion::find($id);
+        $pr->promotionname = $request->promotionname;
+        $pr->description = $request->description;
+        $pr->discount = $request->discount;
+        $pr->discounttype = $request->discounttype;
+        $pr->promotiontype = $request->promotiontype;
+        if($request->discounttype == "cash"){
+            $pr->discount = $request->amount;
+        }else{
+            $pr->discount = $request->percentage;
+        }
+        $pr->startdate = $request->startdate;
+        $pr->enddate = $request->enddate;
+        $pr->update();
+        DB::delete('delete from productpromotions where promotionid = ?', [$id]);
+        if($request->promotiontype=="specific"){
 
-        $prms->promotionname = $request->input('promotionname');
-        $prms->promotiontype = $request->input('promotiontype');
-        $prms->discount = $request->input('discount');
-        $prms->startdate = $request->input('startdate');
-        $prms->enddate = $request->input('enddate');
+            $pr = $_COOKIE['promotions'];
+            $temp = json_decode($pr,true);
+            $last = DB::table('promotions')->latest()->first();
+            $promotionid = $last->id;
+            setcookie("promotions","",time()-3600);
+            foreach($temp as $t){
 
-        $prms->save();
+                $p = new ProductPromotion();
+                $p->promotionid = $promotionid;
+                $p->productid = $t[0];
+                $p->variantid = $t[1];
+                $p->save();
+            }
+
+        }
+
+
+
         Session::put('message', 'Success!');
         return redirect('/promotion');
     }

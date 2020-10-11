@@ -24,6 +24,13 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/backlogin','UserController@login');
 Route::post('/validates','UserController@loginValidate')->name('validate');
 Route::get('/userReport','UserController@createReport')->name('user.report');
+Route::get('/categoryReport','CategoryController@createReport')->name('category.report');
+
+Route::get('/brndReport','brandController@createReport')->name('brand.report');
+
+Route::get('/productReport','productController@createReport')->name('product.report');
+Route::get('/expenseReport','expenseController@createReport')->name('expense.report');
+Route::get('/salesReport','salesController@createReport')->name('sales.report');
 
 
 Route::resource('/bank','BankAccountController');
