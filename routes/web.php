@@ -130,6 +130,10 @@ Route::get('/inventory-report','InventoryController@createReport')->name('invent
 
 Route::get('/reports', 'ReportController@index')->name('reports.index');
 //Route::get('/reports/product-wise-sales', 'ReportController@productWiseSales')->name('reports.product-wise-sales');
+Route::get('/reports/total-expense', 'ReportController@totalExpense')->name('reports.total-expense');
+Route::post('/reports/export-total-expense', 'ReportController@exportTotalExpense')->name('reports.export-total-expense');
+Route::get('/reports/product-return', 'ReportController@productReturn')->name('reports.product-return');
+Route::post('/reports/export-product-return', 'ReportController@exportProductReturn')->name('reports.export-product-return');
 Route::get('/reports/stock-transfer-summary', 'ReportController@stockTransferSummary')->name('reports.stock-transfer-summary');
 Route::post('/reports/export-stock-transfer-summary', 'ReportController@exportStockTransferSummary')->name('reports.export-stock-transfer-summary');
 Route::get('/reports/stock-valuation', 'ReportController@stockValuation')->name('reports.stock-valuation');
@@ -148,6 +152,10 @@ Route::get('/reports/supplier-payment', 'ReportController@supplierPayment')->nam
 Route::post('/reports/export-supplier-payment', 'ReportController@exportSupplierPayment')->name('reports.export-supplier-payment');
 Route::get('/reports/supplier-purchase', 'ReportController@supplierPurchase')->name('reports.supplier-purchase');
 Route::post('/reports/export-supplier-purchase', 'ReportController@exportSupplierPurchase')->name('reports.export-supplier-purchase');
+Route::post('/reports/product-wise-profit', 'ReportController@productWiseProfit')->name('reports.product-wise-profit');
+Route::post('/reports/export-product-wise-profit', 'ReportController@exportProductWiseProfit')->name('reports.export-product-wise-profit');
+//Route::get('/reports/total-payment', 'ReportController@totalPayment')->name('reports.total-payment');
+//Route::post('/reports/export-total-payment', 'ReportController@exportTotalPayment')->name('reports.export-total-payment');
 Route::get('/reports/day-end', 'ReportController@dayEnd')->name('reports.day-end');
 Route::post('/reports/export-day-end', 'ReportController@exportDayEnd')->name('reports.export-day-end');
 

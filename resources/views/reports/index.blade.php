@@ -76,6 +76,18 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-hospital-user"></i></div>
                         Salesman-wise Sales Report
                     </a>
+                    {{-- Total Expense Report --}}
+                    <a class="list-group-item list-group-item-action" id="total-expense" role="tabpanel"
+                       href="{{ route('reports.total-expense') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-money-check"></i></div>
+                        Total Expense Report
+                    </a>
+                    {{-- Product Return Report --}}
+                    <a class="list-group-item list-group-item-action" id="product-return" role="tabpanel"
+                       href="{{ route('reports.product-return') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-backward"></i></div>
+                        Product Return Report
+                    </a>
                 </div>
 
                 {{-- Inventory Category --}}
@@ -132,10 +144,23 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-building"></i></div>
                         Supplier Purchase Report
                     </a>
+                    {{-- Product-wise Profit Report --}}
+                    <a class="list-group-item list-group-item-action" id="supplier-purchase" role="tabpanel"
+                       href="#" data-toggle="modal" data-target="#date_range_select">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
+                        Product-wise Profit Report
+                    </a>
                 </div>
 
                 {{-- Payment Category --}}
                 <div class="list-group category" id="payment" hidden>
+{{--                    --}}{{-- Total Payment Report --}}
+{{--                    <a class="list-group-item list-group-item-action" id="total-payment" role="tabpanel"--}}
+{{--                       href="{{ route('reports.total-payment') }}">--}}
+{{--                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-money-check"></i></div>--}}
+{{--                        Total Payment Report--}}
+{{--                    </a>--}}
+                    {{-- Supplier Payment Report --}}
                     <a class="list-group-item list-group-item-action" id="supplier-payment" role="tabpanel"
                        href="{{ route('reports.supplier-payment') }}">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-building"></i></div>
@@ -151,6 +176,38 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-calendar"></i></div>
                         Day-End Report
                     </a>
+                </div>
+
+                {{-- Date range selection modal --}}
+                <div class="modal fade" id="date_range_select" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form action="{{ route('reports.product-wise-profit') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="start_date" id="start_date">
+                                <input type="hidden" name="end_date" id="end_date">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="date-range-title">Select Date Range for the Report</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="text-center">
+                                            <div id="date_range" style="background: #fff; cursor: pointer; padding: 9px 18px; border: 1px solid #ccc; width: 100%">
+                                                <i class="fa fa-calendar"></i>&nbsp;
+                                                <span></span> <i class="fa fa-caret-down"></i>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Proceed</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,6 +229,60 @@
         }
 
     }
+
+    $(function() {
+        const date_range_text = $('#date_range span');
+
+        const today = moment().format("YYYY-MM-DD");
+        const yesterday = moment().subtract(1, 'days').format("YYYY-MM-DD");
+        const seven_days_back = moment().subtract(6, 'days').format("YYYY-MM-DD");
+        const thirty_days_back = moment().subtract(29, 'days').format("YYYY-MM-DD");
+        const month_start = moment().startOf('month').format("YYYY-MM-DD");
+        const month_end = moment().endOf('month').format("YYYY-MM-DD");
+        const last_month_start = moment().subtract(1, 'month').startOf('month').format("YYYY-MM-DD");
+        const last_month_end = moment().subtract(1, 'month').endOf('month').format("YYYY-MM-DD");
+
+        const start = moment();
+        const end = moment();
+
+        function render(start, end) {
+            start = start.format('YYYY-MM-DD');
+            end = end.format('YYYY-MM-DD');
+
+            if (start === today && end === today)
+                date_range_text.html("Today");
+            else if (start === yesterday && end === yesterday)
+                date_range_text.html("Yesterday");
+            else if (start === seven_days_back && end === today)
+                date_range_text.html("Last 7 Days");
+            else if (start === thirty_days_back && end === today)
+                date_range_text.html("Last 30 Days");
+            else if (start === month_start && end === month_end)
+                date_range_text.html("This Month");
+            else if (start === last_month_start && end === last_month_end)
+                date_range_text.html("Last Month");
+            else
+                date_range_text.html(moment(start).format('MMMM D, YYYY') + ' - ' + moment(end).format('MMMM D, YYYY'));
+
+            $('#start_date').val(start);
+            $('#end_date').val(end);
+        }
+
+        $('#date_range').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, render);
+
+        render(start, end);
+    });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

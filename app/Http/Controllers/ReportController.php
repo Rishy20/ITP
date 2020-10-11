@@ -7,6 +7,7 @@ use App\Inventory;
 use App\Product;
 use App\SalaryPayment;
 use App\Sale;
+use App\SalesProduct;
 use App\StockTransfer;
 use App\VendorPayment;
 use Illuminate\Http\Request;
@@ -38,8 +39,6 @@ class ReportController extends Controller
             ->select('stock_transfers.*', DB::raw('SUM(stock_transfer_items.transfer_qty) AS units'))->get();
 
         foreach ($stock_transfers as $stock_transfer) {
-            $stock_transfer->updated_at = date('Y-m-d', strtotime($stock_transfer->updated_at));
-
             $stock_transfer->source_name = Inventory::where('id', $stock_transfer->source)->pluck('name')->first();
             $stock_transfer->dest_name = Inventory::where('id', $stock_transfer->destination)->pluck('name')->first();
 
@@ -159,6 +158,52 @@ class ReportController extends Controller
     }
 
 
+    // Sales Reports
+
+    public function totalExpense() {
+        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
+            'users.id')->select('expenses.*', 'users.display_name')->get();
+
+        return view('reports.sales.total-expense')->with('expenses', $expenses);
+    }
+
+    public function exportTotalExpense(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
+            'users.id')->whereBetween('expenses.updated_at', [$start_date, $end_date])
+            ->select('expenses.*', 'users.display_name')->get();
+
+        view()->share(['expenses' => $expenses, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.total-expense', [$expenses, $start_date, $end_date]);
+
+        return $pdf->stream('total-expense.pdf');
+    }
+
+    public function productReturn() {
+        $returns = DB::select('select e.id, e.productID, e.customerID, e.salesmanID, e.amount, e.updated_at, p.pcode,
+                        c.firstname, c.lastname, em.fname, em.lname from exchanges e, products p, employees em, customers c where
+                        e.productID = p.id and e.customerID = c.id and e.salesmanID = em.id');
+
+        return view('reports.sales.product-return')->with('returns', $returns);
+    }
+
+    public function exportProductReturn(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $returns = DB::select('select e.id, e.productID, e.customerID, e.salesmanID, e.amount, e.updated_at, p.pcode,
+                        c.firstname, c.lastname, em.fname, em.lname from exchanges e, products p, employees em, customers c where
+                        e.productID = p.id and e.customerID = c.id and e.salesmanID = em.id');
+
+        view()->share(['returns' => $returns, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.product-return', [$returns, $start_date, $end_date]);
+
+        return $pdf->stream('product-return.pdf');
+    }
+
+
     // Product Reports
 
     public function zeroStockProduct() {
@@ -195,7 +240,6 @@ class ReportController extends Controller
             ->get();
 
         foreach ($supplier_purchases as $purchase) {
-            $purchase->updated_at = date('Y-m-d', strtotime($purchase->updated_at));
             $purchase->name = $purchase->last_name . ', ' . $purchase->first_name;
         }
         return view('reports.product.supplier-purchase')->with('supplier_purchases', $supplier_purchases);
@@ -210,7 +254,6 @@ class ReportController extends Controller
             ->select('purchase.*', 'vendors.first_name', 'vendors.last_name', 'vendors.company_name')->get();
 
         foreach ($supplier_purchases as $purchase) {
-            $purchase->updated_at = date('Y-m-d', strtotime($purchase->updated_at));
             $purchase->name = $purchase->last_name . ', ' . $purchase->first_name;
         }
 
@@ -220,8 +263,104 @@ class ReportController extends Controller
         return $pdf->stream('supplier-purchase.pdf');
     }
 
+    public function productWiseProfit(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(products.costPrice) AS cost_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_products as $product) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $product->sale = $sale;
+                    }
+                }
+
+                $product->gp = $product->sales_sum - $product->cost_sum;
+                $product->np = $product->gp - $product->sale->taxes;
+                $product->gp_margin = ($product->gp / $product->sales_sum) * 100;
+            }
+        } else
+            $sales_products = collect();
+
+        return view('reports.product.product-wise-profit')->with('sales_products', $sales_products)
+            ->with('start_date', $start_date)->with('end_date', $end_date);
+    }
+
+    public function exportProductWiseProfit(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(products.costPrice) AS cost_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_products as $product) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $product->sale = $sale;
+                    }
+                }
+
+                $product->gp = $product->sales_sum - $product->cost_sum;
+                $product->np = $product->gp - $product->sale->taxes;
+                $product->gp_margin = ($product->gp / $product->sales_sum) * 100;
+            }
+        } else
+            $sales_products = collect();
+
+        view()->share(['sales_products' => $sales_products, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.product.export.product-wise-profit', [$sales_products, $start_date, $end_date]);
+
+        return $pdf->stream('product-wise-profit.pdf');
+    }
+
 
     // Payment Reports
+
+//    public function totalPayment() {
+//        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
+//            'users.id')->select('expenses.*', 'users.display_name')->get();
+//
+//        foreach ($expenses as $expense)
+//            $expense->updated_at = date('Y-m-d', strtotime($expense->updated_at));
+//
+//        return view('reports.sales.total-expense')->with('expenses', $expenses);
+//    }
+//
+//    public function exportTotalPayment(Request $request) {
+//        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+//        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+//
+//        $expenses = DB::table('expenses')->join('users', 'expenses.userId', '=',
+//            'users.id')->whereBetween('expenses.updated_at', [$start_date, $end_date])
+//            ->select('expenses.*', 'users.display_name')->get();
+//
+//        $total = 0;
+//        foreach ($expenses as $expense) {
+//            $expense->updated_at = date('Y-m-d', strtotime($expense->updated_at));
+//            $total += $expense->amount;
+//        }
+//
+//        view()->share(['expenses' => $expenses, 'start_date' => $start_date, 'end_date' => $end_date]);
+//        $pdf =  PDF::loadView('reports.sales.export.total-expense', [$expenses, $start_date, $end_date]);
+//
+//        return $pdf->stream('total-expense.pdf');
+//    }
 
     public function supplierPayment() {
         $supplier_pays = DB::table('vendor_payment')->join('vendors', 'vendor_payment.vendorID', '=',
@@ -229,7 +368,6 @@ class ReportController extends Controller
             ->get();
 
         foreach ($supplier_pays as $pay) {
-            $pay->updated_at = date('Y-m-d', strtotime($pay->updated_at));
             $pay->name = $pay->last_name . ', ' . $pay->first_name;
         }
 
@@ -245,7 +383,6 @@ class ReportController extends Controller
             ->select('vendor_payment.*', 'vendors.first_name', 'vendors.last_name', 'vendors.company_name')->get();
 
         foreach ($supplier_pays as $pay) {
-            $pay->updated_at = date('Y-m-d', strtotime($pay->updated_at));
             $pay->name = $pay->last_name . ', ' . $pay->first_name;
         }
 
@@ -316,9 +453,9 @@ class ReportController extends Controller
         foreach ($vendor_pays as $vendor_pay)
             $total_vendor_pays += $vendor_pay->amount;
 
-        $sales_info = ['total_sales_incl_tax' => $total_sales + $total_tax, 'total_sales_excl_tax' => $total_sales,
-            'total_qty' => $total_qty, 'gross_profit' => $total_sales + $total_tax - $total_discount - $total_cost,
-            'net_profit' => $total_sales - $total_discount - $total_cost];
+        $sales_info = ['total_sales_incl_tax' => $total_sales, 'total_sales_excl_tax' => $total_sales - $total_tax,
+            'total_qty' => $total_qty, 'gross_profit' => $total_sales - $total_cost,
+            'net_profit' => $total_sales - $total_cost - $total_tax];
         $other_info = ['total_exchanges' => $total_exchanges, 'total_discount' => $total_discount];
         $inventory_info = ['total_value' => $total_inventory_value, 'total_qty' => $total_inventory_qty];
         $payment_info = ['salary_pays' => $total_salary_pays, 'vendor_pays' => $total_vendor_pays, 'total_pays' => $total_salary_pays + $total_vendor_pays];
