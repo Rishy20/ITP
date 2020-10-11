@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">All Payment</div>
 </div>
 @if(session('message'))
@@ -25,27 +24,30 @@
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
             <div class="add-btn">
-                <a href="{{ route('vendorPayment.create') }}">+ Add Vendor Payment</a>
+                <a href="{{ route('vendorPayment.create') }}">Add Vendor Payment</a>
             </div>
             <div class="add-btn">
-                <a href="{{ route('vendorPayment.report') }}" target="_blank">Export Loyalty</a>
+                <a href="{{ route('vendorPayment.report') }}" target="_blank">Export Vendor Payment</a>
             </div>
             <thead class="table-head">
                 <tr>
                     <th>Payment ID</th>
                     <th>Payment Type</th>
                     <th>Vendor ID</th>
+                    <th>Bank ID</th>
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            @foreach($vendorPayment as $row)
             <tbody>
+            @foreach($vendorPayment as $row)
+
                 <tr>
                     <td>{{ $row['id'] }}</td>
                     <td>{{ $row['paymentType'] }}</td>
                     <td>{{ $row['vendorID'] }}</td>
+                    <td>{{ $row['bankID'] }}</td>
                     <td>{{ $row['amount'] }}</td>
                     <td>{{ $row['date'] }}</td>
                     <td class="action-icon">
@@ -58,8 +60,9 @@
                         </form>
                     </td>
                 </tr>
-            </tbody>
+
             @endforeach
+        </tbody>
         </table>
 
     </div> {{-- End  of sectionContent--}}

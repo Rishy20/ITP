@@ -6,7 +6,7 @@
   <div class="pg-title">Edit Vendor Payment</div>
 </div>
 
-<div class="section" style="height: 50%;width:50%"> {{-- Start of Section--}}
+<div class="section"> {{-- Start of Section--}}
   <div class="section-title">
       Edit Payment for Vendor's
       <hr>
@@ -19,14 +19,44 @@
         @method('PATCH')
               <div class="row">
                 <div class="col">
-                  <input type="text" id="vendorId" name="vendorID" value="{{ $vendorPayment->vendorID }}" class="form-control" placeholder="Vendor ID" />
-                  <label for="vendorId" class="float-label">Vendor ID</label>
+                  <div class="form-group">
+                    <label class="sup-label">Vendor Name</label>
+                    <select class="form-control sup-select" name="vendorID" required>
+                        <option value="" disabled selected hidden>Select a Vendor</option>
+                        @foreach($vendor as $v)
+                        <option value="{{$v->id}}">{{$v->first_name}}</option>
+                        @endforeach
+                    </select>
+                  </div>
                 </div>
                   <div class="col">
-                      <input type="text" class="form-control" name="paymentType" value="{{ $vendorPayment->paymentType }}" placeholder="Payment Type">
-                      <label class="float-label">Payment Type</label>
+                    <div class="form-group">
+                      <label class="sup-label">Payment Type</label>
+                      <select class="form-control sup-select" name="paymentType" id="paymentType" required>
+                          <option value="" disabled selected hidden>Select a Payment Type</option>
+                          <option value="Cash" >Cash</option>
+                          <option value="Bank" >Bank</option>
+                          <option value="Cheque" >Cheque</option>
+                      </select>
+                    </div>
                   </div>
               </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="form-group" id="bankDetails">
+                    <label class="sup-label">Bank Details</label>
+                    <select class="form-control sup-select" name="bank" required>
+                        <option value="" disabled selected hidden>Select a Bank</option>
+                        @foreach($banks as $b)
+                        <option value="{{$b->id}}">{{$b->bankname}} - Holder name : {{ $b->name }} - Acc. No. : {{ $b->number }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="col"></div>
+              </div>
+
               <div class="row">
                 <div class="col">
                   <input type="number" id="amount" name="amount" value="{{ $vendorPayment->amount }}" class="form-control" placeholder="Amount" />
@@ -41,31 +71,6 @@
 
 
               <hr>
-              <div class="form-group">
-                <input type="search" name="add_products" id="add_products" class="form-control input-lg" placeholder="Enter Vendor Name..." style="width: 50%" />
-                
-              </div>
-              <br>
-
-              <table class="table hover table-striped table-borderless table-hover all-table">
-                <thead class="table-head">
-                    <tr>
-                        <th>Vendor ID</th>
-                        <th>Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Row 1 Data 1</td>
-                        <td>Row 1 Data 2</td>
-                        <td class="action-icon">
-                            <a href="#"><i class="fas fa-pen"></i></a>
-                            <a href="#"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
 
 
               <div class="row submit-row">
@@ -81,5 +86,19 @@
         </div> {{-- End  of sectionContent--}}
       </div> {{-- End  of section--}}
       
+
+<script>
+$(document).ready(function(){
+  $('#paymentType').on('change', function(){
+
+    if(this.value == 'Bank'){
+      $("#bankDetails").show();
+    }
+    else{
+      $("#bankDetails").hide();
+    }
+  }).trigger("change");
+});
+</script>
 
 @endsection

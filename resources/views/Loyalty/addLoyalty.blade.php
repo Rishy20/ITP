@@ -5,6 +5,9 @@
     <div class="pg-heading">
         <a href="{{ route ( 'loyalty.create' )}}"><i class="fa fa-arrow-left pg-back"></i></a>
         <div class="pg-title">Add Loyalty</div>
+        <div class="demo-btn">
+            Demo
+        </div>
     </div>
     <div class="row">
         <div class="col-md-9">
@@ -155,6 +158,8 @@
         value--;
         document.getElementById('points').value = value;
     }
+
+    
     var num = 0;
     var del = 0;
     var arr = [];
@@ -225,6 +230,14 @@ for(i=1; i<=x;i++){
 }
 
 });
+
+
+$(".demo-btn").click(function(){
+        $("input[name='loyaltyName']").val("Silver");
+        $("input[name='minimumPointRequired']").val("100");
+        $("input[name='tierPoints']").val("100");
+        $("input[name='points']").val("100");
+    });
 </script>
 
 @endsection

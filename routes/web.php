@@ -124,11 +124,11 @@ Route::resource('vendorPayment', 'VendorPaymentController');
 Route::get('/vendorPaymentReport','VendorPaymentController@createReport')->name('vendorPayment.report');
 
 Route::resource('salaryPayment', 'SalaryPaymentController');
+Route::get('/salaryPaymentReport','SalaryPaymentController@createReport')->name('salaryPayment.report');
 Route::get('voucherid', 'VoucherController@getLastIndex')->name('voucher.id');
 Route::get('serviceid', 'ServiceController@getLastIndex');
 Route::get('voucheramount/{id}', 'VoucherController@getVoucherAmount');
 Route::get('customermobile/{mobile}', 'POSController@getCustomer');
-Route::get('/salaryPaymentReport','SalaryPaymentController@createReport')->name('salaryPayment.report');
 
 Route::get('posproduct', 'POSController@returnProducts');
 Auth::routes();

@@ -97,8 +97,9 @@ class LoyaltyController extends Controller
      */
     public function edit($id)
     {
+        $customer = Customer::all();
         $loyalty = Loyalty::find($id);
-        return view('Loyalty.editLoyalty', compact('loyalty', 'id'));
+        return view('Loyalty.editLoyalty', compact('loyalty', 'id','customer'));
     }
 
     /**

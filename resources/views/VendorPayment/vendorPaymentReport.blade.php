@@ -121,6 +121,7 @@
                 <th>Payment ID</th>
                 <th>Payment type</th>
                 <th>Vendor ID</th>
+                <th>Bank ID</th>
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
@@ -130,6 +131,7 @@
                     <td>{{ $row['id'] }}</td>
                     <td>{{ $row['paymentType'] }}</td>
                     <td>{{ $row['vendorID'] }}</td>
+                    <td>{{ $row['bankID'] }}</td>
                     <td>{{ $row['amount'] }}</td>
                     <td>{{ $row['date'] }}</td>
                 </tr>

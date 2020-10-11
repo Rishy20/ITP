@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\SalaryPayment;
 use Illuminate\Support\Facades\Session;
 use PDF;
+use App\Employee;
+use Illuminate\Support\Facades\DB;
 
 class SalaryPaymentController extends Controller
 {
@@ -20,8 +22,9 @@ class SalaryPaymentController extends Controller
      */
     public function index()
     {
-        $salaryPayment = SalaryPayment::all()->toArray();
-        return view('StaffPayment.allStaffPayment',compact('salaryPayment'));
+        $employee = Employee::all();
+        $salaryPayment = DB::select('select s.id, fname,lname,amount,date from salary_payment s,employees e where s.staffId = e.id');
+        return view('StaffPayment.allStaffPayment',compact('salaryPayment','employee'));
     }
 
     /**
@@ -31,7 +34,8 @@ class SalaryPaymentController extends Controller
      */
     public function create()
     {
-        return view('StaffPayment.addStaffPayment');
+        $employee = Employee::all();
+        return view('StaffPayment.addStaffPayment',compact('employee'));
     }
 
     /**
@@ -42,7 +46,14 @@ class SalaryPaymentController extends Controller
      */
     public function store(Request $request)
     {
-        SalaryPayment::create($request->all());
+        foreach($request->amount as $key=>$a){
+            $sp = new SalaryPayment();
+            $sp->staffID = $key;
+            $sp->amount = $a;
+            $sp->date = now();
+            $sp->save();
+        }
+
         Session::put('message', 'Success!');
         return redirect('/salaryPayment');
     }
