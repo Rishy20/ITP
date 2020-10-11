@@ -136,7 +136,7 @@ class productController extends Controller
             }
         }
 
-        return redirect('/product');
+
 
 
         Session::put('message', 'Success!');
@@ -202,13 +202,13 @@ class productController extends Controller
             array_push($dbcolor,$sc->color);
         }
 
-        // $product=Product::findOrFail($id);
-        // $input=$request->all();
-        // $product->update($input);
+        $product=Product::findOrFail($id);
+        $input=$request->all();
+        $product->update($input);
 
-        // $inv = $request->inventory;
-        // $qty = $request->Qty;
-        // DB::update('update inventory_items set qty = ?,inventory_id = ? where product_id = ? and invetory_id = ?', [$qty,$inv,$id,$inv]);
+        $inv = $request->inventory;
+        $qty = $request->Qty;
+        DB::update('update inventory_items set qty = ?,inventory_id = ? where product_id = ? and invetory_id = ?', [$qty,$inv,$id,$inv]);
 
 
         $pId = $id;

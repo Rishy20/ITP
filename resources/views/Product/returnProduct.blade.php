@@ -131,7 +131,7 @@
                 $(".dropdown-menu li").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
-            });
+    });
 
     function addVendor(id){
 

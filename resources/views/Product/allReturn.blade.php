@@ -50,7 +50,6 @@
                         <form method="POST" class="dlt-form" id="dlt-form{{ $i->id }}" action="{{ route('return.destroy',$i->id)}}">
                             @method('DELETE')
                             @csrf
-
                         </form>
                     </td>
                 </tr>

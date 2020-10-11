@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
+use PDF;
 class VendorController extends Controller
 {
     public function __construct()
@@ -111,4 +112,20 @@ class VendorController extends Controller
         Session::put('message', 'Success!');
         return redirect()->back();
     }
+    public function createReport(Request $request){
+
+        $vendor = Vendor::all();
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('vendor',$vendor);
+
+
+        $pdf =  PDF::loadView('vendor.vendorReport',$vendor);
+
+        // // download PDF file with download method
+        return $pdf->stream('vendor.pdf');
+        return view('vendor.vendorReport',compact('vendor'));
+    }
 }
+
+

@@ -6,7 +6,7 @@ use App\service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
+use PDF;
 class ServiceController extends Controller
 {
     public function __construct()
@@ -20,7 +20,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $service = Service::all();
+        // $service = Service::all();
+        $service = DB::select('select s.id,s.return_date,s.service_description,s.cost,c.firstname,c.lastname,u.username,s.created_at from services s left join customers c on s.customer_id = c.id left join users u on u.id = s.user_id');
+        // dd($service);
         return view('Service.allService',compact('service'));
 
     }
@@ -121,4 +123,24 @@ class ServiceController extends Controller
         $serviceId = $last->id;
         return $serviceId;
     }
+    public function createReport(Request $request){
+
+        // $service =  DB::select('select service.id, username,display_name,password,pin,status,roleId,Role_name,u.created_at from users u,
+        // service_roles ur where s.roleId = service.id');
+        $service = DB::select('select s.id,s.return_date,s.service_description,s.cost,c.firstname,c.lastname,u.username,s.created_at from services s left join customers c on s.customer_id = c.id left join users u on u.id = s.user_id');
+
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('service',$service);
+
+
+        $pdf =  PDF::loadView('Service.serviceReport',$service);
+
+        // // download PDF file with download method
+        return $pdf->stream('service.pdf');
+        return view('Service.serviceReport',compact('service'));
+    }
 }
+
+

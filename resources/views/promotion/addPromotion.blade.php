@@ -218,11 +218,8 @@
     $("#typeSel").click(function() {
         if($("#allPrd").is(':selected')){
             $("#allProducts").hide();
-
-
         }else{
             $("#allProducts").show();
-
         }
     });
     document.addEventListener("DOMContentLoaded", function() {

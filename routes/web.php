@@ -33,6 +33,8 @@ Route::get('/expenseReport','expenseController@createReport')->name('expense.rep
 Route::get('/salesReport','salesController@createReport')->name('sales.report');
 Route::get('/customerReport','CustomerController@createReport')->name('customer.report');
 
+Route::get('/vendorReport','vendorController@createReport')->name('vendor.report');
+Route::get('/serviceReport','serviceController@createReport')->name('service.report');
 
 Route::resource('/bank','BankAccountController');
 Route::resource('/exchange','ExchangeController');

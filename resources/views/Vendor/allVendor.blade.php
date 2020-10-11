@@ -2,7 +2,6 @@
 @section('content')
 
 <div class="pg-heading">
-    <i class="fa fa-arrow-left pg-back"></i>
     <div class="pg-title">All Vendors</div>
 </div>
 @if(session('message'))
@@ -20,6 +19,9 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
+            <div class="add-btn">
+                <a href="{{ route('vendor.report') }}" target="_blank">Export Vendors</a>
+                </div>
             <div class="add-btn">
                <a href="{{ route('vendors.create') }}"> Add Vendor </a>
             </div>

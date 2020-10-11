@@ -119,7 +119,7 @@ class CustomerController extends Controller
         $cust->streetaddress = $request->input('streetaddress');
         $cust->city = $request->input('city');
 
-        $cust->save();
+        $cust->update();
         Session::put('message', 'Success!');
         return redirect('/customer');
 
@@ -145,14 +145,14 @@ class CustomerController extends Controller
     public function createReport(Request $request){
 
         $customer =  DB::select('select ID, firstname,lastname,gender,dob,email,phone,streetaddress,city from customers');
-    
+
         // // return view ('Barcode.printBarcode',compact('product'));
-    
+
         view()->share('customer',$customer);
-    
-    
+
+
         $pdf =  PDF::loadView('customer.customerReport',$customer);
-    
+
         // // download PDF file with download method
         return $pdf->stream('customer.pdf');
         return view('customer.customerReport',compact('customer'));
