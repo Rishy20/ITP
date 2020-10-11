@@ -19,9 +19,12 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            <div class="add-btn"> {{-- Add button --}}
-                <a href="{{ route('exchange.create') }}">Add Return</a> {{-- Enter the name of the add btn --}}
+            <div class="add-btn">
+                <a href="{{ route('exchanges.report') }}" target="_blank">Export Exchanges</a>
             </div>
+            {{-- <div class="add-btn">
+                <a href="{{ route('exchange.create') }}">Add Return</a>
+            </div> --}}
     <thead class="table-head">
        <tr>
         <th>ID</th>
@@ -48,7 +51,7 @@
 
 
                     <td class="action-icon">
-                        <a href="{{ route('exchange.edit',$row->id) }}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
+                        {{-- <a href="{{ route('exchange.edit',$row->id) }}"><i class="fas fa-pen"></i></a> Edit icon --}}
                         {{-- Delete Icon --}}
                         <button type="submit" class="dlt-btn" id="dlt-btn{{ $row->id }}"><i class="fas fa-trash-alt"></i></button>
                         <form method="POST" class="dlt-form" id="dlt-form{{ $row->id }}" action="{{ route('exchange.destroy',$row->id) }}">

@@ -323,6 +323,7 @@ class productController extends Controller
     {
         $Product=Product::findOrFail($id);
         $Product->delete();
+        DB::delete('delete variants where  product_id= ?', [$id]);
         Session::put('message', 'Success!');
 
         return redirect()->back();

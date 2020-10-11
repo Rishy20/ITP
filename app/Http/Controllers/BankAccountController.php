@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\BankAccount;
 use Illuminate\Support\Facades\Session;
+use PDF;
+use Illuminate\Support\Facades\DB;
 
 class BankAccountController extends Controller
 {
@@ -129,4 +131,21 @@ class BankAccountController extends Controller
         Session::put('message', 'Success!');
         return redirect('/bank');
     }
+    
+    public function createReport(Request $request){
+
+        $banks =  DB::select('select number,name,type,bankname,branchname from bank_accounts');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('banks',$banks);
+
+
+        $pdf =  PDF::loadView('bankfolder.bankAccountReport',$banks);
+
+        // // download PDF file with download method
+        return $pdf->stream('banks.pdf');
+        return view('bankfolder.bankAccountReport',compact('banks'));
+    }
+
 }

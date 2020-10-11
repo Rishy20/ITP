@@ -1,10 +1,13 @@
 @extends('layouts.main')
 @section('content')
 
-
-<div class="pg-heading">
-    <a href="{{ route('bank.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
-    <div class="pg-title">Create Bank Account</div>
+<div class="addBank">
+    <div class="pg-heading">
+        <a href="{{ route('bank.index')}}"><i class="fa fa-arrow-left pg-back"></i></a>
+        <div class="pg-title">Create Bank Account</div>
+        <div class="demo-btn">
+            Demo
+        </div>
 </div>
 
 <div class="section"> {{-- Start of Section--}}
@@ -72,5 +75,20 @@
   </div> {{-- End  of sectionContent--}}
 </div> {{-- End  of section--}}
 
-}
+
+
+<script>
+
+    //Demo Button
+
+    $(".demo-btn").click(function(){
+        $("input[name='number']").val("4567893");
+        $("input[name='name']").val("Sithara");
+        $("input[name='type']").val("fix");
+        $("input[name='bankname']").val("HSBC");
+        $("input[name='branchname']").val("Galle");
+
+    });
+</script>
+
 @endsection

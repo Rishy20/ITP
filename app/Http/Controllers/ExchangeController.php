@@ -6,6 +6,7 @@ use App\Exchange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class ExchangeController extends Controller
 {
@@ -46,9 +47,9 @@ class ExchangeController extends Controller
     {
         $request->validate([
 
-            'productID'=>'required|max:5',
-            'customerID'=>'required|max:3',
-            'salesmanID'=>'required|max:3',
+            'productID'=>'required',
+            'customerID'=>'required',
+            'salesmanID'=>'required',
             'amount'=>'required',
 
 
@@ -80,7 +81,7 @@ class ExchangeController extends Controller
 
         $exchange = Exchange::find($id);
 
-        return view ('exchangefolder.exchangeEdit',compact('exchange','id'));
+        return view ('exchangefolder.exchangeEdit',compact('exchanges','id'));
     }
 
     /**
@@ -127,7 +128,24 @@ class ExchangeController extends Controller
 
         $exchanges = Exchange::find($id);
         $exchanges->delete();
+
         Session::put('message', 'Success!');
         return redirect('/exchange');
+    }
+
+    public function createReport(Request $request){
+
+        $exchanges = DB::select('select e.id,e.productID,e.customerID,e.salesmanID,e.amount,e.created_at,p.pcode,c.firstname,c.lastname,em.fname,em.lname from exchanges e, products p, employees em, customers c where e.productID = p.id and e.customerID = c.id and e.salesmanID=em.id');
+
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+        view()->share('exchanges',$exchanges);
+
+
+        $pdf =  PDF::loadView('exchangefolder.exchangeReport',$exchanges);
+
+        // // download PDF file with download method
+        return $pdf->stream('exchanges.pdf');
+        return view('exchangefolder.exchangeReport',compact('exchanges'));
     }
 }
