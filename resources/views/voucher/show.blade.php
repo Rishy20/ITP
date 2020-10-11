@@ -23,9 +23,9 @@
         <div class="add-btn">
             <a href="{{ route('voucher.report') }}" target="_blank">Export Vouchers</a>
             </div>
-            <div class="add-btn">
+            {{-- <div class="add-btn">
                 <a href="{{ route('voucher.create') }}">Add Voucher</a>
-            </div>
+            </div> --}}
             <thead class="table-head">
                 <tr>
                     <th>Voucher No.</th>
@@ -36,13 +36,10 @@
             </thead>
             <tbody>
                 @foreach($voucher as $vou)
-
-
                 <tr>
                     <td>{{ $vou->id }}</td>
                     <td>{{ $vou->amount }}</td>
                     <td>{{ $vou->exp }}</td>
-
                     <td class="action-icon">
                         <a href="{{ route('voucher.edit',$vou->id) }}"><i class="fas fa-pen"></i></a>
                         <button type="submit" class="dlt-btn" id="dlt-btn{{ $vou->id }}"><i class="fas fa-trash-alt"></i></button>
@@ -53,8 +50,8 @@
                         </form>
                     </td>
                 </tr>
-                 </tbody>
                  @endforeach
+                </tbody>
         </table>
 
     </div> {{-- End  of sectionContent--}}

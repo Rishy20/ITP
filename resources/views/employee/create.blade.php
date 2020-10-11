@@ -117,7 +117,7 @@
 
                     <div class="form-group">
                         {{-- <label class="br-label">Salary Type</label> --}}
-                        <select class="form-control br-select"  name="salary_type" required>
+                        <select class="form-control br-select"  name="salary_type" required id="salaryType">
                             <option value="" disabled selected hidden>Salary Type</option>
 
                             <option value="Daily">Daily</option>
@@ -159,11 +159,11 @@
         $("input[name='address']").val("Kurunegala");
         $("input[name='mobile']").val("0715647700");
         $("input[name='home']").val("0372278970");
-        //$("input[name='birthday']").val(getDate());
-        $("input[name='joined_date']").val("25/05/2015");
+        $("input[name='birthday']").val(moment("1990-04-01").format("YYYY-MM-DD"));
+        $("input[name='joined_date']").val(moment().format("YYYY-MM-DD"));
         $("input[name='target']").val("50 sales");
         $("input[name='salary']").val("1500.00");
-        $("input[name='salary_type']").val("daily");
+        $("#salaryType").val("Daily");
         $("input[name='commission']").val("0.5");
     });
 

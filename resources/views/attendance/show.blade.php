@@ -31,7 +31,7 @@
             <div class="add-btn"  >
                 <a href="#" id="staffIn">Staff In</a>
             </div>
-            
+
             <thead class="table-head">
                 <tr>
 
@@ -45,10 +45,7 @@
             </thead>
             <tbody>
                 @foreach($attendance as $att)
-
-
                 <tr>
-
                     <td>{{ $att->eid ." - ".$att->fname." ".$att->lname}}</td>
                     <td>
                         @if ($att->in)
@@ -70,10 +67,13 @@
                             @csrf
                         </form>
                     </td>
+                    @else
+                    <td></td>
                     @endif
                 </tr>
-                 </tbody>
+
                  @endforeach
+                </tbody>
         </table>
 
     </div> {{-- End  of sectionContent--}}
