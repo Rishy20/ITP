@@ -45,7 +45,7 @@
 <script>
     // JS for demo button
     $(".demo-btn").click(function(){
-        $("input[name='name']").val("Warehouse");
+        $("input[name='name']").val("Warehouse 05");
         $("input[name='address']").val("Malabe, Colombo");
     });
 </script>

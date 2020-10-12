@@ -43,7 +43,7 @@
                             <td>{{ $stock_transfer->dest_name }}</td>
                             <td class="text-right">{{ $stock_transfer->units }}</td>
                             <td>{{ $stock_transfer->status }}</td>
-                            <td>{{ $stock_transfer->updated_at }}</td>
+                            <td>{{ $stock_transfer->created_at }}</td>
                         </tr>
                     @endforeach
                 </tbody>
