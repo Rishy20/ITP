@@ -264,14 +264,14 @@
                 </div>
 
                 <div class="sub-btn-div">
-
+{{--
                     <button class="sub-btn btn mr-2">
                         <i class="fas fa-undo sub-icon"></i><span class="sub-btn-txt"> Retrieve Sale</span>
                     </button>
 
                     <button class="sub-btn btn mr-2">
                         <i class="fas fa-parking sub-icon"></i><span class="sub-btn-txt"> Park Sale</span>
-                    </button>
+                    </button> --}}
                     <button class="sub-btn btn" id="discardSale">
                         <i class="fas fa-trash-alt sub-icon" ></i><span class="sub-btn-txt"> Discard Sale</span>
                     </button>
@@ -584,7 +584,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Redeem Points</label>
-                        <input type="text" name="amount" id="voucherAmount" class="form-control" />
+                        <input type="text" name="amount" id="redeemAmount" class="form-control" />
 
                     </div>
                 </div>
@@ -621,16 +621,16 @@
                 <div class="col">
                     Membership :
                 </div>
-                <div class="col">
-                    Platinum
+                <div class="col" id="membership">
+
                  </div>
             </div>
             <div class="row">
                 <div class="col">
                     Points :
                 </div>
-                <div class="col">
-                    1000
+                <div class="col" id="points">
+
                  </div>
             </div>
             <div class="row">

@@ -790,7 +790,10 @@ input[type="radio"]:checked:after {
 }
 .minus-btn,
 .plus-btn {
-    background-color: #5c8babd4;
+    background-color: #5c8babd4 !important;
+}
+.minus-btn .btn:focus,.plus-btn .btn:focus{
+    background-color: #2e2e2ed4 !important;
 }
 .minus-btn button:hover,
 .plus-btn button:hover,.minus-btn button:active,

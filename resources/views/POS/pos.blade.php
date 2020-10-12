@@ -1261,6 +1261,12 @@ $('#cardbtn').click(function(){
     $('#voucherOptions2').hide();
     $('#cardOptions1').hide();
     $('#voucherOptions1').hide();
+
+    $('#pay-col').removeClass('col-md-8');
+    $('.pos-pay').removeClass('pos-loyalty-width');
+    $('.pay-customer').hide();
+    $('#loyaltyOptions').hide();
+    $('#loyaltyOptions .pay-model-btn').hide();
 })
 $('#voucherbtn').click(function(){
     $('#cardOptions').hide();
@@ -1273,16 +1279,29 @@ $('#voucherbtn').click(function(){
     $('#voucherOptions2').hide();
     $('#cardOptions1').hide();
     $('#voucherOptions1').hide();
+
+    $('#pay-col').removeClass('col-md-8');
+    $('.pos-pay').removeClass('pos-loyalty-width');
+    $('.pay-customer').hide();
+    $('#loyaltyOptions').hide();
+    $('#loyaltyOptions .pay-model-btn').hide();
 })
 $('#loyaltybtn').click(function(){
-    $('#pay-col').addClass('col-md-8');
-    $('.pos-pay').addClass('pos-loyalty-width');
-    $('.pay-customer').show();
+    $('#pay-col').toggleClass('col-md-8');
+    $('.pos-pay').toggleClass('pos-loyalty-width');
+    $('.pay-customer').toggle();
     $('#loyaltyOptions').toggle();
     $('#loyaltyOptions .pay-model-btn').toggle();
     $('#cardOptions .pay-model-btn').hide();
     $('#splitOptions .pay-model-btn').hide();
     $('#voucherOptions .pay-model-btn').hide();
+    $('#voucherOptions').hide();
+    $('#splitOptions').hide();
+    $('#cardOptions').hide();
+    $('#cardOptions2').hide();
+    $('#voucherOptions2').hide();
+    $('#cardOptions1').hide();
+    $('#voucherOptions1').hide();
 })
 
 $('#splitbtn').click(function(){
@@ -1297,6 +1316,12 @@ $('#splitbtn').click(function(){
     $('#cardOptions .pay-model-btn').hide();
     $('#voucherOptions .pay-model-btn').hide();
     $('#splitOptions .pay-model-btn').toggle();
+
+    $('#pay-col').removeClass('col-md-8');
+    $('.pos-pay').removeClass('pos-loyalty-width');
+    $('.pay-customer').hide();
+    $('#loyaltyOptions').hide();
+    $('#loyaltyOptions .pay-model-btn').hide();
 })
 
 
@@ -1426,6 +1451,9 @@ function getCustomer(){
             $('#lname').html(data[0]['lastname']);
             $('#mobile').html(data[0]['phone']);
             $('#city').html(data[0]['city']);
+            $('#points').html(data[0]['points']);
+            $('#membership').html(data[0]['loyaltyName']);
+            $('#redeemAmount').val(data[0]['points']);
             $('.load-spinner-cus').hide();
             $('.pay-customer').removeClass('opacity4');
         }else{
