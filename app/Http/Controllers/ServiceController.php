@@ -43,7 +43,6 @@ class ServiceController extends Controller
      */
     public function create()
     {
-
         return view('service.addService');
     }
 
@@ -103,11 +102,11 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $service=Service::findOrFail($id);
-        $input=$request->all();
-        $service->update($input);
-        Session::put('message', 'Success!');
-        return redirect('/service');
+        // $service=Service::findOrFail($id);
+        // $input=$request->all();
+        // $service->update($input);
+        // Session::put('message', 'Success!');
+        // return redirect('/service');
     }
 
     public function updateService(Request $request){

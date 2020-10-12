@@ -70,7 +70,7 @@ class VoucherController extends Controller
 
         $last = DB::table('vouchers')->latest()->first();
         $voucherId = $last->id;
-        return $voucherId;
+        return $voucherId + 1;
     }
 
     public function getVoucherAmount($id){

@@ -443,10 +443,13 @@ class POSController extends Controller
     }
 
     public function getCustomer($mobile){
+
+
         $cus = DB::table('customers')
         ->where('phone','=',$mobile)
         ->get();
-
+        // $points = DB::select('select c.id,firstname,lastname,gender,phone,city,points,loyaltyId from customers c, loyalty_customers lc where c.id = lc.customerId and c.phone = ?', [$mobile]);
+        // dd($points);
         return $cus;
     }
 }

@@ -26,7 +26,7 @@ class EmployeeController extends Controller
         //$employee =  DB::select('select fname, lname, nic, address, mobile, home, joined_date, target, salary, salary_type, commission from employees emp');
         return view ('Employee.show',compact('employee'));
 
-        
+
         //return Employee::all();
         //dd($request->all());
         //return view('employees.index');
@@ -68,7 +68,7 @@ class EmployeeController extends Controller
 
         Employee::create($request->all());
         Session::put('message', 'Success!');
-        return redirect()->back();
+        return redirect('/employee');
 
         /* $employee = new employee;
         $employee->first_name = request('fname');
