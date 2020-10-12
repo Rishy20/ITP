@@ -110,9 +110,9 @@
             Exchange DETAIL REPORT
         </div>
         <div class="period">
-            <span class="from">20-09-2020 &nbsp;</span>
+            <span class="from">{{$sdate}} &nbsp;</span>
             <span class="to">to &nbsp;</span>
-            <span class="to_date">20-10-2020</span>
+            <span class="to_date">{{$edate}}</span>
         </div>
         <hr class="hr">
         <table class="all-table table-striped">
@@ -120,11 +120,11 @@
             <tr class="table-head">
             <th>ID</th>
             <th>Product Code</th>
-            <th>Customer ID</th>
-            <th>Salesman ID</th>
+            <th>Customer</th>
+            <th>Salesman </th>
             <th>Amount</th>
             <th>Date</th>
-        
+
             </tr>
             <tbody>
             @foreach($exchanges as $row)
@@ -135,7 +135,7 @@
              <td>{{ $row->fname." ".$row->lname }}</td>
              <td>{{ $row->amount }}</td>
              <td>{{ $row->created_at }}</td>
-                   
+
                 </tr>
                 @endforeach
             </tbody>

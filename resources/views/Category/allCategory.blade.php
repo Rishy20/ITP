@@ -30,6 +30,7 @@
                 <tr>
                     <th>Category Name</th>
                     <th style="max-width: 600px; width: 600px">Category Description</th>
+                    <th>No.of Products</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -40,7 +41,7 @@
 
                     <td>{{$i->name}}</td>
                     <td>{{$i->description}}</td>
-
+                    <td>{{$i->count}}</td>
                     <td class="action-icon">
                         <a href="{{route('category.show',$i->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         <button type="submit" class="dlt-btn" id="dlt-btn{{ $i->id }}"><i class="fas fa-trash-alt"></i></button>

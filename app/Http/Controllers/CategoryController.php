@@ -20,7 +20,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category= Category::all();
+
+        $category = DB::select('select c.id,c.name,c.description,count(p.id) as count from categories c, products p  where p.catID = c.id group by p.catId');
+
 
         return view ('Category.allCategory',compact('category'));
     }
@@ -58,6 +60,7 @@ class CategoryController extends Controller
     public function show($category)
     {
         $cat= Category::find($category);
+
 
         return view('Category.editCategory',compact('cat'));
     }
@@ -105,6 +108,7 @@ class CategoryController extends Controller
     }
 
     public function createReport(Request $request){
+
 
         $cat =  DB::select('select c.name,c.description,count(catID) as count  from categories c , products p where p.catID = c.id group by p.catID ');
 

@@ -3,6 +3,7 @@
 
 <div class="pg-heading">
     <div class="pg-title">All Returns</div>
+
 </div>
 
 @if(session('message'))
@@ -33,7 +34,7 @@
                     <th style="max-width: 600px; width: 600px">Remarks</th>
                     <th>Vendor</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th>Action</th
                 </tr>
             </thead>
             <tbody>
@@ -60,5 +61,26 @@
 
     </div> {{-- End  of sectionContent--}}
 </div> {{-- End  of section--}}
+<script>
 
+    $(document).ready(function() {
+
+FilterStart = moment().format("YYYY-MM-DD");
+FilterEnd = moment().format("YYYY-MM-DD");
+$.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
+
+        var DataTableStart = data[5].trim();
+        var DataTableEnd = data[5].trim();
+        if (FilterStart == '' || FilterEnd == '') {
+            return true;
+        }
+        if (DataTableStart >= FilterStart && DataTableEnd <= FilterEnd + 1) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+});
+</script>
 @endsection
