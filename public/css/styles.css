@@ -1678,4 +1678,12 @@ button:focus{
 #remarks-row{
     padding: 0px 0px;
 }
-
+.header-logout{
+    width: 118px;
+    float: right;
+    right: 0 !important;
+    margin-left: auto;
+    min-width: 100px;
+    margin-top: 8px;
+    padding: 0px 11px;
+}

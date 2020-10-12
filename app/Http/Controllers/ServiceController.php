@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +22,17 @@ class ServiceController extends Controller
     public function index()
     {
         // $service = Service::all();
-        $service = DB::select('select s.id,s.return_date,s.service_description,s.cost,c.firstname,c.lastname,u.username,s.created_at from services s left join customers c on s.customer_id = c.id left join users u on u.id = s.user_id');
+        $customer = Customer::all();
+        $service = DB::select('select s.id,s.customer_id,s.return_date,s.service_description,s.cost,c.firstname,c.lastname,u.username,s.created_at from services s left join customers c on s.customer_id = c.id left join users u on u.id = s.user_id');
         // dd($service);
-        return view('Service.allService',compact('service'));
+        $last = DB::table('services')->latest()->first();
+
+        if($last == null){
+            $serviceId = 1;
+        }else{
+             $serviceId = ($last->id) + 1;
+        }
+        return view('Service.allService',compact('service','customer','serviceId'));
 
     }
 
@@ -58,7 +67,7 @@ class ServiceController extends Controller
 
             Service::create($request->all());
             Session::put('message', 'Success!');
-            // return redirect()->back();
+            return redirect()->back();
     }
 
     /**
@@ -92,18 +101,23 @@ class ServiceController extends Controller
      * @param  \App\service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, service $service)
+    public function update(Request $request, $id)
     {
-        $service->id = $request->input('id');
-        $service->customer_id = $request->input('customer_id');
-        $service->date = $request->input('return_date');
-        $service->service_description = $request->input('service_description');
-        $service->cost = $request->input('cost');
-        $service->save();
+        $service=Service::findOrFail($id);
+        $input=$request->all();
+        $service->update($input);
         Session::put('message', 'Success!');
         return redirect('/service');
     }
 
+    public function updateService(Request $request){
+
+        $service=Service::findOrFail($request->id);
+        $input=$request->all();
+        $service->update($input);
+        Session::put('message', 'Success!');
+        return redirect('/service');
+    }
     /**
      * Remove the specified resource from storage.
      *

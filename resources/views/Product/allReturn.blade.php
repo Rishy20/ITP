@@ -38,18 +38,19 @@
             </thead>
             <tbody>
                 @foreach($returns as $i)
-                <tr onclick="window.location='{{route("return.show",$i->id)}}';">
+                <tr >
 
-                    <td>{{$i->id}}</td>
-                    <td>{{$i->remarks}}</td>
-                    <td>{{$i->first_name .' '.$i->last_name}}</td>
-                    <td>{{$i->date}}</td>
+                    <td onclick="window.location='{{route("return.show",$i->id)}}';">{{$i->id}}</td>
+                    <td onclick="window.location='{{route("return.show",$i->id)}}';">{{$i->remarks}}</td>
+                    <td onclick="window.location='{{route("return.show",$i->id)}}';">{{$i->first_name .' '.$i->last_name}}</td>
+                    <td onclick="window.location='{{route("return.show",$i->id)}}';">{{$i->date}}</td>
                     <td class="action-icon">
                         <a href="{{route('return.edit',$i->id)}}"><i class="fas fa-pen"></i></a> {{-- Edit icon --}}
                         <button type="submit" class="dlt-btn" id="dlt-btn{{ $i->id }}"><i class="fas fa-trash-alt"></i></button>
                         <form method="POST" class="dlt-form" id="dlt-form{{ $i->id }}" action="{{ route('return.destroy',$i->id)}}">
                             @method('DELETE')
                             @csrf
+
                         </form>
                     </td>
                 </tr>

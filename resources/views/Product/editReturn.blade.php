@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="pg-heading">
-    <a href="{{ route('inventories.index') }}">
+    <a href="{{ route('return.index') }}">
         <i class="fa fa-arrow-left pg-back"></i>
     </a>
     <div class="pg-title">Return products</div>
@@ -15,33 +15,37 @@
         <hr>
     </div>
     <div class="section-content">
-        <form method="POST" class="needs-validation" action="{{ route('return.store') }}" novalidate>
+        <form method="POST" class="needs-validation" action="{{ route('return.update',$return->id) }}" novalidate>
             @csrf
+            @method('patch')
             <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label>Vendor</label>
-                        <input type="text" id="vendor" name="vendor" class="form-control" data-toggle="dropdown" placeholder="Select Vendor" required/>
+                        <input type="text" id="vendor" name="vendor" value="{{$return->first_name . " " . $return->last_name}}" class="form-control" data-toggle="dropdown" placeholder="Select Vendor" required/>
                         <ul class="dropdown-menu service-cus-dropdown">
-                            <input class="form-control" id="vendorSearch" type="text" placeholder="Search..">
+                        <input class="form-control" id="vendorSearch" type="text"  placeholder="Search..">
                             @foreach($vendor as $v)
                                 <li onclick="addVendor({{$v->id}})" >{{$v->first_name . " " .$v->last_name }}</li>
                             @endforeach
                         </ul>
-                        <input type="text" name="vendorId" id="vendorId" hidden/>
+                    <input type="text" name="vendorId" value="{{$return->vendorId}}" id="vendorId" hidden/>
                     </div>
                 </div>
                 <div class="col">
                     <label>Return Date</label>
-
-                        <input type="date" name="date" class="form-control "value="<?php echo date('Y-m-d'); ?>"required/>
+                        @php
+                            $time = strtotime($return->date);
+                            $newformat = date('Y-m-d',$time);
+                        @endphp
+                        <input type="date" name="date" class="form-control" value="{{$newformat}}"required/>
 
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label>Remarks</label>
-                    <textarea name="remarks" class="pos-sub-txtArea" rows=5></textarea>
+                <textarea name="remarks" class="pos-sub-txtArea" rows=5>{{$return->remarks}}</textarea>
                 </div>
             </div>
 
@@ -132,6 +136,12 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
     });
+    $(document).ready(function(){
+        var product = <?php echo json_encode($product); ?>;
+        product.forEach(function(index,value,array){
+            addProduct(array[value]['productId'],array[value]['variantId'],array[value]['qty']);
+        });
+    })
 
     function addVendor(id){
 
@@ -145,7 +155,7 @@
             }
         });
         $('.load-spinner').show();
-        $url = "/vendorproduct/"+id;
+        $url = "vendorproduct/"+id;
 
         $.get($url, function(data, status){
             $("tr").remove(".item-table-row");
@@ -160,7 +170,7 @@
 
 
 
-    function addProduct(id,vid){
+    function addProduct(id,vid,qty){
 
 var complex = <?php echo json_encode($prd); ?>;
 complex.forEach(myFunction);
@@ -195,13 +205,16 @@ function myFunction(index,value,array){
         cell6.innerHTML = array[value]['color'];
 
 
+        if(qty == undefined){
 
-        if(array[value]['quantity'] == null){
-            cell7.innerHTML = '<input type="text" value="'+array[value]['Qty']+'" class="table-qty"/>';
+            if(array[value]['quantity'] == null){
+                cell7.innerHTML = '<input type="text" value="'+array[value]['Qty']+'" class="table-qty"/>';
+            }else{
+                cell7.innerHTML = '<input type="text" value="'+array[value]['quantity']+'" class="table-qty"/>';
+            }
         }else{
-            cell7.innerHTML = '<input type="text" value="'+array[value]['quantity']+'" class="table-qty"/>';
+            cell7.innerHTML = '<input type="text" value="'+qty+'" class="table-qty"/>';
         }
-
         cell8.innerHTML = '<i class="fas fa-times cancel" id="remove"></i>';
         cell9.innerHTML = index;
         cell9.className = 'none';
@@ -215,7 +228,7 @@ function myFunction(index,value,array){
         }else{
             arr.push([array[value]['id'],array[value]['vid'],array[value]['quantity']]);
         }
-    }else if(vid.length == 0){
+    }else if(vid == null || vid.length == 0){
         if(array[value]['id'] == id){
             var row = selectedProducts.insertRow();
         row.className = 'item-table-row';

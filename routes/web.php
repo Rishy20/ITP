@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginAdminController;
 use App\Http\Controllers\brandController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\App;
@@ -75,6 +76,7 @@ Route::get('/allForm', function () {
 
 Route::resource('vendors','VendorController');
 Route::resource('service', 'ServiceController');
+Route::patch('/updateService','ServiceController@updateService')->name('service.updateService');
 
 Route::get('/test', 'VendorController@index');
 Route::post('/store', 'VendorController@store');
@@ -98,6 +100,7 @@ Route::get('/purchaseReport','PurchaseController@createReport')->name('purchase.
 Route::get('/login', function(){
     return view('login');
 });
+Route::get('/logout','Auth\LoginAdminController@logout')->name('admin.logout');
 Route::get('poslogin', 'Auth\LoginPosController@index');
 Route::get('/pos',"POSController@index")->name('pos');
 Route::post('/pos',"POSController@store")->name('pos');

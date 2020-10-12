@@ -182,9 +182,7 @@
             $('#payBtn').on('click', function() {
                 var t = $('#amnt-total').html(total);
 
-                if(arr.length == 0){
-                    alert("Please add Items")
-                }else if($('#adds').is(":visible")){
+                if($('#adds').is(":visible")){
                     alert("Please select a Salesman")
                 }else{
                 $('#posSubPay').toggleClass('block');

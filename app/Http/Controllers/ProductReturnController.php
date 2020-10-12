@@ -128,7 +128,17 @@ class ProductReturnController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $r = DB::select('select r.id,v.id as vendorId, v.first_name, v.last_name,r.date, r.remarks from return_products r, vendors v where r.vendorId = v.id and r.id = ?',[$id]);
+        $vendor = Vendor::all();
+        foreach($r as $res){
+            $return = $res;
+        }
+        $product = DB::select('select productId,variantId,qty from product_returns where returnId = ?', [$id]);
+
+        $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,p.costPrice,v.size,v.color,v.price,v.quantity,p.Qty from products p LEFT JOIN variants v ON p.id = v.product_id');
+        return view('Product.editReturn',compact('vendor','prd','return','product'));
+
     }
 
     /**
@@ -140,7 +150,60 @@ class ProductReturnController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $rp = ReturnProducts::find($id);
+        $rp->vendorId = $request->vendorId;
+        $rp->date = $request->date;
+        $rp->remarks = $request->remarks;
+        $rp->update();
+
+        $pr = $_COOKIE['returnproducts'];
+        $temp = json_decode($pr,true);
+        $last = DB::table('return_products')->latest()->first();
+        $returnid = $id;
+        setcookie("returnproducts","",time()-3600);
+
+        DB::delete('delete from product_returns where returnId = ?', [$id]);
+        foreach($temp as $t){
+
+            $p = new ProductReturn();
+            $p->returnId = $returnid;
+            $p->productId = $t[0];
+            if($t[1] != null){
+                $p->variantId = $t[1];
+            }
+            $p->qty = $t[2];
+            $p->save();
+
+
+
+            $product = DB::table('products')
+            ->where('id','=',$t[0])
+            ->get();
+
+            //Deduct from Products table
+            foreach($product as $prd){
+                $qty = $prd->Qty;
+            }
+            $newQty = $qty - $t[2];
+            DB::update('update products set Qty = ? where id = ?', [$newQty,$t[0]]);
+
+            //Deduct from variants table
+
+            if($t[1] != null){
+                $variant = DB::table('variants')
+                ->where('id','=',$t[1])
+                ->get();
+
+                //Deduct from Products table
+                foreach($variant as $v){
+                    $qty = $v->quantity;
+                }
+                $newQty = $qty - $t[2];
+                DB::update('update variants set quantity = ? where id = ?', [$newQty,$t[1]]);
+            }
+        }
+        return redirect('/return');
     }
 
     /**
@@ -151,7 +214,11 @@ class ProductReturnController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $pr = ReturnProducts::findOrFail($id);
+        $pr->delete();
+        DB::delete('delete from product_returns where returnId = ?', [$id]);
+        return redirect()->back();
     }
 
     public function getVendorProducts($id){

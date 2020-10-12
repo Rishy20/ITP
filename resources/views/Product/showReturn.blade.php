@@ -60,7 +60,7 @@
         <div class="col-md-4 ">
             <div class="section mb-4"> {{-- Start of Section 2--}}
                 <div class="section-title section-title-sub">
-                    Sale Information
+                    Return Information
                     <hr>
                 </div>
                 <div class="section-content"> {{-- Start of sectionContent--}}
