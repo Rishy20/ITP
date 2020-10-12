@@ -165,6 +165,10 @@ Route::post('/reports/category-wise-sales', 'ReportController@categoryWiseSales'
 Route::post('/reports/export-category-wise-sales', 'ReportController@exportCategoryWiseSales')->name('reports.export-category-wise-sales');
 Route::post('/reports/supplier-wise-sales', 'ReportController@supplierWiseSales')->name('reports.supplier-wise-sales');
 Route::post('/reports/export-supplier-wise-sales', 'ReportController@exportSupplierWiseSales')->name('reports.export-supplier-wise-sales');
+Route::post('/reports/salesman-wise-sales', 'ReportController@salesmanWiseSales')->name('reports.salesman-wise-sales');
+Route::post('/reports/export-salesman-wise-sales', 'ReportController@exportSalesmanWiseSales')->name('reports.export-salesman-wise-sales');
+Route::post('/reports/customer-wise-sales', 'ReportController@customerWiseSales')->name('reports.customer-wise-sales');
+Route::post('/reports/export-customer-wise-sales', 'ReportController@exportCustomerWiseSales')->name('reports.export-customer-wise-sales');
 Route::get('/reports/total-expense', 'ReportController@totalExpense')->name('reports.total-expense');
 Route::post('/reports/export-total-expense', 'ReportController@exportTotalExpense')->name('reports.export-total-expense');
 Route::get('/reports/product-return', 'ReportController@productReturn')->name('reports.product-return');

@@ -334,6 +334,66 @@ class ReportController extends Controller
         return $pdf->stream('supplier-wise-sales.pdf');
     }
 
+    public function salesmanWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = DB::table('sales')->join('employees', 'sales.staffId', '=', 'employees.id')
+            ->join('sales_products', 'sales_products.saleId', '=', 'sales.id')
+            ->groupBy('sales.staffId')->whereBetween('sales.updated_at', [$start_date, $end_date])
+            ->select('employees.*', DB::raw('SUM(sales.amount) AS sales_sum'),
+                DB::raw('SUM(sales.taxes) AS taxes_sum'), DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+
+        return view('reports.sales.salesman-wise-sales')->with('sales', $sales)
+            ->with('start_date', $start_date)->with('end_date', $end_date);
+    }
+
+    public function exportSalesmanWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = DB::table('sales')->join('employees', 'sales.staffId', '=', 'employees.id')
+            ->join('sales_products', 'sales_products.saleId', '=', 'sales.id')
+            ->groupBy('sales.staffId')->whereBetween('sales.updated_at', [$start_date, $end_date])
+            ->select('employees.*', DB::raw('SUM(sales.amount) AS sales_sum'),
+                DB::raw('SUM(sales.taxes) AS taxes_sum'), DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+
+        view()->share(['sales' => $sales, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.salesman-wise-sales', [$sales, $start_date, $end_date]);
+
+        return $pdf->stream('salesman-wise-sales.pdf');
+    }
+
+    public function customerWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = DB::table('sales')->join('customers', 'sales.customerId', '=', 'customers.id')
+            ->join('sales_products', 'sales_products.saleId', '=', 'sales.id')
+            ->groupBy('sales.customerId')->whereBetween('sales.updated_at', [$start_date, $end_date])
+            ->select('customers.*', DB::raw('SUM(sales.amount) AS sales_sum'),
+                DB::raw('SUM(sales.taxes) AS taxes_sum'), DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+
+        return view('reports.sales.customer-wise-sales')->with('sales', $sales)
+            ->with('start_date', $start_date)->with('end_date', $end_date);
+    }
+
+    public function exportCustomerWiseSales(Request $request) {
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
+
+        $sales = DB::table('sales')->join('customers', 'sales.customerId', '=', 'customers.id')
+            ->join('sales_products', 'sales_products.saleId', '=', 'sales.id')
+            ->groupBy('sales.customerId')->whereBetween('sales.updated_at', [$start_date, $end_date])
+            ->select('customers.*', DB::raw('SUM(sales.amount) AS sales_sum'),
+                DB::raw('SUM(sales.taxes) AS taxes_sum'), DB::raw('SUM(sales_products.qty) AS qty_sum'))->get();
+
+        view()->share(['sales' => $sales, 'start_date' => $start_date, 'end_date' => $end_date]);
+        $pdf =  PDF::loadView('reports.sales.export.salesman-wise-sales', [$sales, $start_date, $end_date]);
+
+        return $pdf->stream('salesman-wise-sales.pdf');
+    }
+
     public function productReturn() {
         $returns = DB::select('select e.id, e.productID, e.customerID, e.salesmanID, e.amount, e.updated_at, p.pcode,
                         c.firstname, c.lastname, em.fname, em.lname from exchanges e, products p, employees em, customers c where

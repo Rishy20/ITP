@@ -61,23 +61,29 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-tshirt"></i></div>
                         Product-wise Sales Report
                     </a>
+                    {{-- Category-wise Sales Report --}}
                     <a class="list-group-item list-group-item-action" id="category-wise-sales" role="tabpanel" href="#"
                        data-toggle="modal" data-target="#date_range_select" onclick="updateForm('{{ route('reports.category-wise-sales') }}')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-list"></i></div>
                         Category-wise Sales Report
                     </a>
+                    {{-- Supplier-wise Sales Report --}}
                     <a class="list-group-item list-group-item-action" id="supplier-wise-sales" role="tabpanel" href="#"
                        data-toggle="modal" data-target="#date_range_select" onclick="updateForm('{{ route('reports.supplier-wise-sales') }}')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-building"></i></div>
                         Supplier-wise Sales Report
                     </a>
-                    <a class="list-group-item list-group-item-action" id="customer-wise-sales" role="tabpanel" href="#">
-                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-user"></i></div>
-                        Customer-wise Sales Report
-                    </a>
-                    <a class="list-group-item list-group-item-action" id="salesman-wise-sales" role="tabpanel" href="#">
+                    {{-- Salesman-wise Sales Report --}}
+                    <a class="list-group-item list-group-item-action" id="salesman-wise-sales" role="tabpanel" href="#"
+                       data-toggle="modal" data-target="#date_range_select" onclick="updateForm('{{ route('reports.salesman-wise-sales') }}')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-hospital-user"></i></div>
                         Salesman-wise Sales Report
+                    </a>
+                    {{-- Customer-wise Sales Report --}}
+                    <a class="list-group-item list-group-item-action" id="customer-wise-sales" role="tabpanel" href="#"
+                       data-toggle="modal" data-target="#date_range_select" onclick="updateForm('{{ route('reports.customer-wise-sales') }}')">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-user"></i></div>
+                        Customer-wise Sales Report
                     </a>
                     {{-- Total Expense Report --}}
                     <a class="list-group-item list-group-item-action" id="total-expense" role="tabpanel"
