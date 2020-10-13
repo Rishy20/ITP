@@ -8,7 +8,7 @@ use App\ReturnProducts;
 use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use PDF;
 class ProductReturnController extends Controller
 {
 
@@ -98,6 +98,7 @@ class ProductReturnController extends Controller
                 DB::update('update variants set quantity = ? where id = ?', [$newQty,$t[1]]);
             }
         }
+        return redirect('/return');
     }
 
     /**
@@ -224,5 +225,23 @@ class ProductReturnController extends Controller
     public function getVendorProducts($id){
         $prd = DB::select('select p.id,v.id as vid ,pcode,p.name,v.size,v.color,v.price,v.quantity,p.Qty from products p LEFT JOIN variants v ON p.id = v.product_id Where p.supplierId = ?',[$id]);
         return $prd;
+    }
+
+    public function createReport(Request $request){
+
+
+        $returns = DB::select('select r.id, v.first_name, v.last_name,r.date, r.remarks,sum(p.costPrice * rp.qty) as total from return_products r, vendors v,product_returns rp,products p where r.vendorId = v.id and rp.productId = p.id Group By  r.id, v.first_name, v.last_name,r.date, r.remarks');
+        // $tot = DB::select('select sum(p.costPrice * r.qty) as total from product_returns r, products p where r.productId = p.id ');
+        // // return view ('Barcode.printBarcode',compact('product'));
+
+
+        view()->share('returns',$returns);
+
+
+        $pdf =  PDF::loadView('Product.returnReport',$returns);
+
+        // // download PDF file with download method
+        return $pdf->stream('returns.pdf');
+        return view('Product.returnReport',compact('returns'));
     }
 }

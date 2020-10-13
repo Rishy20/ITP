@@ -30,6 +30,7 @@
                 <th>ID</th>
                 <th>Promotion Name</th>
                 <th>Promotion Type</th>
+                <th>Discount Type</th>
                 <th>Discount</th>
                 <th>Start Date</th>
                 <th>End Date</th>
@@ -43,6 +44,7 @@
                 <td> {{ $row->id }} </td>
                 <td> {{ $row->promotionname }} </td>
                 <td> {{ $row->promotiontype }} </td>
+                <td> {{ $row->discounttype }} </td>
                 <td> {{ $row->discount }} </td>
                 <td> {{ $row->startdate }} </td>
                 <td> {{ $row->enddate }} </td>

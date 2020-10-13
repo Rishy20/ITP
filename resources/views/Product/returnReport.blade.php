@@ -107,37 +107,28 @@
             <div class="today">{{ date("d-m-Y") }}</div>
         </div>
         <div class="pg-title">
-            EMPLOYEE DETAIL REPORT
+            RETURN DETAIL REPORT
         </div>
 
         <hr class="hr">
         <table class="all-table table-striped">
 
             <tr class="table-head">
-                <th>Name</th>
-                <th>NIC</th>
-                <th>Address</th>
-                <th>Phone(Mobile)</th>
-                <th>Phone(Home)</th>
-                <th>Joined Date</th>
-                <th>Target</th>
-                <th>Salary</th>
-                <th>Salary Type</th>
-                <th>Commission</th>
+                    <th>Return No.</th>
+                    <th style="max-width: 600px; width: 200px">Remarks</th>
+                    <th>Vendor</th>
+                    <th>Total</th>
+                    <th>Date</th>
+
             </tr>
             <tbody>
-                @foreach($employee as $emp)
+                @foreach($returns as $i)
                 <tr>
-                    <td>{{ $emp->fname." ".$emp->lname }}</td>
-                    <td>{{ $emp->nic }}</td>
-                    <td>{{ $emp->address }}</td>
-                    <td>{{ $emp->mobile }}</td>
-                    <td>{{ $emp->home }}</td>
-                    <td>{{ $emp->joined_date }}</td>
-                    <td>{{ $emp->target }}</td>
-                    <td>{{ $emp->salary }}</td>
-                    <td>{{ $emp->salary_type }}</td>
-                    <td>{{ $emp->commission }}</td>
+                    <td >{{$i->id}}</td>
+                    <td >{{$i->remarks}}</td>
+                    <td >{{$i->first_name .' '.$i->last_name}}</td>
+                    <td >Rs.{{$i->total}}</td>
+                    <td >{{$i->date}}</td>
 
                 </tr>
                 @endforeach

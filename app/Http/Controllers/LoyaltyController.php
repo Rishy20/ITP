@@ -23,7 +23,7 @@ class LoyaltyController extends Controller
      */
     public function index()
     {
-        $loyalty = Loyalty::all()->toArray();
+        $loyalty = DB::select('select l.id,loyaltyName,minimumPointRequired,tierPoints,l.points, count(lc.id) as count from loyalty l, loyalty_customers lc where l.id = lc.loyaltyId GROUP BY l.id,loyaltyName,minimumPointRequired,tierPoints,l.points');
         return view('Loyalty.allLoyalty', compact('loyalty'));
     }
 
@@ -55,7 +55,7 @@ class LoyaltyController extends Controller
             'points' => 'required'
         ]);
 
-        // Loyalty::create($request->all());
+        Loyalty::create($request->all());
 
         $c = $_COOKIE['customers'];
         $customer = json_decode($c,true);
@@ -99,7 +99,10 @@ class LoyaltyController extends Controller
     {
         $customer = Customer::all();
         $loyalty = Loyalty::find($id);
-        return view('Loyalty.editLoyalty', compact('loyalty', 'id','customer'));
+
+        $loyal_cus = DB::table('loyalty_customers')->where('loyaltyId','=',$id)->get();
+        // dd($loyal_cus);
+        return view('Loyalty.editLoyalty', compact('loyalty', 'id','customer','loyal_cus'));
     }
 
     /**
@@ -122,6 +125,24 @@ class LoyaltyController extends Controller
 
         $input = $request->all();
         $loyalty->update($input);
+
+        $c = $_COOKIE['customers'];
+        $customer = json_decode($c,true);
+
+        $loyaltyid = $id;
+        $pointsonSignUp = $loyalty->points;
+        setcookie("customers","",time()-3600);
+        DB::delete('delete from loyalty_customers where loyaltyId = ?', [$id]);
+        foreach($customer as $cu){
+
+            $cus = new LoyaltyCustomer();
+            $cus->loyaltyId = $loyaltyid;
+            $cus->customerId = $cu[0];
+            $cus->points = $pointsonSignUp;
+            $cus->save();
+        }
+
+
         Session::put('message', 'Success!');
         return redirect('/loyalty');
     }
@@ -134,7 +155,7 @@ class LoyaltyController extends Controller
      */
     public function destroy($id)
     {
-
+        DB::delete('delete from loyalty_customers where loyaltyId = ?', [$id]);
         $loyalty = Loyalty::findOrFail($id);
         $loyalty->delete();
         Session::put('message', 'Success!');
@@ -143,7 +164,8 @@ class LoyaltyController extends Controller
 
     public function createReport(Request $request){
 
-        $loyalty =  Loyalty::all()->toArray();
+        $loyalty = DB::select('select l.id,loyaltyName,minimumPointRequired,tierPoints,l.points, count(lc.id) as count from loyalty l, loyalty_customers lc where l.id = lc.loyaltyId GROUP BY l.id,loyaltyName,minimumPointRequired,tierPoints,l.points');
+
 
         // // return view ('Barcode.printBarcode',compact('product'));
 

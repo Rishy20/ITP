@@ -4,6 +4,7 @@
 <div class="pg-heading">
     <div class="pg-title">All Returns</div>
 
+
 </div>
 
 @if(session('message'))
@@ -21,9 +22,9 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            {{-- <div class="add-btn">
-                <a href="{{ route('brand.report') }}" target="_blank">Export Brand</a>
-            </div> --}}
+            <div class="add-btn">
+                <a href="{{ route('return.report') }}" target="_blank">Export Returns</a>
+            </div>
             <div class="add-btn"> {{-- Add button --}}
                 <a href="{{ route('return.create') }}">Create Return</a> {{-- Enter the name of the add btn --}}
             </div>
@@ -61,26 +62,5 @@
 
     </div> {{-- End  of sectionContent--}}
 </div> {{-- End  of section--}}
-<script>
 
-    $(document).ready(function() {
-
-FilterStart = moment().format("YYYY-MM-DD");
-FilterEnd = moment().format("YYYY-MM-DD");
-$.fn.dataTable.ext.search.push(
-    function(settings, data, dataIndex) {
-
-        var DataTableStart = data[5].trim();
-        var DataTableEnd = data[5].trim();
-        if (FilterStart == '' || FilterEnd == '') {
-            return true;
-        }
-        if (DataTableStart >= FilterStart && DataTableEnd <= FilterEnd + 1) {
-            return true;
-        } else {
-            return false;
-        }
-    });
-});
-</script>
 @endsection

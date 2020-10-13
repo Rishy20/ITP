@@ -65,8 +65,11 @@
                         <div class="header-time">
                             <livewire:time />
                         </div>
-                        <div class="header-user pos-header-user">
+                        <div class="header-user pos-header-user" data-toggle="dropdown">
                             <i class="fas fa-user-circle header-icon"></i> {{Auth::user()->display_name}}
+                            <ul class="dropdown-menu header-logout">
+                                <li onclick="window.location='{{route("pos.logout")}}';">Logout</li></a>
+                                </ul>
                         </div>
                     </div>
                 </div>
@@ -182,11 +185,44 @@
             $('#payBtn').on('click', function() {
                 var t = $('#amnt-total').html(total);
 
+
                 if($('#adds').is(":visible")){
                     alert("Please select a Salesman")
                 }else{
-                $('#posSubPay').toggleClass('block');
-                $('#fadeBgPay').toggleClass('block');
+                    $('#posSubPay').toggleClass('block');
+                    $('#fadeBgPay').toggleClass('block');
+
+                    // var promo = <?php echo json_encode($promo); ?>;
+                    // promo.forEach(function(index,value,array){
+
+                    //     if(array[value]['promotiontype'] === "all"){
+                    //         if(array[value]['discounttype'] === "percentage"){
+                    //             var per = array[value]['discount'];
+                    //             var tot = total + discount;
+                    //             var dis = (+tot * (+per/100)) + discount;
+                    //             var newAmount = tot - dis;
+
+                    //             $('#discount').html('Rs.'+dis);
+                    //             $('#total').html('Rs.'+ newAmount);
+                    //             $('#amnt-total').html(newAmount)
+                    //             $('#paytotal').html('Rs.'+ newAmount);
+                    //             $('#promotion-pos').show();
+                    //             $('#promotion-pos').html(array[value]['promotionname'] + " Promotion Applied");
+                    //         }else{
+                    //             var per = array[value]['discount'];
+                    //             var tot = total + discount;
+                    //             var dis = per + discount;
+                    //             var newAmount = tot - dis;
+
+                    //             $('#discount').html('Rs.'+dis);
+                    //             $('#total').html('Rs.'+ newAmount);
+                    //             $('#amnt-total').html(newAmount)
+                    //             $('#paytotal').html('Rs.'+ newAmount);
+                    //             $('#promotion-pos').html(array[value]['promotionname'] + " Promotion Applied");
+                    //         }
+                    //     }
+                    // });
+
 
                 }
 
@@ -782,6 +818,47 @@
                 }
         }
 
+        function addExpense(){
+
+if($('#expenseAmount').val().length == 0){
+    alert("Please enter an amount");
+
+}else{
+
+
+    $('#posSubExpense').removeClass('block');
+    $('#fadeBg').removeClass('block');
+
+
+
+let userId = {{Auth::user()->id}};
+let type = $('#expenseSelect').val();
+let description = $('#expenseDescription').val();
+let cost = $('#expenseAmount').val();
+let _token   = $('meta[name="csrf-token"]').attr('content');
+
+$.ajax({
+    url:"/expense",
+    type:"POST",
+    data:{
+        userId:userId,
+        type:type,
+        description:description,
+        amount:cost,
+        _token:_token
+    },
+    success:function(response){
+
+    },
+});
+
+
+$('#expenseDescription').val('');
+$('#expenseAmount').val('');
+
+}
+}
+
         var num = 0;
         var del = 0;
         var arr = [];
@@ -1323,6 +1400,21 @@ $('#splitbtn').click(function(){
     $('#loyaltyOptions').hide();
     $('#loyaltyOptions .pay-model-btn').hide();
 })
+$('#redeembtn').click(function(){
+
+    var points = $('#redeemAmount').val();
+    if(points > cusPoints){
+        alert("Insufficient Points to redeem");
+    }else{
+        var a = $('#amnt-total').html();
+        console.log(a);
+        var totAfterRedeem = a - points;
+        $('#amnt-total').html(totAfterRedeem);
+    }
+
+
+})
+
 
 
 $('#pay-method1').click(function(){
@@ -1394,7 +1486,7 @@ m2Voucher.addEventListener('keyup', () => {
 
 var m1Amnt = $('#method1Amount').val();
 var m2Amnt = $('#method2Amount').val();
-
+var cusPoints;
 function updatePayBalance(){
     var tot = +m1Amnt + +m2Amnt
     $('#amnt-tend').val(tot);
@@ -1419,7 +1511,7 @@ function getAmount(){
     $('.load-spinner').show();
     $.get(url, function(data, status){
 
-        if(data != -1){
+        if(data != -1 && data != -2){
             $('#voucherAmount').val(data);
             $('#amnt-tend').val(data);
             $('.load-spinner').hide();
@@ -1427,8 +1519,11 @@ function getAmount(){
             var t = $('#amnt-total').html();
             var balance = amountTend - t;
             $('#balance').html(balance);
-        }else{
+        }else if(data == -1){
             alert("Voucher Expired!");
+            $('.load-spinner').hide();
+        }else if(data == -2){
+            alert("Voucher Already Used!");
             $('.load-spinner').hide();
         }
 
@@ -1452,6 +1547,7 @@ function getCustomer(){
             $('#mobile').html(data[0]['phone']);
             $('#city').html(data[0]['city']);
             $('#points').html(data[0]['points']);
+            cusPoints = data[0]['points'];
             $('#membership').html(data[0]['loyaltyName']);
             $('#redeemAmount').val(data[0]['points']);
             $('.load-spinner-cus').hide();

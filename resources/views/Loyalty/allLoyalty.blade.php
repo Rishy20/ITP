@@ -38,14 +38,14 @@
             @foreach($loyalty as $row)
             <tbody>
                 <tr>
-                    <td>{{ $row['loyaltyName'] }}</td>
-                    <td>{{ $row['minimumPointRequired'] }}</td>
-                    <td>{{ $row['tierPoints'] }}</td>
-                    <td> 10 </td>
+                    <td>{{ $row->loyaltyName}}</td>
+                    <td>{{ $row->minimumPointRequired }}</td>
+                    <td>{{ $row->tierPoints }}</td>
+                    <td> {{$row->count}} </td>
                     <td class="action-icon">
-                        <a href="{{ route('loyalty.edit',$row['id']) }}"><i class="fas fa-pen"></i></a>
-                        <button type="submit" class="dlt-btn" id="dlt-btn{{ $row['id'] }}"><i class="fas fa-trash-alt"></i></button>
-                        <form method="POST" class="dlt-form" id="dlt-form{{ $row['id'] }}" action="{{ route('loyalty.destroy',$row['id']) }}">
+                        <a href="{{ route('loyalty.edit',$row->id) }}"><i class="fas fa-pen"></i></a>
+                        <button type="submit" class="dlt-btn" id="dlt-btn{{ $row->id }}"><i class="fas fa-trash-alt"></i></button>
+                        <form method="POST" class="dlt-form" id="dlt-form{{ $row->id }}" action="{{ route('loyalty.destroy',$row->id )}}">
                             @method('DELETE')
                             @csrf
 

@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Session;
 
 class LoginPosController extends Controller
 {
@@ -26,9 +26,9 @@ class LoginPosController extends Controller
         $user =  DB::table('users')
                 ->where('pin','=',$request->pin)
                 ->get();
+            // dd($user);
 
-
-        if($user){
+        if(sizeof($user)>0){
             foreach($user as $u){
                 $uid = $u->id;
             }
@@ -37,7 +37,17 @@ class LoginPosController extends Controller
             return redirect()->intended(route('pos'));
         }
 
+        Session::put('fail', 'Invalid Credentials');
 
         return redirect()->back();
+    }
+    public function logout(Request $request){
+
+        auth()->guard()->logout();
+
+        $request->session()->flush();
+
+        return  redirect('/pos/login');
+
     }
 }

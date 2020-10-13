@@ -18,7 +18,7 @@ class CreateReturnProductsTable extends Migration
             $table->unsignedBigInteger('vendorId');
             $table->date('date');
             $table->longText('remarks')->nullable();
-            $table->foreign('vendorId')->references('id')->on('vendors');
+            $table->foreign('vendorId')->references('id')->on('vendors')->cascadeOnDelete();
             $table->timestamps();
         });
     }

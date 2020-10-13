@@ -22,36 +22,26 @@
             <form method="POST" action="{{ route('login.admin') }}" class="needs-validation" novalidate>
                 @csrf
                 <div class="form-group">
-                    <input type="text" id="name" name="username" class="form-control @error('email') is-invalid @enderror " placeholder="Enter Username"   value="{{ old('email') }}" required />
+                    <input type="text" id="name" name="username" class="form-control " placeholder="Enter Username"   v required />
                     <label for="name" class="float-label">Username</label>
-                    <div class="invalid-feedback">
+                    <div class="invalid-feedback user-invalid">
                         Please enter a username
                     </div>
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password"  required />
+                    <input type="password" id="password" name="password" class="form-control " placeholder="Enter Password"  required />
                     <label for="password" class="float-label">Password</label>
-                    <div class="invalid-feedback">
+                    <div class="invalid-feedback password-invalid">
                         Please enter a Password
                     </div>
-
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
                 </div>
-                {{-- @if(session('fail'))
+                @if(session('fail'))
                 <div class="invalid-credentials">
                     Invalid Credentials, Please Try again!
                 </div>
                 {{ Session::forget('fail') }}
-                @endif --}}
+                @endif
                 <input type="submit" class="login-btn" value="SIGN IN"></input>
             </form>
         </div>

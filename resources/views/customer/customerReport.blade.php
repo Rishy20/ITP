@@ -27,7 +27,7 @@
         .pg-title {
             font-size: 34px;
             position: relative;
-            top: -35px;
+            top: -20px;
             font-weight: 600;
             color: #3a3a3a;
             letter-spacing: 1.2px;
@@ -109,11 +109,7 @@
         <div class="pg-title">
             CUSTOMER DETAIL REPORT
         </div>
-        <div class="period">
-            <span class="from">20-09-2020 &nbsp;</span>
-            <span class="to">to &nbsp;</span>
-            <span class="to_date">20-10-2020</span>
-        </div>
+
         <hr class="hr">
         <table class="all-table table-striped">
 
@@ -125,7 +121,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>City</th>
-               
+
             </tr>
             <tbody>
                 @foreach($customer as $row)
@@ -137,9 +133,9 @@
                 <td> {{ $row->email }} </td>
                 <td> {{ $row->phone }} </td>
                 <td> {{ $row->city }} </td>
-              
 
-                   
+
+
                 </tr>
                 @endforeach
             </tbody>

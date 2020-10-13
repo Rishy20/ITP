@@ -27,7 +27,7 @@
         .pg-title {
             font-size: 34px;
             position: relative;
-            top: -35px;
+            top: -20px;
             font-weight: 600;
             color: #3a3a3a;
             letter-spacing: 1.2px;
@@ -109,18 +109,17 @@
         <div class="pg-title">
             VOUCHER DETAIL REPORT
         </div>
-        <div class="period">
-            <span class="from">20-09-2020 &nbsp;</span>
-            <span class="to">to &nbsp;</span>
-            <span class="to_date">20-10-2020</span>
-        </div>
+
         <hr class="hr">
         <table class="all-table table-striped">
 
             <tr class="table-head">
-                <th>Number</th>
-                <th>Amount</th>
-                <th>Expiry Date</th>
+
+                    <th>Voucher No.</th>
+                    <th>Amount</th>
+                    <th>Expiry Date</th>
+                    <th>Redeem Status</th>
+
             </tr>
             <tbody>
                 @foreach($voucher as $vou)
@@ -128,7 +127,8 @@
                     <td>{{ $vou->id }}</td>
                     <td>{{ $vou->amount }}</td>
                     <td>{{ $vou->exp }}</td>
-                    
+                    <td>{{ $vou->redeem_status==1?"Redeemed":"Not Redeemed" }}</td>
+
                 </tr>
                 @endforeach
             </tbody>
