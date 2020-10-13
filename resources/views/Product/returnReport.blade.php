@@ -117,7 +117,7 @@
                     <th>Return No.</th>
                     <th style="max-width: 600px; width: 200px">Remarks</th>
                     <th>Vendor</th>
-                    <th>Total</th>
+                    {{-- <th>Total</th> --}}
                     <th>Date</th>
 
             </tr>
@@ -127,7 +127,7 @@
                     <td >{{$i->id}}</td>
                     <td >{{$i->remarks}}</td>
                     <td >{{$i->first_name .' '.$i->last_name}}</td>
-                    <td >Rs.{{$i->total}}</td>
+                    {{-- <td >Rs.{{$i->total}}</td> --}}
                     <td >{{$i->date}}</td>
 
                 </tr>

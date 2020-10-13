@@ -110,12 +110,12 @@
     //Demo Button
 
     $(".demo-btn").click(function(){
-        $("input[name='username']").val("Rishard");
-        $("input[name='display_name']").val("Rishard Akram");
+        $("input[name='username']").val("John");
+        $("input[name='display_name']").val("David John");
         $("input[name='password']").val("admin1234");
         $("input[name='repass']").val("admin1234");
-        $("input[name='pin']").val("1234");
-        $("input[name='repin']").val("1234");
+        $("input[name='pin']").val("4444");
+        $("input[name='repin']").val("4444");
     });
 
 

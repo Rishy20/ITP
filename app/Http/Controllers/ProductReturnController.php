@@ -230,7 +230,8 @@ class ProductReturnController extends Controller
     public function createReport(Request $request){
 
 
-        $returns = DB::select('select r.id, v.first_name, v.last_name,r.date, r.remarks,sum(p.costPrice * rp.qty) as total from return_products r, vendors v,product_returns rp,products p where r.vendorId = v.id and rp.productId = p.id Group By  r.id, v.first_name, v.last_name,r.date, r.remarks');
+        $returns = DB::select('select r.id, v.first_name, v.last_name,r.date, r.remarks from return_products r, vendors v,product_returns rp,products p where r.vendorId = v.id and rp.productId = p.id Group By  r.id, v.first_name, v.last_name,r.date, r.remarks');
+    //    dd($returns);
         // $tot = DB::select('select sum(p.costPrice * r.qty) as total from product_returns r, products p where r.productId = p.id ');
         // // return view ('Barcode.printBarcode',compact('product'));
 

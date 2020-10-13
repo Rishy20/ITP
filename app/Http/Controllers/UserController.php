@@ -92,7 +92,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->username = $request->input('username');
+        $user->username = $request->input('test');
         $user->display_name = $request->input('display_name');
         $user->roleId = $request->input('roleId');
         $user->save();

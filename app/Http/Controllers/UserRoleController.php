@@ -43,7 +43,7 @@ class UserRoleController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+
         userRole::create($request->all());
         Session::put('message', 'Success!');
         return redirect('/role');
@@ -224,8 +224,9 @@ class UserRoleController extends Controller
         $userRole->viewDashboardStatistics = $request->viewDashboardStatistics=== null?0:1;
         $userRole->save();
         $userRole = userRole::findOrFail($id);
-        return redirect('/role');
         Session::put('message', 'Success!');
+        return redirect('/role');
+
     }
 
     /*

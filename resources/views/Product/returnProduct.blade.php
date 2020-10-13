@@ -213,6 +213,7 @@ function myFunction(index,value,array){
         }else{
             arr.push([array[value]['id'],array[value]['vid'],array[value]['quantity']]);
         }
+        console.log(arr);
     }else if(vid.length == 0){
         if(array[value]['id'] == id){
             var row = selectedProducts.insertRow();
@@ -257,7 +258,7 @@ function myFunction(index,value,array){
         }else{
             arr.push([array[value]['id'],array[value]['vid'],array[value]['quantity']]);
         }
-
+        console.log(arr);
     }
 
     }
@@ -293,7 +294,7 @@ $('#selectedProducts').on('click', '#remove', function(e){
 
     var index = $(this).closest('tr').index();
     var table = document.getElementById("selectedProducts");
-    var delrow = table.rows[index].cells[7].innerHTML;
+    var delrow = table.rows[index].cells[8].innerHTML;
     arr.splice(delrow,1);
     var n = JSON.stringify(arr);
     document.cookie = "returnproducts = "+n;
@@ -301,10 +302,12 @@ $('#selectedProducts').on('click', '#remove', function(e){
     updateTotal();
     var x = table.rows.length;
     num = 0;
-    for(i=1; i<=x;i++){
+    for(i=1; i<x;i++){
         table.rows[i].cells[0].innerHTML = ++num;
+
         table.rows[i].cells[8].innerHTML = num-1;
     }
+
 
 });
 $("#selectedProducts").on('change','.table-qty',function() {

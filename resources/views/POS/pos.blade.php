@@ -1157,7 +1157,7 @@ $('#expenseAmount').val('');
                         cell12.className = 'none';
                         arr.push([array[value]['id'],price-discount,array[value]['discount'],size,color,1]);
 
-
+                        console.log(arr);
                     }
                     updateStats();
                 }

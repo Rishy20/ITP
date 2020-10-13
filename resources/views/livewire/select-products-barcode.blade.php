@@ -2,7 +2,7 @@
     <div class="section-title">
         <span class="sp-barcode">Select Products</span>
         <div class="add-btn">
-            <a class="cursor" wire:click="createPDF">Print Barcodes</a>
+            <a class="cursor" wire:click="createPDF" >Print Barcodes</a>
         </div>
         <hr class="mt-3 mb-4">
 

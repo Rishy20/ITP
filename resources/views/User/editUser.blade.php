@@ -18,13 +18,13 @@
                         @csrf
                         @method('PATCH')
                         <div class="row">
-                            <div class="col">
-                                <input type="text" id="username" name="username" value="{{ $user->username }}" class="form-control" placeholder="Username" required/>
-                                <label for="username" class="float-label">Username</label>
-                                <div class="invalid-feedback">
-                                    Please enter a username
-                                  </div>
 
+                            <div class="col">
+                                <input type="text" name="test" class="form-control"  value="{{ $user->username }}"  required>
+                                <label class="float-label">User name</label>
+                                <div class="invalid-feedback">
+                                    Please enter a name
+                                  </div>
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" name="display_name" value="{{ $user->display_name }}" placeholder="Display name" required>
