@@ -27,7 +27,7 @@
         .pg-title {
             font-size: 34px;
             position: relative;
-            top: -20px;
+            top: -35px;
             font-weight: 600;
             color: #3a3a3a;
             letter-spacing: 1.2px;
