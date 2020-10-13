@@ -70,13 +70,18 @@ class VoucherController extends Controller
 
         $last = DB::table('vouchers')->latest()->first();
         $voucherId = $last->id;
-        return $voucherId;
+        return $voucherId + 1;
     }
 
     public function getVoucherAmount($id){
 
         $voucher = Voucher::find($id);
 
+        if($voucher->redeem_status == 0){
+            return $voucher->amount;
+        }else{
+            return -2;
+        }
         if($voucher->exp > date("Y-m-d")){
             return $voucher->amount;
         }else{
@@ -106,11 +111,16 @@ class VoucherController extends Controller
      */
     public function update(Request $request, Voucher $voucher)
     {
-        //$voucher = Voucher::findOrFail($id);
+
+    }
+
+    public function updateVoucher(Request $request){
+
+        $voucher = Voucher::findOrFail($request->id);
         $voucher->amount = $request->input('amount');
         $voucher->exp = $request->input('exp');
-
-        $voucher->save();
+        $voucher->redeem_status = $request->input('redeem_status');
+        $voucher->update();
         Session::put('message', 'Success!');
         return redirect('/voucher');
     }
@@ -131,7 +141,7 @@ class VoucherController extends Controller
 
     public function createReport(Request $request){
 
-        $voucher =  DB::select('select v.id, amount, exp from vouchers v');
+        $voucher =  DB::select('select v.id, amount, exp,redeem_status from vouchers v');
 
         // // return view ('Barcode.printBarcode',compact('product'));
 

@@ -187,7 +187,9 @@
                 <div class="display-info">
                     <span class="display-text">Discount &nbsp;  <button class="discount-plus" ><i class="fas fa-plus-circle"></i></button> </span>
                     <span class="display-values" id="discount">Rs.0</span>
-
+                    <div class="promotion-pos" id="promotion-pos">
+                        Promotion Applied
+                    </div>
                     <div class="pos-discount" >
                         <div class="full-pg" id="discountBg"></div>
                         <div class="row">
@@ -227,6 +229,7 @@
                             <div class="col-sm-3 form-check-label font-weight-bold pt-2 ">
                                 Discount
                             </div>
+
                             <div class="col-sm-8 input-group mb-3">
                                 <input type="text" id="percentageDisc" class="form-control" placeholder="0" >
                                 <div class="input-group-append">
@@ -264,14 +267,14 @@
                 </div>
 
                 <div class="sub-btn-div">
-
+{{--
                     <button class="sub-btn btn mr-2">
                         <i class="fas fa-undo sub-icon"></i><span class="sub-btn-txt"> Retrieve Sale</span>
                     </button>
 
                     <button class="sub-btn btn mr-2">
                         <i class="fas fa-parking sub-icon"></i><span class="sub-btn-txt"> Park Sale</span>
-                    </button>
+                    </button> --}}
                     <button class="sub-btn btn" id="discardSale">
                         <i class="fas fa-trash-alt sub-icon" ></i><span class="sub-btn-txt"> Discard Sale</span>
                     </button>
@@ -293,13 +296,12 @@
 
         <div class="pos-sub-display-content">
 
-            <form method="POST" action="{{route('expense.store')}}">
-                @csrf
+
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Type</label>
-                            <select name="type" class="form-control" id="exampleFormControlSelect1">
+                            <label for="FormControlSelect1">Type</label>
+                            <select name="type" class="form-control" id="expenseSelect">
                                 <option value="Stationary">Stationary</option>
                                 <option value="Food">Food</option>
                                 <option value="Electricity">Electricity</option>
@@ -313,7 +315,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Amount</label>
-                            <input type="text" name="amount" class="form-control" />
+                            <input type="text" id="expenseAmount" name="amount" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -324,16 +326,16 @@
                         <label>Description</label>
                     </div>
                     <div class="row">
-                        <textarea name="description" class="pos-sub-txtArea" rows=5></textarea>
+                        <textarea name="description" id="expenseDescription" class="pos-sub-txtArea" rows=5></textarea>
                     </div>
                 </div>
-                <input type="text" value="{{Auth::user()->id}}" name="userId" hidden>
+                <input type="text" value="{{Auth::user()->id}}" name="userId" id="expenseUserId" hidden>
                 <div class="action-btn-row">
 
-                    <input type="submit" class="add-sub-btn" value="Add" />
+                    <input type="submit" onclick="addExpense()" class="add-sub-btn" value="Add" />
 
                 </div>
-            </form>
+
         </div>
     </div>
     {{-- End of Add Expense Model --}}
@@ -448,7 +450,6 @@
                             <select class="form-control" id="pay-method1">
                                 <option value="Cash" id="cash">Cash</option>
                                 <option value="Card" id="card">Card</option>
-                                <option value="Loyalty" id="loyalty">Loyalty</option>
                                 <option value="Voucher" id="voucherSelect">Voucher</option>
                             </select>
                         </div>
@@ -512,7 +513,6 @@
                             <select class="form-control" id="pay-method2">
                                 <option value="Cash" id="cash">Cash</option>
                                 <option value="Card" id="card">Card</option>
-                                <option value="Loyalty" id="loyalty">Loyalty</option>
                                 <option value="Voucher" id="voucherSelect">Voucher</option>
                             </select>
                         </div>
@@ -584,13 +584,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Redeem Points</label>
-                        <input type="text" name="amount" id="voucherAmount" class="form-control" />
+                        <input type="text" name="amount" id="redeemAmount" class="form-control" />
 
                     </div>
                 </div>
                 </div>
             </div>
-                <button class="btn pay-model-btn mt-2">Redeem Points</button>
+                <button class="btn pay-model-btn mt-2" id="redeembtn">Redeem Points</button>
             </div>
 
 
@@ -621,16 +621,16 @@
                 <div class="col">
                     Membership :
                 </div>
-                <div class="col">
-                    Platinum
+                <div class="col" id="membership">
+
                  </div>
             </div>
             <div class="row">
                 <div class="col">
                     Points :
                 </div>
-                <div class="col">
-                    1000
+                <div class="col" id="points">
+
                  </div>
             </div>
             <div class="row">
@@ -772,7 +772,7 @@
 
        </div>
    </div>
-   {{-- End of Add Expense Model --}}
+   {{-- End of Add Service Model --}}
 
    {{-- Staff In Attendance --}}
 <div class="full-pg" id="fadeBg1"></div>

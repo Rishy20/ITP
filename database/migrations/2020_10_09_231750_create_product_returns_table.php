@@ -19,9 +19,9 @@ class CreateProductReturnsTable extends Migration
             $table->unsignedBigInteger('productId');
             $table->unsignedBigInteger('variantId')->nullable();
             $table->integer('qty');
-            $table->foreign('returnId')->references('id')->on('return_products');
-            $table->foreign('productId')->references('id')->on('products');
-            $table->foreign('variantId')->references('id')->on('variants');
+            $table->foreign('returnId')->references('id')->on('return_products')->cascadeOnDelete();
+            $table->foreign('productId')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreign('variantId')->references('id')->on('variants')->cascadeOnDelete();
             $table->timestamps();
         });
     }

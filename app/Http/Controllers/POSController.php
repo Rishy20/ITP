@@ -42,6 +42,9 @@ class POSController extends Controller
        $cust = Customer::all();
        $emp = Employee::all();
        $last = DB::table('services')->latest()->first();
+       $date = date("Y-m-d");
+
+        $promo = DB::table('promotions')->where('startdate','<=',$date)->where('enddate','>',$date)->get();
 
        if($last == null){
            $serviceId = 1;
@@ -49,7 +52,7 @@ class POSController extends Controller
             $serviceId = ($last->id) + 1;
        }
 
-        return view('POS.pos',compact('prd','var','cust','emp','serviceId'));
+        return view('POS.pos',compact('prd','var','cust','emp','serviceId','promo'));
 
     }
 
@@ -95,125 +98,125 @@ class POSController extends Controller
           // Set params
           $cid = $request->customer;
           $sid = $request->staff;
-          $store_name = 'LeatherLine';
-          $store_address = 'No.69,Bodhiraja Mawatha,';
-          $store_city = 'Kurunegala';
-          $store_phone = '037-2224660';
-          $store_email = 'yourmart@email.com';
-          $store_website = 'yourmart.com';
-          $tax_percentage = 0;
-          $discount = $request->discount;
-          $type = $request->type;
-          $amount = $request->amount;
-          $balance = $request->balance;
-          $transaction_id = $saleId;
-          $items = array();
-          // Set items
+        //   $store_name = 'LeatherLine';
+        //   $store_address = 'No.69,Bodhiraja Mawatha,';
+        //   $store_city = 'Kurunegala';
+        //   $store_phone = '037-2224660';
+        // //   $store_email = 'yourmart@email.com';
+        // //   $store_website = 'yourmart.com';
+        //   $tax_percentage = 0;
+        //   $discount = $request->discount;
+        //   $type = $request->type;
+        //   $amount = $request->amount;
+        //   $balance = $request->balance;
+        //   $transaction_id = $saleId;
+        //   $items = array();
+        //   // Set items
 
-          foreach($product as $pr){
-              $p = DB::table('products')
-              ->where('id','=',$pr[0])
-              ->get();
-              $p = json_decode($p,true);
-              if(strlen($pr[3]) == 0 && strlen($pr[4]) == 0){
-                  array_push($items,[
-                      'name' => $p[0]['name'],
-                      'pcode' => $p[0]['pcode'],
-                      'qty' => $pr[5],
-                      'price' => ($pr[1]/$pr[5]) + $pr[2],
-                  ]);
-              }else if(strlen($pr[3]) > 0 && strlen($pr[4]) > 0){
-                  array_push($items,[
-                      'name' => $p[0]['name']."  ".$pr[3]."/".$pr[4],
-                      'pcode' => $p[0]['pcode'],
-                      'qty' => $pr[5],
-                      'price' => ($pr[1]/$pr[5]) + $pr[2],
-                  ]);
-              }else if(strlen($pr[3]) > 0 && strlen($pr[4]) == 0){
-                  array_push($items,[
-                      'name' => $p[0]['name']."  ".$pr[3],
-                      'pcode' => $p[0]['pcode'],
-                      'qty' => $pr[5],
-                      'price' => ($pr[1]/$pr[5]) + $pr[2],
-                  ]);
-              }else if(strlen($pr[3]) == 0 && strlen($pr[4]) > 0){
-                  array_push($items,[
-                      'name' => $p[0]['name']."  ".$pr[4],
-                      'pcode' => $p[0]['pcode'],
-                      'qty' => $pr[5],
-                      'price' => ($pr[1]/$pr[5]) + $pr[2],
-                  ]);
-              }
-          }
+        //   foreach($product as $pr){
+        //       $p = DB::table('products')
+        //       ->where('id','=',$pr[0])
+        //       ->get();
+        //       $p = json_decode($p,true);
+        //       if(strlen($pr[3]) == 0 && strlen($pr[4]) == 0){
+        //           array_push($items,[
+        //               'name' => $p[0]['name'],
+        //               'pcode' => $p[0]['pcode'],
+        //               'qty' => $pr[5],
+        //               'price' => ($pr[1]/$pr[5]) + $pr[2],
+        //           ]);
+        //       }else if(strlen($pr[3]) > 0 && strlen($pr[4]) > 0){
+        //           array_push($items,[
+        //               'name' => $p[0]['name']."  ".$pr[3]."/".$pr[4],
+        //               'pcode' => $p[0]['pcode'],
+        //               'qty' => $pr[5],
+        //               'price' => ($pr[1]/$pr[5]) + $pr[2],
+        //           ]);
+        //       }else if(strlen($pr[3]) > 0 && strlen($pr[4]) == 0){
+        //           array_push($items,[
+        //               'name' => $p[0]['name']."  ".$pr[3],
+        //               'pcode' => $p[0]['pcode'],
+        //               'qty' => $pr[5],
+        //               'price' => ($pr[1]/$pr[5]) + $pr[2],
+        //           ]);
+        //       }else if(strlen($pr[3]) == 0 && strlen($pr[4]) > 0){
+        //           array_push($items,[
+        //               'name' => $p[0]['name']."  ".$pr[4],
+        //               'pcode' => $p[0]['pcode'],
+        //               'qty' => $pr[5],
+        //               'price' => ($pr[1]/$pr[5]) + $pr[2],
+        //           ]);
+        //       }
+        //   }
 
-          foreach($voucher as $v){
-              array_push($items,[
-                  'name' => 'Voucher',
-                  'pcode' => $v[0],
-                  'qty' => 1,
-                  'price' => $v[1],
-              ]);
-          }
+        //   foreach($voucher as $v){
+        //       array_push($items,[
+        //           'name' => 'Voucher',
+        //           'pcode' => $v[0],
+        //           'qty' => 1,
+        //           'price' => $v[1],
+        //       ]);
+        //   }
 
 
-          // Init printer
-          $printer = new ReceiptPrinter;
-          $printer->init(
-              config('receiptprinter.connector_type'),
-              config('receiptprinter.connector_descriptor')
-          );
+        //   // Init printer
+        //   $printer = new ReceiptPrinter;
+        //   $printer->init(
+        //       config('receiptprinter.connector_type'),
+        //       config('receiptprinter.connector_descriptor')
+        //   );
 
-          // Set store info
-          $printer->setStore($cid,$sid, $store_name, $store_address,$store_city, $store_phone, $store_email, $store_website);
+        //   // Set store info
+        //   $printer->setStore($cid,$sid, $store_name, $store_address,$store_city, $store_phone, $store_email, $store_website);
 
-          // Add items
-          foreach ($items as $item) {
-              $printer->addItem(
-                  $item['name'],
-                  $item['pcode'],
-                  $item['qty'],
-                  $item['price']
-              );
-          }
-          // Set tax
-          $printer->setTax($tax_percentage);
+        //   // Add items
+        //   foreach ($items as $item) {
+        //       $printer->addItem(
+        //           $item['name'],
+        //           $item['pcode'],
+        //           $item['qty'],
+        //           $item['price']
+        //       );
+        //   }
+        //   // Set tax
+        //   $printer->setTax($tax_percentage);
 
-          // Set Discount
-          $printer->setDiscount($discount);
+        //   // Set Discount
+        //   $printer->setDiscount($discount);
 
-          //Set Type
-          $printer->setType($type);
+        //   //Set Type
+        //   $printer->setType($type);
 
-          //Set Amount
-          $printer->setAmount($amount);
+        //   //Set Amount
+        //   $printer->setAmount($amount);
 
-          //Set Balance
-          $printer->setBalance($balance);
+        //   //Set Balance
+        //   $printer->setBalance($balance);
 
-          if($type === 'split'){
-            //Set Method1
-            $printer->setMethod1($request->method1);
-            //Set Method2
-            $printer->setMethod2($request->method2);
-            //Set Method1 Amount
-            $printer->setm1Amount($request->meth1Amount);
-            //Set Method2 Amount
-            $printer->setm2Amount($request->meth2Amount);
-          }
-          // Calculate total
-          $printer->calculateSubTotal();
-          $printer->calculateGrandTotal();
+        //   if($type === 'split'){
+        //     //Set Method1
+        //     $printer->setMethod1($request->method1);
+        //     //Set Method2
+        //     $printer->setMethod2($request->method2);
+        //     //Set Method1 Amount
+        //     $printer->setm1Amount($request->meth1Amount);
+        //     //Set Method2 Amount
+        //     $printer->setm2Amount($request->meth2Amount);
+        //   }
+        //   // Calculate total
+        //   $printer->calculateSubTotal();
+        //   $printer->calculateGrandTotal();
 
-          // Set transaction ID
-          $printer->setTransactionID($transaction_id);
+        //   // Set transaction ID
+        //   $printer->setTransactionID($transaction_id);
 
-          // Set qr code
-          // $printer->setQRcode([
-          //     'tid' => $transaction_id,
-          // ]);
+        //   // Set qr code
+        //   // $printer->setQRcode([
+        //   //     'tid' => $transaction_id,
+        //   // ]);
 
-          // Print receipt
-          $printer->printReceipt();
+        //   // Print receipt
+        //   $printer->printReceipt();
 
 
 
@@ -324,6 +327,10 @@ class POSController extends Controller
                 $sp->amount = $request->amount;
                 $sp->voucherId = $request->voucher1;
                 $sp->save();
+
+                $v = Voucher::find($request->voucher1);
+                $v->redeem_status = 1;
+                $v->update();
             }
 
         }else{
@@ -348,6 +355,10 @@ class POSController extends Controller
                 $sp->amount = $request->meth1Amount;
                 $sp->voucherId= $request->voucher1;
                 $sp->save();
+
+                $v = Voucher::find($request->voucher1);
+                $v->redeem_status = 1;
+                $v->update();
             }
 
             if($request->method2 === 'Cash'){
@@ -443,9 +454,12 @@ class POSController extends Controller
     }
 
     public function getCustomer($mobile){
-        $cus = DB::table('customers')
-        ->where('phone','=',$mobile)
-        ->get();
+
+
+        // $cus = DB::table('customers')
+        // ->where('phone','=',$mobile)
+        // ->get();
+        $cus = DB::select('select c.id,firstname,lastname,gender,phone,city,lc.points,loyaltyId,loyaltyName from customers c, loyalty_customers lc,loyalty l where c.id = lc.customerId and l.id = lc.loyaltyId and c.phone = ?', [$mobile]);
 
         return $cus;
     }

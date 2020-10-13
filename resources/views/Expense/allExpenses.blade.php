@@ -4,6 +4,25 @@
 <div class="pg-heading">
 
     <div class="pg-title">All Expenses</div>
+    <input type="text" class="daterange" id="daterange" name="daterange" />
+    {{-- <span  id="daterange"> --}}
+    <input type="text" id="end" name="end" hidden>
+    {{-- <span class="dash">-</span> --}}
+    <input type="text" id="start" name="start" hidden>
+    {{-- </span> --}}
+
+    <div class="period-selector">
+        <select class="custom-select p-select" id="pSelect" id="typeSel">
+            <option value="1" id="today">Today</option>
+            <option value="2" id="day2">Yesterday</option>
+            <option value="7" id="day7">Last 7 Days</option>
+            <option value="14" id="day14">Last 14 Days</option>
+            <option value="30" id="day30">This Month</option>
+            <option value="60" id="day60">Last Month</option>
+            <option value="range" id="date">Date Range</option>
+        </select>
+
+    </div>
 </div>
 @if(session('message'))
 <div class="message">
@@ -225,6 +244,28 @@
             }
         }
     }
+
+
+$(document).ready(function() {
+
+    FilterStart = moment().format("YYYY-MM-DD");
+    FilterEnd = moment().format("YYYY-MM-DD");
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+
+            var DataTableStart = data[4].trim();
+            var DataTableEnd = data[4].trim();
+            if (FilterStart == '' || FilterEnd == '') {
+                return true;
+            }
+            if (DataTableStart >= FilterStart && DataTableEnd <= FilterEnd + 1) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+});
+
 
 </script>
 @endsection

@@ -110,9 +110,9 @@
              ATTENDANCE DETAIL REPORT
         </div>
         <div class="period">
-            <span class="from">20-09-2020 &nbsp;</span>
+            <span class="from">{{$sdate}} &nbsp;</span>
             <span class="to">to &nbsp;</span>
-            <span class="to_date">20-10-2020</span>
+            <span class="to_date">{{$edate}}</span>
         </div>
         <hr class="hr">
         <table class="all-table table-striped">
@@ -127,7 +127,9 @@
                 @foreach($attendance as $att)
                 <tr>
                     <td>{{ $att->fname." ".$att->lname}}</td>
+                    <td>{{ $att->created_at }}</td>
                     <td>{{ $att->in }}</td>
+
                     <td>{{ $att->out }}</td>
                 </tr>
                 @endforeach

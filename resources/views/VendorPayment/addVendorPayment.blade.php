@@ -48,7 +48,7 @@
                 <div class="col">
                   <div class="form-group" id="bankDetails">
                     <label class="sup-label">Bank Details</label>
-                    <select class="form-control sup-select" name="bankID" required>
+                    <select class="form-control sup-select" name="bankID" >
                         <option value="" disabled selected hidden>Select a Bank</option>
                         @foreach($banks as $b)
                         <option value="{{$b->id}}">{{$b->bankname}} - Holder name : {{ $b->name }} - Acc. No. : {{ $b->number }}</option>

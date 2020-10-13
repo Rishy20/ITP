@@ -141,7 +141,7 @@
         <div class="period">
             <span class="from">{{$sdate}} &nbsp;</span>
             <span class="to">to &nbsp;</span>
-        <span class="to_date">{{$edate}}</span>
+            <span class="to_date">{{$edate}}</span>
         </div>
         <hr class="hr">
         <table class="all-table table-striped">

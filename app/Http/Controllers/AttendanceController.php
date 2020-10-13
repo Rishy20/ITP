@@ -169,15 +169,94 @@ class AttendanceController extends Controller
 
     public function createReport(Request $request){
 
-        //$attendance =  DB::select('select a.id, in, out from attendances a, fname e where a.fname = e.fname');
-        $attendance =  DB::select('select a.id,a.created_at,a.in,a.out,a.e_id,e.id as eid,e.fname,e.lname from employees e LEFT JOIN attendances a ON e.id = a.e_id');
+        if(isset($_COOKIE['timeperiod'])){
+            $time = $_COOKIE['timeperiod'];
+        }else{
+            $time = 0;
+        }
+        date_default_timezone_set('Asia/Colombo');
+        $date = date_create(date("Y-m-d")) ;
+        setcookie("timeperiod","",time()-3600);
 
-        // // return view ('Barcode.printBarcode',compact('product'));
+        if($time == 1 || $time == 0){
+            $sdate = date("Y-m-d") ;
+            $diff = new DateInterval('P1D');
+            $edate = date_add($date,$diff);
+        }else if($time == 2){
+            $eddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P0D');
+            $edate = date_add($eddate,$diff);
+            $sddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P1D');
+            $sdate = date_sub($sddate,$diff);
+        }else if($time == 7 ){
+            $eddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P1D');
+            $edate = date_add($eddate,$diff);
+            $sddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P7D');
+            $sdate = date_sub($sddate,$diff);
+        }else if($time == 14){
+            $eddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P1D');
+            $edate = date_add($eddate,$diff);
+            $sddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P14D');
+            $sdate = date_sub($sddate,$diff);
+        }else if($time == 30){
+            $eddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P1M');
+            $edate = date_add($eddate,$diff);
 
-        view()->share('attendance',$attendance);
+            $sddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P1M');
+            $sdate = date_sub($sddate,$diff);
+
+        }else if($time == 60){
+            $eddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P1D');
+            $edate = date_add($eddate,$diff);
+            $sddate = date_create(date("Y-m-d")) ;
+            $diff = new DateInterval('P2M');
+            $sdate = date_sub($sddate,$diff);
+        }else if($time == 100){
+            $sdate = $_COOKIE['start'];
+            $end = $_COOKIE['end'];
+            $datee = strtotime($end);
+            $edate = date("Y-m-d", strtotime("+1 day", $datee));
+            setcookie("start","",time()-3600);
+            setcookie("end","",time()-3600);
+        }
+
+        $attendance =  DB::select('select a.id,a.created_at,a.in,a.out,a.e_id,e.id as eid,e.fname,e.lname from employees e LEFT JOIN attendances a ON e.id = a.e_id and a.created_at >= ? and a.created_at < ?',[$sdate,$edate]);
+
+        $newEndDate = date("Y-m-d") ;
+        if($time==1 || $time == 0){
+            $data = [
+                'attendance'   => $attendance,
+                'sdate' => $sdate,
+                'edate'  => $newEndDate,
+            ];
+
+        }else if($time == 100){
+            $data = [
+                'attendance'   => $attendance,
+                'sdate' => $sdate,
+                'edate'  => $end,
+            ];
+        }else{
+            $data = [
+                'attendance'   => $attendance,
+                'sdate' => $sdate->format('Y-m-d'),
+                'edate'  => $newEndDate,
+            ];
+        }
 
 
-        $pdf =  PDF::loadView('Attendance.attendanceReport',$attendance);
+        view()->share('attendance',$data);
+
+
+        $pdf =  PDF::loadView('Attendance.attendanceReport',$data);
 
         // // download PDF file with download method
         return $pdf->stream('attendance.pdf');

@@ -3,6 +3,8 @@
 
 <div class="pg-heading">
     <div class="pg-title">All Returns</div>
+
+
 </div>
 
 @if(session('message'))
@@ -20,9 +22,9 @@
     <div class="section-content"> {{-- Start of sectionContent--}}
 
         <table id="myTable" class="table hover table-striped table-borderless table-hover all-table">
-            {{-- <div class="add-btn">
-                <a href="{{ route('brand.report') }}" target="_blank">Export Brand</a>
-            </div> --}}
+            <div class="add-btn">
+                <a href="{{ route('return.report') }}" target="_blank">Export Returns</a>
+            </div>
             <div class="add-btn"> {{-- Add button --}}
                 <a href="{{ route('return.create') }}">Create Return</a> {{-- Enter the name of the add btn --}}
             </div>
@@ -33,7 +35,7 @@
                     <th style="max-width: 600px; width: 600px">Remarks</th>
                     <th>Vendor</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th>Action</th
                 </tr>
             </thead>
             <tbody>

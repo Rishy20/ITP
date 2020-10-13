@@ -118,7 +118,7 @@ class SalesController extends Controller
             $sdate = date("Y-m-d") ;
             $diff = new DateInterval('P1D');
             $edate = date_add($date,$diff);
-        }else if($time = 2){
+        }else if($time == 2){
             $eddate = date_create(date("Y-m-d")) ;
             $diff = new DateInterval('P0D');
             $edate = date_add($eddate,$diff);

@@ -59,6 +59,7 @@ Route::patch('/empout','AttendanceController@markOut')->name('attendance.markout
 Route::get('/attendanceReport','AttendanceController@createReport')->name('attendance.report');
 Route::get('/employeeReport','EmployeeController@createReport')->name('employee.report');
 Route::get('/voucherReport','VoucherController@createReport')->name('voucher.report');
+Route::get('/returnReport','ProductReturnController@createReport')->name('return.report');
 //Route::get('/employees', 'EmployeeController@index');
 //Route::get('/create', 'EmployeeController@create');
 //Route::post('/store', 'EmployeeController@store')->name('employees.store');
@@ -77,6 +78,7 @@ Route::get('/allForm', function () {
 Route::resource('vendors','VendorController');
 Route::resource('service', 'ServiceController');
 Route::patch('/updateService','ServiceController@updateService')->name('service.updateService');
+Route::patch('/updateVoucher','VoucherController@updateVoucher')->name('voucher.updateVoucher');
 
 Route::get('/test', 'VendorController@index');
 Route::post('/store', 'VendorController@store');
@@ -106,6 +108,7 @@ Route::get('/pos',"POSController@index")->name('pos');
 Route::post('/pos',"POSController@store")->name('pos');
 Route::get('/pos/login',"Auth\LoginPosController@index")->name('pos.login');
 Route::post('/pos/login',"Auth\LoginPosController@login")->name('pos.login');
+Route::get('/pos/logout',"Auth\LoginPosController@logout")->name('pos.logout');
 Route::get('/role', function(){
     return view('User.addUserRole');
 });

@@ -186,11 +186,9 @@ function myFunction(index,value,array){
         cell1.innerHTML = ++num;
         cell2.innerHTML = array[value]['pcode'];
         cell3.innerHTML = array[value]['name'];
-        if(array[value]['price'] == null){
+
             cell4.innerHTML = array[value]['costPrice'];
-        }else{
-            cell4.innerHTML = array[value]['price'];
-        }
+
         cell5.innerHTML = array[value]['size'];
         cell6.innerHTML = array[value]['color'];
 
@@ -277,13 +275,12 @@ function updateTotal(){
             var qty = 0;
             var total = 0;
             var price = 0;
-            for(i=1;i<x;i++){
-                qty = qty +  parseInt($(table.rows[i].cells[6]).find('.table-qty').val());
-                price = price + parseInt(table.rows[i].cells[3].innerHTML);
-            }
-            console.log(qty,price);
 
-            total = price * qty;
+            for(i=1;i<x;i++){
+                qty = parseInt($(table.rows[i].cells[6]).find('.table-qty').val());
+                price = parseInt(table.rows[i].cells[3].innerHTML);
+                total = total + (price * qty);
+            }
             total = format_number(total);
             $('#return-tot-amount').html(total);
 

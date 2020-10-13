@@ -285,7 +285,7 @@ $(".demo-btn").click(function(){
         $("input[name='costPrice']").val("5000");
         $("input[name='sellingPrice']").val("6500");
         $("input[name='discount']").val("500");
-        $("input[name='profit']").val("1000");
+        $("#profit").val("1000");
         $("#inventory").val("5");
 
         $("input[name='Qty']").val("20");
@@ -295,8 +295,15 @@ $(".demo-btn").click(function(){
 
     });
 
-
-
+    //Validate only numberic values
+    $('input[name="costPrice"],input[name="sellingPrice"],input[name="discount"]').keyup(function(e)
+                                {
+        if (/\D/g.test(this.value))
+        {
+            // Filter non-digits from input value.
+            this.value = this.value.replace(/\D/g, '');
+        }
+    });
 
 
 

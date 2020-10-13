@@ -162,9 +162,6 @@
             <a href="{{ route('attendance.index') }}">Staff Attendance</a>
         </li>
         <li class="pos-nav-li">
-            <a href="{{ route('attendance.create') }}">Mark Attendance</a>
-        </li>
-        <li class="pos-nav-li">
             <a href="{{ route('salaryPayment.index') }}">Salary Payment</a>
         </li>
 
