@@ -51,7 +51,7 @@ class ReportController extends Controller
         $start_date = date('Y-m-d'.' 00:00:00', strtotime($request->input('start_date')));
         $end_date = date('Y-m-d'.' 23:59:59', strtotime($request->input('end_date')));
 
-        $stock_transfers = StockTransfer::whereBetween('updated_at', [$start_date, $end_date])->get();
+        $stock_transfers = StockTransfer::whereBetween('created_at', [$start_date, $end_date])->get();
 
         $items = DB::table('stock_transfer_items')->get();
 
