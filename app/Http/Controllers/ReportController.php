@@ -394,6 +394,106 @@ class ReportController extends Controller
         return $pdf->stream('salesman-wise-sales.pdf');
     }
 
+    public function dailySalesSummary() {
+        return view('reports.sales.daily-sales-summary');
+    }
+
+    public function exportDailySalesSummary(Request $request) {
+        $date = $request->input('date');
+
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($date));
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($date));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        $profit = collect();
+        $profit->revenue = 0;
+        $profit->cost = 0;
+        $profit->gp = 0;
+        $profit->gp_margin = 0;
+        $profit->tax = 0;
+
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(products.costPrice) AS cost_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_products as $item) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $item->sale = $sale;
+                    }
+                }
+
+                $profit->revenue += $item->sales_sum;
+                $profit->cost += $item->cost_sum;
+                $profit->tax += $item->sale->taxes;
+            }
+
+            $profit->gp = $profit->revenue - $profit->cost;
+            $profit->gp_margin += ($profit->gp / $profit->revenue) * 100;
+        }
+
+        view()->share(['profit' => $profit, 'date' => $date]);
+        $pdf =  PDF::loadView('reports.sales.export.daily-sales-summary', [$profit, $date]);
+
+        return $pdf->stream('daily-sales-summary.pdf');
+    }
+
+    public function monthlySalesSummary() {
+        return view('reports.sales.monthly-sales-summary');
+    }
+
+    public function exportMonthlySalesSummary(Request $request) {
+        $date = $request->input('date');
+
+        $start_date = date('Y-m-d'.' 00:00:00', strtotime($date));
+        $temp_date = Carbon::createFromFormat('Y-m', $date)->endOfMonth();
+        $end_date = date('Y-m-d'.' 23:59:59', strtotime($temp_date));
+
+        $sales = Sale::whereBetween('updated_at', [$start_date, $end_date])->get();
+
+        $profit = collect();
+        $profit->revenue = 0;
+        $profit->cost = 0;
+        $profit->gp = 0;
+        $profit->gp_margin = 0;
+        $profit->tax = 0;
+
+        if (!$sales->isEmpty()) {
+            $sales_products = DB::table('sales_products')->join('products', 'sales_products.pid', '=', 'products.id')
+                ->whereIn('saleId', $sales->pluck('id'))->groupBy('sales_products.pid')
+                ->select('products.*', DB::raw('SUM(sales_products.price) AS sales_sum'),
+                    DB::raw('SUM(products.costPrice) AS cost_sum'))->get();
+            $taxes = SalesProduct::all();
+
+            foreach ($sales_products as $item) {
+                foreach ($sales as $sale) {
+                    foreach ($taxes as $tax) {
+                        if ($tax->saleId == $sale->id)
+                            $item->sale = $sale;
+                    }
+                }
+
+                $profit->revenue += $item->sales_sum;
+                $profit->cost += $item->cost_sum;
+                $profit->tax += $item->sale->discount;
+            }
+
+            $profit->gp = $profit->revenue - $profit->cost;
+            if ($profit->revenue != 0)
+                $profit->gp_margin += ($profit->gp / $profit->revenue) * 100;
+        }
+
+        view()->share(['profit' => $profit, 'date' => $date]);
+        $pdf =  PDF::loadView('reports.sales.export.monthly-sales-summary', [$profit, $date]);
+
+        return $pdf->stream('monthly-sales-summary.pdf');
+    }
+
     public function productReturn() {
         $returns = DB::select('select e.id, e.productID, e.customerID, e.salesmanID, e.amount, e.updated_at, p.pcode,
                         c.firstname, c.lastname, em.fname, em.lname from exchanges e, products p, employees em, customers c where
@@ -408,7 +508,7 @@ class ReportController extends Controller
 
         $returns = DB::select('select e.id, e.productID, e.customerID, e.salesmanID, e.amount, e.updated_at, p.pcode,
                         c.firstname, c.lastname, em.fname, em.lname from exchanges e, products p, employees em, customers c where
-                        e.productID = p.id and e.customerID = c.id and e.salesmanID = em.id');
+                        e.productID = p.id and e.customerID = c.id and e.salesmanID = em.id and e.updated_at between ? and ?', [$start_date, $end_date]);
 
         view()->share(['returns' => $returns, 'start_date' => $start_date, 'end_date' => $end_date]);
         $pdf =  PDF::loadView('reports.sales.export.product-return', [$returns, $start_date, $end_date]);

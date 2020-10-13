@@ -28,10 +28,6 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-tshirt"></i></div>
                         Product
                     </a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#customer" role="tab" onclick="categorySection('Customer')">
-                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-people-arrows"></i></div>
-                        Customer
-                    </a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#payment" role="tab" onclick="categorySection('Payment')">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-dollar-sign"></i></div>
                         Payment
@@ -85,6 +81,18 @@
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-user"></i></div>
                         Customer-wise Sales Report
                     </a>
+                    {{-- Daily Sales Summary Report --}}
+                    <a class="list-group-item list-group-item-action" id="daily-sales-summary" role="tabpanel"
+                       href="{{ route('reports.daily-sales-summary') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-calendar"></i></div>
+                        Daily Sales Summary Report
+                    </a>
+                    {{-- Monthly Sales Summary Report --}}
+                    <a class="list-group-item list-group-item-action" id="monthly-sales-summary" role="tabpanel"
+                       href="{{ route('reports.monthly-sales-summary') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-calendar"></i></div>
+                        Monthly Sales Summary Report
+                    </a>
                     {{-- Total Expense Report --}}
                     <a class="list-group-item list-group-item-action" id="total-expense" role="tabpanel"
                        href="{{ route('reports.total-expense') }}">
@@ -96,18 +104,6 @@
                        href="{{ route('reports.product-return') }}">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-backward"></i></div>
                         Product Return Report
-                    </a>
-                    {{-- Daily Profit Report --}}
-                    <a class="list-group-item list-group-item-action" id="daily-profit" role="tabpanel"
-                       href="{{ route('reports.daily-profit') }}">
-                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
-                        Daily Profit Report
-                    </a>
-                    {{-- Monthly Profit Report --}}
-                    <a class="list-group-item list-group-item-action" id="monthly-profit" role="tabpanel"
-                       href="{{ route('reports.monthly-profit') }}">
-                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
-                        Monthly Profit Report
                     </a>
                 </div>
 
@@ -197,6 +193,18 @@
                        href="{{ route('reports.day-end') }}">
                         <div class="d-inline-block" style="width: 32px"><i class="fa fa-calendar"></i></div>
                         Day-End Report
+                    </a>
+                    {{-- Daily Profit Report --}}
+                    <a class="list-group-item list-group-item-action" id="daily-profit" role="tabpanel"
+                       href="{{ route('reports.daily-profit') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
+                        Daily Profit Report
+                    </a>
+                    {{-- Monthly Profit Report --}}
+                    <a class="list-group-item list-group-item-action" id="monthly-profit" role="tabpanel"
+                       href="{{ route('reports.monthly-profit') }}">
+                        <div class="d-inline-block" style="width: 32px"><i class="fa fa-coins"></i></div>
+                        Monthly Profit Report
                     </a>
                 </div>
 
